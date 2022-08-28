@@ -52,6 +52,11 @@
         <div class="row invoice_header">
           <div class="col-xs-5" style="width: 25%; float:left;">
               <img src="{{asset('storage/logo/'.$info->logo)}}" width="100%" alt="Logo">
+              {{$info->adress}}<br>
+              {{$info->phone}}<br>
+              {{$info->email}}<br>
+              {{$info->web}}<br>
+              Bin No: {{$info->bin_no}}<br>
           </div>
           <div class="col-xs-7" style="width: 75%; text-align:right">
               <div style=" width:100%; text-align:right;">
@@ -76,7 +81,6 @@
                   @endif
                   Sale Type :<b>{{$sale_type}}</b> <br>
                   Date : {{date('d-m-Y',intval($invoice->dates))}}<br/>
-                  Bin No : {{\App\Models\CompanyInformations::first()->bin_no}}
               </div>
           </div>
         </div>

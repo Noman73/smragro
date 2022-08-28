@@ -36,4 +36,8 @@ class Invoice extends Model
     {
         return $this->belongsTo(User::class,'author_id','id');
     }
+    public function notes()
+    {
+        return $this->belongsTo(MultiNote::class,'note_id','id');
+    }
 }

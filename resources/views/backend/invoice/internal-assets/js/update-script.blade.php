@@ -72,6 +72,29 @@
           cache:true,
         }
       })
+      $("#note").select2({
+    theme:'bootstrap4',
+    placeholder:'Select Note',
+    allowClear:true,
+    ajax:{
+      url:"{{URL::to('/admin/get-multi-note')}}",
+      type:'post',
+      dataType:'json',
+      delay:20,
+      data:function(params){
+        return {
+          searchTerm:params.term,
+          _token:"{{csrf_token()}}",
+          }
+      },
+      processResults:function(response){
+        return {
+          results:response,
+        }
+      },
+      cache:true,
+    }
+  });
       let total_item=0;
       function addNew(){
         form=`<tr><td><input type="hidden" name="record_type[]" value="new" ><select class="form-control product" name="product[]"></select></td>`;
@@ -530,7 +553,8 @@
        .then(res=>{
         console.log(res);
         this_cat.parent().next().next().next().children("[name='price[]']").val(parseFloat(res.data).toFixed(2));
-        
+        calculation()
+        totalCal();
        })
      })
 
@@ -550,15 +574,19 @@
     }
     function showInvoice(invoices){
         $('#sale_type').val(invoices.sale_type)
-        $('#customer').html('<option value="'+invoices.customer.id+'">'+invoices.customer.name+'</option>')
+        if(invoices.customer!=null){
+          $('#customer').html('<option value="'+invoices.customer.id+'">'+invoices.customer.name+'</option>');
+        }
         $('#hand_bill').val(invoices.hand_bill);
         $('#date').val(dateFormat(invoices.dates*1000))
         $('#discount').val(invoices.discount);
         $('#vat').val(invoices.vat);
         $('#transport').val(invoices.transport);
         $('#staff_note').val(invoices.staff_note);
-        $('#note').val(invoices.note);
-        $('#total').val(invoices.note);
+        if(invoices.notes!=null){
+          $('#note').html('<option value="'+invoices.notes.id+'">'+invoices.notes.note+'</option>')
+        }
+        $('#total').val(invoices.total);
         $('#total-item').val(invoices.total_item);
         total_item=parseInt(invoices.total_item)
         if(invoices.sale_type==2){

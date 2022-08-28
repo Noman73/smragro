@@ -164,7 +164,7 @@ class InvoiceTestController extends Controller
             $invoice->discount_type = $data['discount_type'];
             $invoice->discount = $data['discount'];
             $invoice->action_id = $data['action'];
-            $invoice->note = $data['note'];
+            $invoice->note_id = $data['note'];
             $invoice->staff_note = $data['staff_note'];
             $invoice->author_id = auth()->user()->id;
             $invoice->save();
@@ -380,7 +380,7 @@ class InvoiceTestController extends Controller
      */
     public function edit($id)
     {
-        $invoice=Invoice::with('sales','customer','pay','condition_amount')->where('id',$id)->get()->toArray();
+        $invoice=Invoice::with('sales','customer','pay','condition_amount','notes')->where('id',$id)->get()->toArray();
         return view('backend.invoice.invoice-update',compact('invoice'));
     }
 
@@ -509,7 +509,7 @@ class InvoiceTestController extends Controller
             $invoice->discount_type = $data['discount_type'];
             $invoice->discount = $data['discount'];
             $invoice->action_id = $data['action'];
-            $invoice->note = $data['note'];
+            $invoice->note_id = $data['note'];
             $invoice->staff_note = $data['staff_note'];
             $invoice->author_id = auth()->user()->id;
             $invoice->save();

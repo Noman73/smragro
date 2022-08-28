@@ -427,6 +427,12 @@
                 </a>
               </li>
               <li class="nav-item">
+                <a href="{{URL::to('admin/multi_note')}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Invoice Note</p>
+                </a>
+              </li>
+              <li class="nav-item">
                 <a href="{{URL::to('admin/shipping-company')}}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Shipping Company</p>

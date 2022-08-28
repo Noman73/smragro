@@ -408,6 +408,29 @@ $('#date,#cheque_issue_date').daterangepicker({
       cache:true,
     }
   });
+  $("#note").select2({
+    theme:'bootstrap4',
+    placeholder:'Select Note',
+    allowClear:true,
+    ajax:{
+      url:"{{URL::to('/admin/get-multi-note')}}",
+      type:'post',
+      dataType:'json',
+      delay:20,
+      data:function(params){
+        return {
+          searchTerm:params.term,
+          _token:"{{csrf_token()}}",
+          }
+      },
+      processResults:function(response){
+        return {
+          results:response,
+        }
+      },
+      cache:true,
+    }
+  });
   function paymentMethod(){
     let method_type=$("input[name='payment_method_type[]']:checked").val();
     console.log(method_type)
@@ -523,7 +546,8 @@ $('body').on('select2:select',"select[name='product[]']", function (e){
    .then(res=>{
     console.log(res);
     this_cat.parent().next().next().next().children("[name='price[]']").val(parseFloat(res.data).toFixed(2));
-    
+    calculation()
+    totalCal();
    })
  })
 

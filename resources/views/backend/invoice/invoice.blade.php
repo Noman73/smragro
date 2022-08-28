@@ -135,7 +135,7 @@
                     <div class="col-12 col-md-8">
                       <div class="form-group">
                         <label for="">Note :</label>
-                        <textarea class="form-control" name="" id="note" rows="2" placeholder="write something..."></textarea>
+                        <select class="form-control" name="" id="note"></select>
                       </div>
                       <div class="form-group">
                         <label for="">staff Note :</label>
