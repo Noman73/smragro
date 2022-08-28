@@ -77,7 +77,8 @@
                   হ্যান্ড মেমো নম্বর : <b>{{$invoice->hand_bill}}</b><br>
                   @endif
                   বিক্রয় ধরন :<b>{{$sale_type}}</b> <br>
-                  তারিখ : {{date('d-m-Y',intval($invoice->dates))}}
+                  তারিখ : {{date('d-m-Y',intval($invoice->dates))}}<br/>
+                  বিন নম্বর : {{\App\Models\CompanyInformations::first()->bin_no}}
               </div>
           </div>
         </div>

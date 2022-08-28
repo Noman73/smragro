@@ -15,6 +15,8 @@ class CreateMultipleNoteSelection extends Migration
     {
         Schema::create('multi_notes', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('invoice_id');
+            $table->text('note');
             $table->timestamps();
         });
     }

@@ -75,7 +75,8 @@
                   Hand Memo : <b>{{$invoice->hand_bill}}</b><br>
                   @endif
                   Sale Type :<b>{{$sale_type}}</b> <br>
-                  Date : {{date('d-m-Y',intval($invoice->dates))}}
+                  Date : {{date('d-m-Y',intval($invoice->dates))}}<br/>
+                  Bin No : {{\App\Models\CompanyInformations::first()->bin_no}}
               </div>
           </div>
         </div>
