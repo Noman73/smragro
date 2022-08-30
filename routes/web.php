@@ -50,6 +50,8 @@ Route::group([
     Route::resource('/sleep','SleepController');
     Route::resource('/credit-setup','CreditSetupController');
     Route::resource('/employee','EmployeeController');
+    Route::post('/get-employee','EmployeeController@getEmployee');
+    Route::resource('/employee-salary','EmployeeSalaryController');
     Route::post('/get-category','CategoryController@getCategory');
     Route::post('/get-unit','UnitController@getUnit');
     Route::post('/get-product','ProductController@getProduct');

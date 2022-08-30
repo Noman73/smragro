@@ -252,7 +252,12 @@
                 <p>Employee</p>
               </a>
             </li>
-           
+            <li class="nav-item">
+              <a href="{{URL::to('admin/employee-salary')}}" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Salary Setup</p>
+              </a>
+            </li>
           </ul>
         </li>
         {{-- hr end --}}

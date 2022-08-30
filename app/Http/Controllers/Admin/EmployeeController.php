@@ -137,4 +137,11 @@ class EmployeeController extends Controller
     {
         //
     }
+    public function getEmployee(Request $request){
+        $customer= Employee::where('name','like','%'.$request->searchTerm.'%')->orWhere('code','like','%'.$request->searchTerm.'%')->take(15)->get();
+        foreach ($customer as $value){
+             $set_data[]=['id'=>$value->id,'text'=>($value->code!=null? $value->code.'-': '').$value->name.'('.$value->phone.')'];
+         }
+         return $set_data;
+     }
 }
