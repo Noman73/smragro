@@ -63,6 +63,8 @@
                     <th>Name</th>
                     <th>Adress</th>
                     <th>Mobile</th>
+                    <th>Bank Name</th>
+                    <th>Account No.</th>
                     <th>Action</th>
                   </tr>
                 </thead>
@@ -133,26 +135,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-md-8 mr-auto ml-auto">
-                    <div class="form-group">
-                      <label for="opening_balance" class="font-weight-bold">Opening Balance:</label>
-                      <div class='row'>
-                        <div class='col-sm-9'>
-                            <input class="form-control " id="opening_balance"  type="number" placeholder="Opening Balance">
-                            <div id="opening_balance_msg" class="invalid-feedback">
-                            </div>
-                          </div>
-                          <div class='col-sm-3'>
-                            <select class="form-control" id="balance_type" >
-                            <option value="1">Balance</option>
-                            <option value="0">Due</option>
-                            </select>
-                            <div id="balance_type_msg" class="invalid-feedback">
-                            </div>
-                          </div>
-                        </div>
-                    </div>
-                  </div>
+                 
                   <div class="col-md-8 mr-auto ml-auto">
                     <div class="form-group">
                       <label for="message-text" class="col-form-label">NID:</label>
@@ -166,6 +149,30 @@
                       <label for="message-text" class="col-form-label">Birth Date:</label>
                       <input type="text" class="form-control" id="birth_date" placeholder="Enter Phone Number">
                       <div class="invalid-feedback" id="birth_date_msg">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-8 mr-auto ml-auto">
+                    <div class="form-group">
+                      <label for="message-text" class="col-form-label">phone 2:</label>
+                      <input type="text" class="form-control" id="phone2" placeholder="Enter Phone Number">
+                      <div class="invalid-feedback" id="phone2_msg">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-8 mr-auto ml-auto">
+                    <div class="form-group">
+                      <label for="message-text" class="col-form-label">Bank Name:</label>
+                      <input type="text" class="form-control" id="bank_name" placeholder="Enter Bank Name">
+                      <div class="invalid-feedback" id="bank_name_msg">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-8 mr-auto ml-auto">
+                    <div class="form-group">
+                      <label for="message-text" class="col-form-label">Bank Account No:</label>
+                      <input type="text" class="form-control" id="bank_account_no" placeholder="Enter Bank Name">
+                      <div class="invalid-feedback" id="bank_account_no_msg">
                       </div>
                     </div>
                   </div>

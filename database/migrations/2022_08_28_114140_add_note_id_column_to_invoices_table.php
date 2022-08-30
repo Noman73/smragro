@@ -28,5 +28,6 @@ class AddNoteIdColumnToInvoicesTable extends Migration
         Schema::table('invoices', function (Blueprint $table) {
             $table->dropColumn('note_id');
         });
+
     }
 }

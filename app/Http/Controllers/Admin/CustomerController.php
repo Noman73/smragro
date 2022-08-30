@@ -58,9 +58,10 @@ class CustomerController extends Controller
             'name'=>"required|max:200|min:1",
             'email'=>"nullable|email|max:200|min:1",
             'phone'=>"required|max:200|min:1",
+            'phone2'=>"nullable|max:200|min:1",
+            'bank_name'=>"nullable|max:200|min:1",
+            'bank_account_no'=>"nullable|max:200|min:1",
             'adress'=>"nullable|max:200|min:1",
-            'opening_balance'=>"nullable|max:200|min:1",
-            'balance_type'=>"required|max:200|min:1",
             'nid'=>"nullable|max:200|min:1",
             'birth_date'=>"nullable|max:200|min:1",
             'image'=>'nullable|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
@@ -73,6 +74,9 @@ class CustomerController extends Controller
             $customer->name=$request->name;
             $customer->email=$request->email;
             $customer->phone=$request->phone;
+            $customer->phone2=$request->phone2;
+            $customer->bank_name=$request->bank_name;
+            $customer->bank_account_no=$request->bank_account_no;
             $customer->code=$ledger_code->code.'-'.(($countCustomer ==null? 0 : $countCustomer)+1);
             $customer->adress=$request->adress;
             $customer->nid=$request->nid;
@@ -125,15 +129,15 @@ class CustomerController extends Controller
     public function update(Request $request, $id)
     {
         // return response()->json($request->all());
-        // 
         $validator=Validator::make($request->all(),[
             'company_name'=>"nullable|max:200|min:1",
             'name'=>"required|max:200|min:1",
             'email'=>"nullable|email|max:200|min:1",
             'phone'=>"required|max:200|min:1",
+            'phone2'=>"nullable|max:200|min:1",
+            'bank_name'=>"nullable|max:200|min:1",
+            'bank_account_no'=>"nullable|max:200|min:1",
             'adress'=>"nullable|max:200|min:1",
-            'opening_balance'=>"nullable|max:200|min:1",
-            'balance_type'=>"required|max:200|min:1",
             'nid'=>"nullable|max:200|min:1",
             'birth_date'=>"nullable|max:200|min:1",
             'image'=>'nullable|image|mimes:jpg,png,jpeg,gif,svg|max:2048|',
@@ -144,13 +148,10 @@ class CustomerController extends Controller
             $customer->name=$request->name;
             $customer->email=$request->email;
             $customer->phone=$request->phone;
+            $customer->phone2=$request->phone2;
+            $customer->bank_name=$request->bank_name;
+            $customer->bank_account_no=$request->bank_account_no;
             $customer->adress=$request->adress;
-            if($request->balance_type==0){
-                $balance=-abs($request->opening_balance);
-            }else{
-                $balance=$request->opening_balance;
-            }
-            $customer->opening_balance=$balance;
             $customer->nid=$request->nid;
             $customer->birth_date=$request->birth_date;
             $customer->author_id=auth()->user()->id;

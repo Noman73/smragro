@@ -28,6 +28,14 @@
             name:'phone',
           },
           {
+            data:'bank_name',
+            name:'bank_name',
+          },
+          {
+            data:'bank_account_no',
+            name:'bank_account_no',
+          },
+          {
             data:'action',
             name:'action',
           }
@@ -42,9 +50,10 @@ window.formRequest= function(){
     let name=$('#name').val();
     let adress=$('#adress').val();
     let phone=$('#phone').val();
+    let phone2=$('#phone2').val();
+    let bank_name=$('#bank_name').val();
+    let bank_account_no=$('#bank_account_no').val();
     let email=$('#email').val();
-    let opening_balance=$('#opening_balance').val();
-    let balance_type=$('#balance_type').val();
     let nid=$('#nid').val();
     let birth_date=$('#birth_date').val();
     let image=document.getElementById('file').files;
@@ -54,11 +63,12 @@ window.formRequest= function(){
     formData.append('name',name);
     formData.append('adress',adress);
     formData.append('phone',phone);
+    formData.append('phone2',phone2);
+    formData.append('bank_name',bank_name);
+    formData.append('bank_account_no',bank_account_no);
     formData.append('email',email);
-    formData.append('opening_balance',opening_balance);
     formData.append('nid',nid);
     formData.append('birth_date',birth_date);
-    formData.append('balance_type',balance_type);
     if(image[0]!=null){
       formData.append('image',image[0]);
     }
