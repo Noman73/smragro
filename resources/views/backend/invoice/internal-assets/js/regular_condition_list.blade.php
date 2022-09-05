@@ -101,7 +101,7 @@
 $(document).delegate("#modalBtn", "click", function(event){
     clear();
     $('#exampleModalLabel').text('Add New Category');
-
+    
 });
 $(document).delegate(".editRow", "click", function(){
     $('#exampleModalLabel').text('Edit Category');
@@ -168,7 +168,18 @@ function clear(){
   $("input").removeClass('is-invalid').val('');
   $(".invalid-feedback").text('');
 }
-
+function remove(){
+  $('#ammount').val('');
+  $('#method').val('0');
+  $('#date,#issue_date').daterangepicker({
+        showDropdowns: true,
+        singleDatePicker: true,
+        // parentEl: ".bd-example-modal-lg .modal-body",
+        locale: {
+            format: 'DD-MM-YYYY',
+        }
+  }); 
+}
 function paymentMethod(){
     let method_type=$('#method').val()
     console.log(method_type)

@@ -115,6 +115,14 @@
                 </a>
               </li>
               <li class="nav-item">
+                <a href="{{URL::to('admin/regular-condition-list')}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>
+                    R Condition List
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
                 <a href="{{URL::to('admin/customer')}}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>
