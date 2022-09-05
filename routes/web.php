@@ -35,6 +35,8 @@ Route::group([
     Route::resource('/bank','BankAccountController');
     Route::resource('/customer','CustomerController');
     Route::resource('/invoice','InvoiceTestController');
+    Route::resource('/regular-condition-list','RegularConditionListController');
+    Route::resource('/regular-receive','RegularReceiveController');
     Route::get('/invoice-list','InvoiceTestController@invoiceList');
     Route::get('/purchase-list','PurchaseInvoiceTest@purchaseList');
     Route::resource('/sales_return','SalesReturnController');

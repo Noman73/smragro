@@ -11,6 +11,7 @@ use App\Models\Customer;
 use App\Models\Product;
 use App\Models\AccountLedger;
 use App\Rules\CheckCreditLimit;
+use App\Models\ShippingAdress;
 use Validator;
 use Auth;
 use DataTables;
@@ -89,6 +90,16 @@ class InvoiceTestController extends Controller
         }else{
             $wcustomer='nullable';
         }
+        if($data['sale_by']>0 ){
+            $courier='required';
+        }else{
+            $courier='nullable';
+        }
+        if($data['sale_by']==2){
+            $shipping_adress='required';
+        }else{
+            $shipping_adress='nullable';
+        }
         $validator = Validator::make($data, [
             'product' => 'required|array',
             'product.*' => 'required|distinct|regex:/^([0-9]+)$/',
@@ -111,6 +122,12 @@ class InvoiceTestController extends Controller
             'ammount' => $sale_cond.'|max:18|regex:/^([0-9.]+)$/',
             'note' => 'nullable|max:500',
             'staff_note' => 'nullable|max:500',
+            'sale_by'=>'required|max:20|min:1',
+            'courier'=>$courier.'|max:20|min:1',
+            'shipping_name'=>$shipping_adress.'|max:20|min:1',
+            'shipping_mobile'=>$shipping_adress.'|max:20|min:1',
+            'shipping_adress'=>$shipping_adress.'|max:20|min:1',
+            'condition_amount'=>$shipping_adress.'|max:20|min:1',
             // walking customer
             'mobile' => $wcustomer.'|max:15|min:11',
             'name' => $wcustomer.'|min:1|max:200',
@@ -131,7 +148,17 @@ class InvoiceTestController extends Controller
             }else{
                 $total_payable-=($data['discount']==null ? 0: $data['discount']);
             }
-
+            if($data['sale_by']==2){
+                $shipping_adress=new ShippingAdress;
+                $shipping_adress->name=$data['shipping_name'];
+                $shipping_adress->phone=$data['shipping_mobile'];
+                $shipping_adress->adress=$data['shipping_adress'];
+                $shipping_adress->author_id= auth()->user()->id;
+                $shipping_adress->save();
+                $adress_id=$shipping_adress->id;
+            }else{
+                $adress_id=null;
+            }
             // search customer
             if($data['mobile']!=null){
                 $existance_customer=Customer::where('phone',$data['mobile'])->count();
@@ -155,17 +182,20 @@ class InvoiceTestController extends Controller
             $invoice->hand_bill = $data['hand_bill'];
             $invoice->customer_id = $customer_id;
             $invoice->shipping_id = $data['courier'];
+            $invoice->shipped_adress_id = $adress_id;
             $invoice->total_item = $data['total_item'];
             $invoice->vat = $data['vat'];
             $invoice->transport = $data['transport'];
             $invoice->total_payable = $total_payable;
             $invoice->total = $total;
             $invoice->sale_type = $data['sale_type'];
+            $invoice->sale_by = $data['sale_by'];
             $invoice->discount_type = $data['discount_type'];
             $invoice->discount = $data['discount'];
             $invoice->action_id = $data['action'];
             $invoice->note_id = $data['note'];
             $invoice->staff_note = $data['staff_note'];
+            $invoice->cond_amount = $data['condition_amount'];
             $invoice->author_id = auth()->user()->id;
             $invoice->save();
             $inv_id = $invoice->id;
@@ -380,7 +410,7 @@ class InvoiceTestController extends Controller
      */
     public function edit($id)
     {
-        $invoice=Invoice::with('sales','customer','pay','condition_amount','notes')->where('id',$id)->get()->toArray();
+        $invoice=Invoice::with('sales','customer','pay','condition_amount','notes','shipping_customer','courier')->where('id',$id)->get()->toArray();
         return view('backend.invoice.invoice-update',compact('invoice'));
     }
 
@@ -434,6 +464,17 @@ class InvoiceTestController extends Controller
         }else{
             $wcustomer='nullable';
         }
+        if($data['sale_by']>0 ){
+            $courier='required';
+        }else{
+            $courier='nullable';
+        }
+        if($data['sale_by']==2){
+            $shipping_adress='required';
+        }else{
+            $shipping_adress='nullable';
+        }
+        $shipping_adress_id=Invoice::find($id)->shipped_adress_id;
         $validator = Validator::make($data, [
             'product' => 'required|array',
             'product.*' => 'required|distinct|regex:/^([0-9]+)$/',
@@ -456,6 +497,12 @@ class InvoiceTestController extends Controller
             'ammount' => $sale_cond.'|max:18|regex:/^([0-9.]+)$/',
             'note' => 'nullable|max:500',
             'staff_note' => 'nullable|max:500',
+            // courier and shipping
+            'courier'=>$courier.'|max:20|min:1',
+            'shipping_name'=>$shipping_adress.'|max:20|min:1',
+            'shipping_mobile'=>$shipping_adress.'|max:20|min:1|unique:shipping_adresses,phone,'.$shipping_adress_id,
+            'shipping_adress'=>$shipping_adress.'|max:20|min:1',
+            'condition_amount'=>$shipping_adress.'|max:20|min:1',
             // walking customer
             'mobile' => $wcustomer.'|max:15|min:11',
             'name' => $wcustomer.'|min:1|max:200',
@@ -495,22 +542,49 @@ class InvoiceTestController extends Controller
             }else{
                 $customer_id=$data['customer'];
             }
+
+            if($data['sale_by']==2){
+                $shp_extnce=ShippingAdress::find($shipping_adress_id);
+                if($shp_extnce!=null){
+                    $shipping_adress=ShippingAdress::find($shipping_adress_id);
+                    $shipping_adress->name=$data['shipping_name'];
+                    $shipping_adress->phone=$data['shipping_mobile'];
+                    $shipping_adress->adress=$data['shipping_adress'];
+                    $shipping_adress->author_id= auth()->user()->id;
+                    $shipping_adress->save();
+                    $adress_id=$shipping_adress->id; 
+                }else{
+                    $shipping_adress=new ShippingAdress;
+                    $shipping_adress->name=$data['shipping_name'];
+                    $shipping_adress->phone=$data['shipping_mobile'];
+                    $shipping_adress->adress=$data['shipping_adress'];
+                    $shipping_adress->author_id= auth()->user()->id;
+                    $shipping_adress->save();
+                    $adress_id=$shipping_adress->id;
+                }
+                
+            }else{
+                $adress_id=null;
+            }
             $invoice = Invoice::find($id);
             $invoice->dates = strtotime(strval($data['date']));
             $invoice->hand_bill = $data['hand_bill'];
             $invoice->customer_id = $customer_id;
             $invoice->shipping_id = $data['courier'];
+            $invoice->shipped_adress_id = $adress_id;
             $invoice->total_item = count($data['product']);
             $invoice->vat = $data['vat'];
             $invoice->transport = $data['transport'];
             $invoice->total_payable = $total_payable;
             $invoice->total = $total;
             $invoice->sale_type = $data['sale_type'];
+            $invoice->sale_by = $data['sale_by'];
             $invoice->discount_type = $data['discount_type'];
             $invoice->discount = $data['discount'];
             $invoice->action_id = $data['action'];
             $invoice->note_id = $data['note'];
             $invoice->staff_note = $data['staff_note'];
+            $invoice->cond_amount = $data['condition_amount'];
             $invoice->author_id = auth()->user()->id;
             $invoice->save();
             $inv_id = $invoice->id;

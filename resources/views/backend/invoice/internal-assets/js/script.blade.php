@@ -305,6 +305,11 @@ $('#date,#cheque_issue_date').daterangepicker({
     let cheque_photo=document.getElementById('cheque_photo').files;
     // courier
     let courier=$('#courier').val();
+    let shipping_name=$('#shipping_name').val();
+    let shipping_mobile=$('#shipping_mobile').val();
+    let shipping_adress=$('#shipping_adress').val();
+    let condition_amount=$('#condition_amount').val();
+    let sale_by= $('input[name="sale_by[]"]:checked').val();
     formData=new FormData()
     formData.append('sale_type',sale_type);
     formData.append('discount_type',discount_type);
@@ -339,6 +344,11 @@ $('#date,#cheque_issue_date').daterangepicker({
     }
     // courier
     formData.append('courier',courier);
+    formData.append('shipping_name',shipping_name);
+    formData.append('shipping_mobile',shipping_mobile);
+    formData.append('shipping_adress',shipping_adress);
+    formData.append('condition_amount',condition_amount);
+    formData.append('sale_by',sale_by);
     axios.post('admin/invoice',formData)
     .then(response=>{
       console.log(response);
@@ -519,14 +529,30 @@ $(document).on('change keyup','#w_mobile',function(){
 })
 
 function saleByCheck(){
-    sale_by_self=$("#sale_by_self").is(":checked");
-    sale_by_courier=$("#sale_by_courier").is(":checked");
-    if(sale_by_self){
+    function clearSaleBy(){
+      $('#courier-list').val(null).trigger('change');
+      $('#shipping_name,#shipping_mobile,#shipping_adress,#condition_amount').val('');
+    }
+    checkedInput= $('input[name="sale_by[]"]:checked');
+    console.log(checkedInput.val())
+    switch (parseInt(checkedInput.val())) {
+      case 0:
       $('#courier-list').addClass('d-none')
+      $('.shipping').addClass('d-none')
       $('#ammount').attr('disabled',true);
-    }else if(sale_by_courier){
+      clearSaleBy();
+      break;
+      case 1:
       $('#courier-list').removeClass('d-none')
-      $('#ammount').attr('disabled',false);
+      $('.shipping').addClass('d-none')
+      $('#ammount').attr('disabled',true);
+      break;
+      case 2:
+      $('.shipping').removeClass('d-none')
+      $('#courier-list').removeClass('d-none')
+      break;
+      default:
+        break;
     }
 }
 

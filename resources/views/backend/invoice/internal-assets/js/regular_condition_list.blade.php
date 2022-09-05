@@ -4,8 +4,9 @@
         datatable= $('#datatable').DataTable({
         processing:true,
         serverSide:true,
+        responsive:true,
         ajax:{
-          url:"{{URL::to('admin/condition-list')}}"
+          url:"{{URL::to('admin/regular-condition-list')}}"
         },
         columns:[
           {
@@ -15,28 +16,41 @@
             searchable:false
           },
           {
+            data:'dates',
+            name:'dates',
+          },
+          {
             data:'id',
             name:'id',
           },
           {
-            data:'name',
-            name:'name',
+            data:'hand_bill',
+            name:'hand_bill',
           },
           {
-            data:'mobile',
-            name:'mobile',
+            data:'customer_name',
+            name:'customer_name',
+          },
+          
+          {
+            data:'shipping_to',
+            name:'shipping_to',
           },
           {
             data:'total_payable',
             name:'total_payable',
           },
           {
-            data:'pay',
-            name:'pay',
+            data:'cond_amount',
+            name:'cond_amount',
           },
           {
-            data:'sleep_no',
-            name:'sleep_no',
+            data:'courier',
+            name:'courier',
+          },
+          {
+            data:'user_name',
+            name:'user_name',
           },
           {
             data:'action',
@@ -46,8 +60,7 @@
     });
   })
     
-
-window.formRequest= function(){
+  window.formRequest= function(){
     let ammount=$('#ammount').val();
     let method=$('#method').val();
     let date=$('#date').val();
@@ -69,7 +82,7 @@ window.formRequest= function(){
     if(id!=''){
       // formData.append('_method','PUT');
     }
-     axios.post("{{route('condition_receive.store')}}",formData)
+     axios.post("{{route('regular-receive.store')}}",formData)
     .then(function (response){
         if(response.data.message){
             toastr.success(response.data.message)
@@ -87,11 +100,11 @@ window.formRequest= function(){
 }
 $(document).delegate("#modalBtn", "click", function(event){
     clear();
-    $('#exampleModalLabel').text('Add New Bank Account');
+    $('#exampleModalLabel').text('Add New Category');
 
 });
 $(document).delegate(".editRow", "click", function(){
-    $('#exampleModalLabel').text('Edit Bank Account');
+    $('#exampleModalLabel').text('Edit Category');
     let route=$(this).data('url');
     axios.get(route)
     .then((data)=>{
@@ -100,14 +113,30 @@ $(document).delegate(".editRow", "click", function(){
         if(key=='name'){
           $('#'+'name').val(data.data[key]);
         }
-        if(key=='open_ammount'){
-          $('#opening_balance').val(Math.abs(data.data[key]));
+        if(key=='category_id'){
+          $('#category').val(data.data[key]).niceSelect('update');
         }
          $('#'+key).val(data.data[key]);
          $('#modal').modal('show');
          $('#id').val(data.data.id);
       })
     })
+});
+$(document).delegate(".receive", "click", function(){
+    $('#exampleModalLabel').text('Receive');
+    let id=$(this).data('id');
+    $('#id').val(id);
+    let receive_amount=$(this).parent().parent().prev().prev().prev().text();
+    let courier=$(this).parent().parent().prev().prev().text();
+    let customer_name=$(this).parent().parent().prev().prev().prev().prev().prev().prev().text();
+    let invoice_id=$(this).parent().parent().prev().prev().prev().prev().prev().prev().prev().prev().text();
+    $('#ammount').val(receive_amount);
+    console.log(customer_name,invoice_id);
+    $('#invoice_id').text(invoice_id);
+    $('#name').text(customer_name);
+    $('#courier').text(courier);
+    $('.details').removeClass('d-none');
+    $('#modal').modal('show');
 });
 $(document).delegate(".deleteRow", "click", function(){
     let route=$(this).data('url');
@@ -133,44 +162,14 @@ $(document).delegate(".deleteRow", "click", function(){
       }
     })
 });
+
+
 function clear(){
   $("input").removeClass('is-invalid').val('');
   $(".invalid-feedback").text('');
-  $('form select').val('').niceSelect('update');
 }
-$("#bank").select2({
-    theme:'bootstrap4',
-    placeholder:'Payment Method',
-    allowClear:true,
-    ajax:{
-      url:"{{URL::to('/admin/get-payment-method')}}",
-      type:'post',
-      dataType:'json',
-      delay:20,
-      data:function(params){
-        return {
-          searchTerm:params.term,
-          _token:"{{csrf_token()}}",
-          }
-      },
-      processResults:function(response){
-        return {
-          results:response,
-        }
-      },
-      cache:true,
-    }
-  });
 
-  $('#date,#issue_date').daterangepicker({
-        showDropdowns: true,
-        singleDatePicker: true,
-        // parentEl: ".bd-example-modal-lg .modal-body",
-        locale: {
-            format: 'DD-MM-YYYY',
-        }
-});  
-  function paymentMethod(){
+function paymentMethod(){
     let method_type=$('#method').val()
     console.log(method_type)
     $('#cheque_no').val('');
@@ -184,39 +183,16 @@ $("#bank").select2({
   }
 
   $(document).ready(function(){
-  paymentMethod();
-})
- 
- function setInvoiceId(id)
- {
-    $('#id').val(id);
- }
+    paymentMethod();
+  })
 
- function sleepRequest(){
-    let sleep_no=$('#sleep_no').val();
-    let id=$('#id').val();
-    let formData= new FormData();
-    formData.append('sleep_no',sleep_no);
-    formData.append('invoice_id',id);
-    $('#exampleModalLabel').text('Add New Sleep');
-    if(id!=''){
-      // formData.append('_method','PUT');
-    }
-        //axios post request
-         axios.post("{{route('sleep.store')}}",formData)
-        .then(function (response){
-            if(response.data.message){
-                toastr.success(response.data.message)
-                datatable.ajax.reload();
-                remove();
-                $('#modal').modal('hide');
-            }else if(response.data.error){
-              var keys=Object.keys(response.data.error);
-              keys.forEach(function(d){
-                $('#'+d).addClass('is-invalid');
-                $('#'+d+'_msg').text(response.data.error[d][0]);
-              })
-            }
-        })
- }
+  $('#date,#issue_date').daterangepicker({
+        showDropdowns: true,
+        singleDatePicker: true,
+        // parentEl: ".bd-example-modal-lg .modal-body",
+        locale: {
+            format: 'DD-MM-YYYY',
+        }
+}); 
+
 </script>

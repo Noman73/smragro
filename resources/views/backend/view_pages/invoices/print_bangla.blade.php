@@ -18,7 +18,7 @@
 
     <!--Favicon-->
     <link rel="icon" href="https://2aitautomation.com/meherpur/public/img/favicon.png" type="image/x-icon" />
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- Bootstrap 3.3.7 -->
     <link rel="stylesheet" href="https://2aitautomation.com/meherpur/public/themes/backend/bower_components/bootstrap/dist/css/bootstrap.min.css">
     <style>
@@ -89,7 +89,7 @@
         </div>
       
       <div class="row">
-          <div class="col-xs-6" style="width: 100%;float:left">
+          <div class="col-xs-6" style="width: 50%;float:left">
               <br>
               <table class="table table-bordered">
                 @if(isset($invoice->customer->name))
@@ -99,6 +99,20 @@
                 @endif
               </table>
           </div>
+          @if($invoice->sale_by==2)
+          <div class="col-xs-6" style="width:50%;text-align:right;float:right;border :1 px solid black;">
+            <br>
+            <table class="table table-bordered">
+              @if(isset($invoice->shipping_customer->name))
+                  <strong>Shipping to :</strong><br/>
+                  ক্রেতা : <b>{{($invoice->shipping_customer->name)}}</b> ,  
+                  মোবাইল : <b>{{$invoice->shipping_customer->phone}}</b> <br/>
+                  ঠিকানা : <b>{{$invoice->shipping_customer->adress}}</b><br/>
+                  কুরিয়ার : <b>{{$invoice->courier->name}}</b>
+              @endif
+            </table>
+          </div>
+          @endif
       </div>
   
   
@@ -151,11 +165,16 @@
                    @endif
               </h4>
               @if($invoice->sale_type==2)
-                <p>মোট কন্ডিশন টাকা : {{floatval($invoice->total_payable)-floatval( (isset($invoice->condition_amount->debit)? $invoice->condition_amount->debit : 0.00) )}}</p>
+                <p>কন্ডিশন টাকা : {{floatval($invoice->total_payable)-floatval( (isset($invoice->condition_amount->debit)? $invoice->condition_amount->debit : 0.00) )}}</p>
               @endif
+              @if($invoice->sale_by==2)
+                <p class='h4 font-weight-bold'>কন্ডিশন টাকা: {{$invoice->cond_amount}}</p> 
+              @endif
+                <p class="font-weight-bold">নোট : {{($invoice->notes !=null ?$invoice->notes->note : '' )}}</p> 
           </div>
           <div class="col-md-6" style="width:50%;float: right;">
               <table class="table table-bordered">
+              
                 <tr>
                     <th>মোট ইনভয়েস</th>
                     <td>৳. {{$invoice->total}}</td>
@@ -205,6 +224,12 @@
                     <td>৳. {{floatval($invoice->total_payable)-floatval($invoice->pay->sum('debit'))}}</td>
                     @endif
                   </tr>
+                  @if($invoice->sale_by==2)
+                    <tr>
+                        <th>কন্ডিশন </th>
+                        <td>৳. {{$invoice->cond_amount}}</td>
+                    </tr>
+                  @endif
               </table>
           </div>
       </div>
@@ -213,7 +238,7 @@
         <b>সর্বমোট কথায় (ইনভয়েসে বাকি):</b> {{$numto->bnWord($invoice->total_payable)}}
          টাকা <br>
                           
-              <b>মন্তব্য :<b> {{$invoice->note}} <br>
+              <b>মন্তব্য :<b> {{$invoice->staff_note}} <br>
                 প্রস্তুতকারক : <b>{{$invoice->user->name}}</b>,প্রিন্ট করেছেন <b>{{auth()->user()->name}}</b>, Print Time : {{date('d-m-Y h:i:s')}}
           </div>
       </div>

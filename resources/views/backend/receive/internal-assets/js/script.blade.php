@@ -45,6 +45,7 @@
 });  
 
 window.formRequest= function(){
+  
     $('.submit').attr('disabled',true);
     $('input,select').removeClass('is-invalid');
     v_id=$("input[name='v_id[]']").map(function(){
@@ -132,6 +133,24 @@ window.formRequest= function(){
         })
     }
 }
+
+function formRequestTry(){
+  let date=$('#date').val();
+  let amount=$('#total').text();
+  Swal.fire({
+      title: 'Are you sure?',
+      html: "<p>Total Amount: <b class='text-danger'>"+amount+"</b> Date: <b class='text-danger'>"+date+"</b></p><p>You Want Save this ?</p>",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes Save It!'
+    }).then((result) => {
+      if (result.value==true) {
+        formRequest();
+      }
+    })
+}
 $(document).delegate("#modalBtn", "click", function(event){
     clear();
     $('#exampleModalLabel').text('Add New Receive');
@@ -205,6 +224,11 @@ function initSelect2(){
             }
         },
         processResults:function(response){
+         res=response.map(function(currentValue, index, arr){
+          if (currentValue.text==='Customer'){
+            response[index]['disabled']=true;
+          }
+        });
           return {
             results:response,
           }

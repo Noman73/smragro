@@ -40,4 +40,11 @@ class Invoice extends Model
     {
         return $this->belongsTo(MultiNote::class,'note_id','id');
     }
+    public function shipping_customer(){
+        return $this->belongsTo(ShippingAdress::class,'shipped_adress_id','id');
+    }
+    public function courier()
+    {
+        return $this->belongsTo(ShippingCompany::class,'shipping_id','id');
+    }
 }

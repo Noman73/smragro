@@ -4,14 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\AccountLedger;
-use App\Models\Vinvoice;
-use App\Models\Voucer;
-use Validator;
-use App\Rules\FundTransferAmmountRule;
-use App\Rules\FundTransferToMethodRule;
-use App\Rules\FundTransferToBankRule;
-class FundTransferController extends Controller
+
+class RegularReceiveController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -24,7 +18,7 @@ class FundTransferController extends Controller
     }
     public function index()
     {
-        return view('backend.fund_transfer.fund_transfer');
+        //
     }
 
     /**
@@ -45,61 +39,49 @@ class FundTransferController extends Controller
      */
     public function store(Request $request)
     {
-        // return $request->all();
         $validator=Validator::make($request->all(),[
-            'ammount'=>["required","max:200",new FundTransferAmmountRule($request->from_method,$request->from_bank)],
+            'ammount'=>"required|max:200",
             'date'=>"required|max:200",
-            'from_method'=>"required|max:1",
-            'to_method'=>["nullable","max:1",new FundTransferToMethodRule($request->from_method,$request->from_bank,$request->to_bank)],
-            'from_bank'=>"nullable|max:20",
-            'to_bank'=>["nullable","max:20",new FundTransferToBankRule($request->from_bank)],
+            'method'=>"required|max:1",
         ]);
-
+        
         if($validator->passes()){
-            $customer_ledger=AccountLedger::where('name','Customer')->first();
+            $subledger=AccountLedger::where('name','Condition Sale')->first();
             $v_invoice=new Vinvoice;
             $v_invoice->date=strtotime($request->date);
             $v_invoice->total=$request->ammount;
-            // action type 4 for fund transfer
-            $v_invoice->action_type=4;
+            // action type 2 for supplier payment
+            $v_invoice->action_type=3;
             $v_invoice->author_id = auth()->user()->id;
             $v_invoice->save();
             if($v_invoice){
-                if($request->to_method==0){
-                     $to_ledger=AccountLedger::where('name','Cash')->first();
-                }else{
-                    $to_ledger=AccountLedger::where('name','Bank')->first();
-                }
-                if($request->from_method==0){
-                    $from_ledger=AccountLedger::where('name','Cash')->first();
-                }else{
-                    $from_ledger=AccountLedger::where('name','Bank')->first();
-                }
+                //condition credit
                 $voucer=new Voucer;
                 $voucer->date= strtotime($request->date);
-                $voucer->transaction_name="Fund Transfer";
-                $voucer->v_inv_id= $v_invoice->id;
-                $voucer->debit=$request->ammount;
-                $voucer->ledger_id=$to_ledger->id;
-                if($request->to_bank!='null'){
-                    $voucer->subledger_id=$request->to_bank;
-                }
-                $voucer->author_id = auth()->user()->id;
-                $voucer->save();
-                // from_method credit
-                $voucer=new Voucer;
-                $voucer->date= strtotime($request->date);
-                $voucer->transaction_name="Fund Transfer";
+                $voucer->transaction_name="Condition Sale Receipt";
                 $voucer->v_inv_id= $v_invoice->id;
                 $voucer->credit=$request->ammount;
-                $voucer->ledger_id=$from_ledger->id;
-                if($request->from_bank!='null'){
-                    $voucer->subledger_id=$request->from_bank;
+                $voucer->ledger_id=$subledger->id;
+                $voucer->save();
+                // Cash/Bank dabit
+                if($request->method==0){
+                    $ledger=AccountLedger::where('name','Cash')->first();
+                }else{
+                    $ledger=AccountLedger::where('name','Bank')->first();
                 }
-                $voucer->author_id = auth()->user()->id;
+                $voucer=new Voucer;
+                $voucer->date= strtotime($request->date);
+                $voucer->transaction_name="Condition Sale Receipt";
+                $voucer->v_inv_id= $v_invoice->id;
+                $voucer->invoice_id= $request->invoice_id;
+                $voucer->debit=$request->ammount;
+                $voucer->ledger_id=$ledger->id;
+                if($request->method!=0){
+                  $voucer->subledger_id=$request->bank;
+                }
                 $voucer->save();
                 if($voucer){
-                    return response()->json(['message'=>'Fund Transfer Added']);
+                    return response()->json(['message'=>'Condition Sale Receive Added']);
                 }
             }
             

@@ -13,7 +13,7 @@ class InvoiceViewController extends Controller
     }
     public function index($id) 
     {
-        $invoice=Invoice::with('sales','customer','pay','condition_amount','user')->where('id',$id)->first();
+        $invoice=Invoice::with('sales','customer','pay','condition_amount','user','shipping_customer','courier','notes')->where('id',$id)->first();
         // dd($invoice);
         // dd($invoice);
         return view('backend.view_pages.invoices.invoices',compact('invoice'));
@@ -21,24 +21,24 @@ class InvoiceViewController extends Controller
 
     public function print($id)
     {
-        $invoice=Invoice::with('sales','customer','pay','condition_amount','user')->where('id',$id)->first();
+        $invoice=Invoice::with('sales','customer','pay','condition_amount','user','shipping_customer','courier','notes')->where('id',$id)->first();
 
         return view('backend.view_pages.invoices.print',compact('invoice'));
     }
     public function printInBangla($id)
     {
-        $invoice=Invoice::with('sales','customer','pay','condition_amount','user')->where('id',$id)->first();
+        $invoice=Invoice::with('sales','customer','pay','condition_amount','user','shipping_customer','courier','notes')->where('id',$id)->first();
 
         return view('backend.view_pages.invoices.print_bangla',compact('invoice'));
     }
     public function chalan($id)
     {
-        $invoice=Invoice::with('sales','customer','pay','condition_amount','user')->where('id',$id)->first();
+        $invoice=Invoice::with('sales','customer','pay','condition_amount','user','shipping_customer','courier','notes')->where('id',$id)->first();
         return view('backend.view_pages.invoices.chalan',compact('invoice'));
     }
     public function totalChalan($id)
     {
-        $invoice=Invoice::with('sales','customer','pay','condition_amount','user')->where('id',$id)->first();
+        $invoice=Invoice::with('sales','customer','pay','condition_amount','user','shipping_customer','courier','notes')->where('id',$id)->first();
         return view('backend.view_pages.invoices.total_chalan',compact('invoice'));
     }
 }

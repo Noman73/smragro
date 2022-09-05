@@ -16,6 +16,10 @@ class CustomerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function index()
     {
         if(request()->ajax()){
@@ -183,7 +187,11 @@ class CustomerController extends Controller
         //
     }
     public function getCustomer(Request $request){
-        $customer= Customer::where('name','like','%'.$request->searchTerm.'%')->orWhere('code','like','%'.$request->searchTerm.'%')->where('type',1)->take(15)->get();
+        $searchTerm=$request->searchTerm;
+        $customer= Customer::where('type',1)->where(function($query) use ($searchTerm){
+            $query->where('name','like','%'.$searchTerm.'%')
+                     ->orWhere('code','like','%'.$searchTerm.'%');
+        })->take(15)->get();
         foreach ($customer as $value){
              $set_data[]=['id'=>$value->id,'text'=>($value->code!=null? $value->code.'-': '').$value->name.'('.$value->phone.')'];
          }

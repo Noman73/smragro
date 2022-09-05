@@ -16,7 +16,7 @@
 
     <!--Favicon-->
     <link rel="icon" href="https://2aitautomation.com/meherpur/public/img/favicon.png" type="image/x-icon" />
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- Bootstrap 3.3.7 -->
     <link rel="stylesheet" href="https://2aitautomation.com/meherpur/public/themes/backend/bower_components/bootstrap/dist/css/bootstrap.min.css">
     <style>
@@ -51,12 +51,7 @@
     <div id="print" class="print" >
         <div class="row invoice_header">
           <div class="col-xs-5" style="width: 25%; float:left;">
-              <img src="{{asset('storage/logo/'.$info->logo)}}" width="100%" alt="Logo">
-              {{$info->adress}}<br>
-              {{$info->phone}}<br>
-              {{$info->email}}<br>
-              {{$info->web}}<br>
-              Bin No: {{$info->bin_no}}<br>
+              @include('layouts.adress')
           </div>
           <div class="col-xs-7" style="width: 75%; text-align:right">
               <div style=" width:100%; text-align:right;">
@@ -87,7 +82,7 @@
         </div>
       
       <div class="row">
-          <div class="col-xs-6" style="width: 100%;float:left">
+          <div class="col-xs-6" style="width: 50%;float:left">
               <br>
               <table class="table table-bordered">
                 @if(isset($invoice->customer->name))
@@ -97,6 +92,20 @@
                 @endif
               </table>
           </div>
+          @if($invoice->sale_by==2)
+          <div class="col-xs-6" style="width:50%;text-align:right;float:right;border :1 px solid black;">
+            <br>
+            <table class="table table-bordered">
+              @if(isset($invoice->shipping_customer->name))
+                  <strong>Shipping to :</strong><br/>
+                  Customer : <b>{{($invoice->shipping_customer->name)}}</b> ,  
+                  Mobile No : <b>{{$invoice->shipping_customer->phone}}</b> <br>
+                  Adress : <b>{{$invoice->shipping_customer->adress}}</b>
+                  Courier : <b>{{$invoice->shipping_customer->adress}}</b>
+              @endif
+            </table>
+          </div>
+          @endif
       </div>
   
   
@@ -149,11 +158,16 @@
                    @endif
               </h4>
               @if($invoice->sale_type==2)
-                <p>The Condition Amount is : {{floatval($invoice->total_payable)-floatval( (isset($invoice->condition_amount->debit)? $invoice->condition_amount->debit : 0.00) )}}</p>
+                <p class='h4 font-weight-bold'>Condition Taka : {{floatval($invoice->total_payable)-floatval( (isset($invoice->condition_amount->debit)? $invoice->condition_amount->debit : 0.00) )}}</p>
               @endif
+              @if($invoice->sale_by==2)
+                <p class='h4 font-weight-bold'>Condition Taka: {{$invoice->cond_amount}}</p> 
+              @endif
+                <p class="font-weight-bold">{{($invoice->notes !=null ?'Note : '.$invoice->notes->note : '' )}}</p> 
           </div>
           <div class="col-md-6" style="width:50%;float: right;">
               <table class="table table-bordered">
+                
                 <tr>
                     <th>Invoice Total</th>
                     <td>৳. {{$invoice->total}}</td>
@@ -203,6 +217,12 @@
                     <td>৳. {{floatval($invoice->total_payable)-floatval($invoice->pay->sum('debit'))}}</td>
                     @endif
                   </tr>
+                  @if($invoice->sale_by==2)
+                    <tr>
+                        <th>Condition Amount</th>
+                        <td>৳. {{$invoice->cond_amount}}</td>
+                    </tr>
+                  @endif
               </table>
           </div>
       </div>
@@ -211,7 +231,7 @@
         <b>Total in Word (Invoice Due):</b> {{Terbilang::make($invoice->total_payable)}}
         Taka  <br>
                           
-              <b>Comment :<b> {{$invoice->note}} <br>
+              <b>Comment :<b> {{$invoice->staff_note}} <br>
               Created By : <b>{{$invoice->user->name}}</b>,Printed By <b>{{auth()->user()->name}}</b>, Print Time : {{date('d-m-Y h:i:s')}}
           </div>
       </div>

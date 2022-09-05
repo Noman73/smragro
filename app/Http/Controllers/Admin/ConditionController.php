@@ -66,7 +66,7 @@ class ConditionController extends Controller
             'ammount'=>"required|max:200",
             'date'=>"required|max:200",
             'method'=>"required|max:1",
-        ]);
+          ]);
         
         if($validator->passes()){
             $subledger=AccountLedger::where('name','Condition Sale')->first();

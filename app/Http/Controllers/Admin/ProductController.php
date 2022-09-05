@@ -237,7 +237,14 @@ class ProductController extends Controller
     }
     public function getProductWithoutCombo(Request $request)
     {
-        $products= Product::where('name','like','%'.$request->searchTerm.'%')->orWhere('product_code','like','%'.$request->searchTerm.'%')->where('purchase',1)->where('combo',0)->take(15)->get();
+        $searchTerm=$request->searchTerm;
+        $products= Product::where('purchase',1)
+        ->where(function($query) use ($searchTerm){
+            $query->where('name','like','%'.$searchTerm.'%')
+                     ->orWhere('product_code','like','%'.$searchTerm.'%');
+        })
+        ->take(15)->get();
+        // $products= Product::where('name','like','%'.$request->searchTerm.'%')->orWhere('product_code','like','%'.$request->searchTerm.'%')->where('purchase',1)->where('combo',0)->take(15)->get();
         foreach ($products as $value){
              $set_data[]=['id'=>$value->id,'text'=>$value->product_code.'-'.$value->name];
         }

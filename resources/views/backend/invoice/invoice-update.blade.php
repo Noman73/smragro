@@ -147,10 +147,40 @@
                            <label for="cash">By Self</label>
                            <input type="radio" onchange="saleByCheck()" name="sale_by[]" id="sale_by_courier" value="1">
                            <label for="walking">By Courier</label>
+                           <input type="radio" onchange="saleByCheck()" name="sale_by[]" id="sale_by_shipping" value="2">
+                           <label for="walking">Shipping To</label>
                       </div>
                       <div class="d-none" id="courier-list">
                         <select class="form-control form-control-sm" name="" id="courier">
                         </select>
+                      </div>
+                      <div class="d-none shipping">
+                        <div class="row mt-2">
+                          <div class="col-3">
+                            <div class="form-group">
+                              <label for="">name:</label>
+                              <input type="text" class="form-control" id="shipping_name" placeholder="Enter Name">
+                            </div>
+                          </div>
+                          <div class="col-3">
+                            <div class="form-group">
+                              <label for="">mobile:</label>
+                              <input type="number" class="form-control" id="shipping_mobile" placeholder="Enter Mobile">
+                            </div>
+                          </div>
+                          <div class="col-3">
+                            <div class="form-group">
+                              <label for="">adress:</label>
+                              <input type="text" class="form-control" id="shipping_adress" placeholder="Enter Adress">
+                            </div>
+                          </div>
+                          <div class="col-3">
+                            <div class="form-group">
+                              <label for="">amount:</label>
+                              <input type="text" class="form-control" id="condition_amount" placeholder="Enter Amount">
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                     {{-- end note --}}
