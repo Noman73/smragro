@@ -153,6 +153,23 @@ window.formRequest= function(){
         })
     }
 }
+function formRequestTry(){
+  let date=$('#date').val();
+  let amount=$('#total').text();
+  Swal.fire({
+      title: 'Are you sure?',
+      html: "<p>Total Amount: <b class='text-danger'>"+amount+"</b> Date: <b class='text-danger'>"+date+"</b></p><p>You Want Save this ?</p>",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes Save It!'
+    }).then((result) => {
+      if (result.value==true) {
+        formRequest();
+      }
+    })
+}
 $(document).delegate("#modalBtn", "click", function(event){
     clear();
     $('#exampleModalLabel').text('Add New Payment');
@@ -338,6 +355,7 @@ function paymentMethod(){
           format: 'DD-MM-YYYY',
       }
     });
+    calculation();
   }
   $(document).on('focus keyup focusout',"input[name='ammount[]']",function(){
     calculation();

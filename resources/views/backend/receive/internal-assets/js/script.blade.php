@@ -45,7 +45,6 @@
 });  
 
 window.formRequest= function(){
-  
     $('.submit').attr('disabled',true);
     $('input,select').removeClass('is-invalid');
     v_id=$("input[name='v_id[]']").map(function(){
@@ -104,6 +103,7 @@ window.formRequest= function(){
                 $('#modal').modal('hide');
                 calculation();
                 $('.submit').attr('disabled',false);
+                window.location="{{URL::to('admin/view-pages/receive-view/')}}/"+response.data.id
             }else if(response.data.error){
               var keys=Object.keys(response.data.error);
               keys.forEach(function(d){
@@ -121,7 +121,7 @@ window.formRequest= function(){
               datatable.ajax.reload();
               remove();
               $('.submit').attr('disabled',false);
-
+              window.location="{{URL::to('admin/view-pages/receive-view/')}}/"+response.data.id
           }else if(response.data.error){
               var keys=Object.keys(response.data.error);
               keys.forEach(function(d){
@@ -364,6 +364,7 @@ function changeMethod(){
           format: 'DD-MM-YYYY',
       }
     });
+    calculation();
   }
 
   $(document).on('focus keyup focusout',"input[name='ammount[]']",function(){

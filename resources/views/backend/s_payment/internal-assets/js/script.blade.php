@@ -108,6 +108,25 @@ window.formRequest= function(){
         })
     }
 }
+
+function formRequestTry(){
+  let date=$('#date').val();
+  let amount=($('#ammount').val() =='' ? '0.00' : $('#ammount').val());
+  let supplier=($('#supplier').text() =='' ? "Not Selected" : $('#supplier').text() );
+  Swal.fire({
+      title: 'Are you sure?',
+      html: "<p >Supplier : <b class='text-danger'>"+supplier+"</b></p><p>Total Amount: <b class='text-danger'>"+amount+"</b> Date: <b class='text-danger'>"+date+"</b></p><p>You Want Save this ?</p>",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes Save It!'
+    }).then((result) => {
+      if (result.value==true) {
+        formRequest();
+      }
+    })
+}
 $(document).delegate("#modalBtn", "click", function(event){
     clear();
     $('#exampleModalLabel').text('Add New Receive');

@@ -139,7 +139,7 @@ class ReceiveController extends Controller
                         $voucer->author_id = auth()->user()->id;
                         $voucer->save();
                 }
-                 return response()->json(['message'=>'Receive Successfully Added']); 
+                 return response()->json(['message'=>'Receive Successfully Added','id'=>$v_invoice->id]); 
          }
          return response()->json(['error'=>$validator->getMessageBag()]);
     }
@@ -283,7 +283,7 @@ class ReceiveController extends Controller
                        $voucer->author_id = auth()->user()->id;
                        $voucer->save();
                }
-                return response()->json(['message'=>'Receive Successfully Added']); 
+                return response()->json(['message'=>'Receive Successfully Updated','id'=>$v_invoice->id]); 
         }
         return response()->json(['error'=>$validator->getMessageBag()]);
     }

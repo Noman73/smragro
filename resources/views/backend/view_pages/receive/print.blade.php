@@ -15,7 +15,7 @@
 
     <!--Favicon-->
     <link rel="icon" href="https://2aitautomation.com/meherpur/public/img/favicon.png" type="image/x-icon" />
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- Bootstrap 3.3.7 -->
     <link rel="stylesheet" href="https://2aitautomation.com/meherpur/public/themes/backend/bower_components/bootstrap/dist/css/bootstrap.min.css">
     <style>
@@ -50,10 +50,10 @@
     
 </div><div id="print" class="print mt-5" >
     <div class="row invoice_header">
-      <div class="col-xs-5" style="width: 20%; float:left;">
-          <img src="{{asset('storage/logo/'.$info->logo)}}" width="100%" alt="Logo">
+      <div class="col-xs-5" style="width: 50%; float:left;">
+          @include('layouts.adress')
       </div>
-      <div class="col-xs-7" style="width: 80%; text-align:right">
+      <div class="col-xs-7" style="width: 50%; text-align:right">
           <div style="padding:5px; width:100%; text-align:right;">
               <span style="font-size: 16px;">
                   <b>
@@ -65,7 +65,7 @@
               // dd($invoice);
               @endphp
               Receipt No :<b>R-{{date('dm',$vinvoice->date).substr(date('Y',$vinvoice->date),-2).$vinvoice->id}}</b> <br>
-              Transaction Type :<b>Credit Voucer</b> <br>
+              TRX Type :<b>Credit Voucer</b> <br>
               Date : {{date('d-m-Y',intval($vinvoice->date))}} 
           </div>
       </div>
@@ -76,7 +76,7 @@
           <table class="table table-bordered">
             @foreach($invoice as $method)
             @if($method->debit!=0)
-              Method : <b>{{$method->name}}</b> 
+                <u><p class="h5">Receive by : <b>{{$method->name}}</b> </p></u> 
               @if($method->sub_name!='')  
               Name : <b>{{$method->sub_name}}</b> <br>
               @endif
@@ -93,9 +93,8 @@
                   <thead>
                       <tr>
                           <th width="40%" class="text-left">Name</th>
-                          <th width="20%" class="text-left">Sub Name</th>
                           <th width="20%" class="text-center">Comment</th>
-                          <th width="20%" class="text-right">Ammount</th>
+                          <th width="20%" class="text-right">Amount</th>
                       </tr>
                   </thead>
                   <tbody>
@@ -109,8 +108,7 @@
                       $total+=floatval($data->credit)
                       @endphp
                           <tr>
-                              <td>{{$data->name}}</td>
-                              <td class="text-left">{{$data->sub_name}}</td>
+                              <td>{{$data->name.($data->sub_name!=null ? ' - '.$data->sub_name : '' )}}</td>
                               <td class="text-left">{{($data->comment)}}</td>
                               <td class="text-right">৳{{$data->credit}}</td>
                           </tr>
@@ -119,9 +117,9 @@
                   </tbody>
                   <tfoot>
                     <tr>
-                      <th style='text-align:right;' colspan='2'>Total</th>
+                      <th style='text-align:right;visibility:hidden;'></th>
+                      <th style='text-align:right;'>Total</th>
                       <th style="text-align:right;">{{number_format($total,2)}}</th>
-                      <th></th>
                     </tr>
                   </tfoot>
               </table>
@@ -134,7 +132,7 @@
           <b>Total in Word (Total):</b> {{Terbilang::make($total)}}
           Taka  <br>
           <b>Note :<b> {{$vinvoice->note}} <br>
-          Created By : <b>{{auth()->user()->name}}</b>,Printed By <b>{{auth()->user()->name}}</b>, Print Time : {{date('d-m-Y h:i:s')}}
+          Created By : <b>{{auth()->user()->name}}</b>,Printed By : <b>{{auth()->user()->name}}</b>, Print Time : {{date('d-m-Y h:i:s')}}
       </div>
   </div>
   <div class="footer">

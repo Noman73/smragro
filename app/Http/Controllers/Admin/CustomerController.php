@@ -7,15 +7,21 @@ use Illuminate\Http\Request;
 use Validator;
 use App\Models\Customer;
 use App\Models\AccountLedger;
+use App\Models\Voucer;
 use DataTables;
 use DB;
+use App\Http\Traits\BalanceTrait;
 class CustomerController extends Controller
 {
+
+
+    use BalanceTrait;
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+
     public function __construct()
     {
         $this->middleware('auth');
@@ -28,7 +34,8 @@ class CustomerController extends Controller
               ->addIndexColumn()
               ->addColumn('action',function($get){
               $button  ='<div class="d-flex justify-content-center">';
-                $button.='<a data-url="'.route('customer.edit',$get->id).'"  href="javascript:void(0)" class="btn btn-primary shadow btn-xs sharp me-1 editRow"><i class="fas fa-pencil-alt"></i></a>
+              $button.='<a data-url="'.route('customer.edit',$get->id).'"  href="javascript:void(0)" class="btn btn-primary shadow btn-xs sharp me-1 editRow"><i class="fas fa-pencil-alt"></i></a>
+              <a href="'.route('customer.show',$get->id).'" target="_blank" class="btn btn-warning shadow btn-xs sharp me-1 ml-1"><i class="fas fa-print"></i></a>
               <a data-url="'.route('customer.destroy',$get->id).'" href="javascript:void(0)" class="btn btn-danger shadow btn-xs sharp ml-1 deleteRow"><i class="fa fa-trash"></i></a>';
               $button.='</div>';
             return $button;
@@ -109,7 +116,12 @@ class CustomerController extends Controller
      */
     public function show($id)
     {
-        //
+        $customer_ledger=AccountLedger::where('name','Customer')->first()->id;
+        $customer=Customer::with('author')->find($id);
+        $current_balance=$this->customerBalance($id);
+        $customer->current_balance=$current_balance;
+        $customer->last_trx=Voucer::where('ledger_id',$customer_ledger)->where('subledger_id',$id)->orderBy('id','desc')->first()->date;
+        return view('backend.customer.print',compact('customer'));
     }
 
     /**

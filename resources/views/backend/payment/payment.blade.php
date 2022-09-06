@@ -34,7 +34,7 @@
                   <div class="card-title">Payment History </div>
                 </div>
                 <div class="col-6">
-                  <button class="btn btn-primary float-right" data-toggle="modal" data-target="#modal" data-whatever="@mdo">Add New</button>
+                  <button class="btn btn-primary float-right" data-toggle="modal" data-target="#modal" data-whatever="@mdo" onclick="remove()">Add New</button>
                 </div>
               </div>
             </div>
@@ -146,7 +146,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary submit" onclick="formRequest()">Save</button>
+              <button type="button" class="btn btn-primary submit" onclick="formRequestTry()">Save</button>
             </div>
           </div>
         </div>

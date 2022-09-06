@@ -34,7 +34,7 @@
                   <div class="card-title">Receive History </div>
                 </div>
                 <div class="col-6">
-                  <button class="btn btn-primary float-right" data-toggle="modal" data-target="#modal" data-whatever="@mdo">Add New</button>
+                  <button class="btn btn-primary float-right" data-toggle="modal" data-target="#modal" data-whatever="@mdo" onclick="remove()">Add New</button>
                 </div>
               </div>
             </div>

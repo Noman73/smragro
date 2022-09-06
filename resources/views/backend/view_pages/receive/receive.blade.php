@@ -70,7 +70,7 @@
                   <div id="print" class="print mt-5" >
                     <div class="row invoice_header">
                       <div class="col-xs-5" style="width: 20%; float:left;">
-                          <img src="{{asset('storage/logo/'.$info->logo)}}" width="100%" alt="Logo">
+                        @include('layouts.adress')
                       </div>
                       <div class="col-xs-7" style="width: 80%; text-align:right">
                           <div style="padding:5px; width:100%; text-align:right;">
@@ -84,7 +84,7 @@
                               // dd($invoice);
                               @endphp
                               Receipt No :<b>R-{{date('dm',$vinvoice->date).substr(date('Y',$vinvoice->date),-2).$vinvoice->id}}</b> <br>
-                              Transaction Type :<b>Credit Voucer</b> <br>
+                              TRX Type :<b>Credit Voucer</b> <br>
                               Date : {{date('d-m-Y',intval($vinvoice->date))}} 
                           </div>
                       </div>
@@ -95,7 +95,7 @@
                           <table class="table table-bordered">
                             @foreach($invoice as $method)
                             @if($method->debit!=0)
-                              Method : <b>{{$method->name}}</b> 
+                              <u><p class="h5">Receive by : <b>{{$method->name}}</b> </p></u>
                               @if($method->sub_name!='')  
                               Name : <b>{{$method->sub_name}}</b> <br>
                               @endif
@@ -112,9 +112,8 @@
                                   <thead>
                                       <tr>
                                           <th width="40%" class="text-left">Name</th>
-                                          <th width="20%" class="text-left">Sub Name</th>
                                           <th width="20%" class="text-center">Comments</th>
-                                          <th width="20%" class="text-right">Ammount</th>
+                                          <th width="20%" class="text-right">Amount</th>
                                           
                                       </tr>
                                   </thead>
@@ -129,8 +128,7 @@
                                       $total+=floatval($data->credit)
                                       @endphp
                                           <tr>
-                                              <td>{{$data->name}}</td>
-                                              <td class="text-left">{{$data->sub_name}}</td>
+                                              <td>{{$data->name.($data->sub_name!=null ? ' - '.$data->sub_name : '' )}}</td>
                                               <td class="text-left">{{($data->comment)}}</td>
                                               <td class="text-right">৳{{$data->credit}}</td>
                                           </tr>
@@ -141,7 +139,6 @@
                                     <tr>
                                       <th style='text-align:right;' colspan='2'>Total</th>
                                       <th style="text-align:right;">{{number_format($total,2)}}</th>
-                                      <th></th>
                                     </tr>
                                   </tfoot>
                               </table>
@@ -154,7 +151,7 @@
                           <b>Total in Word (Total):</b> {{Terbilang::make($total)}}
                           Taka  <br>
                           <b>Note :<b> {{$vinvoice->note}} <br>
-                          Created By : <b>{{auth()->user()->name}}</b>,Printed By <b>{{auth()->user()->name}}</b>, Print Time : {{date('d-m-Y h:i:s')}}
+                          Created By : <b>{{auth()->user()->name}}</b>,Printed By : <b>{{auth()->user()->name}}</b>, Print Time : {{date('d-m-Y h:i:s')}}
                       </div>
                   </div>
                   <div class="footer">
