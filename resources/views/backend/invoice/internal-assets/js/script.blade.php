@@ -371,7 +371,23 @@ $('#date,#cheque_issue_date').daterangepicker({
         }
     })
   }
-
+  function formRequestTry(){
+    let date=$('#date').val();
+    let amount=($('#total_payable').val() =='' ? '0.00' : $('#total_payable').val());
+    Swal.fire({
+        title: 'Are you sure?',
+        html: "<p>Total Payable: <b class='text-danger'>"+amount+"</b> Date: <b class='text-danger'>"+date+"</b></p><p>You Want Save this ?</p>",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes Save It!'
+      }).then((result) => {
+        if (result.value==true) {
+          formRequest();
+        }
+      })
+  }
   $("#bank").select2({
     theme:'bootstrap4',
     placeholder:'Payment Method',

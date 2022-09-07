@@ -70,12 +70,20 @@
               <table class="table table-bordered">
                 @if(isset($customer))
                 <tr>
+                    <td>Company Name </td>
+                    <td class="text-right">{{$customer->company_name}}</td>
+                </tr>
+                <tr>
                     <td>Name </td>
                     <td class="text-right">{{$customer->name}}</td>
                 </tr>
                 <tr>
                     <td>Phone </td>
                     <td class="text-right">{{$customer->phone}}</td>
+                </tr>
+                <tr>
+                    <td>Phone 2</td>
+                    <td class="text-right">{{$customer->phone2}}</td>
                 </tr>
                 <tr>
                     <td>Email </td>
@@ -96,6 +104,10 @@
                 <tr>
                     <td>Current Balance </td>
                     <td class="text-right">{{$customer->current_balance}}</td>
+                </tr>
+                <tr>
+                    <td>Credit Limit </td>
+                    <td class="text-right">{{(isset($customer->credit_limit->amount) ? $customer->credit_limit->amount : "N/A")}}</td>
                 </tr>
                 <tr>
                     <td>Last Transaction </td>

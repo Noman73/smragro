@@ -196,7 +196,7 @@
                     
                 </div>
                 <div class="float-right mt-2">
-                    <button class="btn btn-primary submit" onclick="formRequest()">Save</button>
+                    <button class="btn btn-primary submit" onclick="formRequestTry()">Save</button>
                     <button class="btn btn-warning">Print</button>
                 </div>
                </div>

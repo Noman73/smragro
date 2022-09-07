@@ -429,6 +429,7 @@ class InvoiceTestController extends Controller
         $data['qantity'] = explode(',', $r->qantity);
         $data['price'] = explode(',', $r->price);
         $data['record_type'] = explode(',', $r->record_type);
+        $data['sale_delete'] = array_filter(explode(',', $r->sale_delete));
         $data['sale_id'] = explode(',', $r->sale_id);
         // return $data['product'];
         if (isset($r->customer) and $r->customer=='null') {
@@ -597,7 +598,7 @@ class InvoiceTestController extends Controller
                             $this->comboIteration($product->combobox,$product->comboqty,$data['date'],$inv_id);
                         }
                     }
-                    info($length);
+                    info(($data['record_type'][$i]).'-'.$i);
                     if($data['record_type'][$i]=='sales'){
                         $stmt = Sale::find($data['sale_id'][$i]);
                         $stmt->invoice_id = $inv_id;
@@ -624,8 +625,12 @@ class InvoiceTestController extends Controller
                         $stmt->save();
                     }
                     
+                    
                 }
                 if ($stmt = true) {
+                    for ($i=0; $i < count($data['sale_delete']); $i++) { 
+                        Sale::find($data['sale_delete'][$i])->delete();
+                    }
                     $voucer_delete=Voucer::where('invoice_id',$id)->delete();
                     // customized code 
                     $sales_ledger=AccountLedger::where('name','Sales')->first();

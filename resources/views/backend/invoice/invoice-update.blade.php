@@ -276,7 +276,7 @@
                 </div>
                 <div class="float-right mt-2">
                     <button class="btn btn-secondary" onclick="Clean()">Reset</button>
-                    <button class="btn btn-primary" onclick="formRequest()">Save</button>
+                    <button class="btn btn-primary" onclick="formRequestTry()">Save</button>
                 </div>
                </div>
             </div>

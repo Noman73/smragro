@@ -12,4 +12,8 @@ class Customer extends Model
     {
         return $this->belongsTo(User::class,'author_id','id');
     }
+    public function credit_limit()
+    {
+        return $this->belongsTo(CreditSetup::class,'id','customer_id');
+    }
 }

@@ -228,6 +228,7 @@ class PurchaseInvoiceTest extends Controller
         $data['price'] = explode(',', $r->price);
         $data['record_type'] = explode(',', $r->record_type);
         $data['sale_id'] = explode(',', $r->sale_id);
+        $data['purchase_delete'] = array_filter(explode(',', $r->purchase_delete));
         // return $data['product'];
         if (isset($r->supplier) and $r->supplier=='null') {
             $data['supplier'] = null;
@@ -299,10 +300,11 @@ class PurchaseInvoiceTest extends Controller
                 $length = intval($data['total_item']) - 1;
                 for ($i = 0; $i <= $length; $i++) {
                     if($data['record_type'][$i]=='sales'){
-                        $stmt = Purchase::find($id);
+                        $stmt = Purchase::find($data['sale_id'][$i]);
                         $stmt->invoice_id = $inv_id;
                         $stmt->dates = strtotime(strval($data['date']));
                         $stmt->supplier_id = $data['supplier'];
+                        info($data['product'][$i]);
                         $stmt->product_id = $data['product'][$i];
                         if ($data['action'] == 0) {
                             $stmt->deb_qantity = $data['qantity'][$i];
@@ -333,6 +335,9 @@ class PurchaseInvoiceTest extends Controller
                     }
                 }
                 if ($stmt = true) {
+                    for ($i=0; $i < count($data['purchase_delete']); $i++) { 
+                        Purchase::find($data['purchase_delete'][$i])->delete();
+                    }
                     $voucer_delete=Voucer::where('pinvoice_id',$id)->delete();
                     $purchase_ledger=AccountLedger::where('name','Purchase')->first();
                     $supplier_ledger=AccountLedger::where('name','Supplier')->first();

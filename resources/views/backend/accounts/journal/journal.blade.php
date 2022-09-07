@@ -103,7 +103,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary submit" onclick="formRequest(event)" id="submitBtn">Save</button>
+              <button type="button" class="btn btn-primary submit" onclick="formRequestTry(event)" id="submitBtn">Save</button>
             </div>
           </div>
         </div>

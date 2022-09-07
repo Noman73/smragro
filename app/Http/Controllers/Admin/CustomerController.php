@@ -117,7 +117,7 @@ class CustomerController extends Controller
     public function show($id)
     {
         $customer_ledger=AccountLedger::where('name','Customer')->first()->id;
-        $customer=Customer::with('author')->find($id);
+        $customer=Customer::with('credit_limit','author')->find($id);
         $current_balance=$this->customerBalance($id);
         $customer->current_balance=$current_balance;
         $customer->last_trx=Voucer::where('ledger_id',$customer_ledger)->where('subledger_id',$id)->orderBy('id','desc')->first()->date;

@@ -73,6 +73,7 @@
         }
       })
       let total_item=0;
+      let deleteArr=[];
       function addNew(){
         form=`<tr><td><input type="hidden" name="record_type[]" value="new" ><select class="form-control product" name="product[]"></select></td>`;
         form+=`<td><input type="number" disabled class="form-control bg-secondary text-light" name="stock[]" placeholder='0.00'/></td>`;
@@ -91,6 +92,10 @@
         supplierVisibility()
       })
       $(document).on('click','.removeItem',function(){
+        let sale_id=$(this).parent().prev().prev().prev().prev().prev().children("input[name='sale_id[]']").val();
+        console.log(sale_id)
+        deleteArr.push(sale_id);
+        console.log(deleteArr)
         $(this).parent().parent().remove();
         total_item=total_item-1;
        $('#total-item').val(total_item)
@@ -231,7 +236,6 @@
           $('#ammount').attr('disabled',false);
         }
       }
-    
       function formRequest(){
         $('.submit').attr('disabled',true);
         $('input,select').removeClass('is-invalid');
@@ -300,6 +304,7 @@
         formData.append('note',note);
         formData.append('staff_note',staff_note);
         formData.append('date',date);
+        formData.append('purchase_delete',deleteArr);
         formData.append('_method','PUT');
         // payment to voucer
         // formData.append('payment_method',payment_method);
@@ -325,7 +330,23 @@
             }
         })
       }
-    
+      function formRequestTry(){
+        let date=$('#date').val();
+        let amount=($('#total_payable').val() =='' ? '0.00' : $('#total_payable').val());
+        Swal.fire({
+            title: 'Are you sure?',
+            html: "<p>Total Payable: <b class='text-danger'>"+amount+"</b> Date: <b class='text-danger'>"+date+"</b></p><p>You Want Save this ?</p>",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes Save It!'
+          }).then((result) => {
+            if (result.value==true) {
+              formRequest();
+            }
+          })
+      }
       $("#payment_method").select2({
         theme:'bootstrap4',
         placeholder:'Payment Method',
