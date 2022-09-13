@@ -25,16 +25,6 @@
     <section class="content">
       <div class="container-fluid">
         <div class="card ">
-            {{-- <div class="card-header">
-              <div class="row">
-                <div class="col-6">
-                  <div class="card-title">Supplier </div>
-                </div>
-                <div class="col-6">
-                  <button class="btn btn-primary float-right" data-toggle="modal" data-target="#modal" data-whatever="@mdo">Add New</button>
-                </div>
-              </div>
-            </div> --}}
             <div class="card-body">
                <div class="container">
                    <div class="row">
@@ -44,20 +34,13 @@
                           <option value="1">Regular</option>
                           <option value="2">Condition</option>
                         </select>
-                           {{-- <input type="radio" onchange="customerVisibility()"  name="sale_type[]" id="cash" value="0" checked>
-                           <label for="walking">Cash</label>
-                           <input type="radio" onchange="customerVisibility()" name="sale_type[]" id="regular" value="1">
-                           <label for="regular">Regular</label> --}}
-                           {{-- <input type="radio" onchange="customerVisibility()" name="sale_type[]" id="condition" value="2">
-                           <label for="condition">Condition</label>
-                           <div class="invalid-feedback" id='purchase_type_msg'></div> --}}
                        </div>
                        <div class="col-12 col-md-3 invisible" id="init-customer">
                           <div class="input-group">
                               <select class="form-control" id="customer" onchange="balance(this)">
                               </select>
                               <div class="input-group-append">
-                                <button class="btn btn-outline-primary" type="button" id="customerModal">Add <i class="fas fa-plus"></i></button>
+                                <button class="btn btn-outline-primary" type="button" data-toggle="modal" id="customerModal" data-target='#modal'>Add <i class="fas fa-plus"></i></button>
                               </div>
                               <div class="invalid-feedback" id='customer_msg'></div>
                           </div>
@@ -85,8 +68,6 @@
                            <input type="text" class="form-control" id="date" placeholder="Date">
                          </div>
                        </div>
-
-                       
                    </div>
                    <div class="row" id="w_customer">
                       <div class="col-12 col-md-3 mt-2">
@@ -287,7 +268,7 @@
         <div class="modal-dialog modal-lg">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Add New Supplier</h5>
+              <h5 class="modal-title" id="exampleModalLabel">Add New Customer</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -328,45 +309,12 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-md-8 mr-auto ml-auto">
-                    <div class="form-group">
-                      <label for="opening_balance" class="font-weight-bold">Opening Balance:</label>
-                      <div class='row'>
-                        <div class='col-sm-9'>
-                            <input class="form-control " id="opening_balance"  type="number" placeholder="Opening Balance">
-                            <div id="opening_balance_msg" class="invalid-feedback">
-                            </div>
-                          </div>
-                          <div class='col-sm-3'>
-                            <select class="form-control" id="balance_type" >
-                            <option value="1">Balance</option>
-                            <option value="0">Due</option>
-                            </select>
-                            <div id="balance_type_msg" class="invalid-feedback">
-                            </div>
-                          </div>
-                        </div>
-                    </div>
-                  </div>
-                  <div class="col-md-8 mr-auto ml-auto">
-                    <div class="form-group">
-                      <label for="adress" class="font-weight-bold">Supplier Type:</label>
-                      <select class="form-control " id="supplier_type">
-                        <option value="">--select--</option>
-                        <option value="Distributor">Distributor</option>
-                        <option value="Whole Saler">Whole Saler</option>
-                        <option value="Company">Company</option>
-                      </select>
-                      <div id="supplier_type_msg" class="invalid-feedback">
-                      </div>
-                    </div>
-                  </div>
                 </div>
               </form>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary" onclick="supplierFormRequest()">Save</button>
+              <button type="button" class="btn btn-primary" onclick="customerFormRequest()">Save</button>
             </div>
           </div>
         </div>

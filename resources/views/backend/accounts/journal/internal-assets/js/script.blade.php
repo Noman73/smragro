@@ -125,7 +125,7 @@ function formRequestTry(){
   let amount=$('#total').text();
   Swal.fire({
       title: 'Are you sure?',
-      html: "<p> Date: <b class='text-danger'>"+date+"</b></p><p>You Want Save this ?</p>",
+      html:</b></p><p>You Want Save this ?</p>",
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -330,4 +330,7 @@ $(document).on('select2:unselect','.ledger', function (e) {
     $(this).parent().next().children().val(null).trigger('change');
     console.log($(this).parent().next().children().val());
   });
+
+
+  
 </script>

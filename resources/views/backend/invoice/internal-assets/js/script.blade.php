@@ -6,25 +6,18 @@ window.customerFormRequest= function(){
     let adress=$('#adress').val();
     let phone=$('#phone').val();
     let email=$('#email').val();
-    let opening_balance=$('#opening_balance').val();
-    let balance_type=$('#balance_type').val();
     let id=$('#id').val();
     let formData= new FormData();
     formData.append('name',name);
     formData.append('adress',adress);
     formData.append('phone',phone);
     formData.append('email',email);
-    formData.append('opening_balance',opening_balance);
-    formData.append('balance_type',balance_type);
-    formData.append('supplier_type',supplier_type);
-    $('#exampleModalLabel').text('Add New Supplier');
-
-         axios.post("{{route('supplier.store')}}",formData)
+    $('#exampleModalLabel').text('Add New Customer');
+         axios.post("{{route('customer.store')}}",formData)
         .then(function (response){
             if(response.data.message){
                 toastr.success(response.data.message)
-                datatable.ajax.reload();
-                clear();
+                Clean();
                 $('#modal').modal('hide');
             }else if(response.data.error){
               var keys=Object.keys(response.data.error);
@@ -602,5 +595,28 @@ $('body').on('select2:select',"select[name='product[]']", function (e){
    
 //  })
 
-
+// $(document).keypress(function(event) {
+//     if(event.keyCode==100 && !event.shiftKey){
+//       addNew()
+//       return false
+//     }
+    
+// });
+$(document).keypress(function(event){
+ console.log(event.which)
+  if(event.keyCode==68){
+      addNew();
+  }
+  if(event.keyCode==65){
+    cond=false;
+    let product=$("select[name='product[]']").map(function(){
+        if($(this).val()==null && cond===false){
+          $(this).focus();
+          $(this).select2('open');
+          cond=true;
+        }
+    });
+    
+  }
+})
 </script>
