@@ -234,6 +234,7 @@ $('#date,#cheque_issue_date').daterangepicker({
   function formRequest(){
     $('.submit').attr('disabled',true);
     $('input,select').removeClass('is-invalid');
+    let warehouse=($('#warehouse').val()==null ? '' : $('#warehouse').val() );
     let supplier=$('#supplier').val();
     let chalan_no=$('#chalan_no').val();
     let purchase_type=$("input[name='purchase_type[]']:checked").val();
@@ -273,6 +274,7 @@ $('#date,#cheque_issue_date').daterangepicker({
     
     formData=new FormData()
     formData.append('purchase_type',purchase_type);
+    formData.append('warehouse',warehouse);
     formData.append('action',action);
     formData.append('supplier',supplier);
     formData.append('chalan_no',chalan_no);
@@ -332,6 +334,41 @@ $('#date,#cheque_issue_date').daterangepicker({
         }
       })
   }
+  $("#warehouse").select2({
+    theme:'bootstrap4',
+    placeholder:'Warehouse',
+    allowClear:true,
+    ajax:{
+      url:"{{URL::to('/admin/get-warehouse')}}",
+      type:'post',
+      dataType:'json',
+      delay:20,
+      data:function(params){
+        return {
+          searchTerm:params.term,
+          _token:"{{csrf_token()}}",
+          }
+      },
+      processResults:function(response){
+        return {
+          results:response,
+        }
+      },
+      cache:true,
+    },
+    initSelection: function(element, callback) {
+      var id = $(element).val();
+      if(id !== "") {
+          $.ajax("{{URL::to('/admin/get-warehouse')}}", {
+              type:'post',
+              data: {_token:"{{csrf_token()}}"},
+              dataType: "json"
+          }).done(function(data) {
+              callback(data);
+          });
+      }
+      }
+  });
   $("#payment_method").select2({
     theme:'bootstrap4',
     placeholder:'Payment Method',

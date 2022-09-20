@@ -11,12 +11,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Stock</h1>
+            <h1 class="m-0">Warehouse</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Stock</li>
+              <li class="breadcrumb-item active">Warehouse</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -31,10 +31,10 @@
             <div class="card-header bg-dark">
               <div class="row">
                 <div class="col-6">
-                  <div class="card-title">Stock</div>
+                  <div class="card-title">Warehouse </div>
                 </div>
                 <div class="col-6">
-                  {{-- <button class="btn btn-primary float-right" data-toggle="modal" data-target="#modal" data-whatever="@mdo">Add New</button> --}}
+                  <button class="btn btn-primary float-right" data-toggle="modal" data-target="#modal" data-whatever="@mdo">নতুন</button>
                 </div>
               </div>
             </div>
@@ -42,10 +42,10 @@
               <table class="table table-sm text-center table-bordered" id="datatable">
                 <thead>
                   <tr>
-                    <th>SL</th>
-                    <th class='text-left'>Name</th>
-                    <th class='text-center'>Warehouse</th>
-                    <th>Quantity</th>
+                    <th>SL.</th>
+                    <th>Warehouse</th>
+                    <th>Adress</th>
+                    <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -55,11 +55,11 @@
           </div>
       </div><!-- /.container-fluid -->
       {{-- modal --}}
-      {{-- <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="modal">
+      <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="modal">
         <div class="modal-dialog modal-lg">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Add New Bank Account</h5>
+              <h5 class="modal-title" id="exampleModalLabel">Add New Warehouse</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -75,57 +75,12 @@
                       <div class="invalid-feedback" id="name_msg">
                       </div>
                     </div>
-                  </div>
-                  <div class="col-md-8 mr-auto ml-auto">
                     <div class="form-group">
-                      <label for="recipient-name" class="col-form-label">Branch Name:</label>
-                      <input type="text" class="form-control" id="branch_name" placeholder="Enter Branch Name">
-                      <div class="invalid-feedback" id="branch_name_msg">
+                        <label for="recipient-name" class="col-form-label">Adress:</label>
+                        <input type="text" class="form-control" id="adress" placeholder="Enter Adress">
+                        <div class="invalid-feedback" id="adress_msg">
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                  <div class="col-md-8 mr-auto ml-auto">
-                    <div class="form-group">
-                      <label for="recipient-name" class="col-form-label">Account No:</label>
-                      <input type="number" class="form-control" id="account_no" placeholder="Enter Account No">
-                      <div class="invalid-feedback" id="account_no_msg">
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-8 mr-auto ml-auto">
-                    <div class="form-group">
-                      <label for="recipient-name" class="col-form-label">Account Code:</label>
-                      <input type="number" class="form-control" id="account_code" placeholder="Enter Account Code">
-                      <div class="invalid-feedback" id="account_code_msg">
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-8 mr-auto ml-auto">
-                    <div class="form-group">
-                      <label for="recipient-name" class="col-form-label">Details:</label>
-                      <input type="text" class="form-control" id="details" placeholder="Enter Account Code">
-                      <div class="invalid-feedback" id="details_msg">
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-8 mr-auto ml-auto">
-                    <div class="form-group">
-                      <label for="recipient-name" class="col-form-label">Opening Balance:</label>
-                      <input type="number" class="form-control" id="opening_balance" placeholder="Enter Opening Balance">
-                      <div class="invalid-feedback" id="opening_balance_msg">
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-8 mr-auto ml-auto">
-                    <div class="form-group">
-                      <label for="adress" class="font-weight-bold">Account Type:</label>
-                      <select class="form-control " id="account_type">
-                        <option value="1">Bank</option>
-                        <option value="0">Others</option>
-                      </select>
-                      <div id="account_type_msg" class="invalid-feedback">
-                      </div>
-                    </div>
                   </div>
                 </div>
               </form>
@@ -136,7 +91,7 @@
             </div>
           </div>
         </div>
-      </div> --}}
+      </div>
       {{-- endmodal --}}
     </section>
   @endsection
@@ -147,5 +102,5 @@
   <script src="{{asset('storage/adminlte/plugins/datatables-responsive/js/dataTables.responsive.min.js')}}"></script>
   <script src="{{asset('storage/adminlte/plugins/datatables-responsive/js/responsive.bootstrap4.min.js')}}"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.26.0/axios.min.js" integrity="sha512-bPh3uwgU5qEMipS/VOmRqynnMXGGSRv+72H/N260MQeXZIK4PG48401Bsby9Nq5P5fz7hy5UGNmC/W1Z51h2GQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  @include('backend.stock.internal-assets.js.script')
+  @include('backend.warehouse.internal-assets.js.script')
   @endsection

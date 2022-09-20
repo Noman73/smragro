@@ -35,6 +35,8 @@ Route::group([
     Route::resource('/bank','BankAccountController');
     Route::resource('/customer','CustomerController');
     Route::resource('/invoice','InvoiceTestController');
+    Route::resource('/warehouse','WarehouseController');
+    Route::post('/get-warehouse','WarehouseController@getWarehouse');
     Route::resource('/regular-condition-list','RegularConditionListController');
     Route::resource('/regular-receive','RegularReceiveController');
     Route::get('/invoice-list','InvoiceTestController@invoiceList');
@@ -166,4 +168,25 @@ Route::group([
     Route::post('/supplier-statement-report','SupplierStatementReportController@generateReport');
     Route::get('/customer-balance-analysis-report','CustomerBalanceAnalysisController@index');
     Route::post('/customer-balance-analysis-report','CustomerBalanceAnalysisController@getReport');
+});
+
+Route::group([
+    'namespace' => 'App\Http\Controllers\SuperAdmin\Auth',
+],function(){
+    Route::get('/super-admin/home','LoginController@showLoginForm');
+    Route::get('/super-admin','LoginController@showLoginForm');
+    Route::post('/super-admin','LoginController@login')->name('superadmin.login');
+});
+
+Route::group([
+    'namespace' => 'App\Http\Controllers\SuperAdmin',
+],function(){
+    Route::get('/super-admin/home','SuperAdminController@home');
+});
+
+Route::group([
+    'prefix'=>'super-admin',
+    'namespace' => 'App\Http\Controllers\SuperAdmin',
+],function(){
+    Route::resource('/general-setting','GeneralSettingController');
 });

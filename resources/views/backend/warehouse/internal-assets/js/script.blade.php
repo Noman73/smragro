@@ -6,7 +6,7 @@
         serverSide:true,
         responsive:true,
         ajax:{
-          url:"{{URL::to('admin/stock')}}"
+          url:"{{route('warehouse.index')}}"
         },
         columns:[
           {
@@ -20,25 +20,14 @@
             name:'name',
           },
           {
-            data:'store',
-            name:'store',
+            data:'adress',
+            name:'adress',
           },
           {
-            data:'qantity',
-            name:'qantity',
-          },
-        ],
-        'columnDefs': [
-              {
-                  "targets": 1, // your case first column
-                  "className": "text-left",
-                  // "width": "4%"
-            },
-            {
-                  "targets": 2,
-                  "className": "text-right",
-            }
-          ]
+            data:'action',
+            name:'action',
+          }
+        ]
     });
   })
     
@@ -46,28 +35,19 @@
 window.formRequest= function(){
     $('input,select').removeClass('is-invalid');
     let name=$('#name').val();
-    let branch_name=$('#branch_name').val();
-    let account_no=$('#account_no').val();
-    let account_code=$('#account_code').val();
-    let details=$('#details').val();
-    let opening_balance=$('#opening_balance').val();
-    let account_type=$('#account_type').val();
+    let adress=$('#adress').val();
     let id=$('#id').val();
     let formData= new FormData();
     formData.append('name',name);
-    formData.append('branch_name',branch_name);
-    formData.append('account_no',account_no);
-    formData.append('account_code',account_code);
-    formData.append('details',details);
-    formData.append('opening_balance',opening_balance);
-    formData.append('account_type',account_type);
-    $('#exampleModalLabel').text('Add New Bank Account');
+    formData.append('adress',adress);
+    $('#exampleModalLabel').text('Add New Warehouse');
+    console.log(id)
     if(id!=''){
       formData.append('_method','PUT');
     }
     //axios post request
     if (id==''){
-         axios.post("{{route('bank.store')}}",formData)
+         axios.post("{{route('warehouse.store')}}",formData)
         .then(function (response){
             if(response.data.message){
                 toastr.success(response.data.message)
@@ -83,12 +63,13 @@ window.formRequest= function(){
             }
         })
     }else{
-      axios.post("{{URL::to('admin/bank/')}}/"+id,formData)
+      axios.post("{{URL::to('admin/warehouse/')}}/"+id,formData)
         .then(function (response){
           if(response.data.message){
               toastr.success(response.data.message);
               datatable.ajax.reload();
               clear();
+              $('#modal').modal('hide');
           }else if(response.data.error){
               var keys=Object.keys(response.data.error);
               keys.forEach(function(d){
@@ -101,11 +82,11 @@ window.formRequest= function(){
 }
 $(document).delegate("#modalBtn", "click", function(event){
     clear();
-    $('#exampleModalLabel').text('Add New Bank Account');
+    $('#exampleModalLabel').text('Add New Warehouse');
 
 });
 $(document).delegate(".editRow", "click", function(){
-    $('#exampleModalLabel').text('Edit Bank Account');
+    $('#exampleModalLabel').text('Edit Warehouse');
     let route=$(this).data('url');
     axios.get(route)
     .then((data)=>{
@@ -114,8 +95,8 @@ $(document).delegate(".editRow", "click", function(){
         if(key=='name'){
           $('#'+'name').val(data.data[key]);
         }
-        if(key=='open_ammount'){
-          $('#opening_balance').val(Math.abs(data.data[key]));
+        if(key=='category_id'){
+          $('#category').val(data.data[key]).niceSelect('update');
         }
          $('#'+key).val(data.data[key]);
          $('#modal').modal('show');
@@ -147,11 +128,10 @@ $(document).delegate(".deleteRow", "click", function(){
       }
     })
 });
+
+
 function clear(){
   $("input").removeClass('is-invalid').val('');
   $(".invalid-feedback").text('');
-  $('form select').val('').niceSelect('update');
 }
-
-
 </script>

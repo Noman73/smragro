@@ -56,7 +56,13 @@
                           </div>
                           <div class="total_balance d-none">Balance: <span id="supplier-balance"></span></div>
                        </div>
-                       <div class="col-12 col-md-2 mt-2">
+                       <div class="col-12 col-md-1">
+                      </div>
+                       <div class="col-12 col-md-2">
+                        <div class="form-group">
+                          <select name="warehouse" id="warehouse" class="form-control"></select>
+                          <div class="invalid-feedback" id="warehouse_msg"></div>
+                        </div>
                          <div class="float-right d-none">
                             <input type="radio" name="action[]" value="0" checked>
                             <label for="">Purchase</label>
@@ -65,8 +71,6 @@
                             <div class="invalid-feedback" id='action_msg'></div>
                          </div>
                        </div>
-                       <div class="col-12 col-md-1">
-                      </div>
                        <div class="col-12 col-md-2">
                         <div class="form-group">
                           <input type="text" class="form-control" id="chalan_no" placeholder="Chalan No.">

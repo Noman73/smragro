@@ -132,6 +132,7 @@ class InvoiceTestController extends Controller
             'mobile' => $wcustomer.'|max:15|min:11',
             'name' => $wcustomer.'|min:1|max:200',
             'mobile' => $wcustomer.'|max:11',
+            'warehouse' => 'required|max:15',
         ]);
 
         if ($validator->passes()) {
@@ -181,6 +182,7 @@ class InvoiceTestController extends Controller
             $invoice->dates = strtotime(strval($data['date']));
             $invoice->hand_bill = $data['hand_bill'];
             $invoice->customer_id = $customer_id;
+            $invoice->store_id = $data['warehouse'];
             $invoice->shipping_id = $data['courier'];
             $invoice->shipped_adress_id = $adress_id;
             $invoice->total_item = $data['total_item'];
@@ -210,6 +212,7 @@ class InvoiceTestController extends Controller
                     }
                     $stmt = new Sale();
                     $stmt->invoice_id = $inv_id;
+                    $stmt->store_id = $data['warehouse'];
                     $stmt->dates = strtotime(strval($data['date']));
                     $stmt->customer_id = $customer_id;
                     $stmt->product_id = $data['product'][$i];
