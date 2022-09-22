@@ -20,6 +20,10 @@
             name:'date',
           },
           {
+            data:'trx_id',
+            name:'trx_id',
+          },
+          {
             data:'total',
             name:'total',
           },
@@ -71,6 +75,7 @@ window.formRequest= function(event){
     }
     //axios post request
     if (id==''){
+      console.log('store')
          axios.post("{{route('journal.store')}}",formData)
         .then(function (response){
             if(response.data.message){
@@ -90,15 +95,6 @@ window.formRequest= function(event){
                 $('#'+d+'_msg').text(response.data.error[d][0]);
                 err+=response.data.error[d][0]+'\n';
               })
-              Swal.fire({
-                  title: 'Opps !',
-                  text: err,
-                  icon: 'warning',
-                  showCancelButton: true,
-                  confirmButtonColor: '#3085d6',
-                  cancelButtonColor: '#d33',
-                  confirmButtonText: 'Yes, delete it!'
-                })
             }
         })
     }else{
@@ -125,7 +121,7 @@ function formRequestTry(){
   let amount=$('#total').text();
   Swal.fire({
       title: 'Are you sure?',
-      html:</b></p><p>You Want Save this ?</p>",
+      html:"</b></p><p>You Want Save this ?</p>",
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -133,7 +129,7 @@ function formRequestTry(){
       confirmButtonText: 'Yes Save It!'
     }).then((result) => {
       if (result.value==true) {
-        formRequest();
+        formRequest(event);
       }
     })
 }

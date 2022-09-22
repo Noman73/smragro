@@ -359,7 +359,7 @@ $(".customer").select2({
           html+="<tr>"
           html+="<td class='text-left'>"+dateFormat(d.date*1000)+"</td>"
           html+="<td class='text-center'>"+'#'+(d.id).toString().padStart(7,'0')+"</td>"
-          html+="<td class='text-left'>"+d.note+"</td>"
+          html+="<td class='text-left'>"+(d.note!=null ? d.note : '')+"</td>"
           html+="<td class='text-right'>"+(parseFloat(d.total).toFixed(2))+"</td></tr>";
          
       })

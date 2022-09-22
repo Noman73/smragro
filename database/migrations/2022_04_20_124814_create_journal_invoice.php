@@ -16,7 +16,7 @@ class CreateJournalInvoice extends Migration
         Schema::create('invoice_journals', function (Blueprint $table) {
             $table->id();
             $table->string('date');
-            $table->decimal('total');
+            $table->decimal('total',20,2);
             $table->unsignedBigInteger('author_id');
             $table->timestamps();
         });

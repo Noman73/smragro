@@ -35,6 +35,7 @@ Route::group([
     Route::resource('/bank','BankAccountController');
     Route::resource('/customer','CustomerController');
     Route::resource('/invoice','InvoiceTestController');
+    Route::resource('/pos','PosController');
     Route::resource('/regular-condition-list','RegularConditionListController');
     Route::resource('/regular-receive','RegularReceiveController');
     Route::get('/invoice-list','InvoiceTestController@invoiceList');
@@ -119,6 +120,8 @@ Route::group([
     Route::get('/journal-print/{invoice_id}','JournalViewController@print');
     Route::get('/purchase-view/{invoice_id}','PurchaseViewController@index');
     Route::get('/purchase-print/{invoice_id}','PurchaseViewController@print');
+    Route::get('/fund-transfer-view/{invoice_id}','FundTransferController@index');
+    Route::get('/fund-transfer-print/{invoice_id}','FundTransferController@print');
 });
 
 
@@ -166,4 +169,6 @@ Route::group([
     Route::post('/supplier-statement-report','SupplierStatementReportController@generateReport');
     Route::get('/customer-balance-analysis-report','CustomerBalanceAnalysisController@index');
     Route::post('/customer-balance-analysis-report','CustomerBalanceAnalysisController@getReport');
+    Route::get('/chart-of-account-report','ChartOfAccountController@index');
+    Route::post('/chart-of-account-report','ChartOfAccountController@getReport');
 });

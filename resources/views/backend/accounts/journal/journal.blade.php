@@ -43,8 +43,9 @@
                 <thead>
                   <tr>
                     <th>SL.</th>
-                    <th>date</th>
-                    <th>total</th>
+                    <th>Date</th>
+                    <th>TRX-ID</th>
+                    <th>Total</th>
                     <th>Action</th>
                   </tr>
                 </thead>

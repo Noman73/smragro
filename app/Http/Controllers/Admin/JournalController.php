@@ -38,6 +38,9 @@ class JournalController extends Controller
           ->addColumn('date',function($get){
           return date('d-m-Y',$get->date);
         })
+        ->addColumn('trx_id',function($get){
+            return 'J-'.date('dm',$get->date).substr(date('Y',$get->date),-2).$get->id;
+        })
           ->rawColumns(['action'])->make(true);
         }
         return view('backend.accounts.journal.journal');

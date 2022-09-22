@@ -11,6 +11,9 @@ use Validator;
 use App\Rules\FundTransferAmmountRule;
 use App\Rules\FundTransferToMethodRule;
 use App\Rules\FundTransferToBankRule;
+use DataTables;
+use URL;
+use App\Http\FtInvoice;
 class FundTransferController extends Controller
 {
     /**
@@ -24,6 +27,26 @@ class FundTransferController extends Controller
     }
     public function index()
     {
+        if(request()->ajax()){
+            $get=Vinvoice::where('action_type',4)->get();
+            return DataTables::of($get)
+              ->addIndexColumn()
+              ->addColumn('action',function($get){
+              $button  ='<div class="d-flex justify-content-center">';
+                $button.='<a data-url=""  href="'.URL::to('admin/view-pages/fund-transfer-view/'.$get->id).'" class="btn btn-warning shadow btn-xs sharp me-1 editRow"><i class="fas fa-print"></i></a>
+                <a data-url="'.route('fund_transfer.edit',$get->id).'"  href="javascript:void(0)" class="btn btn-primary shadow btn-xs sharp ml-1 editRow"><i class="fas fa-pen"></i></a>
+              <a data-url="'.route('fund_transfer.destroy',$get->id).'" href="javascript:void(0)" class="btn btn-danger shadow btn-xs sharp ml-1 deleteRow"><i class="fa fa-trash"></i></a>';
+              $button.='</div>';
+            return $button;
+          })
+          ->addColumn('date',function($get){
+              return date('d-m-Y',$get->date);
+          })
+          ->addColumn('trx_id',function($get){
+            return 'F-'.date('dm',$get->date).substr(date('Y',$get->date),-2).$get->id;
+        })
+          ->rawColumns(['action'])->make(true);
+        }
         return view('backend.fund_transfer.fund_transfer');
     }
 
@@ -66,7 +89,7 @@ class FundTransferController extends Controller
             $v_invoice->save();
             if($v_invoice){
                 if($request->to_method==0){
-                     $to_ledger=AccountLedger::where('name','Cash')->first();
+                    $to_ledger=AccountLedger::where('name','Cash')->first();
                 }else{
                     $to_ledger=AccountLedger::where('name','Bank')->first();
                 }
@@ -75,6 +98,7 @@ class FundTransferController extends Controller
                 }else{
                     $from_ledger=AccountLedger::where('name','Bank')->first();
                 }
+
                 $voucer=new Voucer;
                 $voucer->date= strtotime($request->date);
                 $voucer->transaction_name="Fund Transfer";

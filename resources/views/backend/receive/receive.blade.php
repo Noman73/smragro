@@ -45,7 +45,7 @@
                     <th>SL</th>
                     <th>Date</th>
                     <th>TRX-ID</th>
-                    <th>Ammount</th>
+                    <th>Amount</th>
                     <th>Action</th>
                   </tr>
                 </thead>

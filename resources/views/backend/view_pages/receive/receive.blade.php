@@ -69,10 +69,10 @@
               </div>  
                   <div id="print" class="print mt-5" >
                     <div class="row invoice_header">
-                      <div class="col-xs-5" style="width: 20%; float:left;">
+                      <div class="col-xs-5" style="width:50%; float:left;">
                         @include('layouts.adress')
                       </div>
-                      <div class="col-xs-7" style="width: 80%; text-align:right">
+                      <div class="col-xs-7" style="width: 50%; text-align:right">
                           <div style="padding:5px; width:100%; text-align:right;">
                               <span style="font-size: 16px;">
                                   <b>
@@ -109,9 +109,9 @@
                       <div class="col-md-12">
                           <div class="table-responsive">
                               <table class="table table-bordered table-striped">
-                                  <thead>
-                                      <tr>
-                                          <th width="40%" class="text-left">Name</th>
+                                  <thead >
+                                      <tr >
+                                          <th width="40%" class="text-left">Receive To</th>
                                           <th width="20%" class="text-center">Comments</th>
                                           <th width="20%" class="text-right">Amount</th>
                                           

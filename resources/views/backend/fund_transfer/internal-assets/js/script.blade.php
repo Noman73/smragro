@@ -6,7 +6,7 @@
         serverSide:true,
         responsive:true,
         ajax:{
-          url:"{{route('s-payment.index')}}"
+          url:"{{route('fund_transfer.index')}}"
         },
         columns:[
           {
@@ -18,6 +18,10 @@
           {
             data:'date',
             name:'date',
+          },
+          {
+            data:'trx_id',
+            name:'trx_id',
           },
           {
             data:'total',

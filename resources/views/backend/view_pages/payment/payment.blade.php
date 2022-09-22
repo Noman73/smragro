@@ -108,12 +108,12 @@
                   <div class="row">
                       <div class="col-md-12">
                           <div class="table-responsive">
-                              <table class="table table-bordered table-striped">
+                              <table class="table table-bordered table-striped rounded">
                                   <thead>
                                       <tr>
-                                          <th width="40%" class="text-left">Name</th>
+                                          <th width="40%" class="text-left">Receive By</th>
                                           <th width="20%" class="text-center">Comments</th>
-                                          <th width="20%" class="text-right">Ammount</th>
+                                          <th width="20%" class="text-right">Amount</th>
                                           
                                       </tr>
                                   </thead>

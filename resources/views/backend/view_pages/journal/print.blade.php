@@ -10,14 +10,12 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-
     <title>SMRAGRO</title>
-
     <!--Favicon-->
     <link rel="icon" href="https://2aitautomation.com/meherpur/public/img/favicon.png" type="image/x-icon" />
 
     <!-- Bootstrap 3.3.7 -->
-    <link rel="stylesheet" href="https://2aitautomation.com/meherpur/public/themes/backend/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <style>
         body{
             font-size: 10px;
@@ -47,26 +45,23 @@
 </head>
 <body>
 <div class="container-fluid">
-    
-
 <div id="print" class="print mt-5" >
     <div class="row invoice_header">
-      <div class="col-xs-5" style="width: 20%; float:left;">
-          <img src="{{asset('storage/logo/'.$info->logo)}}" width="100%" alt="Logo">
+      <div class="col-xs-5" style="width: 50%; float:left;">
+          @include('layouts.adress')
       </div>
-      <div class="col-xs-7" style="width: 80%; text-align:right">
+      <div class="col-xs-7" style="width: 50%; text-align:right">
           <div style="padding:0px; width:100%; text-align:right;">
               <span style="font-size: 16px;">
                   <b>
-                      Journal
+                      Fund Transfer
                   </b>
               </span><br>
               @php
-              
               // dd($invoice);
               @endphp
-              Receipt No :<b>J-{{date('dm',$journalInvoice->date).substr(date('Y',$journalInvoice->date),-2).$journalInvoice->id}}</b> <br>
-              Transaction Type :<b>Journal Voucer</b> <br>
+              Receipt No :<b>J-{{date('dm',$journalInvoice->date).substr(date('Y',$journalInvoice->date),-2).$journalInvoice->id}}</b><br>
+              Transaction Type :<b>Fund Transfer</b> <br>
               Date : {{date('d-m-Y',intval($journalInvoice->date))}} 
           </div>
       </div>

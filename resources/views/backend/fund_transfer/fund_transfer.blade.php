@@ -44,6 +44,7 @@
                   <tr>
                     <th>SL</th>
                     <th>Date</th>
+                    <th>TRX-ID</th>
                     <th>Amount</th>
                     <th>Action</th>
                   </tr>
@@ -65,7 +66,7 @@
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body ml-5 mr-5">
               <form>
                 <input type="hidden" id="id">
                 <div class="row">

@@ -33,7 +33,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Journal History</h1>
+            <h1 class="m-0">Fund Transfer History</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -49,23 +49,13 @@
     <section class="content">
       <div class="container-fluid">
         <div class="card ">
-            {{-- <div class="card-header">
-              <div class="row">
-                <div class="col-6">
-                  <div class="card-title">Supplier </div>
-                </div>
-                <div class="col-6">
-                  <button class="btn btn-primary float-right" data-toggle="modal" data-target="#modal" data-whatever="@mdo">Add New</button>
-                </div>
-              </div>
-            </div> --}}
             <div class="card-body">
               @php 
               use Riskihajar\Terbilang\Facades\Terbilang;
               $info=App\Models\CompanyInformations::first();
               @endphp
               <div class="float-right clearfix">
-                <a target='_blank' class="btn btn-warning" href='{{URL::to('admin/view-pages/journal-print/'.$journalInvoice->id)}}'>Print</a>
+                <a target='_blank' class="btn btn-warning" href='{{URL::to('admin/view-pages/fund-transfer-print/'.$journalInvoice->id)}}'>Print</a>
               </div>  
                   <div id="print" class="print mt-5" >
                     <div class="row invoice_header">
@@ -76,15 +66,15 @@
                           <div style="padding:5px; width:100%; text-align:right;">
                               <span style="font-size: 16px;">
                                   <b>
-                                      Journal
+                                      Fund Transfer
                                   </b>
                               </span><br>
                               @php
                               
                               // dd($invoice);
                               @endphp
-                              Receipt No :<b>J-{{date('dm',$journalInvoice->date).substr(date('Y',$journalInvoice->date),-2).$journalInvoice->id}}</b> <br>
-                              TRX Type :<b>Journal Voucer</b> <br>
+                              Receipt No :<b>F-{{date('dm',$journalInvoice->date).substr(date('Y',$journalInvoice->date),-2).$journalInvoice->id}}</b> <br>
+                              TRX Type :<b>Fund Transfer</b> <br>
                               Date : {{date('d-m-Y',intval($journalInvoice->date))}} 
                           </div>
                       </div>
@@ -105,14 +95,13 @@
                           </table>
                       </div>
                   </div> --}}
-                  <div class="row mt-5">
+                  <div class="row mt-4">
                       <div class="col-md-12">
                           <div class="table-responsive">
                               <table class="table table-bordered table-striped">
                                   <thead>
                                       <tr>
-                                          <th width="30%" class="text-left">A/C Name</th>
-                                          <th width="20%" class="text-left">Sub A/C Name</th>
+                                          <th width="30%" class="text-left">Name</th>
                                           <th width="15%" class="text-center">Comments</th>
                                           <th width="15%" class="text-right">Debit</th>
                                           <th width="15%" class="text-right">Credit</th>
@@ -131,8 +120,7 @@
                                       $total_credit+=floatval($data->credit);
                                       @endphp
                                           <tr>
-                                              <td>{{$data->name}}</td>
-                                              <td class="text-left">{{$data->sub_name}}</td>
+                                              <td>{!!($data->debit !=0? "Transfer to " : "Transfer from ").'<b>'.$data->name!!}{{($data->sub_name!=null? '-'.$data->sub_name : "")}}</b></td>
                                               <td class="text-left">{{($data->comment)}}</td>
                                               <td class="text-right">৳{{$data->debit}}</td>
                                               <td class="text-right">৳{{$data->credit}}</td>
@@ -141,7 +129,7 @@
                                   </tbody>
                                   <tfoot>
                                     <tr>
-                                      <th style='text-align:right;' colspan='3'>Total</th>
+                                      <th style='text-align:right;' colspan='2'>Total</th>
                                       <th style="text-align:right;">{{number_format($total_debit,2)}}</th>
                                       <th style="text-align:right;">{{number_format($total_credit,2)}}</th>
                                     </tr>

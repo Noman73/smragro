@@ -1,129 +1,5 @@
 <script>
-    var datatable;
-    var removeArr=[];
-    $(document).ready(function(){
-        datatable= $('#datatable').DataTable({
-        processing:true,
-        serverSide:true,
-        responsive:true,
-        ajax:{
-          url:"{{route('make-price.index')}}"
-        },
-        columns:[
-          {
-            data:'DT_RowIndex',
-            name:'DT_RowIndex',
-            orderable:false,
-            searchable:false
-          },
-          {
-            data:'customer',
-            name:'customer',
-          },
-          {
-            data:'product',
-            name:'product',
-          },
-          {
-            data:'price',
-            name:'price',
-          },
-          {
-            data:'action',
-            name:'action',
-          }
-        ]
-    });
-  })
-  $('#date,#issue_date').daterangepicker({
-        showDropdowns: true,
-        singleDatePicker: true,
-        // parentEl: ".bd-example-modal-lg .modal-body",
-        locale: {
-            format: 'DD-MM-YYYY',
-        }
-});  
-
-window.formRequest= function(){
-    $('input,select').removeClass('is-invalid');
-    product=$("select[name='product[]']").map(function(){
-        return ($(this).val()==null? '': $(this).val());
-    }).get();
-    price=$("input[name='price[]']").map(function(){
-        return $(this).val();
-    }).get();
-    console.log(product,price);
-    let customer=$('#customer').val();
-    let id=$('#id').val();
-    let formData= new FormData();
-    formData.append('customer',customer);
-    formData.append('product',product);
-    formData.append('price',price);
-    formData.append('remove',removeArr);
-    $('#exampleModalLabel').text('Add New Price');
-    if(id!=''){
-      formData.append('_method','PUT');
-    }
-    //axios post request
-    if (id==''){
-         axios.post("{{route('make-price.store')}}",formData)
-        .then(function (response){
-            if(response.data.message){
-                toastr.success(response.data.message)
-                datatable.ajax.reload();
-                remove();
-                $('#modal').modal('hide');
-                removeArr=[];
-            }else if(response.data.error){
-              var keys=Object.keys(response.data.error);
-              errors="";
-              keys.forEach(function(d){
-                $('#'+d).addClass('is-invalid');
-                $('#'+d+'_msg').text(response.data.error[d][0]);
-
-                  errors+=response.data.error[d][0]+"<br>"
-                  Swal.fire({
-                    title: 'Opps !',
-                    html: errors,
-                    icon: 'warning',
-                    showCancelButton: true,
-                    showConfirmButton: false,
-                    cancelButtonColor: '#d33',
-                  }).then((result) => {
-                    if (result.value==true) {
-                      axios.delete(route)
-                      .then((data)=>{
-                        if(data.data.message){
-                          toastr.success(data.data.message);
-                          datatable.ajax.reload();
-                        }else if(data.data.warning){
-                          toastr.error(data.data.warning);
-                        }
-                      })
-                    }
-                  })
-                // end sweetalert
-
-              })
-            }
-        })
-    }else{
-      axios.post("{{URL::to('admin/make-price/')}}/"+id,formData)
-        .then(function (response){
-          if(response.data.message){
-              toastr.success(response.data.message);
-              datatable.ajax.reload();
-              remove();
-          }else if(response.data.error){
-              var keys=Object.keys(response.data.error);
-              keys.forEach(function(d){
-                $('#'+d).addClass('is-invalid')
-                $('#'+d+'_msg').text(response.data.error[d][0]);
-              })
-            }
-        })
-    }
-}
+ 
 $(document).delegate("#modalBtn", "click", function(event){
     clear();
     $('#exampleModalLabel').text('Add New Payment');
@@ -350,59 +226,28 @@ $(".customer").select2({
       $('#inv_ledger').text($('#ledger option:selected').text());
     }
     $('.inv_ledger').removeClass('d-none')
-    axios.post("{{URL::to('/admin/ledger-report')}}",{ledger:ledger,subledger:subledger,from_date:fromDate,to_date:toDate})
+    axios.post("{{URL::to('/admin/chart-of-account-report')}}",{from_date:fromDate,to_date:toDate})
     .then((res)=>{
       console.log(res)
       html="";
-      balance=parseFloat((res.data[1][0]['balance']==null ? 0: res.data[1][0]['balance']));
-      console.log(res.data[1][0]['balance'])
-      class_type=res.data[2].class_type;
-      let id='';
-      switch (d.transaction_name) {
-        case 'journal':
-          id=d.journal_inv_id;
-          url="{{URL::to('admin/view-pages/journal-view')}}/"+id
-          break;
-        case 'Payment':
-          id=d.v_inv_id;
-          url="{{URL::to('admin/view-pages/payment-view')}}/"+id
-        break;
-        case 'Customer Receive':
-          id=d.v_inv_id;
-          url="{{URL::to('admin/view-pages/receive-view')}}/"+id
-        break;
-        case 'Receive':
-          id=d.v_inv_id;
-          url="{{URL::to('admin/view-pages/receive-view')}}/"+id
-        break;
-        case 'Sale Invoice':
-          id=d.invoice_id;
-          url="<a href='{{URL::to('admin/view-pages/sale-invoice-view')}}/"+id+"'>S-"+d+"<a>"
-        break;
-        case 'Fund Transfer':
-          id=d.v_inv_id;
-          url="<a href='{{URL::to('admin/view-pages/fund-transfer-view')}}/"+id+"'>"++"<a>"
-        break;
-        default:
-          id='';
-          url='';
-          break;
-      }
-      res.data[0].forEach(function(d){
+      blcount=0;
+      res.data.forEach(function(d){
         console.log(d);
-          html+="<tr><td>"+(d.date=='' ? '' : dateFormat(d.date*1000))+"</td>"
-          html+="<td>"+(d.created_at=='' ?  '':dateFormat(Date.parse(d.created_at)))+"</td>"
-          html+="<td class='text-left'>"+d.transaction_name+(d.comment!=''? '('+d.comment+')':'' )+"</td>"
-          html+="<td class='text-center'>"+d.id+"</td>"
-          html+="<td class='text-right'>"+d.debit+"</td>"
-          html+="<td class='text-right'>"+d.credit+"</td>"
-          if(class_type==1 || class_type==4){
-            html+="<td class='text-right'>"+(balance+=parseFloat(d.debit)-parseFloat(d.credit)).toFixed(2)+"</td></tr>";
-          }else{
-            html+="<td class='text-right'>"+(balance+=parseFloat(d.credit)-parseFloat(d.debit)).toFixed(2)+"</td></tr>";
-          } 
+          blcount+=parseFloat(d.debit)-parseFloat(d.credit);
+          html+="<tr><td class='text-left' style='border-left:1px solid black;'>"+d.class_name+"</td>";
+          html+="<td class='text-left' style='border-left:1px solid black;'>"+d.group_name+"</td>";
+          html+="<td class='text-left' style='border-left:1px solid black;'>"+d.code+(d.code==''? "" : '-')+d.name+"</td>";
+
+          
+          html+="<td class='text-right' style='border:1px solid black;'>"+(parseFloat(d.debit-d.credit)).toFixed(2)+"</td>";
+          
+          
       })
       $('#data-load').html(html);
+      // $('#blcount').text(blcount.toFixed(2));
+
+      $('#printed_user').text("{{auth()->user()->name}}");
+      showPrintTime();
     })
     
   }
@@ -416,13 +261,7 @@ $(".customer").select2({
     return(dates + "-" + month + "-" + year);
     // return date;
   }
-  function dateFormatInvId(data){
-    date=new Date(data);
-    let dates = ("0" + date.getDate()).slice(-2);
-    let month = ("0" + (date.getMonth() + 1)).slice(-2);
-    let year = date.getFullYear();
-    return(((year).toString()).substring(2,4)+month+dates);
-  }
+
   $('#fromDate,#toDate').daterangepicker({
         showDropdowns: true,
         singleDatePicker: true,
@@ -431,4 +270,11 @@ $(".customer").select2({
             format: 'DD-MM-YYYY',
         }
   });
+  function showPrintTime(){
+    time=moment().format('MMMM Do YYYY, h:mm:ss a');
+    $('#print_time').text(time);
+  }
+  $(document).ready(function(){
+    Apply();
+  })
 </script>
