@@ -18,7 +18,7 @@
     <link rel="icon" href="https://2aitautomation.com/meherpur/public/img/favicon.png" type="image/x-icon" />
 
     <!-- Bootstrap 3.3.7 -->
-    <link rel="stylesheet" href="https://2aitautomation.com/meherpur/public/themes/backend/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <style>
         body{
             font-size: 10px;
