@@ -35,6 +35,7 @@ Route::group([
     Route::resource('/bank','BankAccountController');
     Route::resource('/customer','CustomerController');
     Route::resource('/invoice','InvoiceTestController');
+    Route::resource('/pos','PosController');
     Route::resource('/warehouse','WarehouseController');
     Route::post('/get-warehouse','WarehouseController@getWarehouse');
     Route::resource('/regular-condition-list','RegularConditionListController');
@@ -170,10 +171,8 @@ Route::group([
     Route::post('/supplier-statement-report','SupplierStatementReportController@generateReport');
     Route::get('/customer-balance-analysis-report','CustomerBalanceAnalysisController@index');
     Route::post('/customer-balance-analysis-report','CustomerBalanceAnalysisController@getReport');
-<<<<<<< HEAD
     Route::get('/chart-of-account-report','ChartOfAccountController@index');
     Route::post('/chart-of-account-report','ChartOfAccountController@getReport');
-=======
 });
 
 Route::group([
@@ -195,5 +194,4 @@ Route::group([
     'namespace' => 'App\Http\Controllers\SuperAdmin',
 ],function(){
     Route::resource('/general-setting','GeneralSettingController');
->>>>>>> BismillahShop
 });

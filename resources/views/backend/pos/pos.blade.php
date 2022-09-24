@@ -160,7 +160,12 @@
                           </div>
                         </div>
                         <div class="col-12 col-md-3">
-                          <div class="card rounded" style="min-height:100px;"></div>
+                          <div class="card rounded" style="min-height:100px;">
+                            <p style="font-size:10px;" class="bg-danger pl-1 mt-2">Quantity : 120</p>
+                            <center style="font-size:12px;" class="font-weight-bold">
+                             <img src="{{}}" alt="ASDFSDAF">
+                            </center>
+                          </div>
                         </div>
                         <div class="col-12 col-md-3">
                           <div class="card rounded" style="min-height:100px;"></div>
