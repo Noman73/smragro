@@ -51,17 +51,18 @@
                           <input type="text" class="form-control" id="hand_bill" placeholder="Hand Bill">
                         </div>
                        </div>
-                       <div class="col-12 col-md-2 mt-2">
+                       <div class="col-12 col-md-3 ">
+                        <div class="form-group">
+                          <select name="warehouse" id="warehouse" class="form-control"></select>
+                          <div class="invalid-feedback" id="warehouse_msg"></div>
+                        </div>
                          <div class="float-right d-none">
-
                             <input type="radio" name="action[]" value="0" checked>
                             <label for="">Sale</label>
                             <input type="radio" name="action[]" value="1">
                             <label for="">Return</label>
                             <div class="invalid-feedback" id='action_msg'></div>
                          </div>
-                       </div>
-                       <div class="col-12 col-md-1">
                        </div>
                        <div class="col-12 col-md-2">
                          <div class="form-group">

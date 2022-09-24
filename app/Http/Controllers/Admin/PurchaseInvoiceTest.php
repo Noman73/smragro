@@ -91,6 +91,7 @@ class PurchaseInvoiceTest extends Controller
             'note' => 'nullable|max:500',
             'staff_note' => 'nullable|max:500',
             'chalan_no' => 'nullable|max:500',
+            'warehouse' => 'required|max:500',
         ]);
         if ($validator->passes()) {
             $length = intval($data['total_item']) - 1;
@@ -105,6 +106,7 @@ class PurchaseInvoiceTest extends Controller
             $invoice = new PInvoice;
             $invoice->dates = strtotime(strval($data['date']));
             $invoice->supplier_id = $data['supplier'];
+            $invoice->store_id = $data['warehouse'];
             $invoice->chalan_no = $data['chalan_no'];
             $invoice->total_item = $data['total_item'];
             $invoice->vat = $data['vat'];
@@ -127,6 +129,7 @@ class PurchaseInvoiceTest extends Controller
                     $stmt->invoice_id = $inv_id;
                     $stmt->dates = strtotime(strval($data['date']));
                     $stmt->supplier_id = $data['supplier'];
+                    $stmt->store_id = $data['warehouse'];
                     $stmt->product_id = $data['product'][$i];
                     if ($data['action'] == 0) {
                         $stmt->deb_qantity = $data['qantity'][$i];

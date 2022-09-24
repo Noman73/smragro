@@ -250,6 +250,7 @@ $('#date,#cheque_issue_date').daterangepicker({
     $('input,select').removeClass('is-invalid');
     let discountCheck=$('#discountCheck').is(':checked');
     console.log(discountCheck);
+    let warehouse=($('#warehouse').val()==null ? '' : $('#warehouse').val() );
     if(discountCheck){
       discount_type=1;
     }else{
@@ -305,6 +306,7 @@ $('#date,#cheque_issue_date').daterangepicker({
     let sale_by= $('input[name="sale_by[]"]:checked').val();
     formData=new FormData()
     formData.append('sale_type',sale_type);
+    formData.append('warehouse',warehouse);
     formData.append('discount_type',discount_type);
     formData.append('discount',discount);
     formData.append('action',action);
@@ -381,6 +383,44 @@ $('#date,#cheque_issue_date').daterangepicker({
         }
       })
   }
+
+  $("#warehouse").select2({
+    theme:'bootstrap4',
+    placeholder:'Warehouse',
+    allowClear:true,
+    ajax:{
+      url:"{{URL::to('/admin/get-warehouse')}}",
+      type:'post',
+      dataType:'json',
+      delay:20,
+      data:function(params){
+        return {
+          searchTerm:params.term,
+          _token:"{{csrf_token()}}",
+          }
+      },
+      processResults:function(response){
+        return {
+          results:response,
+        }
+      },
+      cache:true,
+    },
+    initSelection: function(element, callback) {
+      var id = $(element).val();
+      if(id !== "") {
+          $.ajax("{{URL::to('/admin/get-warehouse')}}", {
+              type:'post',
+              data: {_token:"{{csrf_token()}}"},
+              dataType: "json"
+          }).done(function(data) {
+              callback(data);
+          });
+      }
+      }
+  });
+
+
   $("#bank").select2({
     theme:'bootstrap4',
     placeholder:'Payment Method',
