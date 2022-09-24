@@ -152,25 +152,28 @@
                   </div>
                 </div>
                 <div class="col-md-4 ">
-                  <div class="product-list border ml-2">
+                  <div class="product-list border">
                       <div class="row" style="min-height: 400px;margin:10px">
-                        <div class="col-12 col-md-3">
+                        <div class="col-12 col-md-4">
                           <div class="card rounded" style="min-height:100px;">
                             <img class="img-fluid" src="" alt="">
                           </div>
                         </div>
-                        <div class="col-12 col-md-3">
+                        <div class="col-12 col-md-4">
                           <div class="card rounded" style="min-height:100px;">
-                            <p style="font-size:10px;" class="bg-danger pl-1 mt-2">Quantity : 120</p>
-                            <center style="font-size:12px;" class="font-weight-bold">
-                             <img src="{{}}" alt="ASDFSDAF">
-                            </center>
+                              <div class="container">
+                                <p style="font-size:10px;" class="bg-danger pl-1 mt-2">Quantity : 120</p>
+                                <center style="font-size:12px;" class="font-weight-bold">
+                                <img class="img-fluid" src="{{asset('storage/logo/1_1658290238.png')}}" alt="sdf">
+                                </center>
+                                <p style="font-size:10px;">sunsilk shampoo</p>
+                              </div>
                           </div>
                         </div>
-                        <div class="col-12 col-md-3">
+                        <div class="col-12 col-md-4">
                           <div class="card rounded" style="min-height:100px;"></div>
                         </div>
-                        <div class="col-12 col-md-3">
+                        <div class="col-12 col-md-4">
                           <div class="card rounded" style="min-height:100px;"></div>
                         </div>
                       </div>

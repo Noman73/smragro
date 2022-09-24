@@ -66,7 +66,7 @@ $("#customer").select2({
     }
   })
   let total_item=0;
-  function addNew(){
+  function addNew(product_id,name,qantity,price){
     form=`<tr><td><select class="form-control product" name="product[]"></select></td>`;
     form+=`<td><input type="number" disabled class="form-control bg-secondary text-light" name="stock[]" placeholder='0.00'/></td>`;
     form+=`<td><input type="number" class="form-control qantity" name="qantity[]" placeholder='0.00' value='1'/></td>`;
