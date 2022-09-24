@@ -50,13 +50,13 @@ class LedgerReportController extends Controller
                 where ledger_id=:ledger_id and customers.type=2 and voucers.date<:from_date
             ",['ledger_id'=>AccountLedger::where('name','Customer')->first()->id,'from_date'=>$from_date]);
             $arr= DB::select("
-            SELECT voucer.id,voucer.date,voucer.debit,voucer.credit,voucer.transaction_name,voucer.comment,voucer.created_at from
+            SELECT voucer.id,voucer.v_inv_id,voucer.journal_inv_id,voucer.invoice_id,voucer.pinvoice_id,voucer.date,voucer.debit,voucer.credit,voucer.transaction_name,voucer.comment,voucer.created_at from
             (
-                    SELECT voucers.id,voucers.date,voucers.debit,voucers.credit,voucers.transaction_name,voucers.comment,voucers.created_at from voucers
+                    SELECT voucers.id,voucers.v_inv_id,voucers.journal_inv_id,voucers.invoice_id,voucers.pinvoice_id,voucers.date,voucers.debit,voucers.credit,voucers.transaction_name,voucers.comment,voucers.created_at from voucers
                     inner join customers on customers.id=voucers.subledger_id
                      where voucers.ledger_id=:ledger_id and customers.type=2 and voucers.date>=:from_date and voucers.date<=:to_date
                     UNION ALL
-                    SELECT 0,'',0.00,0.00,'P/F','',''
+                    SELECT 0,'','','','','',0.00,0.00,'P/F','',''
             ) voucer
             order by voucer.date,voucer.id
                 ",['ledger_id'=>AccountLedger::where('name','Customer')->first()->id,'from_date'=>$from_date,'to_date'=>$to_date]);
@@ -66,13 +66,13 @@ class LedgerReportController extends Controller
                 SELECT sum(debit)-sum(credit) balance from voucers where ledger_id=:ledger_id and date<:from_date
             ",['ledger_id'=>$data['ledger'],'from_date'=>$from_date]);
             $arr= DB::select("
-            SELECT voucer.id,voucer.date,voucer.debit,voucer.credit,voucer.transaction_name,voucer.comment,voucer.created_at from
+            SELECT voucer.id,voucer.v_inv_id,voucer.journal_inv_id,voucer.invoice_id,voucer.pinvoice_id,voucer.date,voucer.debit,voucer.credit,voucer.transaction_name,voucer.comment,voucer.created_at from
             (
-                    SELECT voucers.id,voucers.date,voucers.debit,voucers.credit,voucers.transaction_name,voucers.comment,voucers.created_at from voucers
+                    SELECT voucers.id,voucers.v_inv_id,voucers.journal_inv_id,voucers.invoice_id,voucers.pinvoice_id,voucers.date,voucers.debit,voucers.credit,voucers.transaction_name,voucers.comment,voucers.created_at from voucers
                     
                      where voucers.ledger_id=:ledger_id and date>=:from_date and date<=:to_date
                     UNION ALL
-                    SELECT 0,'',0.00,0.00,'P/F','',''
+                    SELECT 0,'','','','','',0.00,0.00,'P/F','',''
             ) voucer
             order by voucer.date,voucer.id
                 ",['ledger_id'=>$data['ledger'],'from_date'=>$from_date,'to_date'=>$to_date]);
