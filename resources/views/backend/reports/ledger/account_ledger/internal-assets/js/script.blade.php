@@ -385,7 +385,7 @@ $(".customer").select2({
         break;
         case 'Sale Invoice':
           id=d.invoice_id;
-          url="<a target='_blank' href='{{URL::to('admin/view-pages/sale-invoice-view')}}/"+id+"'>"+(dateFormatInvId(d.date*1000)+id).toString()+"<a>"
+          url="<a target='_blank' href='{{URL::to('admin/view-pages/sales-invoice')}}/"+id+"'>"+(dateFormatInvId(d.date*1000)+id).toString()+"<a>"
         break;
         case 'Purchase Invoice':
           id=d.pinvoice_id;

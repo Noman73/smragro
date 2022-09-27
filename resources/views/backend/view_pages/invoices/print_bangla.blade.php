@@ -17,10 +17,11 @@
     <title>SMRAGRO</title>
 
     <!--Favicon-->
-    <link rel="icon" href="https://2aitautomation.com/meherpur/public/img/favicon.png" type="image/x-icon" />
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- Bootstrap 3.3.7 -->
-    <link rel="stylesheet" href="https://2aitautomation.com/meherpur/public/themes/backend/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
     <style>
         body{
             font-size: 10px;
@@ -52,7 +53,7 @@
 <div class="container-fluid">
     <div id="print" class="print" >
         <div class="row invoice_header">
-          <div class="col-xs-5" style="width: 25%; float:left;">
+          <div class="col-xs-5" style="width: 50%; float:left;">
               <img src="{{asset('storage/logo/'.$info->logo)}}" width="100%" alt="Logo">
               {{$info->adress}}<br>
               {{$info->phone}}<br>
@@ -60,7 +61,7 @@
               {{$info->web}}<br>
               বিন নম্বর: {{$info->bin_no}}<br>
           </div>
-          <div class="col-xs-7" style="width: 75%; text-align:right">
+          <div class="col-xs-7" style="width: 50%; text-align:right">
               <div style=" width:100%; text-align:right;">
                   <span style="font-size: 16px;">
                       <b>

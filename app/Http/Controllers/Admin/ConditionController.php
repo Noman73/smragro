@@ -70,6 +70,7 @@ class ConditionController extends Controller
         
         if($validator->passes()){
             $subledger=AccountLedger::where('name','Condition Sale')->first();
+            $customer=Invoice::with('customer')->where('id',$request->invoice_id)->first()->customer->id;
             $v_invoice=new Vinvoice;
             $v_invoice->date=strtotime($request->date);
             $v_invoice->total=$request->ammount;
@@ -83,6 +84,7 @@ class ConditionController extends Controller
                 $voucer->date= strtotime($request->date);
                 $voucer->transaction_name="Condition Sale Receipt";
                 $voucer->v_inv_id= $v_invoice->id;
+                $voucer->invoice_id= $request->invoice_id;
                 $voucer->credit=$request->ammount;
                 $voucer->ledger_id=$subledger->id;
                 $voucer->save();

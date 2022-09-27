@@ -5,21 +5,7 @@
  @endsection
  @section('content')
     <!-- Content Header (Page header) -->
-    <div class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1 class="m-0">Manage Pos</h1>
-          </div><!-- /.col -->
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Pos</li>
-            </ol>
-          </div><!-- /.col -->
-        </div><!-- /.row -->
-      </div><!-- /.container-fluid -->
-    </div>
+    
     <!-- /.content-header -->
     <!-- Main content -->
     <section class="content">
@@ -31,14 +17,22 @@
                     {{-- devide product list --}}
                     
                     <div class="col-8">
-                      <div class="form-group">
-                        <label for="">Customer</label>
-                        <select class="form-control" name="customer" id="customer"></select>
-                      </div>
-                      <div class="form-group">
-                        <label for=""></label>
-                      </div>
+                      
                     <div class="row">
+                      <div style="margin-left:-5px;" class="col-6">
+                        <div class="form-group">
+                          <select class="form-control" name="customer" id="customer"></select>
+                        </div>
+                      </div>
+                      <div style="" class="col-6">
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <div class="input-group-text"><i class="fas fa-barcode"></i></div>
+                          </div>
+                          <input type="text" class="form-control" id="barcode" placeholder="Barcode">
+                        </div>
+                  
+                      </div>
                    <div class="table-responsive">
                        <table class="table table-sm text-center table-bordered" id="add_product">
                            <thead>
@@ -152,31 +146,28 @@
                   </div>
                 </div>
                 <div class="col-md-4 ">
-                  <div class="product-list border">
-                      <div class="row" style="min-height: 400px;margin:10px">
-                        <div class="col-12 col-md-4">
-                          <div class="card rounded" style="min-height:100px;">
-                            <img class="img-fluid" src="" alt="">
-                          </div>
-                        </div>
-                        <div class="col-12 col-md-4">
-                          <div class="card rounded" style="min-height:100px;">
-                              <div class="container">
-                                <p style="font-size:10px;" class="bg-danger pl-1 mt-2">Quantity : 120</p>
-                                <center style="font-size:12px;" class="font-weight-bold">
-                                <img class="img-fluid" src="{{asset('storage/logo/1_1658290238.png')}}" alt="sdf">
-                                </center>
-                                <p style="font-size:10px;">sunsilk shampoo</p>
-                              </div>
-                          </div>
-                        </div>
-                        <div class="col-12 col-md-4">
-                          <div class="card rounded" style="min-height:100px;"></div>
-                        </div>
-                        <div class="col-12 col-md-4">
-                          <div class="card rounded" style="min-height:100px;"></div>
+                  <div class="product-list border" style="min-height: 400px;">
+                    <div class="container">
+                      <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group mt-2">
+                          <select class="form-control" name="" id="category" onchange="showProduct()"></select>
                         </div>
                       </div>
+                      <div class="col-md-6">
+                        <div class="form-group mt-2">
+                          <select class="form-control" name="" id="brand"></select>
+                        </div>
+                      </div>
+                      <div class="col-md-12">
+                        <input class="form-control form-control-sm" type="text" id="search" placeholder="Search">
+                      </div>
+                    </div>
+                    </div>
+                    <div class="row show-product" style="margin:10px">
+                        
+                        
+                    </div>
                   </div>
                 </div>
                </div>
@@ -188,7 +179,7 @@
           </div>
          
       </div><!-- /.container-fluid -->
-
+      <audio id="audio" src="{{asset('storage/audio/beep.wav')}}" autoplay="false"></audio>
       {{-- modal --}}
       <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="modal">
         <div class="modal-dialog modal-lg">
@@ -251,5 +242,5 @@
 
   @section('script')
   
-  @include('backend.invoice.internal-assets.js.script')
+  @include('backend.pos.internal-assets.js.script')
   @endsection

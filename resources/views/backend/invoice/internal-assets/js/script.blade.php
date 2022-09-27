@@ -408,15 +408,21 @@ $('#date,#cheque_issue_date').daterangepicker({
     },
     initSelection: function(element, callback) {
       var id = $(element).val();
-      if(id !== "") {
-          $.ajax("{{URL::to('/admin/get-warehouse')}}", {
-              type:'post',
-              data: {_token:"{{csrf_token()}}"},
-              dataType: "json"
-          }).done(function(data) {
-              callback(data);
-          });
-      }
+        if(id !== "") {
+            $.ajax("{{URL::to('/admin/get-warehouse')}}", {
+                type:'post',
+                data: {_token:"{{csrf_token()}}"},
+                dataType: "json"
+            }).done(function(data) {
+                option="<option value='"+data[0].id+"'>"+data[0].text+"</option>";
+                // callback(data);
+                console.log(option)
+                $('#warehouse').html(option);
+                callback()
+            });
+            
+        }
+        
       }
   });
 

@@ -65,23 +65,62 @@ $("#customer").select2({
       cache:true,
     }
   })
+  $("#category").select2({
+    theme:'bootstrap4',
+    placeholder:'Category',
+    allowClear:true,
+    ajax:{
+      url:"{{URL::to('/admin/get-category')}}",
+      type:'post',
+      dataType:'json',
+      delay:20,
+      data:function(params){
+        return {
+          searchTerm:params.term,
+          _token:"{{csrf_token()}}",
+          }
+      },
+      processResults:function(response){
+        
+        return {
+          results:response,
+        }
+      },
+      cache:true,
+    }
+  })
   let total_item=0;
   function addNew(product_id,name,qantity,price){
-    form=`<tr><td><select class="form-control product" name="product[]"></select></td>`;
-    form+=`<td><input type="number" disabled class="form-control bg-secondary text-light" name="stock[]" placeholder='0.00'/></td>`;
-    form+=`<td><input type="number" class="form-control qantity" name="qantity[]" placeholder='0.00' value='1'/></td>`;
-    form+=`<td><input type="number" class="form-control price" name="price[]" placeholder='0.00'/></td>`;
-    form+=`<td><input type="number" class="form-control total" name="total[]" placeholder='0.00'/></td>`;
+    // sound
+    var sound = document.getElementById("audio");
+    sound.play();
+  // sound end
+    exist=$("input[name='product[]'][value='"+product_id+"']");
+    if(exist.val()==product_id){
+      qty=exist.parent().next().next().children("input[name='qantity[]']")
+      qty.val(parseFloat(qty.val())+1)
+      console.log('skldfjd')
+      calculation()
+      return false;
+      
+    }
+    form=`<tr><td>`+name+`<input class="form-control d-none" name="product[]" value="`+product_id+`"></td>`;
+    form+=`<td><input type="text" disabled class="form-control form-control-sm bg-secondary text-light" name="stock[]" value="`+qantity+`" placeholder='0.00'/></td>`;
+    form+=`<td><input type="number" class="form-control form-control-sm qantity" name="qantity[]" placeholder='0.00' value='1'/></td>`;
+    form+=`<td><input type="number" class="form-control form-control-sm price" name="price[]" value="`+price+`" placeholder='0.00'/></td>`;
+    form+=`<td><input type="number" class="form-control form-control-sm total" name="total[]" placeholder='0.00'/></td>`;
     form+=`<td><button class="btn btn-sm btn-danger removeItem" >X</button></td></tr>`;
    $("#item_table_body").append(form);
    initSelect2()
    total_item=total_item+1;
    $('#total-item').val(total_item)
+   calculation()
   }
 
   $(document).ready(function(){
-    addNew();
     customerVisibility()
+    showProduct();
+    $('#barcode').focus();
   })
   $(document).on('click','.removeItem',function(){
     $(this).parent().parent().remove();
@@ -121,6 +160,9 @@ $(document).on('change keyup','.price,#discount,#vat,.qantity,#transport,.produc
     calculation()
     totalCal();
   }
+})
+$(document).on('keyup change','#search',function(){
+  showProduct();
 })
 $(document).on('focusout','.total',function(){
   totalValDivision(this);
@@ -450,6 +492,29 @@ $('#date,#cheque_issue_date').daterangepicker({
       cache:true,
     }
   });
+  $("#brand").select2({
+    theme:'bootstrap4',
+    placeholder:'Brand',
+    allowClear:true,
+    ajax:{
+      url:"{{URL::to('/admin/get-brand')}}",
+      type:'post',
+      dataType:'json',
+      delay:20,
+      data:function(params){
+        return {
+          searchTerm:params.term,
+          _token:"{{csrf_token()}}",
+          }
+      },
+      processResults:function(response){
+        return {
+          results:response,
+        }
+      },
+      cache:true,
+    }
+  });
   function paymentMethod(){
     let method_type=$("input[name='payment_method_type[]']:checked").val();
     console.log(method_type)
@@ -619,6 +684,41 @@ $(document).keypress(function(event){
     
   }
 })
-
-
+function showProduct(){
+  category=$('#category').val();
+  search=$('#search').val();
+  brand=$('#brand').val();
+    axios.post("{{URL::to('admin/get-all-products')}}",{category:category,brand:brand,search:search})
+    .then(res=>{
+      console.log(res)
+      product='';
+      res.data.forEach(function(d){
+       product+= `<div class="col-12 col-md-4">
+                    <div onclick="addNew(`+d.id+`,'`+d.name.replace('"','“')+`','`+d.qantity+`',`+d.sale_price+`)" class="card rounded" style="min-height:120px;">
+                      <div class="container">
+                        <p style="font-size:10px;" class="bg-danger pl-1 mt-2">Quantity : `+d.qantity+`</p>
+                        <center style="font-size:10px;">
+                        <img style="max-height:50px;" class="img-fluid" src="{{asset('storage/product/')}}/`+(d.image!=null ? d.image : 'no-image.png')+`" alt="sdf">
+                        </center>
+                        <p style="font-size:10px;text-align:center;font-weight:bold">`+d.name+`</p>
+                        <p class="font-weight-bold text-center bg-primary p-1" style="font-size:10px;">৳ `+d.sale_price+`</p>
+                      </div>
+                    </div>
+                  </div>
+                `
+      })
+      $('.show-product').html(product)
+    })
+}
+$(document).on('keyup','#barcode',function(){
+  code=$(this).val();
+  axios.get("{{URL::to('admin/get-product-by-code')}}/"+code)
+  .then(res=>{
+    console.log(res);
+    data=res.data[0];
+    $('#barcode').val('');
+    addNew(data.id,data.name.replace('"','“'),data.qantity,data.sale_price)
+    return false;
+  })
+})
 </script>

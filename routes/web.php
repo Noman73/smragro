@@ -26,6 +26,10 @@ Route::group([
     'namespace' => 'App\Http\Controllers\Admin',
 ],function(){
     Route::resource('/category','CategoryController');
+    Route::resource('/brand','BrandController');
+    Route::post('/get-brand','BrandController@getBrand');
+    Route::post('/get-all-products','ProductController@getAllProduct');
+    Route::get('/get-product-by-code/{code}','ProductController@getProductByCode');
     Route::resource('/multi_note','MultiNoteController');
     Route::post('/get-multi-note','MultiNoteController@getMultiNote');
     Route::resource('/supplier','SupplierController');
