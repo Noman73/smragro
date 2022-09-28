@@ -147,8 +147,13 @@
                               <th width="50%">Paid Amount: </th>
                               <td><input type="number" class="form-control form-control-sm" id="ammount" placeholder="0.00"></td>
                             </tr>
+                            
                         </table>
                     </div>
+                  </div>
+                  <div class="float-right mt-4">
+                    <button class="btn btn-secondary" onclick="Clean()">Reset</button>
+                    <button class="btn btn-primary submit" onclick="formRequestTry()">Save</button>
                   </div>
                 </div>
                 <div class="col-md-4 ">

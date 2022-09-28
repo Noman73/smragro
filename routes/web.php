@@ -74,6 +74,7 @@ Route::group([
     Route::get('/price-list/{customer_id}','MakePriceController@priceList');
     Route::get('/get-quantity/{product_id}','ProductController@getQantity');
     Route::post('/get-product-price','ProductController@productPrice');
+    Route::resource('/roles','RoleController');
 
 });
 Route::group([

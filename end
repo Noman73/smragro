@@ -1,0 +1,114 @@
+[33mcommit b85ea47bfb75467fb32e680fe0e1aa13d9071f42[m[33m ([m[1;36mHEAD -> [m[1;32mbismillah2[m[33m)[m
+Author: Abdullah Al Noman <noman.eng73@gmail.com>
+Date:   Tue Sep 27 13:15:16 2022 +0600
+
+    27-09-2022
+
+[33mcommit 673a73f6df2af7e35e3396d559c3bd1a0e8d0f4e[m[33m ([m[1;31morigin/bismillah2[m[33m)[m
+Author: Abdullah Al Noman <noman.eng73@gmail.com>
+Date:   Sat Sep 24 15:42:44 2022 +0600
+
+    24-09-2022
+
+[33mcommit 98ec880fbc38d1e9d92d254449628817ab03f01c[m
+Author: Abdullah Al Noman <noman.eng73@gmail.com>
+Date:   Sat Sep 24 11:12:32 2022 +0600
+
+    pos development process
+
+[33mcommit bf216e9f4cd879f505dffbd13746aa79b98567ac[m
+Merge: 3ea049f 7184425
+Author: Abdullah Al Noman <noman.eng73@gmail.com>
+Date:   Sat Sep 24 10:02:51 2022 +0600
+
+    git merged BismillahShop completed
+
+[33mcommit 3ea049fae124e957f537593f9cf6ad2c581f2728[m
+Author: Abdullah Al Noman <noman.eng73@gmail.com>
+Date:   Sat Sep 24 09:49:55 2022 +0600
+
+    24-09-2022
+
+[33mcommit 8f7a6f3bfb804ec9c9f110cb7cab179e49c7d3dc[m
+Author: Abdullah Al Noman <noman.eng73@gmail.com>
+Date:   Thu Sep 22 15:44:25 2022 +0600
+
+    22-09-2022
+
+[33mcommit 71844254dba1acfc895bf1d35f0d24afda9fb84b[m[33m ([m[1;32mBismillahShop[m[33m)[m
+Author: Abdullah Al Noman <noman.eng73@gmail.com>
+Date:   Tue Sep 20 09:38:30 2022 +0600
+
+    superadmin added
+
+[33mcommit adf6006ed3e0e46324c6efcf18d3e4ad44022e2f[m
+Author: Abdullah Al Noman <noman.eng73@gmail.com>
+Date:   Tue Sep 13 11:02:51 2022 +0600
+
+    added warehouse migration file
+
+[33mcommit 2ef5fb75b70f7982d2cbd215269ef8b097e80148[m[33m ([m[1;31morigin/main[m[33m, [m[1;32mmain[m[33m)[m
+Author: Abdullah Al Noman <noman.eng73@gmail.com>
+Date:   Wed Sep 7 17:22:01 2022 +0600
+
+    07-09-2022
+
+[33mcommit f9d50ec8301c977f431d97b018b9e7f4abd66af2[m
+Author: Abdullah Al Noman <noman.eng73@gmail.com>
+Date:   Tue Sep 6 18:19:40 2022 +0600
+
+    06-09-2022
+
+[33mcommit 5d8435de131cd0d90ec230b40ca5d8b436f33684[m
+Author: Abdullah Al Noman <noman.eng73@gmail.com>
+Date:   Mon Sep 5 16:11:59 2022 +0600
+
+    05-08-2022
+
+[33mcommit 6becc2b41c7a370ee9187d4d1b62cba6ef2ef7b5[m
+Author: Abdullah Al Noman <noman.eng73@gmail.com>
+Date:   Mon Sep 5 15:22:25 2022 +0600
+
+    05-08-2022
+
+[33mcommit 178c0bac987726c047008dc015e26d1ce59c7f64[m
+Author: Abdullah Al Noman <noman.eng73@gmail.com>
+Date:   Tue Aug 30 16:08:30 2022 +0600
+
+    salary setup crud complete
+
+[33mcommit e096cb12ff5b5432067e1b94e1cefe36f78c15ad[m
+Author: Abdullah Al Noman <noman.eng73@gmail.com>
+Date:   Tue Aug 30 11:26:38 2022 +0600
+
+    git ignore file add
+
+[33mcommit 557429bd613ea461fcc5d9d184893b2b1c6deac0[m
+Author: Abdullah Al Noman <noman.eng73@gmail.com>
+Date:   Tue Aug 30 11:22:56 2022 +0600
+
+    add phone2 bank_name bank_account_no column to customers table
+
+[33mcommit 23f73b97bd9c36403e809f666acef8e3dc9497a3[m
+Author: Abdullah Al Noman <noman.eng73@gmail.com>
+Date:   Sun Aug 28 15:33:44 2022 +0600
+
+    28-08-22
+
+[33mcommit 1a521a2d7676205b94dd45cb310c9ee83054cef1[m
+Author: Abdullah Al Noman <noman.eng73@gmail.com>
+Date:   Sun Aug 28 10:37:19 2022 +0600
+
+    bin added in invoice
+
+[33mcommit d95bc9603dd1191ae82f7e78c1092732356be49d[m
+Author: Abdullah Al Noman <noman.eng73@gmail.com>
+Date:   Sun Aug 28 10:08:35 2022 +0600
+
+    storage added
+
+[33mcommit 3153f50c3a8ee282befb9729794ea80b769fac33[m
+Author: Abdullah Al Noman <noman.eng73@gmail.com>
+Date:   Sun Aug 28 10:04:56 2022 +0600
+
+    first commit
