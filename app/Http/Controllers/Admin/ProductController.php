@@ -321,7 +321,7 @@ class ProductController extends Controller
             ) as sales1 on sales1.product_id=products.id
             inner join units on units.id=products.unit_id
             where products.category_id like :category and products.name like :search
-            group by products.id,purchases.product_id,sales1.product_id order by products.id limit 20
+            group by products.id,purchases.product_id,sales1.product_id order by products.id limit 9
             ",['category'=>'%'.$category.'%','search'=>'%'.$search.'%']);
     }
     public function getProductByCode($code){
@@ -335,7 +335,7 @@ class ProductController extends Controller
             ) as sales1 on sales1.product_id=products.id
             inner join units on units.id=products.unit_id
             where products.product_code=:code
-            group by products.id,purchases.product_id,sales1.product_id order by products.id limit 20
+            group by products.id,purchases.product_id,sales1.product_id order by products.id limit 9
             ",['code'=>$code]);
     }
 }
