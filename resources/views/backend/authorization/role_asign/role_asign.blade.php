@@ -11,12 +11,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Permission</h1>
+            <h1 class="m-0">Role Asign</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Permission</li>
+              <li class="breadcrumb-item active">Role Asign</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -31,10 +31,10 @@
             <div class="card-header bg-dark">
               <div class="row">
                 <div class="col-6">
-                  <div class="card-title">Permission </div>
+                  <div class="card-title">Role Asign </div>
                 </div>
                 <div class="col-6">
-                  <button class="btn btn-primary float-right" data-toggle="modal" data-target="#modal" data-whatever="@mdo">Add New</button>
+                  <button class="btn btn-primary float-right" data-toggle="modal" data-target="#modal" data-whatever="@mdo">নতুন</button>
                 </div>
               </div>
             </div>
@@ -43,7 +43,8 @@
                 <thead>
                   <tr>
                     <th>SL.</th>
-                    <th>Permission Name</th>
+                    <th>Role Name</th>
+                    <th>User Name</th>
                     <th>Action</th>
                   </tr>
                 </thead>
@@ -58,7 +59,7 @@
         <div class="modal-dialog modal-lg">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Add New Permission</h5>
+              <h5 class="modal-title" id="exampleModalLabel">Add New Role</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -75,6 +76,14 @@
                       </div>
                     </div>
                   </div>
+                  <div class="col-md-8 mr-auto ml-auto">
+                    <div class="form-group">
+                      <label for="recipient-name" class="col-form-label">User:</label>
+                      <select class="form-control" name="" id="user"></select>
+                      <div class="invalid-feedback" id="user_msg">
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </form>
             </div>
@@ -88,12 +97,11 @@
       {{-- endmodal --}}
     </section>
   @endsection
-
   @section('script')
   <script src="{{asset('storage/adminlte/plugins/datatables/jquery.dataTables.min.js')}}"></script>
   <script src="{{asset('storage/adminlte/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
   <script src="{{asset('storage/adminlte/plugins/datatables-responsive/js/dataTables.responsive.min.js')}}"></script>
   <script src="{{asset('storage/adminlte/plugins/datatables-responsive/js/responsive.bootstrap4.min.js')}}"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.26.0/axios.min.js" integrity="sha512-bPh3uwgU5qEMipS/VOmRqynnMXGGSRv+72H/N260MQeXZIK4PG48401Bsby9Nq5P5fz7hy5UGNmC/W1Z51h2GQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  @include('backend.authorization.permission.internal-assets.js.script')
+  @include('backend.authorization.role_asign.internal-assets.js.script')
   @endsection

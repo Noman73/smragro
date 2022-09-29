@@ -76,6 +76,8 @@ Route::group([
     Route::post('/get-product-price','ProductController@productPrice');
     Route::resource('/roles','RoleController');
     Route::resource('/permission','PermissionController');
+    Route::resource('/asign-permission','ApplyPermissionController');
+    Route::resource('/asign-role','RoleAsignController');
 
 });
 Route::group([

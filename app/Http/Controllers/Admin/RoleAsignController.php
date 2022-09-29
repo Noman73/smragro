@@ -5,21 +5,20 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class ApplyPermissionController extends Controller
+class RoleAsignController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-
     public function __construct()
     {
-        $this->middleware('auth');
+         $this->middleware('auth'); 
     }
     public function index()
     {
-        return view('backend.authorization.asign_permission.asign_permission');
+        return view('backend.authorization.role_asign.role_asign');
     }
 
     /**
@@ -40,7 +39,7 @@ class ApplyPermissionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
     }
 
     /**

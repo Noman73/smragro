@@ -11,12 +11,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Category</h1>
+            <h1 class="m-0">Permission Asign</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Category</li>
+              <li class="breadcrumb-item active">Permission Asign</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -31,61 +31,17 @@
             <div class="card-header bg-dark">
               <div class="row">
                 <div class="col-6">
-                  <div class="card-title">Category </div>
+                  <div class="card-title">Permission Asign </div>
                 </div>
                 <div class="col-6">
-                  <button class="btn btn-primary float-right" data-toggle="modal" data-target="#modal" data-whatever="@mdo">নতুন</button>
                 </div>
               </div>
             </div>
             <div class="card-body">
-              <table class="table table-sm text-center table-bordered" id="datatable">
-                <thead>
-                  <tr>
-                    <th>SL.</th>
-                    <th>Category</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                </tbody>
-              </table>
+              
             </div>
           </div>
       </div><!-- /.container-fluid -->
-      {{-- modal --}}
-      <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="modal">
-        <div class="modal-dialog modal-lg">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Add New Category</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <form>
-                <input type="hidden" id="id">
-                <div class="row">
-                  <div class="col-md-8 mr-auto ml-auto">
-                    <div class="form-group">
-                      <label for="recipient-name" class="col-form-label">Name:</label>
-                      <input type="text" class="form-control" id="name" placeholder="Enter Name">
-                      <div class="invalid-feedback" id="name_msg">
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </form>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary" onclick="formRequest()">Save</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      {{-- endmodal --}}
     </section>
   @endsection
 
