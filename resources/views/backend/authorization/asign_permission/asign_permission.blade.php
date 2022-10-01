@@ -38,6 +38,49 @@
               </div>
             </div>
             <div class="card-body">
+              <table class="table table-sm text-center table-bordered">
+                <thead>
+                  <tr>
+                    <th>Role</th>
+                    <th>Permissions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @php 
+                  $roles=App\Models\Role::all();
+                  $i=0;
+                  @endphp
+                  @foreach($roles as $role)
+                  <tr>
+                    <td>{{$role->name}}</td>
+                    <td>
+                      {{-- tab start --}}
+                      <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        @foreach($permission as $perm)
+                        <li class="nav-item">
+                          <a class="nav-link" id="{{strtolower(str_replace(" ","_",$perm->name.$role->id))}}-tab" data-toggle="tab" href="#{{strtolower(str_replace(" ","_",$perm->name.$role->id))}}" role="tab" aria-controls="{{strtolower(str_replace(" ","_",$perm->name.$role->id))}}"
+                            aria-selected="true">{{$perm->name}}</a>
+                        </li>
+                        @endforeach
+                      </ul>
+                      <div class="tab-content" id="myTabContent">
+                        @foreach($permission as $perm)
+                        <div class="tab-pane fade " id="{{strtolower(str_replace(' ','_',$perm->name.$role->id))}}" role="tabpanel" aria-labelledby="{{strtolower(str_replace(' ','_',$perm->name.$role->id))}}-tab">
+                          <div class="container m-4">
+                          @foreach($perm->permission as $p)
+                          <label for="">{{$p->name}}</label>
+                            <input type="checkbox"><br/>
+                          @endforeach
+                          </div>
+                        </div>
+                        @endforeach
+                      </div>
+                      {{-- tab end --}}
+                    </td>
+                  </tr>
+                  @endforeach
+                </tbody>
+              </table>
               
             </div>
           </div>

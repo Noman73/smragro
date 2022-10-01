@@ -412,7 +412,7 @@ $(".customer").select2({
             html+="<td class='text-right'>"+(balance+=parseFloat(d.debit)-parseFloat(d.credit)).toFixed(2)+"</td></tr>";
           }else{
             html+="<td class='text-right'>"+(balance+=parseFloat(d.credit)-parseFloat(d.debit)).toFixed(2)+"</td></tr>";
-          } 
+          }
       })
       $('#data-load').html(html);
     })

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
+use App\Models\Part;
 class ApplyPermissionController extends Controller
 {
     /**
@@ -19,7 +19,8 @@ class ApplyPermissionController extends Controller
     }
     public function index()
     {
-        return view('backend.authorization.asign_permission.asign_permission');
+        $permission=Part::with('permission')->get();
+        return view('backend.authorization.asign_permission.asign_permission',compact('permission'));
     }
 
     /**

@@ -44,6 +44,7 @@
                   <tr>
                     <th>SL.</th>
                     <th>Permission Name</th>
+                    <th>Part Name</th>
                     <th>Action</th>
                   </tr>
                 </thead>
@@ -72,6 +73,14 @@
                       <label for="recipient-name" class="col-form-label">Name:</label>
                       <input type="text" class="form-control" id="name" placeholder="Enter Name">
                       <div class="invalid-feedback" id="name_msg">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-8 mr-auto ml-auto">
+                    <div class="form-group">
+                      <label for="recipient-name" class="col-form-label">Part:</label>
+                      <select name="" id="part"></select>
+                      <div class="invalid-feedback" id="part_msg">
                       </div>
                     </div>
                   </div>

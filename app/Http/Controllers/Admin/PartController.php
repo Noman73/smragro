@@ -4,10 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Permission;
+use App\Models\Part;
 use DataTables;
 use Validator;
-class PermissionController extends Controller
+
+class PartController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -21,22 +22,19 @@ class PermissionController extends Controller
     public function index()
     {
         if(request()->ajax()){
-            $get=Permission::with('part')->get();
+            $get=Part::all();
             return DataTables::of($get)
               ->addIndexColumn()
               ->addColumn('action',function($get){
               $button  ='<div class="d-flex justify-content-center">';
-                $button.='<a data-url="'.route('permission.edit',$get->id).'"  href="javascript:void(0)" class="btn btn-primary shadow btn-xs sharp me-1 editRow"><i class="fas fa-pencil-alt"></i></a>
-              <a data-url="'.route('permission.destroy',$get->id).'" href="javascript:void(0)" class="btn btn-danger shadow btn-xs sharp ml-1 deleteRow"><i class="fa fa-trash"></i></a>';
+                $button.='<a data-url="'.route('part.edit',$get->id).'"  href="javascript:void(0)" class="btn btn-primary shadow btn-xs sharp me-1 editRow"><i class="fas fa-pencil-alt"></i></a>
+              <a data-url="'.route('part.destroy',$get->id).'" href="javascript:void(0)" class="btn btn-danger shadow btn-xs sharp ml-1 deleteRow"><i class="fa fa-trash"></i></a>';
               $button.='</div>';
             return $button;
           })
-          ->addColumn('part',function($get){
-            return $get->part->name;
-          })
-          ->rawColumns(['action','part'])->make(true);
+          ->rawColumns(['action'])->make(true);
         }
-        return view('backend.authorization.permission.permission');
+        return view('backend.authorization.part.part');
     }
 
     /**
@@ -59,12 +57,10 @@ class PermissionController extends Controller
     {
         $validator=Validator::make($request->all(),[
             'name'=>"required|max:200|min:1",
-            'part'=>"required|max:15|min:1",
         ]);
         if($validator->passes()){
-            
-            $role=Permission::create(['name' => $request->name,'part_id'=>$request->part]);
-            if ($role) {
+            $part=Part::create(['name' => $request->name]);
+            if ($part){
                 return response()->json(['message'=>'Part Added Success']);
             }
         }
@@ -90,7 +86,7 @@ class PermissionController extends Controller
      */
     public function edit($id)
     {
-        //
+        return response()->json(Part::find($id));
     }
 
     /**
@@ -102,7 +98,16 @@ class PermissionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validator=Validator::make($request->all(),[
+            'name'=>"required|max:200|min:1",
+        ]);
+        if($validator->passes()){
+            $part=Part::find($id)->update(['name' => $request->name]);
+            if ($part){
+                return response()->json(['message'=>'Part Updated Success']);
+            }
+        }
+        return response()->json(['error'=>$validator->getMessageBag()]);
     }
 
     /**
@@ -115,4 +120,11 @@ class PermissionController extends Controller
     {
         //
     }
+    public function getPart(Request $request){
+        $part= Part::where('name','like','%'.$request->searchTerm.'%')->take(15)->get();
+        foreach ($part as $value){
+             $set_data[]=['id'=>$value->id,'text'=>$value->name];
+         }
+         return $set_data;
+     }
 }

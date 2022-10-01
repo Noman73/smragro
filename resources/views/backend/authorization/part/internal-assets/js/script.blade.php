@@ -6,7 +6,7 @@
         serverSide:true,
         responsive:true,
         ajax:{
-          url:"{{route('asign-role.index')}}"
+          url:"{{route('part.index')}}"
         },
         columns:[
           {
@@ -16,78 +16,32 @@
             searchable:false
           },
           {
-            data:'role',
-            name:'role',
+            data:'name',
+            name:'name',
           },
           {
-            data:'user',
-            name:'user',
+            data:'action',
+            name:'action',
           }
         ]
     });
   })
-  $("#user").select2({
-    theme:'bootstrap4',
-    placeholder:'Select Note',
-    allowClear:true,
-    ajax:{
-      url:"{{URL::to('/admin/get-user')}}",
-      type:'post',
-      dataType:'json',
-      delay:20,
-      data:function(params){
-        return {
-          searchTerm:params.term,
-          _token:"{{csrf_token()}}",
-          }
-      },
-      processResults:function(response){
-        return {
-          results:response,
-        }
-      },
-      cache:true,
-    }
-  });   
-  $("#role").select2({
-    theme:'bootstrap4',
-    placeholder:'Select Note',
-    allowClear:true,
-    ajax:{
-      url:"{{URL::to('/admin/get-role')}}",
-      type:'post',
-      dataType:'json',
-      delay:20,
-      data:function(params){
-        return {
-          searchTerm:params.term,
-          _token:"{{csrf_token()}}",
-          }
-      },
-      processResults:function(response){
-        return {
-          results:response,
-        }
-      },
-      cache:true,
-    }
-  });   
+    
+
 window.formRequest= function(){
     $('input,select').removeClass('is-invalid');
-    let user=$('#user').val();
-    let role=$('#role').val();
+    let name=$('#name').val();
     let id=$('#id').val();
     let formData= new FormData();
-    formData.append('user',user);
-    formData.append('role',role);
-    $('#exampleModalLabel').text('Add New Category');
+    formData.append('name',name);
+    $('#exampleModalLabel').text('Add New Permission');
     console.log(id)
     if(id!=''){
       formData.append('_method','PUT');
     }
     //axios post request
     if (id==''){
-         axios.post("{{route('asign-role.store')}}",formData)
+         axios.post("{{route('part.store')}}",formData)
         .then(function (response){
             if(response.data.message){
                 toastr.success(response.data.message)
@@ -103,7 +57,7 @@ window.formRequest= function(){
             }
         })
     }else{
-      axios.post("{{URL::to('admin/asign-role/')}}/"+id,formData)
+      axios.post("{{URL::to('admin/part/')}}/"+id,formData)
         .then(function (response){
           if(response.data.message){
               toastr.success(response.data.message);

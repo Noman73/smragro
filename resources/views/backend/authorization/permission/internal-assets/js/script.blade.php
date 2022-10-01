@@ -20,20 +20,48 @@
             name:'name',
           },
           {
+            data:'part',
+            name:'part',
+          },
+          {
             data:'action',
             name:'action',
           }
         ]
     });
   })
-    
+  $("#part").select2({
+    theme:'bootstrap4',
+    placeholder:'Select Note',
+    allowClear:true,
+    ajax:{
+      url:"{{URL::to('/admin/get-part')}}",
+      type:'post',
+      dataType:'json',
+      delay:20,
+      data:function(params){
+        return {
+          searchTerm:params.term,
+          _token:"{{csrf_token()}}",
+          }
+      },
+      processResults:function(response){
+        return {
+          results:response,
+        }
+      },
+      cache:true,
+    }
+  });
 
 window.formRequest= function(){
     $('input,select').removeClass('is-invalid');
     let name=$('#name').val();
+    let part=$('#part').val();
     let id=$('#id').val();
     let formData= new FormData();
     formData.append('name',name);
+    formData.append('part',part);
     $('#exampleModalLabel').text('Add New Permission');
     console.log(id)
     if(id!=''){

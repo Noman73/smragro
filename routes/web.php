@@ -78,7 +78,10 @@ Route::group([
     Route::resource('/permission','PermissionController');
     Route::resource('/asign-permission','ApplyPermissionController');
     Route::resource('/asign-role','RoleAsignController');
-
+    Route::resource('/part','PartController');
+    Route::post('/get-role','RoleAsignController@getRole');
+    Route::post('/get-user','RoleAsignController@getUser');
+    Route::post('/get-part','PartController@getPart');
 });
 Route::group([
     'prefix'=>"admin/accounts",
