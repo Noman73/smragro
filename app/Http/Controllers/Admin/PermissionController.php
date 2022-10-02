@@ -4,9 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Permission;
+use Spatie\Permission\Models\Permission;
 use DataTables;
 use Validator;
+use App\Models\RoleHasPermission;
 class PermissionController extends Controller
 {
     /**
@@ -21,7 +22,7 @@ class PermissionController extends Controller
     public function index()
     {
         if(request()->ajax()){
-            $get=Permission::with('part')->get();
+            $get=\App\Models\Permission::with('part')->get();
             return DataTables::of($get)
               ->addIndexColumn()
               ->addColumn('action',function($get){
@@ -114,5 +115,9 @@ class PermissionController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function getPermission()
+    {
+        return RoleHasPermission::with('role','permission')->get();
     }
 }

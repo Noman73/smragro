@@ -57,7 +57,7 @@
                       {{-- tab start --}}
                       <ul class="nav nav-tabs" id="myTab" role="tablist">
                         @foreach($permission as $perm)
-                        <li class="nav-item">
+                        <li class="nav-item font-weight-bold">
                           <a class="nav-link" id="{{strtolower(str_replace(" ","_",$perm->name.$role->id))}}-tab" data-toggle="tab" href="#{{strtolower(str_replace(" ","_",$perm->name.$role->id))}}" role="tab" aria-controls="{{strtolower(str_replace(" ","_",$perm->name.$role->id))}}"
                             aria-selected="true">{{$perm->name}}</a>
                         </li>
@@ -69,7 +69,8 @@
                           <div class="container m-4">
                           @foreach($perm->permission as $p)
                           <label for="">{{$p->name}}</label>
-                            <input type="checkbox"><br/>
+                            <input type="hidden" name="role[]" value="{{$role->name}}">
+                            <input id="data{{$role->id.$p->id}}" type="checkbox" name="permissions[]" value="{{$p->name}}"><br/>
                           @endforeach
                           </div>
                         </div>
@@ -81,7 +82,7 @@
                   @endforeach
                 </tbody>
               </table>
-              
+              <button class="btn  btn-primary mt-3 float-right" onclick="formRequest()">Save</button>
             </div>
           </div>
       </div><!-- /.container-fluid -->

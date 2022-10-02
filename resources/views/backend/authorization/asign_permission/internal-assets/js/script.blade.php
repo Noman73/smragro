@@ -30,50 +30,42 @@
 
 window.formRequest= function(){
     $('input,select').removeClass('is-invalid');
-    let name=$('#name').val();
-    let id=$('#id').val();
+    let permission=$("input[name='permissions[]']").map(function(){
+      return $(this).val();
+    }).get();
+    let role=$("input[name='role[]']").map(function(){
+      return $(this).val();
+    }).get();
+    let condition=$("input[name='permissions[]']").map(function(){
+      return  ($(this).prop("checked") ? true : false);
+    }).get();
+    console.log(permission,role,condition)
+
     let formData= new FormData();
-    formData.append('name',name);
-    $('#exampleModalLabel').text('Add New Category');
-    console.log(id)
-    if(id!=''){
-      formData.append('_method','PUT');
-    }
+    formData.append('permission',permission);
+    formData.append('role',role);
+    formData.append('condition',condition);
+    $('#exampleModalLabel').text('Add New Permission');
     //axios post request
-    if (id==''){
-         axios.post("{{route('category.store')}}",formData)
-        .then(function (response){
-            if(response.data.message){
-                toastr.success(response.data.message)
-                datatable.ajax.reload();
-                clear();
-                $('#modal').modal('hide');
-            }else if(response.data.error){
-              var keys=Object.keys(response.data.error);
-              keys.forEach(function(d){
-                $('#'+d).addClass('is-invalid');
-                $('#'+d+'_msg').text(response.data.error[d][0]);
-              })
-            }
-        })
-    }else{
-      axios.post("{{URL::to('admin/category/')}}/"+id,formData)
-        .then(function (response){
-          if(response.data.message){
-              toastr.success(response.data.message);
-              datatable.ajax.reload();
-              clear();
-              $('#modal').modal('hide');
-          }else if(response.data.error){
-              var keys=Object.keys(response.data.error);
-              keys.forEach(function(d){
-                $('#'+d).addClass('is-invalid')
-                $('#'+d+'_msg').text(response.data.error[d][0]);
-              })
-            }
-        })
-    }
+    
+      axios.post("{{route('asign-permission.store')}}",formData)
+    .then(function (response){
+        if(response.data.message){
+            toastr.success(response.data.message)
+            datatable.ajax.reload();
+            clear();
+            $('#modal').modal('hide');
+        }else if(response.data.error){
+          var keys=Object.keys(response.data.error);
+          keys.forEach(function(d){
+            $('#'+d).addClass('is-invalid');
+            $('#'+d+'_msg').text(response.data.error[d][0]);
+          })
+        }
+    })
 }
+
+
 $(document).delegate("#modalBtn", "click", function(event){
     clear();
     $('#exampleModalLabel').text('Add New Category');
@@ -122,8 +114,20 @@ $(document).delegate(".deleteRow", "click", function(){
       }
     })
 });
-
-
+function getData(){
+  axios.get("{{URL::to('admin/get-role-has-permission')}}")
+  .then((res)=>{
+    console.log(res.data)
+    data=res.data;
+    data.forEach(function(d){
+      x=$('#data'+d.role_id+d.permission_id).attr('checked',true);
+      console.log(x.val())
+    })
+  })
+}
+$(document).ready(function(){
+  getData();
+})
 function clear(){
   $("input").removeClass('is-invalid').val('');
   $(".invalid-feedback").text('');
