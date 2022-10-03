@@ -3,7 +3,23 @@
  @section('link')
  <link rel="stylesheet" href="{{asset('storage/adminlte/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
   <link rel="stylesheet" href="{{asset('storage/adminlte/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
-  
+  <style>
+       /* Vertical Tabs */
+       .vertical-tabs{font-size:14px;padding:10px;color:#008000}
+        .vertical-tabs .nav-tabs .nav-link{background:#4CAF50;border:1px solid transparent;color:#fff;height:37px}
+        .vertical-tabs .nav-tabs .nav-link.active{background-color:#009900!important;border-color:transparent !important;color:#fff;}
+        .vertical-tabs .nav-tabs .nav-link{border:1px solid transparent;border-top-left-radius:0rem!important;}
+        .vertical-tabs .tab-content>.active{background:#fff;display:block;}
+        .vertical-tabs .nav.nav-tabs{border-bottom:0;border-right:1px solid transparent;display:block;float:left;margin-right:20px;padding-right:15px;}
+        .vertical-tabs div.tab-content{height:100% !important;}
+        .vertical-tabs .sv-tab-panel{background:#fff;height:145px;padding-top:10px;}
+        .vertical-tabs div#home-v.tab-pane .sv-tab-panel{background:#a6dba6}
+        .vertical-tabs div#profile-v.tab-pane .sv-tab-panel{background:#99d699;}
+        .vertical-tabs div#messages-v.tab-pane .sv-tab-panel{background:#8cd18c}
+        .vertical-tabs div#settings-v.tab-pane .sv-tab-panel{background:#80cc80}
+       
+        /* Vertical Tabs */
+  </style>
  @endsection
  @section('content')
     <!-- Content Header (Page header) -->
@@ -54,29 +70,34 @@
                   <tr>
                     <td>{{$role->name}}</td>
                     <td>
-                      {{-- tab start --}}
-                      <ul class="nav nav-tabs" id="myTab" role="tablist">
-                        @foreach($permission as $perm)
-                        <li class="nav-item font-weight-bold">
-                          <a class="nav-link" id="{{strtolower(str_replace(" ","_",$perm->name.$role->id))}}-tab" data-toggle="tab" href="#{{strtolower(str_replace(" ","_",$perm->name.$role->id))}}" role="tab" aria-controls="{{strtolower(str_replace(" ","_",$perm->name.$role->id))}}"
-                            aria-selected="true">{{$perm->name}}</a>
-                        </li>
-                        @endforeach
-                      </ul>
-                      <div class="tab-content" id="myTabContent">
-                        @foreach($permission as $perm)
-                        <div class="tab-pane fade " id="{{strtolower(str_replace(' ','_',$perm->name.$role->id))}}" role="tabpanel" aria-labelledby="{{strtolower(str_replace(' ','_',$perm->name.$role->id))}}-tab">
-                          <div class="container m-4">
-                          @foreach($perm->permission as $p)
-                          <label for="">{{$p->name}}</label>
-                            <input type="hidden" name="role[]" value="{{$role->name}}">
-                            <input id="data{{$role->id.$p->id}}" type="checkbox" name="permissions[]" value="{{$p->name}}"><br/>
+                      {{-- vertical tab --}}
+                      <div class="vertical-tabs">
+                        <ul class="nav nav-tabs" role="tablist">
+                          @foreach($permission as $perm)
+                           <li class="nav-item">
+                              <a class="nav-link" data-toggle="tab" href="#{{strtolower(str_replace(" ","_",$perm->name.$role->id))}}-v" role="tab" aria-controls="{{strtolower(str_replace(" ","_",$perm->name.$role->id))}}">{{$perm->name}}</a>
+                          </li>
                           @endforeach
-                          </div>
+                        </ul>
+                        <div class="tab-content">
+                          @foreach($permission as $perm)
+                            <div class="tab-pane" id="{{strtolower(str_replace(" ","_",$perm->name.$role->id))}}-v" role="tabpanel">
+                                <div class="sv-tab-panel">
+                                
+                                  @foreach($perm->permission as $p)
+                                  <div class="text-center">
+                                    <input style="accent-color:green" id="data{{$role->id.$p->id}}" type="checkbox" name="permissions[]" value="{{$p->name}}">
+                                    <label for="">{{$p->name}}</label><br/>
+                                    <input type="hidden" name="role[]" value="{{$role->name}}">
+                                  </div>
+                                  @endforeach
+                                </div>
+                                
+                            </div>
+                           @endforeach
                         </div>
-                        @endforeach
-                      </div>
-                      {{-- tab end --}}
+                     </div>
+                     {{-- end tab --}}
                     </td>
                   </tr>
                   @endforeach

@@ -79,10 +79,12 @@ Route::group([
     Route::resource('/asign-permission','ApplyPermissionController');
     Route::resource('/asign-role','RoleAsignController');
     Route::resource('/part','PartController');
+    Route::resource('/asign-permission-user','UserDirectPermissionController');
     Route::post('/get-role','RoleAsignController@getRole');
     Route::post('/get-user','RoleAsignController@getUser');
     Route::post('/get-part','PartController@getPart');
     Route::get('/get-role-has-permission','PermissionController@getPermission');
+    Route::get('/get-model-has-permission/{user_id}','PermissionController@getModelPermission');
 });
 Route::group([
     'prefix'=>"admin/accounts",

@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Part;
 use DataTables;
 use Validator;
-
+use Spatie\Permission\Models\Permission;
 class PartController extends Controller
 {
     /**
@@ -118,7 +118,12 @@ class PartController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $delete=Part::where('id',$id)->delete();
+        if($delete){
+            Permission::where('part_id',$id)->delete();
+            return ['message' => 'Part Deleted Success'];
+        }
+        return response()->json(['error'=>"Opps! Something Wrong."]);
     }
     public function getPart(Request $request){
         $part= Part::where('name','like','%'.$request->searchTerm.'%')->take(15)->get();

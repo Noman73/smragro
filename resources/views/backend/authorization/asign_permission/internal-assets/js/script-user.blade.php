@@ -27,29 +27,53 @@
     });
   })
     
-
+  $("#user").select2({
+    theme:'bootstrap4',
+    placeholder:'Select Note',
+    allowClear:true,
+    ajax:{
+      url:"{{URL::to('/admin/get-user')}}",
+      type:'post',
+      dataType:'json',
+      delay:20,
+      data:function(params){
+        return {
+          searchTerm:params.term,
+          _token:"{{csrf_token()}}",
+          }
+      },
+      processResults:function(response){
+        return {
+          results:response,
+        }
+      },
+      cache:true,
+    }
+  });  
 window.formRequest= function(){
     $('input,select').removeClass('is-invalid');
     let permission=$("input[name='permissions[]']").map(function(){
       return $(this).val();
     }).get();
-    let role=$("input[name='role[]']").map(function(){
-      return $(this).val();
-    }).get();
+    let user=$("#user").val();
+    if(user==null){
+        user='';
+    }
     let condition=$("input[name='permissions[]']").map(function(){
       return  ($(this).prop("checked") ? true : false);
     }).get();
-    console.log(permission,role,condition)
+    console.log(permission,condition)
 
     let formData= new FormData();
     formData.append('permission',permission);
-    formData.append('role',role);
+    formData.append('user',user);
     formData.append('condition',condition);
     $('#exampleModalLabel').text('Add New Permission');
     //axios post request
     
-      axios.post("{{route('asign-permission.store')}}",formData)
+      axios.post("{{route('asign-permission-user.store')}}",formData)
     .then(function (response){
+        console.log(response)
         if(response.data.message){
             toastr.success(response.data.message)
             datatable.ajax.reload();
@@ -114,19 +138,20 @@ $(document).delegate(".deleteRow", "click", function(){
       }
     })
 });
-function getData(){
-  axios.get("{{URL::to('admin/get-role-has-permission')}}")
+$(document).on('select2:select',"#user", function (e){
+  user_id=$(this).val();
+  axios.get("{{URL::to('admin/get-model-has-permission')}}/"+user_id)
   .then((res)=>{
     console.log(res.data)
     data=res.data;
+    $("input[name='permissions[]']").attr('checked',false)
     data.forEach(function(d){
-      x=$('#data'+d.role_id+d.permission_id).attr('checked',true);
-      console.log(x.val())
+      x=$('#data'+d.permission_id).attr('checked',true);
     })
   })
-}
+})
 $(document).ready(function(){
-  getData();
+
 })
 function clear(){
   $("input").removeClass('is-invalid');

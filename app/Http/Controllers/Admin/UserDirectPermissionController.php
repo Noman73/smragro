@@ -6,16 +6,14 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Part;
 use Validator;
-use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
-class ApplyPermissionController extends Controller
+use App\Models\User;
+class UserDirectPermissionController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-
     public function __construct()
     {
         $this->middleware('auth');
@@ -23,7 +21,7 @@ class ApplyPermissionController extends Controller
     public function index()
     {
         $permission=Part::with('permission')->orderBy('name','asc')->get();
-        return view('backend.authorization.asign_permission.asign_permission',compact('permission'));
+        return view('backend.authorization.asign_permission.asign_permission_user',compact('permission'));
     }
 
     /**
@@ -47,41 +45,24 @@ class ApplyPermissionController extends Controller
         // return $request->all();
         $data=$request->all();
         $data['permission']=explode(',', $request->permission);
-        $data['role']=explode(',', $request->role);
         $data['condition']=explode(',', $request->condition);
         $validator=Validator::make($data,[
-        'role'=>'required|array',
-        'role.*'=>'required|max:50',
+        'user'=>'required|max:20|min:1',
         'permission'=>'required|array',
         'permission.*'=>'required|max:100|min:1',
      ]);
      if ($validator->passes()) {
-        for ($i=0; $i <count($data['role']) ; $i++) { 
-            $role=Role::findByName($data['role'][$i]);
+        for ($i=0; $i <count($data['permission']) ; $i++) { 
+            $user=User::find($request->user);
             if($data['condition'][$i]=='true'){
-                $role->givePermissionTo($data['permission'][$i]);
+                $user->givePermissionTo($data['permission'][$i]);
             }else{
-                $permission=Permission::findByName($data['permission'][$i]);
-                $permission->removeRole($role);
+                $user->revokePermissionTo($data['permission'][$i]);
             }
         }
-
-        // old code
-        //  for ($i=0; $i <count($r->role) ; $i++) {
-        //     $role=Role::findById($r->role[$i]['id']);
-        //     for ($i2=0; $i2 <count($r->permission) ; $i2++) { 
-        //        if ($r->array[$i2][$i]=='on') {
-        //          $permission=Permission::findById($r->permission[$i2]['id']);
-        //          $role->givePermissionTO($permission);
-        //        }elseif ($r->array[$i2][$i]=='off') {
-        //          $permission=Permission::findById($r->permission[$i2]['id']);
-        //          $permission->removeRole($role);
-        //        }
-        //     }
-        //  }
          return response()->json(['message'=>'Permission Assign Success']);
      }
-     return response()->json($validator->getMessageBag());
+     return response()->json(['error'=>$validator->getMessageBag()]);
     }
 
     /**

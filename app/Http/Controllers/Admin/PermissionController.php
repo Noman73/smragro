@@ -8,6 +8,7 @@ use Spatie\Permission\Models\Permission;
 use DataTables;
 use Validator;
 use App\Models\RoleHasPermission;
+use App\Models\ModelHasPermission;
 class PermissionController extends Controller
 {
     /**
@@ -119,5 +120,9 @@ class PermissionController extends Controller
     public function getPermission()
     {
         return RoleHasPermission::with('role','permission')->get();
+    }
+    public function getModelPermission($user_id)
+    {
+        return ModelHasPermission::where("model_id",$user_id)->get();
     }
 }
