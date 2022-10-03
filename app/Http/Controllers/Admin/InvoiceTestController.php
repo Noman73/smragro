@@ -17,6 +17,7 @@ use Auth;
 use DataTables;
 use Illuminate\Foundation\Console\ChannelMakeCommand;
 use URL;
+use App\Models\User;
 class InvoiceTestController extends Controller
 {
     /**
@@ -27,9 +28,15 @@ class InvoiceTestController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware(['permission:Sale Invoice View'], ['only' => ['index']]);
+        $this->middleware(['permission:Sale Invoice Edit'], ['only' => ['edit']]);
+
     }
     public function index()
     {
+        // auth()->user()->givePermissionTo('Sale Invoice View');
+        $user=User::find(auth()->user()->id);
+        $user->revokePermissionTo('Sale Invoice View');
         return view('backend.invoice.invoice');
     }
 

@@ -10,6 +10,7 @@ use App\Models\PInvoice;
 use App\Models\AccountLedger;
 use App\Models\Voucer;
 use DB;
+use App\Models\User;
 class HomeController extends Controller
 {
     /**
