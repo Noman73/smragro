@@ -10,6 +10,8 @@ class SalePricingController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('permission:Sale Pricing Report',['only'=>'index']);
+        $this->middleware('permission:Sale Pricing Report',['only'=>'getReport']);
     }
     public function index()
     {

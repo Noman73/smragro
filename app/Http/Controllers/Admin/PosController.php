@@ -15,6 +15,11 @@ class PosController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('permission:Pos View',['only'=>'index']);
+        $this->middleware('permission:Pos Create',['only'=>'store']);
+        $this->middleware('permission:Pos Edit',['only'=>'edit']);
+        $this->middleware('permission:Pos Edit',['only'=>'update']);
+        $this->middleware('permission:Pos Delete',['only'=>'destroy']);
     }
     public function index()
     {

@@ -12,6 +12,8 @@ class PaymentViewController extends Controller
     public function __construct() 
     {
         $this->middleware('auth');
+        $this->middleware('permission:Payment Print',['only'=>'index']);
+        $this->middleware('permission:Payment Print',['only'=>'print']);
     }
     public function index($id)
     {

@@ -10,6 +10,8 @@ class PurchasePricingController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('permission:Purchase Pricing Report',['only'=>'index']);
+        $this->middleware('permission:Purchase Pricing Report',['only'=>'getReport']);
     }
     public function index()
     {

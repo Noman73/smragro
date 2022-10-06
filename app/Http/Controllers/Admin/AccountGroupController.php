@@ -18,6 +18,11 @@ class AccountGroupController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('permission:Account Group View',['only'=>'index']);
+        $this->middleware('permission:Account Group Create',['only'=>'store']);
+        $this->middleware('permission:Account Group Edit',['only'=>'edit']);
+        $this->middleware('permission:Account Group Edit',['only'=>'update']);
+        $this->middleware('permission:Account Group Delete',['only'=>'destroy']);
     }
     public function index()
     {

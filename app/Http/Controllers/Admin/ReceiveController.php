@@ -23,6 +23,11 @@ class ReceiveController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('permission:Receive View',['only'=>'index']);
+        $this->middleware('permission:Receive Create',['only'=>'store']);
+        $this->middleware('permission:Receive Edit',['only'=>'edit']);
+        $this->middleware('permission:Receive Edit',['only'=>'update']);
+        $this->middleware('permission:Receive Delete',['only'=>'destroy']);
     }
     public function index()
     {

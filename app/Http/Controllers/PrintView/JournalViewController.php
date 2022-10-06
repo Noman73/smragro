@@ -12,6 +12,8 @@ class JournalViewController extends Controller
     public function __construct() 
     {
         $this->middleware('auth');
+        $this->middleware('permission:Journal Print',['only'=>'index']);
+        $this->middleware('permission:Journal Print',['only'=>'print']);
     }
     public function index($id)
     {

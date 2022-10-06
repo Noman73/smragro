@@ -11,6 +11,8 @@ class CashInHandReportController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('permission:Cash In Hand Report',['only'=>'index']);
+        $this->middleware('permission:Cash In Hand Report',['only'=>'getReport']);
     }
     public function index()
     {

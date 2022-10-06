@@ -18,6 +18,11 @@ class AccountClassController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('permission:Account Class View',['only'=>'index']);
+        $this->middleware('permission:Account Class Create',['only'=>'store']);
+        $this->middleware('permission:Account Class Edit',['only'=>'edit']);
+        $this->middleware('permission:Account Class Edit',['only'=>'update']);
+        $this->middleware('permission:Account Class Delete',['only'=>'destroy']);
     }
     public function index()
     {

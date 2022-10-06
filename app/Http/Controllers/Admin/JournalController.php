@@ -20,6 +20,11 @@ class JournalController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('permission:Journal View',['only'=>'index']);
+        $this->middleware('permission:Journal Create',['only'=>'store']);
+        $this->middleware('permission:Journal Edit',['only'=>'edit']);
+        $this->middleware('permission:Journal Edit',['only'=>'update']);
+        $this->middleware('permission:Journal Delete',['only'=>'destroy']);
     }
     public function index()
     {

@@ -10,6 +10,8 @@ class PurchaseViewController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('permission:Purchase Invoice Print',['only'=>'index']);
+        $this->middleware('permission:Purchase Invoice Print',['only'=>'print']);
     }
     public function index($id) 
     {

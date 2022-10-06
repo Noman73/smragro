@@ -21,6 +21,11 @@ class SalesReturnController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('permission:Sales Return View',['only'=>'index']);
+        $this->middleware('permission:Sales Return Create',['only'=>'store']);
+        $this->middleware('permission:Sales Return Edit',['only'=>'edit']);
+        $this->middleware('permission:Sales Return Edit',['only'=>'update']);
+        $this->middleware('permission:Sales Return Delete',['only'=>'destroy']);
     }
     public function index()
     {

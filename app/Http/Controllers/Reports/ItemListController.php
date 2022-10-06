@@ -10,6 +10,8 @@ class ItemListController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('permission:Item List Report',['only'=>'index']);
+        $this->middleware('permission:Item List Report',['only'=>'getReport']);
     }
     public function index()
     {

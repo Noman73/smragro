@@ -10,6 +10,8 @@ class CustomerWiseSalesReportController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('permission:CWS Report',['only'=>'index']);
+        $this->middleware('permission:CWS Report',['only'=>'getReport']);
     }
     public function index()
     {

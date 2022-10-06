@@ -10,6 +10,10 @@ class InvoiceViewController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('permission:Sale Invoice Print',['only'=>'index']);
+        $this->middleware('permission:Sale Invoice Print',['only'=>'print']);
+        $this->middleware('permission:Sale Invoice Print',['only'=>'printInBangla']);
+        $this->middleware('permission:Sale Invoice Print',['only'=>'totalChalan']);
     }
     public function index($id) 
     {

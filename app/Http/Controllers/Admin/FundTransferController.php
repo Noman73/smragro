@@ -24,6 +24,11 @@ class FundTransferController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('permission:Bank Transfer View',['only'=>'index']);
+        $this->middleware('permission:Bank Transfer Create',['only'=>'store']);
+        $this->middleware('permission:Bank Transfer Edit',['only'=>'edit']);
+        $this->middleware('permission:Bank Transfer Edit',['only'=>'update']);
+        $this->middleware('permission:Bank Transfer Delete',['only'=>'destroy']);
     }
     public function index()
     {

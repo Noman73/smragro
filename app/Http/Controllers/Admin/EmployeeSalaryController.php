@@ -17,6 +17,11 @@ class EmployeeSalaryController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('permission:Salary Setup View',['only'=>'index']);
+        $this->middleware('permission:Salary Setup Create',['only'=>'store']);
+        $this->middleware('permission:Salary Setup Edit',['only'=>'edit']);
+        $this->middleware('permission:Salary Setup Edit',['only'=>'update']);
+        $this->middleware('permission:Salary Setup Delete',['only'=>'destroy']);
     }
     public function index()
     {

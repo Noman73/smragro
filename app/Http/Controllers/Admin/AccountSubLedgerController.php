@@ -18,6 +18,11 @@ class AccountSubLedgerController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('permission:Sub Account View',['only'=>'index']);
+        $this->middleware('permission:Sub Account Create',['only'=>'store']);
+        $this->middleware('permission:Sub Account Edit',['only'=>'edit']);
+        $this->middleware('permission:Sub Account Edit',['only'=>'update']);
+        $this->middleware('permission:Sub Account Delete',['only'=>'destroy']);
     }
     public function index()
     {
