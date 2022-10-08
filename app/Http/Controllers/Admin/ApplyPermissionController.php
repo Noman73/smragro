@@ -63,6 +63,9 @@ class ApplyPermissionController extends Controller
      if ($validator->passes()) {
         for ($i=0; $i <count($data['role']) ; $i++) { 
             $role=Role::findByName($data['role'][$i]);
+
+
+            
             if($data['condition'][$i]=='true'){
                 $role->givePermissionTo($data['permission'][$i]);
             }else{

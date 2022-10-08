@@ -493,7 +493,7 @@ class InvoiceTestController extends Controller
             'qantity.*' => 'required|regex:/^([0-9.]+)$/',
             'price' => 'required|array',
             'price.*' => 'required|regex:/^([0-9.]+)$/',
-            'transport' => 'nullable|regex:/^([0-9]+)$/',
+            'transport' => 'nullable|regex:/^([0-9.]+)$/',
             'sale_type' => 'required|regex:/^([0-2]+)$/',
             'discount_type' => 'required|regex:/^([0-2]+)$/',
             'customer' => $customer_cond.'|regex:/^([0-9]+)$/',
