@@ -18,6 +18,8 @@ class CompanyInfoController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('permission:General Info View',['only'=>'index']);
+        $this->middleware('permission:General Info Update',['only'=>'store']);
     }
     public function index()
     {

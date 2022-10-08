@@ -21,6 +21,11 @@ class ProductController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('permission:Product View',['only'=>'index']);
+        $this->middleware('permission:Product Create',['only'=>'store']);
+        $this->middleware('permission:Product Edit',['only'=>'edit']);
+        $this->middleware('permission:Product Edit',['only'=>'update']);
+        $this->middleware('permission:Product Delete',['only'=>'destroy']);
     }
     public function index()
     {

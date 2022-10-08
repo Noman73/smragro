@@ -19,6 +19,11 @@ class CreditSetupController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('permission:Credit Setup View',['only'=>'index']);
+        $this->middleware('permission:Credit Setup Create',['only'=>'store']);
+        $this->middleware('permission:Credit Setup Edit',['only'=>'edit']);
+        $this->middleware('permission:Credit Setup Edit',['only'=>'update']);
+        $this->middleware('permission:Credit Setup Delete',['only'=>'destroy']);
     }
     public function index()
     {

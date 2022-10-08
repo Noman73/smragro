@@ -17,6 +17,11 @@ class ShippingCompanyController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('permission:Shipping Company View',['only'=>'index']);
+        $this->middleware('permission:Shipping Company Create',['only'=>'store']);
+        $this->middleware('permission:Shipping Company Edit',['only'=>'edit']);
+        $this->middleware('permission:Shipping Company Edit',['only'=>'update']);
+        $this->middleware('permission:Shipping Company Delete',['only'=>'destroy']);
     }
     public function index()
     {

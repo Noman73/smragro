@@ -17,6 +17,7 @@ class ChartOfAccountController extends Controller
      */
     public function __construct(){
         $this->middleware('auth');
+        $this->middleware('permission:Chart Of Account View',['only'=>'index']);
     }
     public function index()
     {

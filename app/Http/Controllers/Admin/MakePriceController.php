@@ -21,6 +21,11 @@ class MakePriceController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('permission:Sale Pricing View',['only'=>'index']);
+        $this->middleware('permission:Sale Pricing Create',['only'=>'store']);
+        $this->middleware('permission:Sale Pricing Edit',['only'=>'edit']);
+        $this->middleware('permission:Sale Pricing Edit',['only'=>'update']);
+        $this->middleware('permission:Sale Pricing Delete',['only'=>'destroy']);
     }
     public function index()
     {

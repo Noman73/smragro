@@ -18,6 +18,11 @@ class CategoryController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('permission:Category View',['only'=>'index']);
+        $this->middleware('permission:Category Create',['only'=>'store']);
+        $this->middleware('permission:Category Edit',['only'=>'edit']);
+        $this->middleware('permission:Category Edit',['only'=>'update']);
+        $this->middleware('permission:Category Delete',['only'=>'destroy']);
     }
     public function index()
     {

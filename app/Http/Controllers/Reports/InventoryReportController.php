@@ -10,6 +10,8 @@ class InventoryReportController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('permission:Inventory Report',['only'=>'index']);
+        $this->middleware('permission:Inventory Report',['only'=>'getReport']);
     }
     public function index()
     {

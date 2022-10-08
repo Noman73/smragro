@@ -10,6 +10,8 @@ class TrialBalanceController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('permission:Trial Balance Report',['only'=>'index']);
+        $this->middleware('permission:Trial Balance Report',['only'=>'getReport']);
     }
     public function index()
     {

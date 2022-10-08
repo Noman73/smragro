@@ -28,8 +28,11 @@ class InvoiceTestController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware(['permission:Sale Invoice View'], ['only' => ['index']]);
-        $this->middleware(['permission:Sale Invoice Edit'], ['only' => ['edit']]);
+        $this->middleware('permission:Sale Invoice View',['only'=>'index']);
+        $this->middleware('permission:Sale Invoice Create',['only'=>'store']);
+        $this->middleware('permission:Sale Invoice Edit',['only'=>'edit']);
+        $this->middleware('permission:Sale Invoice Edit',['only'=>'update']);
+        $this->middleware('permission:Sale Invoice Delete',['only'=>'destroy']);
 
     }
     public function index()
@@ -265,24 +268,24 @@ class InvoiceTestController extends Controller
                     }
                     // end vat journal
                     if($data['sale_type']==0){
-                        // sales credit
+                        // Cash ledger
                         $voucer = new Voucer();
                         $voucer->date= strtotime(strval($data['date']));
                         $voucer->transaction_name="Sale Invoice";
                         $voucer->ledger_id = $cash_ledger->id;
                         $voucer->person_id = $customer_id;
-                        $voucer->debit = $sales_amt_without_discount;
+                        $voucer->debit = $total_payable;
                         $voucer->credit = 0;
                         $voucer->invoice_id = $inv_id;
                         $voucer->author_id = auth()->user()->id;
                         $voucer->save();
-                        // cash dabit
+                        // sales ledger
                         $voucer = new Voucer();
                         $voucer->date= strtotime(strval($data['date']));
                         $voucer->transaction_name ="Sale Invoice";
                         $voucer->ledger_id = $sales_ledger->id;
                         $voucer->debit = 0;
-                        $voucer->credit = $total_payable;
+                        $voucer->credit = $sales_amt_without_discount;
                         $voucer->invoice_id = $inv_id;
                         $voucer->author_id = auth()->user()->id;
                         $voucer->save();
@@ -493,7 +496,7 @@ class InvoiceTestController extends Controller
             'qantity.*' => 'required|regex:/^([0-9.]+)$/',
             'price' => 'required|array',
             'price.*' => 'required|regex:/^([0-9.]+)$/',
-            'transport' => 'nullable|regex:/^([0-9]+)$/',
+            'transport' => 'nullable|regex:/^([0-9.]+)$/',
             'sale_type' => 'required|regex:/^([0-2]+)$/',
             'discount_type' => 'required|regex:/^([0-2]+)$/',
             'customer' => $customer_cond.'|regex:/^([0-9]+)$/',
@@ -676,24 +679,24 @@ class InvoiceTestController extends Controller
                     }
                     // end vat journal
                     if($data['sale_type']==0){
-                        // sales credit
+                        // cash debit
                         $voucer = new Voucer();
                         $voucer->date= strtotime(strval($data['date']));
                         $voucer->transaction_name="Sale Invoice";
                         $voucer->ledger_id = $cash_ledger->id;
                         $voucer->person_id = $customer_id;
-                        $voucer->debit = $sales_amt_without_discount;
+                        $voucer->debit = $total_payable;
                         $voucer->credit = 0;
                         $voucer->invoice_id = $inv_id;
                         $voucer->author_id = auth()->user()->id;
                         $voucer->save();
-                        // cash dabit
+                        // sale credit
                         $voucer = new Voucer();
                         $voucer->date= strtotime(strval($data['date']));
                         $voucer->transaction_name ="Sale Invoice";
                         $voucer->ledger_id = $sales_ledger->id;
                         $voucer->debit = 0;
-                        $voucer->credit = $total_payable;
+                        $voucer->credit = $sales_amt_without_discount;
                         $voucer->invoice_id = $inv_id;
                         $voucer->author_id = auth()->user()->id;
                         $voucer->save();

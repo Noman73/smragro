@@ -19,6 +19,11 @@ class ApplyPermissionController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('role:Super-Admin',['only'=>'index']);
+        $this->middleware('role:Super-Admin',['only'=>'store']);
+        $this->middleware('role:Super-Admin',['only'=>'edit']);
+        $this->middleware('role:Super-Admin',['only'=>'update']);
+        $this->middleware('role:Super-Admin',['only'=>'destroy']);
     }
     public function index()
     {
@@ -58,6 +63,9 @@ class ApplyPermissionController extends Controller
      if ($validator->passes()) {
         for ($i=0; $i <count($data['role']) ; $i++) { 
             $role=Role::findByName($data['role'][$i]);
+
+
+            
             if($data['condition'][$i]=='true'){
                 $role->givePermissionTo($data['permission'][$i]);
             }else{

@@ -12,6 +12,8 @@ class LedgerReportController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('permission:Ledger Report',['only'=>'index']);
+        $this->middleware('permission:Ledger Report',['only'=>'getReport']);
     }
     public function index()
     {

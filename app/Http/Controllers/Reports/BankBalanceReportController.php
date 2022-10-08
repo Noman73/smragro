@@ -11,6 +11,8 @@ class BankBalanceReportController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('permission:Bank Balance Report',['only'=>'index']);
+        $this->middleware('permission:Bank Balance Report',['only'=>'getReport']);
     }
     public function index()
     {

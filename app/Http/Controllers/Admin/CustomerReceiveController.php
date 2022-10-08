@@ -22,6 +22,11 @@ class CustomerReceiveController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('permission:Customer Receive View',['only'=>'index']);
+        $this->middleware('permission:Customer Receive Create',['only'=>'store']);
+        $this->middleware('permission:Customer Receive Edit',['only'=>'edit']);
+        $this->middleware('permission:Customer Receive Edit',['only'=>'update']);
+        $this->middleware('permission:Customer Receive Delete',['only'=>'destroy']);
     }
     public function index()
     {

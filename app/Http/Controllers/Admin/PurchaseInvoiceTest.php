@@ -23,6 +23,11 @@ class PurchaseInvoiceTest extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('permission:Purchase Invoice View',['only'=>'index']);
+        $this->middleware('permission:Purchase Invoice Create',['only'=>'store']);
+        $this->middleware('permission:Purchase Invoice Edit',['only'=>'edit']);
+        $this->middleware('permission:Purchase Invoice Edit',['only'=>'update']);
+        $this->middleware('permission:Purchase Invoice Delete',['only'=>'destroy']);
     }
     public function index()
     {

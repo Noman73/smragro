@@ -18,6 +18,11 @@ class MultiNoteController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('permission:Invoice Note View',['only'=>'index']);
+        $this->middleware('permission:Invoice Note Create',['only'=>'store']);
+        $this->middleware('permission:Invoice Note Edit',['only'=>'edit']);
+        $this->middleware('permission:Invoice Note Edit',['only'=>'update']);
+        $this->middleware('permission:Invoice Note Delete',['only'=>'destroy']);
     }
     public function index()
     {

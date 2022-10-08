@@ -10,6 +10,8 @@ class ChartOfAccountController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('permission:Chart Of Account Report',['only'=>'index']);
+        $this->middleware('permission:Chart Of Account Report',['only'=>'getReport']);
     }
     public function index()
     {

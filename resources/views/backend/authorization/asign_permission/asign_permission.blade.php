@@ -5,13 +5,13 @@
   <link rel="stylesheet" href="{{asset('storage/adminlte/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
   <style>
        /* Vertical Tabs */
-       .vertical-tabs{font-size:14px;padding:10px;color:#008000}
+       .vertical-tabs{font-size:14px;padding:10px;color:#008000;}
         .vertical-tabs .nav-tabs .nav-link{background:#4CAF50;border:1px solid transparent;color:#fff;height:37px}
         .vertical-tabs .nav-tabs .nav-link.active{background-color:#009900!important;border-color:transparent !important;color:#fff;}
         .vertical-tabs .nav-tabs .nav-link{border:1px solid transparent;border-top-left-radius:0rem!important;}
         .vertical-tabs .tab-content>.active{background:#fff;display:block;}
         .vertical-tabs .nav.nav-tabs{border-bottom:0;border-right:1px solid transparent;display:block;float:left;margin-right:20px;padding-right:15px;}
-        .vertical-tabs div.tab-content{height:100% !important;}
+        .vertical-tabs div.tab-content{height:300px;display:flex;overflow:scroll;align-items: center;justify-content: center;}
         .vertical-tabs .sv-tab-panel{background:#fff;height:145px;padding-top:10px;}
         .vertical-tabs div#home-v.tab-pane .sv-tab-panel{background:#a6dba6}
         .vertical-tabs div#profile-v.tab-pane .sv-tab-panel{background:#99d699;}
@@ -67,9 +67,9 @@
                   $i=0;
                   @endphp
                   @foreach($roles as $role)
-                  <tr>
+                  <tr class="clearfix">
                     <td>{{$role->name}}</td>
-                    <td>
+                    <td class="">
                       {{-- vertical tab --}}
                       <div class="vertical-tabs">
                         <ul class="nav nav-tabs" role="tablist">
@@ -85,8 +85,8 @@
                                 <div class="sv-tab-panel">
                                 
                                   @foreach($perm->permission as $p)
-                                  <div class="text-center">
-                                    <input style="accent-color:green" id="data{{$role->id.$p->id}}" type="checkbox" name="permissions[]" value="{{$p->name}}">
+                                  <div class="text-center d-block">
+                                    <input style="accent-color:green;" id="data{{$role->id.$p->id}}" type="checkbox" name="permissions[]" value="{{$p->name}}">
                                     <label for="">{{$p->name}}</label><br/>
                                     <input type="hidden" name="role[]" value="{{$role->name}}">
                                   </div>

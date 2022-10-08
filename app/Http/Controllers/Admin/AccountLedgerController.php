@@ -21,6 +21,11 @@ class AccountLedgerController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('permission:Account View',['only'=>'index']);
+        $this->middleware('permission:Account Create',['only'=>'store']);
+        $this->middleware('permission:Account Edit',['only'=>'edit']);
+        $this->middleware('permission:Account Edit',['only'=>'update']);
+        $this->middleware('permission:Account Delete',['only'=>'destroy']);
     }
     public function index()
     {

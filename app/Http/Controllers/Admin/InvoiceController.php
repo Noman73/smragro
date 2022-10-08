@@ -22,6 +22,7 @@ class InvoiceController extends Controller
     public function construct()
     {
         $this->middleware('auth');
+        Bank Transfer
     }
     public function index()
     {

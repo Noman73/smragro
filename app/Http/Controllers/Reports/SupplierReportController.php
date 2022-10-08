@@ -10,6 +10,8 @@ class SupplierReportController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('permission:Supplier List Report',['only'=>'index']);
+        $this->middleware('permission:Supplier List Report',['only'=>'getReport']);
     }
     public function index()
     {

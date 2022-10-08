@@ -13,6 +13,8 @@ class FundTransferController extends Controller
     public function __construct() 
     {
         $this->middleware('auth');
+        $this->middleware('permission:Bank Transfer Print',['only'=>'index']);
+        $this->middleware('permission:Bank Transfer Print',['only'=>'print']);
     }
     public function index($id)
     {

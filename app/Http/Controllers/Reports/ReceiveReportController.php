@@ -10,6 +10,8 @@ class ReceiveReportController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('permission:Receive Report',['only'=>'index']);
+        $this->middleware('permission:Receive Report',['only'=>'getReport']);
     }
     public function index()
     {

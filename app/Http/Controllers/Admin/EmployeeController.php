@@ -18,6 +18,11 @@ class EmployeeController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('permission:Employee View',['only'=>'index']);
+        $this->middleware('permission:Employee Create',['only'=>'store']);
+        $this->middleware('permission:Employee Edit',['only'=>'edit']);
+        $this->middleware('permission:Employee Edit',['only'=>'update']);
+        $this->middleware('permission:Employee Delete',['only'=>'destroy']);
     }
     public function index()
     {

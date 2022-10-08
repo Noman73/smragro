@@ -10,6 +10,8 @@ class CustomerReportController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('permission:Customer List Report',['only'=>'index']);
+        $this->middleware('permission:Customer List Report',['only'=>'getReport']);
     }
     public function index()
     {
