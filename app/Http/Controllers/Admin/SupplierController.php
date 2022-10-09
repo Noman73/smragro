@@ -80,7 +80,7 @@ class SupplierController extends Controller
             $product->email=$request->email;
             $product->phone=$request->phone;
             $product->adress=$request->adress;
-            $product->code=$ledger_code->code.'-'.$countSupplier+1;
+            $product->code=$ledger_code->code.'-'.($countSupplier+1);
             $product->supplier_type=$request->supplier_type;
             $product->author_id=auth()->user()->id;
             if ($request->hasFile('image')) {
