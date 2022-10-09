@@ -5,7 +5,7 @@
 <!-- TABLES CSS CODE -->
 <title>বিক্রয় চালান</title>
 <!-- Bootstrap 3.3.6 -->
-<link rel="stylesheet" href="https://posmatrix.nibiz.xyz/theme/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <style type="text/css">
 	body{
 		font-family: arial;
@@ -19,16 +19,18 @@
     }
 </style>
 </head>
+@php
+    $info=App\Models\CompanyInformations::first();
+@endphp
 <body onload=""><!--   -->
 		<table width="98%" align="center">
 		<tr>
 			<td align="center">
 				<span>													 
-                <strong>Kazi Super Shop</strong><br>
-                	Shop no-2/D plot no-2<br> 
-		            Uttara		            		            <br>
-		            		            		            ফোন: 9999999999<br> 
-			</span>
+                <strong>{{$info->company_name}}</strong><br>
+                	{{$info->adress}}<br>
+                     Mobile: {{$info->phone}}<br> 
+			    </span>
 			</td>
 		</tr>
 		<tr><td align="center"><strong>-----------------চালান-----------------</strong></td></tr>
@@ -68,68 +70,73 @@
 					</tr>
 					</thead>
 					<tbody style="border-bottom-style: dashed;border-width: 0.1px;">
+                        @foreach($invoice->sales as $sales)
 						<tr>
-                            <td style='padding-left: 2px; padding-right: 2px;' valign='top'>1</td>
-                            <td style='padding-left: 2px; padding-right: 2px;'>cadbury  dairy p/n (110gm)</td>
-                            <td style='padding-left: 2px; padding-right: 2px;'>300.00</td>
-                            <td style='text-align: center;padding-left: 2px; padding-right: 2px;'>2.00</td>
-                            <td style='text-align: right;padding-left: 2px; padding-right: 2px;' >600.00</td>
-                        </tr>					
+                            <td style='padding-left: 2px; padding-right: 2px;'>{{$sales->product->product_code.'-'.$sales->product->name}}</td>
+                            <td style='padding-left: 2px; padding-right: 2px;'>{{$sales->price}}</td>
+                            <td style='text-align: center;padding-left: 2px; padding-right: 2px;'>{{$sales->deb_qantity}} {{$sales->product->unit->name}}</td>
+                            <td style='text-align: right;padding-left: 2px; padding-right: 2px;' >{{$sales->price*$sales->deb_qantity}}</td>
+                        </tr>
+                        @endforeach					
 				   </tbody>
 					<tfoot>
 					 <!-- <tr><td colspan="5"><hr></td></tr>    -->
 					 <tr >
-						<td style=" padding-left: 2px; padding-right: 2px;" colspan="5" align="right">কর প্রদানের আগে</td>
-						<td style=" padding-left: 2px; padding-right: 2px;" align="right">600.00</td>
+						<td style=" padding-left: 2px; padding-right: 2px;" colspan="5" align="right">Total</td>
+						<td style=" padding-left: 2px; padding-right: 2px;" align="right">{{$invoice->total}}</td>
 					</tr>
 					<tr >
-						<td style=" padding-left: 2px; padding-right: 2px;" colspan="5" align="right">করের পরিমাণ</td>
-						<td style=" padding-left: 2px; padding-right: 2px;" align="right">0.00</td>
+						<td style=" padding-left: 2px; padding-right: 2px;" colspan="5" align="right">Discount</td>
+						<td style=" padding-left: 2px; padding-right: 2px;" align="right">{{$invoice->discount}}</td>
 					</tr>
-					<!-- <tr >
-						<td style=" padding-left: 2px; padding-right: 2px;" colspan="4" align="right">উপমোট</td>
-						<td style=" padding-left: 2px; padding-right: 2px;" align="right">600.00</td>
-					</tr> -->
+					 <tr >
+						<td style=" padding-left: 2px; padding-right: 2px;" colspan="4" align="right">Vat</td>
+						<td style=" padding-left: 2px; padding-right: 2px;" align="right">{{$invoice->vat}}</td>
+					</tr> 
 					<!-- <tr>
 	                     <td style=' padding-left: 2px; padding-right: 2px;' colspan='4' align='right'>Tax Amt</td>
 	                      <td style=' padding-left: 2px; padding-right: 2px;' align='right'>0.00</td>
 	                </tr> -->
 	                <tr>
-						<td style=" padding-left: 2px; padding-right: 2px;" colspan="5" align="right">অন্যান্য চার্জ</td>
-						<td style=" padding-left: 2px; padding-right: 2px;" align="right">0.00</td>
+						<td style=" padding-left: 2px; padding-right: 2px;" colspan="5" align="right">Total Payable</td>
+						<td style=" padding-left: 2px; padding-right: 2px;" align="right">{{$invoice->total_payable}}</td>
 					</tr>
 	                					
 
 					<!-- <tr><td style="border-bottom-style: dashed;border-width: 0.1px;" colspan="5"></td></tr>   -->
 					<tr>
-						<td style=" padding-left: 2px; padding-right: 2px;font-weight: bold;" colspan="5" align="right">মোট</td>
-						<td style=" padding-left: 2px; padding-right: 2px;font-weight: bold;" align="right">600.00</td>
+						<td style=" padding-left: 2px; padding-right: 2px;font-weight: bold;" colspan="5" align="right">Total Paid</td>
+						@if($invoice->sale_type==0)
+                        <td style=" padding-left: 2px; padding-right: 2px;font-weight: bold;" colspan="5" align="right">৳. {{$invoice->total_payable}}</td>
+                        @elseif($invoice->sale_type==1)
+                        <td style=" padding-left: 2px; padding-right: 2px;font-weight: bold;" colspan="5" align="right">৳. {{$invoice->pay->sum('debit')}}</td>
+                        @else
+                        <td style=" padding-left: 2px; padding-right: 2px;font-weight: bold;" colspan="5" align="right">৳. {{$invoice->pay->sum('debit')}}</td>
+                        @endif
 					</tr>
 					
 					<!-- change_return_status -->
-											<tr>
-							<td style=" padding-left: 2px; padding-right: 2px;" colspan="5" align="right">পরিশোধিত পেমেন্ট</td>
-							<td style=" padding-left: 2px; padding-right: 2px;" align="right">600.00</td>
-						</tr>
 						<tr>
-							<td style=" padding-left: 2px; padding-right: 2px;" colspan="5" align="right">রিটার্ন পরিবর্তন করুন</td>
-							<td style=" padding-left: 2px; padding-right: 2px;" align="right">0.00</td>
+                            @if($invoice->sale_type==1)
+                            <th style=" padding-left: 2px; padding-right: 2px;" colspan="5" align="right">Current Due </th>
+                            {{-- <td>৳. {{$previous_due+$invoice->total_payable}}</td> --}}
+                            <td style=" padding-left: 2px; padding-right: 2px;" colspan="5" align="right">৳. {{App\Http\Traits\BalanceTrait::customerBalance($invoice->customer_id)}}</td>
+                            @elseif($invoice->sale_type==2)
+                            <th style=" padding-left: 2px; padding-right: 2px;" colspan="5" align="right">Total Due </th>
+                            <td style=" padding-left: 2px; padding-right: 2px;" colspan="5" align="right">৳. {{floatval($invoice->total_payable)-floatval($invoice->pay->sum('debit'))}}</td>
+                            @endif
 						</tr>
-										<tr>
-						<td style=" padding-left: 2px; padding-right: 2px;" colspan="5" align="right">গ্রাহক বকেয়া</td>
-						<td style=" padding-left: 2px; padding-right: 2px;" align="right">-78.00</td>
-					</tr>
 					
 					<tr>
-						<td colspan="6" align="center">----------আপনাকে ধন্যবাদ. আবার দর্শন!----------</td>
+						<td colspan="6" align="center">----------Thank You! Come Again----------</td>
 					</tr>
 
 					<tr>
 						<td colspan="6" align="center">
 						
-							<div style="display:inline-block;vertical-align:middle;line-height:16px !important;">	
+							{{-- <div style="display:inline-block;vertical-align:middle;line-height:16px !important;">	
 								<img class="center-block" style=" width: 100%; opacity: 1.0" src="https://posmatrix.nibiz.xyz/barcode/SL0088">
-							</div>
+							</div> --}}
 						    
 						</td>
 					</tr>

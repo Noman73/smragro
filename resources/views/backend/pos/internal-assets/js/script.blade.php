@@ -733,4 +733,8 @@ function notAdd(){
   sound2 = document.getElementById("audio2");
   sound2.play();
 }
+
+function print_invoice(id){
+  window.open("https://posmatrix.nibiz.xyz/pos/print_invoice_pos/"+id, "_blank", "scrollbars=1,resizable=1,height=500,width=500");
+}
 </script>
