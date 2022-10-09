@@ -65,6 +65,45 @@ $("#customer").select2({
       cache:true,
     }
   })
+  $("#warehouse").select2({
+    theme:'bootstrap4',
+    placeholder:'Warehouse',
+    allowClear:true,
+    ajax:{
+      url:"{{URL::to('/admin/get-warehouse')}}",
+      type:'post',
+      dataType:'json',
+      delay:20,
+      data:function(params){
+        return {
+          searchTerm:params.term,
+          _token:"{{csrf_token()}}",
+          }
+      },
+      processResults:function(response){
+        return {
+          results:response,
+        }
+      },
+      cache:true,
+    },
+    initSelection: function(element, callback) {
+      var id = $(element).val();
+        if(id !== "") {
+            $.ajax("{{URL::to('/admin/get-warehouse')}}", {
+                type:'post',
+                data: {_token:"{{csrf_token()}}"},
+                dataType: "json"
+            }).done(function(data) {
+                option="<option value='"+data[0].id+"'>"+data[0].text+"</option>";
+                // callback(data);
+                console.log(option)
+                $('#warehouse').html(option);
+                callback()
+            });
+        }
+      }
+  });
   $("#category").select2({
     theme:'bootstrap4',
     placeholder:'Category',
@@ -92,19 +131,28 @@ $("#customer").select2({
   let total_item=0;
   function addNew(product_id,name,qantity,price){
     // sound
-    var sound = document.getElementById("audio");
-    sound.play();
+    
+    product=$('#'+product_id)
+    dom_qty=product.parent().next().next().children().val();
+    console.log(dom_qty);
+
   // sound end
+  if((parseFloat(qantity)==0 || parseFloat(dom_qty)>=parseFloat(qantity))){
+      notAdd();
+      return false;
+    }
+  var sound = document.getElementById("audio");
+   sound.play();
     exist=$("input[name='product[]'][value='"+product_id+"']");
     if(exist.val()==product_id){
       qty=exist.parent().next().next().children("input[name='qantity[]']")
       qty.val(parseFloat(qty.val())+1)
-      console.log('skldfjd')
       calculation()
+      totalCal();
       return false;
-      
     }
-    form=`<tr><td>`+name+`<input class="form-control d-none" name="product[]" value="`+product_id+`"></td>`;
+    
+    form=`<tr><td>`+name+`<input id="`+product_id+`" class="form-control d-none" name="product[]" value="`+product_id+`"></td>`;
     form+=`<td><input type="text" disabled class="form-control form-control-sm bg-secondary text-light" name="stock[]" value="`+qantity+`" placeholder='0.00'/></td>`;
     form+=`<td><input type="number" class="form-control form-control-sm qantity" name="qantity[]" placeholder='0.00' value='1'/></td>`;
     form+=`<td><input type="number" class="form-control form-control-sm price" name="price[]" value="`+price+`" placeholder='0.00'/></td>`;
@@ -115,12 +163,14 @@ $("#customer").select2({
    total_item=total_item+1;
    $('#total-item').val(total_item)
    calculation()
+   totalCal();
   }
 
   $(document).ready(function(){
     customerVisibility()
     showProduct();
     $('#barcode').focus();
+    $('body').addClass('sidebar-collapse')
   })
   $(document).on('click','.removeItem',function(){
     $(this).parent().parent().remove();
@@ -240,7 +290,8 @@ function totalCal(){
   console.log(total_discount,vat,transport)
   total_payable=(total+vat+transport)-(total_discount)
   $('#total_payable').val(total_payable)
-  if($("#cash").is(':checked')){
+  console.log($("#customer").val())
+  if($("#customer").val()==null){
      $('#ammount').val(total_payable);
   }
 }
@@ -257,30 +308,11 @@ $('#date,#cheque_issue_date').daterangepicker({
     // console.log('123456')
     // cash_sale=$("#cash").is(":checked");
     // regular_sale=$("#regular").is(":checked");
-    sale_type=$('#sale_type').val()
-    if(sale_type==0){
-      $('#init-customer').addClass('invisible')
-      $('#init-customer').removeClass('visible')
-      $("#w_customer").removeClass('d-none');
-      $("#payment_method_row").addClass('d-none');
+    customer=$('#customer').val()
+    if(customer==null){
       $('#ammount').attr('disabled',true);
-      $('#ammount').parent().parent().removeClass('d-none');
     }else if(sale_type==1){
-      $('#init-customer').addClass('visible')
-      $('#init-customer').removeClass('invisible')
       $('#ammount').attr('disabled',false);
-      $('#ammount').parent().parent().addClass('d-none');
-      $("#payment_method_row").addClass('d-none');
-      $("#w_customer").addClass('d-none');
-      $("#w_mobile").val('');
-    }else if(sale_type==2){
-      $('#init-customer').addClass('invisible')
-      $('#init-customer').removeClass('visible')
-      $("#payment_method_row").removeClass('d-none');
-      $("#w_customer").removeClass('d-none');
-      $('#ammount').attr('disabled',false);
-      $("#w_mobile").val('');
-      $('#ammount').parent().parent().removeClass('d-none');
     }
   }
   $('#sale_type').change(function(){
@@ -313,13 +345,12 @@ $('#date,#cheque_issue_date').daterangepicker({
     let vat=$('#vat').val();
     let transport=$('#transport').val();
     let total_payable=$('#total_payable').val();
-    let transaction=$('#transaction').val();
     let ammount=$('#ammount').val();
     let date=$('#date').val();
     let hand_bill=$('#hand_bill').val();
     let note=$('#note').val();
     let staff_note=$('#staff_note').val();
-    let product=$("select[name='product[]']").map(function(){
+    let product=$("input[name='product[]']").map(function(){
         return $(this).val();
     }).get();
     let qantity=$("input[name='qantity[]']").map(function(){
@@ -328,23 +359,13 @@ $('#date,#cheque_issue_date').daterangepicker({
     let price=$("input[name='price[]']").map(function(){
         return $(this).val();
     }).get();
-    // walking customer
-    let w_name=$('#w_name').val();
-    let w_mobile=$('#w_mobile').val();
-    let w_adress=$('#w_adress').val();
     // payment method
     let payment_method_type=$("input[name='payment_method_type[]']:checked").val();
     let payment_method=$('#bank').val();
     let cheque_no=$('#cheque_no').val();
     let cheque_issue_date=$('#cheque_issue_date').val();
     let cheque_photo=document.getElementById('cheque_photo').files;
-    // courier
-    let courier=$('#courier').val();
-    let shipping_name=$('#shipping_name').val();
-    let shipping_mobile=$('#shipping_mobile').val();
-    let shipping_adress=$('#shipping_adress').val();
-    let condition_amount=$('#condition_amount').val();
-    let sale_by= $('input[name="sale_by[]"]:checked').val();
+    let warehouse=$('#warehouse').val()
     formData=new FormData()
     formData.append('sale_type',sale_type);
     formData.append('discount_type',discount_type);
@@ -357,19 +378,12 @@ $('#date,#cheque_issue_date').daterangepicker({
     formData.append('transport',transport);
     formData.append('total_payable',total_payable);
     formData.append('payment_method_type',payment_method_type);
-    formData.append('transaction',transaction);
     formData.append('ammount',ammount);
     formData.append('product',product);
     formData.append('qantity',qantity);
     formData.append('price',price);
-    formData.append('note',note);
-    formData.append('staff_note',staff_note);
     formData.append('date',date);
-    formData.append('hand_bill',hand_bill);
-    // walking customer
-    formData.append('name',w_name);
-    formData.append('mobile',w_mobile);
-    formData.append('adress',w_adress);
+    formData.append('warehouse',warehouse);
     // payment to voucer
     formData.append('payment_method',payment_method);
     formData.append('cheque_no',cheque_no);
@@ -378,13 +392,7 @@ $('#date,#cheque_issue_date').daterangepicker({
       formData.append('cheque_photo',cheque_photo[0]);
     }
     // courier
-    formData.append('courier',courier);
-    formData.append('shipping_name',shipping_name);
-    formData.append('shipping_mobile',shipping_mobile);
-    formData.append('shipping_adress',shipping_adress);
-    formData.append('condition_amount',condition_amount);
-    formData.append('sale_by',sale_by);
-    axios.post('admin/invoice',formData)
+    axios.post("{{route('pos.store')}}",formData)
     .then(response=>{
       console.log(response);
         if(response.data.message){
@@ -693,7 +701,7 @@ function showProduct(){
       console.log(res)
       product='';
       res.data.forEach(function(d){
-       product+= `<div class="col-12 col-md-4">
+       product+= `<div class="col-12 col-md-3">
                     <div onclick="addNew(`+d.id+`,'`+d.name.replace('"','“')+`','`+d.qantity+`',`+d.sale_price+`)" class="card rounded" style="min-height:120px;">
                       <div class="container">
                         <p style="font-size:10px;" class="bg-danger pl-1 mt-2">Quantity : `+d.qantity+`</p>
@@ -721,4 +729,8 @@ $(document).on('keyup','#barcode',function(){
     return false;
   })
 })
+function notAdd(){
+  sound2 = document.getElementById("audio2");
+  sound2.play();
+}
 </script>

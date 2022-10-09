@@ -16,22 +16,27 @@
                    <div class="row">
                     {{-- devide product list --}}
                     
-                    <div class="col-8">
-                      
+                    <div class="col-7">
+                      <input class="form-control d-none" type="text" id="date">
                     <div class="row">
-                      <div style="margin-left:-5px;" class="col-6">
+                      <div  class="col-6 pl-0">
                         <div class="form-group">
                           <select class="form-control" name="customer" id="customer"></select>
                         </div>
                       </div>
-                      <div style="" class="col-6">
+                      <div style="" class="col-6 p-0">
                         <div class="input-group">
                           <div class="input-group-prepend">
                             <div class="input-group-text"><i class="fas fa-barcode"></i></div>
                           </div>
                           <input type="text" class="form-control" id="barcode" placeholder="Barcode">
                         </div>
-                  
+
+                      </div>
+                      <div class="col-12 p-0">
+                        <div class="input-group mb-3">
+                          <select class="form-control" name="" id="warehouse"></select>
+                        </div>
                       </div>
                    <div class="table-responsive">
                        <table class="table table-sm text-center table-bordered" id="add_product">
@@ -141,7 +146,10 @@
                               <th width="50%">Paid Amount: </th>
                               <td><input type="number" class="form-control form-control-sm" id="ammount" placeholder="0.00"></td>
                             </tr>
-                            
+                            <tr>
+                              <th width="50%">SMS: </th>
+                              <td><input type="checkbox" checked ></td>
+                            </tr>
                         </table>
                     </div>
                   </div>
@@ -150,7 +158,7 @@
                     <button class="btn btn-primary submit" onclick="formRequestTry()">Save</button>
                   </div>
                 </div>
-                <div class="col-md-4 ">
+                <div class="col-md-5 ">
                   <div class="product-list border" style="min-height: 400px;">
                     <div class="container">
                       <div class="row">
@@ -185,6 +193,7 @@
          
       </div><!-- /.container-fluid -->
       <audio id="audio" src="{{asset('storage/audio/beep.wav')}}" autoplay="false"></audio>
+      <audio id="audio2" src="{{asset('storage/audio/beep2.mp3')}}" autoplay="false"></audio>
       {{-- modal --}}
       <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="modal">
         <div class="modal-dialog modal-lg">
