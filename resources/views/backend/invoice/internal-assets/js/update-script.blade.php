@@ -155,7 +155,7 @@
       if(e.target.name=="total[]"){
         e.preventDefault();
       }else{
-        calculation()
+        calculation();
         totalCal();
       }
     })
