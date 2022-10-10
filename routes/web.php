@@ -129,6 +129,7 @@ Route::group([
     Route::get('/sales-invoice-bangla-print/{invoice_id}','InvoiceViewController@printInBangla');
     Route::get('/sales-chalan-invoice-print/{invoice_id}','InvoiceViewController@chalan');
     Route::get('/sales-total-chalan-invoice-print/{invoice_id}','InvoiceViewController@totalChalan');
+    Route::get('/sales-pos-invoice-print/{invoice_id}','InvoiceViewController@posPrint');
     Route::get('/payment-view/{invoice_id}','PaymentViewController@index');
     Route::get('/payment-print/{invoice_id}','PaymentViewController@print');
     Route::get('/receive-view/{invoice_id}','ReceiveViewController@index');

@@ -39,8 +39,9 @@
 				<table width="100%">
 					<tr>
 						<td width="40%">Invoice</td>
-						<td><b>#SL0088</b></td>
+						<td><b>S-{{date('dm',$invoice->dates).substr(date('Y',$invoice->dates),-2).$invoice->id}}</b></td>
 					</tr>
+					@if(isset($invoice->customer->name))
 					<tr>
 						<td>Name</td>
 						<td>{{$invoice->customer->name}}</td>
@@ -49,9 +50,10 @@
 						<td>মোবাইল</td>
 						<td>{{$invoice->customer->mobile}}</td>
 					</tr>
+					@endif
 					<tr>
 						<td>Date:{{date('d-m-Y',$invoice->dates)}}</td>
-						<td style="text-align: right;">সময়:01:14 pm</td>
+						<td style="text-align: right;">Time:01:14 pm</td>
 					</tr>
 				</table>
 				
@@ -130,7 +132,6 @@
 					<tr>
 						<td colspan="6" align="center">----------Thank You! Come Again----------</td>
 					</tr>
-
 					<tr>
 						<td colspan="6" align="center">
 						
@@ -143,7 +144,7 @@
 
 					</tfoot>
 				</table>
-				<center style="padding-top:5px;">Powered by NIBIZ SOFT</center>
+				<center style="padding-top:5px;">Powered by Ongsho</center>
 			</td>
 		</tr>
 	</table>
@@ -156,17 +157,12 @@
    </div>
    </div>
 </center>
-
 		<style type="text/css" media="print">
 		@page {
 		    size: auto;   /* auto is the initial value */
 		    margin: 0;  /* this affects the margin in the printer settings */
 		}
-		
-		
-		</style>
-		
-
+	</style>
     <script type="text/javascript">
         window.print();
         window.onfocus=function(){ window.close();}

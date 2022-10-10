@@ -14,7 +14,7 @@
         <a class="btn btn-sm btn-primary" href="{{URL::to('admin/payment')}}">Payment</a>
     </li>
     <li class="nav-item mt-1 mr-1">
-        <a class="btn btn-sm btn-primary" href="{{URL::to('admin/pos')}}">Pos</a>
+        <a class="btn btn-sm btn-primary" target="_blank" href="{{URL::to('admin/pos')}}">Pos</a>
     </li>
     <li class="nav-item mt-1 mr-1">
         <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#calculator">

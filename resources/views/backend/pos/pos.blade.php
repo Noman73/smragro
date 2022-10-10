@@ -185,10 +185,6 @@
                 </div>
                </div>
             </div>
-            <div class="float-right mt-2">
-              <button class="btn btn-secondary" onclick="Clean()">Reset</button>
-              <button class="btn btn-primary submit" onclick="formRequestTry()">Save</button>
-            </div>
           </div>
          
       </div><!-- /.container-fluid -->

@@ -202,7 +202,7 @@ $("#customer").select2({
   }).get();
 }
 
-$(document).on('change keyup','.price,#discount,#vat,.qantity,#transport,.product',function(e){
+$(document).on('change keyup','.price,#discount,#vat,.qantity,#transport,.product,#discountCheck',function(e){
   console.log(e.target.name=='total[]')
   if(e.target.name=="total[]"){
     e.preventDefault();
@@ -399,7 +399,8 @@ $('#date,#cheque_issue_date').daterangepicker({
             toastr.success(response.data.message);
             Clean();
             $('.submit').attr('disabled',false);
-            window.location="{{URL::to('admin/view-pages/sales-invoice')}}/"+response.data.id;
+            // window.location="{{URL::to('admin/view-pages/sales-pos-invoice-print')}}/"+response.data.id;
+            window.open("{{URL::to('admin/view-pages/sales-pos-invoice-print')}}/"+response.data.id, "_blank", "scrollbars=1,resizable=1,height=500,width=500");
         }else if(response.data.error){
           $('.submit').attr('disabled',false);
             var keys=Object.keys(response.data.error);

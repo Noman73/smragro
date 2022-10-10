@@ -234,7 +234,7 @@ class PosController extends Controller
                        $voucer->date= strtotime(strval($data['date']));
                        $voucer->transaction_name="Sale Invoice";
                        $voucer->ledger_id = $customer_ledger->id;
-                       $voucer->subledger_id = $customer_id;
+                       $voucer->subledger_id = $data['customer'];
                        $voucer->debit = $total_payable;
                        $voucer->invoice_id = $inv_id;
                        $voucer->author_id = auth()->user()->id;
@@ -261,7 +261,7 @@ class PosController extends Controller
                                    $voucer->date= strtotime(strval($data['date']));
                                    $voucer->transaction_name = 'Sale Invoice';
                                    $voucer->ledger_id=$customer_ledger->id;
-                                   $voucer->subledger_id=$customer_id;
+                                   $voucer->subledger_id=$data['customer'];
                                    $voucer->debit = $total_payable;
                                    $voucer->credit = 0;
                                    $voucer->invoice_id = $inv_id;
@@ -288,7 +288,7 @@ class PosController extends Controller
                                    $voucer->date= strtotime(strval($data['date']));
                                    $voucer->transaction_name = 'Sale Invoice';
                                    $voucer->ledger_id = $customer_ledger->id;
-                                   $voucer->subledger_id = $customer_id;
+                                   $voucer->subledger_id = $data['customer'];
                                    $voucer->credit = $data['ammount'];
                                    $voucer->cheque_no = $data['cheque_no'];
                                    $voucer->cheque_issue_date = strtotime(strval($data['cheque_issue_date']));
