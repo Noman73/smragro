@@ -81,26 +81,30 @@ class ProductController extends Controller
     {
         // return $request->all();
         $validator=Validator::make($request->all(),[
-            'category'=>"required|max:200|min:1",
+            'category'=>"required|max:20|min:1",
+            'brand'=>"required|max:20|min:1",
+            'part_id'=>"required|max:20|min:1",
             'name'=>"required|max:200|min:1",
             'product_code'=>"nullable|max:200|min:1",
             'model_no'=>"nullable|max:200|min:1",
             'warranty'=>"nullable|max:200|min:1",
-            'unit_type'=>"nullable|max:200|min:1",
-            'sale_price'=>"nullable|max:200|min:1",
-            'buy_price'=>"nullable|max:200|min:1",
+            'unit_type'=>"required|max:200|min:1",
+            'sale_price'=>"required|max:200|min:1",
+            'buy_price'=>"required|max:200|min:1",
             'reorder_level'=>"nullable|max:200|min:1",
             'sale'=>"nullable|max:200|min:1",
             'purchase'=>"nullable|max:200|min:1",
             'production'=>"nullable|max:200|min:1",
             'combo'=>"nullable|max:200|min:1",
-            'status'=>"nullable|max:1|min:1",
+            'status'=>"required|max:1|min:1",
             'image'=>'nullable|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
         ]);
         if($validator->passes()){
             $existance=Product::where('category_id',$request->category)->count();
             $product=new Product;
             $product->category_id=$request->category;
+            $product->brand_id=$request->brand;
+            $product->part_id=$request->part_id;
             $product->name=$request->name;
             $product->product_code=str_pad($request->category,4,'0').($existance!=0 ? (intval($existance)+1) : 1);
             $product->model_no=$request->model_no;

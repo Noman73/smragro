@@ -90,7 +90,8 @@ window.formRequest= function(){
     let purchase=($('#purchase').prop('checked') ? 1 :0);
     let production=($('#production').prop('checked') ? 1 :0);
     let combo=($('#combobox').prop('checked') ? 1 :0);
-
+    let brand=$('#brand').val();
+    let part_id=$('#part_id').val();
     let products=$("select[name='products[]']").map(function(){
       return $(this).val();
     }).get();
@@ -108,7 +109,15 @@ window.formRequest= function(){
     if(category==null){
       category='';
     }
+    if(brand==null){
+      brand='';
+    }
+    if(unit_type==null){
+      unit_type='';
+    }
     formData.append('category',category);
+    formData.append('brand',brand);
+    formData.append('part_id',part_id);
     formData.append('name',name);
     formData.append('product_code',product_code);
     formData.append('model_no',model_no);
@@ -255,6 +264,29 @@ $("#category").select2({
     allowClear:true,
     ajax:{
       url:"{{URL::to('/admin/get-category')}}",
+      type:'post',
+      dataType:'json',
+      delay:20,
+      data:function(params){
+        return {
+          searchTerm:params.term,
+          _token:"{{csrf_token()}}",
+          }
+      },
+      processResults:function(response){
+        return {
+          results:response,
+        }
+      },
+      cache:true,
+    }
+  })
+  $("#brand").select2({
+    theme:'bootstrap4',
+    placeholder:'select',
+    allowClear:true,
+    ajax:{
+      url:"{{URL::to('/admin/get-brand')}}",
       type:'post',
       dataType:'json',
       delay:20,
