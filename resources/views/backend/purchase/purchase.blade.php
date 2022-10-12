@@ -302,6 +302,5 @@
   @endsection
 
   @section('script')
-  
   @include('backend.purchase.internal-assets.js.script')
   @endsection

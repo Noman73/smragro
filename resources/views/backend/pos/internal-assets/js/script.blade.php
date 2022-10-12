@@ -151,7 +151,6 @@ $("#customer").select2({
       totalCal();
       return false;
     }
-    
     form=`<tr><td>`+name+`<input id="`+product_id+`" class="form-control d-none" name="product[]" value="`+product_id+`"></td>`;
     form+=`<td><input type="text" disabled class="form-control form-control-sm bg-secondary text-light" name="stock[]" value="`+qantity+`" placeholder='0.00'/></td>`;
     form+=`<td><input type="number" class="form-control form-control-sm qantity" name="qantity[]" placeholder='0.00' value='1'/></td>`;

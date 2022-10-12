@@ -368,7 +368,7 @@ $('#date,#cheque_issue_date').daterangepicker({
                 // callback(data);
                 console.log(option)
                 $('#warehouse').html(option);
-                callback()
+                callback(data)
             });
         }
       }
