@@ -68,7 +68,6 @@ $("#customer").select2({
   let total_item=0;
   function addNew(){
     form=`<tr><td><select class="form-control product" name="product[]"></select></td>`;
-    form+=`<td><input type="number" disabled class="form-control bg-secondary text-light" name="stock[]" placeholder='0.00'/></td>`;
     form+=`<td><input type="number" class="form-control qantity" name="qantity[]" placeholder='0.00' value='1'/></td>`;
     form+=`<td><input type="number" class="form-control price" name="price[]" placeholder='0.00'/></td>`;
     form+=`<td><input type="number" class="form-control total" name="total[]" placeholder='0.00'/></td>`;
@@ -99,6 +98,10 @@ $("#customer").select2({
 
  $("input[name='price[]']")
   .map(function(){
+      mtp=$(this).parent().prev().children().val();
+      b_rate=$(this).parent().prev().prev().children().val();
+      $(this).val(parseFloat(b_rate)*parseFloat(mtp))
+      console.log("mtp-"+mtp,"b_rate-"+b_rate)
       price=(($(this).val()=='')? 0:$(this).val());
       console.log(qantity[x])
       total=(parseFloat(price)*parseFloat(qantity[x])).toFixed(2);
@@ -113,7 +116,7 @@ $("#customer").select2({
   }).get();
 }
 
-$(document).on('change keyup','.price,#discount,#vat,.qantity,#transport,.product,#discountCheck',function(e){
+$(document).on('change keyup','.price,#discount,#vat,.qantity,#transport,.product,#discountCheck,.mtp,.b_rate',function(e){
   console.log(e.target.name=='total[]')
   if(e.target.name=="total[]"){
     e.preventDefault();
@@ -212,9 +215,6 @@ $('#date,#cheque_issue_date').daterangepicker({
   });
 
   function customerVisibility(){
-    // console.log('123456')
-    // cash_sale=$("#cash").is(":checked");
-    // regular_sale=$("#regular").is(":checked");
     sale_type=$('#sale_type').val()
     if(sale_type==0){
       $('#init-customer').addClass('invisible')
@@ -420,9 +420,7 @@ $('#date,#cheque_issue_date').daterangepicker({
                 $('#warehouse').html(option);
                 callback()
             });
-            
-        }
-        
+         }
       }
   });
 
@@ -462,6 +460,105 @@ $('#date,#cheque_issue_date').daterangepicker({
       data:function(params){
         return {
           searchTerm:params.term,
+          _token:"{{csrf_token()}}",
+          }
+      },
+      processResults:function(response){
+        return {
+          results:response,
+        }
+      },
+      cache:true,
+    }
+  });
+  $("#brand").select2({
+    theme:'bootstrap4',
+    placeholder:'Brand',
+    allowClear:true,
+    ajax:{
+      url:"{{URL::to('/admin/get-brand')}}",
+      type:'post',
+      dataType:'json',
+      delay:20,
+      data:function(params){
+        return {
+          searchTerm:params.term,
+          _token:"{{csrf_token()}}",
+          }
+      },
+      processResults:function(response){
+        return {
+          results:response,
+        }
+      },
+      cache:true,
+    }
+  });
+  $("#model").select2({
+    theme:'bootstrap4',
+    placeholder:'Model',
+    allowClear:true,
+    ajax:{
+      url:"{{URL::to('/admin/get-model')}}",
+      type:'post',
+      dataType:'json',
+      delay:20,
+      data:function(params){
+        return {
+          searchTerm:params.term,
+          brand_id:$('#brand').val(),
+          _token:"{{csrf_token()}}",
+          }
+      },
+      processResults:function(response){
+        return {
+          results:response,
+        }
+      },
+      cache:true,
+    }
+  });
+  $("#product").select2({
+    theme:'bootstrap4',
+    placeholder:'Item Name',
+    allowClear:true,
+    ajax:{
+      url:"{{URL::to('/admin/get-product-by-data')}}",
+      type:'post',
+      dataType:'json',
+      delay:20,
+      data:function(params){
+        return {
+          searchTerm:params.term,
+          brand_id:$('#brand').val(),
+          model_id:$('#model').val(),
+          part_id:$('#part_id').val(),
+          _token:"{{csrf_token()}}",
+          }
+      },
+      processResults:function(response){
+        return {
+          results:response,
+        }
+      },
+      cache:true,
+    }
+  });
+  $("#part_id").select2({
+    theme:'bootstrap4',
+    placeholder:'Part ID',
+    allowClear:true,
+    ajax:{
+      url:"{{URL::to('/admin/get-part-id')}}",
+      type:'post',
+      dataType:'json',
+      delay:20,
+      data:function(params){
+        return {
+          searchTerm:params.term,
+          brand_id:$('#brand').val(),
+          model_id:$('#model').val(),
+          part_id:$('#part_id').val(),
           _token:"{{csrf_token()}}",
           }
       },
@@ -564,7 +661,6 @@ function balance(thisval){
       }
   })
 }
-
 $(document).on('select2:unselect','#customer',function(){
     $('.total_balance').addClass('d-none')
 })
@@ -611,22 +707,24 @@ function saleByCheck(){
     }
 }
 
-$('body').on('select2:select',"select[name='product[]']", function (e){
+$('body').on('select2:select',"#product", function (e){
   id=e.params.data.id;
   this_cat=$(this);
   customer=$('#customer').val();
   axios.get('admin/get-quantity/'+id)
       .then(function(response){
             console.log(response)
+            $('#stock').val(response.data.total);
             this_cat.parent().next().children("[name='stock[]']").val(response.data.total);
           })
           .catch(function(error){
           console.log(error.request);
         })
-  axios.post('admin/get-product-price',{customer:customer,product:id})
+  axios.get('admin/get-product-sale-price/'+id)
    .then(res=>{
     console.log(res);
-    this_cat.parent().next().next().next().children("[name='price[]']").val(parseFloat(res.data).toFixed(2));
+    $('#b_rate').val(parseFloat(res.data).toFixed(2));
+    this_cat.parent().next().next().next().children("[name='b_rate[]']").val(parseFloat(res.data).toFixed(2));
     calculation()
     totalCal();
    })
@@ -664,5 +762,19 @@ $(document).keypress(function(event){
     });
     
   }
+})
+
+function singleCalc(){
+   qty=$('#quantity').val();
+   brate=$('#b_rate').val();
+   mltp=$('#mltp').val();
+   amount=(parseFloat(brate)*parseFloat(mltp)).toFixed(2);
+   total=parseFloat(qty)*parseFloat(amount);
+   $('#amount').val(amount);
+   $('#total').val(total);
+}
+
+$(document).on('change keyup','#quantity,#b_rate,#mltp',function(){
+  singleCalc();
 })
 </script>

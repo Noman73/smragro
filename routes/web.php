@@ -28,6 +28,9 @@ Route::group([
     Route::resource('/category','CategoryController');
     Route::resource('/brand','BrandController');
     Route::post('/get-brand','BrandController@getBrand');
+    Route::post('/get-model','ProductController@getModel');
+    Route::post('/get-product-by-data','ProductController@getProductByData');
+    Route::post('/get-part-id','ProductController@getPartId');
     Route::post('/get-all-products','ProductController@getAllProduct');
     Route::get('/get-product-by-code/{code}','ProductController@getProductByCode');
     Route::resource('/multi_note','MultiNoteController');
@@ -80,6 +83,7 @@ Route::group([
     Route::get('/price-list/{customer_id}','MakePriceController@priceList');
     Route::get('/get-quantity/{product_id}','ProductController@getQantity');
     Route::post('/get-product-price','ProductController@productPrice');
+    Route::get('/get-product-sale-price/{product_id}','ProductController@getProductSalePrice');
     Route::resource('/roles','RoleController');
 
     Route::resource('/permission','PermissionController');
@@ -165,6 +169,8 @@ Route::group([
     Route::post('/purchase-report','PurchaseReportController@getReport');
     Route::get('/inventory-report','InventoryReportController@index');
     Route::post('/inventory-report','InventoryReportController@getReport');
+    Route::get('/stock-value-report','StockValueController@index');
+    Route::post('/stock-value-report','StockValueController@getReport');
     Route::get('/bank-balance-report','BankBalanceReportController@index');
     Route::post('/bank-balance-report','BankBalanceReportController@getReport');
     Route::get('/cash-in-hand-report','CashInHandReportController@index');

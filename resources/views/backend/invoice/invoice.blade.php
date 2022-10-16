@@ -92,23 +92,93 @@
                         </div>
                       </div>
                    </div>
-                   <div class="table-responsive">
-                       <table class="table table-sm text-center table-bordered" id="add_product">
-                           <thead>
-                               <tr>
-                                   <th width='40%'>Product</th>
-                                   <th width='15%'>Stock</th>
-                                   <th width='10%'>Quantity</th>
-                                   <th width='10%'>Price</th>
-                                   <th width='15%'>Total</th>
-                                   <th width='10%'>Action</th>
-                               </tr>
-                           </thead>
-                           <tbody id="item_table_body">
+                   <div class="row">
+                    <div class="col-12 col-md-6 ">
+                      <div class="row">
+                        <div class="col-12 col-md-4">
+                          <div class="form-group">
+                            <label for="">Brand/Company</label>
+                            <select class="form-control" name="" id="brand"></select>
+                          </div>
+                        </div>
+                        <div class="col-12 col-md-4">
+                          <div class="form-group">
+                            <label for="">Model</label>
+                            <select class="form-control" name="" id="model"></select>
+                          </div>
+                        </div>
+                        <div class="col-12 col-md-4">
+                          <div class="form-group">
+                            <label for="">Item Name</label>
+                            <select class="form-control" name="" id="product"></select>
+                          </div>
+                        </div>
+                        <div class="col-12 col-md-4">
+                          <div class="form-group">
+                            <label for="">Part ID</label>
+                            <select class="form-control" name="" id="part_id"></select>
+                          </div>
+                        </div>
+                        <div class="col-12 col-md-3">
+                          <div class="form-group">
+                            <label for="">Quantity</label>
+                            <input type="number" class="form-control" id="quantity" placeholder="0.00" value="1">
+                          </div>
+                        </div>
+                        <div class="col-12 col-md-3">
+                          <div class="form-group">
+                            <label for="">B.Rate</label>
+                            <input type="number" class="form-control" id="b_rate" placeholder="0.00">
+                          </div>
+                        </div>
+                        <div class="col-12 col-md-2">
+                          <div class="form-group">
+                            <label for="">MLTP</label>
+                            <input type="number" class="form-control" id="mltp" placeholder="0.00">
+                          </div>
+                        </div>
+                        <div class="col-12 col-md-3">
+                          <div class="form-group">
+                            <label for="">Amount</label>
+                            <input type="number" class="form-control" id="amount" placeholder="0.00" disabled>
+                          </div>
+                        </div>
+                        <div class="col-12 col-md-3">
+                          <div class="form-group">
+                            <label for="">Total</label>
+                            <input type="number" class="form-control" id="total" placeholder="0.00" disabled>
+                          </div>
+                        </div>
+                        <div class="col-12 col-md-3">
+                          <div class="form-group">
+                            <label for="">Stock</label>
+                            <input disabled type="number" class="form-control" id="stock" placeholder="0.00">
+                          </div>
+                        </div>
+                      </div>
+                     </div>
+                     <div class="col-12 col-md-6 border ">
+                      <div class="table-responsive">
+                          <table class="table table-sm text-center table-bordered mt-2" id="add_product">
+                              <thead>
+                                  <tr>
+                                    <th width='35%'>Product</th>
+                                    <th width='20%'>Quantity</th>
+                                    <th width='20%'>Price</th>
+                                    <th width='15%'>Total</th>
+                                    <th width='10%'>Action</th>
+                                  </tr>
+                              </thead>
+                              <tbody id="item_table_body">
 
-                           </tbody>
-                       </table>
+                              </tbody>
+                          </table>
+                      </div>
                    </div>
+                   </div>
+                   
+                   
+                   
                    <div class="col-12 col-md-1">
                     <button class="btn btn-primary btn-sm" onclick="addNew()">Add <i class="fas fa-plus"></i></button>
                   </div>

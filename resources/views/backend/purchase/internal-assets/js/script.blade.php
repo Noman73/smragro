@@ -76,6 +76,8 @@ $("#supplier").select2({
     form=`<tr><td><select class="form-control product" name="product[]"></select></td>`;
     form+=`<td><input type="number" disabled class="form-control bg-secondary text-light" name="stock[]" placeholder='0.00'/></td>`;
     form+=`<td><input type="number" class="form-control" name="qantity[]" placeholder='0.00' value='1'/></td>`;
+    form+=`<td><input type="number" class="form-control b_rate" name="b_rate[]" placeholder='0.00'/></td>`;
+    form+=`<td><input type="number" class="form-control mtp" name="mtp[]" placeholder='0.00'/></td>`;
     form+=`<td><input type="number" class="form-control price" name="price[]" placeholder='0.00'/></td>`;
     form+=`<td><input type="number" class="form-control total" name="total[]" placeholder='0.00'/></td>`;
     form+=`<td><button class="btn btn-sm btn-danger removeItem" >X</button></td></tr>`;
@@ -105,6 +107,9 @@ $("#supplier").select2({
 
  $("input[name='price[]']")
   .map(function(){
+      mtp=$(this).parent().prev().children().val();
+      b_rate=$(this).parent().prev().prev().children().val();
+      $(this).val(parseFloat(b_rate)*parseFloat(mtp))
       price=(($(this).val()=='')? 0:$(this).val());
       console.log(qantity[x])
       total=(parseFloat(price)*parseFloat(qantity[x])).toFixed(2);
@@ -446,9 +451,26 @@ function balance(thisval){
       }
   })
 }
-function validation(){
-
-}
+$('body').on('select2:select',"select[name='product[]']", function (e){
+  id=e.params.data.id;
+  this_cat=$(this);
+  customer=$('#customer').val();
+  axios.get('admin/get-quantity/'+id)
+      .then(function(response){
+            console.log(response)
+            this_cat.parent().next().children("[name='stock[]']").val(response.data.total);
+          })
+          .catch(function(error){
+          console.log(error.request);
+        })
+  axios.get('admin/get-product-sale-price/'+id)
+   .then(res=>{
+    console.log(res);
+    this_cat.parent().next().next().next().children("[name='b_rate[]']").val(parseFloat(res.data).toFixed(2));
+    calculation()
+    totalCal();
+   })
+ })
  $('#supplierModal').on("click",function(){
    $('#modal').modal('show');
  })

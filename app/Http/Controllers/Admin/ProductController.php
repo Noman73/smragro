@@ -238,9 +238,9 @@ class ProductController extends Controller
     }
     public function getProduct(Request $request)
     {
-        $products= Product::where('name','like','%'.$request->searchTerm.'%')->orWhere('product_code','like','%'.$request->searchTerm.'%')->where('status',1)->take(15)->get();
+        $products= Product::where('name','like','%'.$request->searchTerm.'%')->orWhere('part_id','like','%'.$request->searchTerm.'%')->where('status',1)->take(15)->get();
         foreach ($products as $value){
-             $set_data[]=['id'=>$value->id,'text'=>$value->product_code.'-'.$value->name];
+             $set_data[]=['id'=>$value->id,'text'=>$value->part_id.'-'.$value->name];
         }
         return $set_data;
     }
@@ -346,5 +346,50 @@ class ProductController extends Controller
             where products.product_code=:code
             group by products.id,purchases.product_id,sales1.product_id order by products.id limit 9
             ",['code'=>$code]);
+    }
+    public function getProductSalePrice($product_id)
+    {
+        return Product::find($product_id)->sale_price;
+    }
+    public function getModel(Request $request)
+    {
+        // return $request->all();
+        $brand_id=$request->brand_id;
+        if($request->brand_id==null){
+            $brand_id='';
+            $search= Product::select('id','model_no')->where('model_no','like','%'.$request->searchTerm.'%')->get();
+        }else{
+            $search= Product::select('id','model_no')->where('model_no','like','%'.$request->searchTerm.'%')->where('brand_id',$brand_id)->get();
+        }
+        foreach ($search as $value){
+            $set_data[]=['id'=>$value->model_no,'text'=>$value->model_no];
+       }
+       return $set_data;
+    }
+    public function getProductByData(Request $request)
+    {
+        // return $request->all();
+        $brand_id=($request->brand_id==null? '':$request->brand_id);
+        $model=($request->model_id==null? '':$request->model_id);
+        $part_id=($request->part_id==null? '':$request->part_id);
+        if($part_id=='' ){
+             $search=Product::where('name','like','%'.$request->searchTerm.'%')->where('brand_id',$brand_id)->orWhere('model_no',$model)->get();
+        }else{
+            $search=Product::where('name','like','%'.$request->searchTerm.'%')->where('part_id',$part_id)->get();
+        }
+        foreach ($search as $value){
+            $set_data[]=['id'=>$value->id,'text'=>$value->part_id.'-'.$value->name];
+        }
+        return $set_data;
+    }
+
+    public function getPartId(Request $request)
+    {
+        
+        $search=Product::where('part_id','like','%'.$request->searchTerm.'%')->get();
+        foreach ($search as $value){
+            $set_data[]=['id'=>$value->part_id,'text'=>$value->part_id];
+        }
+        return $set_data;
     }
 }

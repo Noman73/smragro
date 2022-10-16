@@ -89,10 +89,12 @@
                        <table class="table table-sm text-center table-bordered" id="add_product">
                            <thead>
                                <tr>
-                                   <th width='30%'>Product</th>
+                                   <th width='20%'>Product</th>
                                    <th width='15%'>Stock</th>
-                                   <th width='15%'>Quantity</th>
-                                   <th width='15%'>Price</th>
+                                   <th width='10%'>Quantity</th>
+                                   <th width='10%'>B.Rate</th>
+                                   <th width='10%'>MTP</th>
+                                   <th width='10%'>Price</th>
                                    <th width='15%'>Total</th>
                                    <th width='10%'>Action</th>
                                </tr>
