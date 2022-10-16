@@ -113,7 +113,7 @@ $("#customer").select2({
   }).get();
 }
 
-$(document).on('change keyup','.price,#discount,#vat,.qantity,#transport,.product,#discountCheck',function(e){
+$(document).on('change keyup','.price,#discount,#vat,.qantity,#transport,.product,#discountCheck,#sale_type',function(e){
   console.log(e.target.name=='total[]')
   if(e.target.name=="total[]"){
     e.preventDefault();
@@ -198,8 +198,14 @@ function totalCal(){
   console.log(total_discount,vat,transport)
   total_payable=(total+vat+transport)-(total_discount)
   $('#total_payable').val(total_payable)
+  previous_due=(parseFloat($('#previous_due').val())==NaN ? 0 : parseFloat($('#previous_due').val()));
+  amount=(parseFloat($('#ammount').val())==NaN ?0 : parseFloat($('#ammount').val()));
+  console.log('ssf'+previous_due,total_payable,amount)
+  $('#current_due').val(((total_payable+previous_due)-amount).toFixed(2));
   if($("#cash").is(':checked')){
-     $('#ammount').val(total_payable);
+    if($('#sale_type').val()==0){
+      $('#ammount').val(total_payable);
+    }
   }
 }
 $('#date,#cheque_issue_date').daterangepicker({
@@ -223,14 +229,21 @@ $('#date,#cheque_issue_date').daterangepicker({
       $("#payment_method_row").addClass('d-none');
       $('#ammount').attr('disabled',true);
       $('#ammount').parent().parent().removeClass('d-none');
+      $('.due').addClass('d-none');
     }else if(sale_type==1){
       $('#init-customer').addClass('visible')
       $('#init-customer').removeClass('invisible')
-      $('#ammount').attr('disabled',false);
-      $('#ammount').parent().parent().addClass('d-none');
-      $("#payment_method_row").addClass('d-none');
+      // $('#ammount').attr('disabled',false);
+      // $('#ammount').parent().parent().addClass('d-none');
+      // $("#payment_method_row").addClass('d-none');
       $("#w_customer").addClass('d-none');
       $("#w_mobile").val('');
+      // 
+      $('.due').removeClass('d-none')
+      $("#payment_method_row").removeClass('d-none');
+      $('#ammount').attr('disabled',false);
+      $('#ammount').parent().parent().removeClass('d-none');
+      $('#ammount').val('');
     }else if(sale_type==2){
       $('#init-customer').addClass('invisible')
       $('#init-customer').removeClass('visible')
@@ -239,6 +252,8 @@ $('#date,#cheque_issue_date').daterangepicker({
       $('#ammount').attr('disabled',false);
       $("#w_mobile").val('');
       $('#ammount').parent().parent().removeClass('d-none');
+      $('#ammount').val('');
+      $('.due').addClass('d-none');
     }
   }
   $('#sale_type').change(function(){
@@ -500,6 +515,9 @@ function balance(thisval){
   axios.get('admin/accounts/get-customer-balance/'+id)
   .then((res)=>{
       console.log(res.data[0].total);
+      if($('#sale_type').val()==1){
+        $('#previous_due').val(res.data[0].total);
+      }
       if(parseFloat(res.data[0].total)<0){
         $('#customer-balance').text(res.data[0].total);
         $('#customer-balance').addClass('text-danger')

@@ -287,32 +287,9 @@ class InvoiceTestController extends Controller
                         $voucer->author_id = auth()->user()->id;
                         $voucer->save();
                         return ['message' => 'Invoice Added Success', 'id' => $inv_id];
-                    }elseif($data['sale_type']==1){
-                        // sales credit
-                        $voucer = new Voucer();
-                        $voucer->date= strtotime(strval($data['date']));
-                        $voucer->transaction_name ="Sale Invoice";
-                        $voucer->ledger_id = $sales_ledger->id;
-                        $voucer->credit = $sales_amt_without_discount;
-                        $voucer->invoice_id = $inv_id;
-                        $voucer->author_id = auth()->user()->id;
-                        $voucer->save();
-                        // customer debit
-                        $voucer = new Voucer();
-                        $voucer->date= strtotime(strval($data['date']));
-                        $voucer->transaction_name="Sale Invoice";
-                        $voucer->ledger_id = $customer_ledger->id;
-                        $voucer->subledger_id = $customer_id;
-                        $voucer->debit = $total_payable;
-                        $voucer->invoice_id = $inv_id;
-                        $voucer->author_id = auth()->user()->id;
-                        $voucer->save();
-                        if($voucer){
-                            return ['message' => 'Invoice Added Success', 'id' => $inv_id];
-                        }
                     }else{
-                            if ($data['ammount'] != null or $data['ammount']!=0) {
-                                if(floatval($data['ammount'])<floatval($total_payable)){
+                           
+                               
                                     $due_ammount=$total_payable-floatval($data['ammount']);
                                     // sales credit
                                     $voucer = new Voucer();
@@ -364,35 +341,7 @@ class InvoiceTestController extends Controller
                                     $voucer->author_id = auth()->user()->id;
                                     $voucer->save();
                                     return ['message' => 'Invoice Added Success', 'id' => $inv_id];
-                                }else{
-                                    $voucer = new Voucer();
-                                    $voucer->date= strtotime(strval($data['date']));
-                                    $voucer->transaction_name ="Sale Invoice";
-                                    $voucer->ledger_id = $sales_ledger->id;
-                                    $voucer->credit =$sales_amt_without_discount;
-                                    $voucer->invoice_id = $inv_id;
-                                    $voucer->author_id = auth()->user()->id;
-                                    $voucer->save();
-                                    // cash/bank debit
-                                    $voucer = new Voucer();
-                                    $voucer->date= strtotime(strval($data['date']));
-                                    if($data['payment_method_type']==0){
-                                        $voucer->ledger_id=$cash_ledger->id;
-                                    }else{
-                                        $voucer->account_id = $data['payment_method'];
-                                        $voucer->date= strtotime(strval($data['date']));
-                                    }
-                                    $voucer->transaction_name="Sale Invoice";
-                                    $voucer->debit =$data['ammount'];
-                                    $voucer->cheque_no = $data['cheque_no'];
-                                    $voucer->cheque_issue_date = strtotime(strval($data['cheque_issue_date']));
-                                    $voucer->invoice_id = $inv_id;
-                                    $voucer->author_id = auth()->user()->id;
-                                    $voucer->save();
-                                    return ['message' => 'Invoice Added Success', 'id' => $inv_id];
-                                }
-                                return ['message' => 'Invoice Added Success', 'id' => $inv_id];
-                            }
+
                     }
                 }
                 
