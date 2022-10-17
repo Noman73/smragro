@@ -38,9 +38,19 @@ $(document).delegate("#modalBtn", "click", function(event){
 function clear(){
   $("input").removeClass('is-invalid').val('');
   $(".invalid-feedback").text('');
-  $('form select').val('').niceSelect('update');
 }
-
+function itemClear(){
+  $('#brand').val(null).trigger('change');
+  $('#model').val(null).trigger('change');
+  $('#product').val(null).trigger('change');
+  $('#part_id').val(null).trigger('change');
+  $('#quantity').val(1);
+  $('#b_rate').val('');
+  $('#mltp').val('');
+  $('#amount').val('');
+  $('#total-amt').val('');
+  $('#stock').val('');
+}
 $("#customer").select2({
     theme:'bootstrap4',
     placeholder:'Customer',
@@ -67,15 +77,39 @@ $("#customer").select2({
   })
   let total_item=0;
   function addNew(){
-    form=`<tr><td><select class="form-control product" name="product[]"></select></td>`;
-    form+=`<td><input type="number" class="form-control qantity" name="qantity[]" placeholder='0.00' value='1'/></td>`;
-    form+=`<td><input type="number" class="form-control price" name="price[]" placeholder='0.00'/></td>`;
-    form+=`<td><input type="number" class="form-control total" name="total[]" placeholder='0.00'/></td>`;
+
+    let item=$('#product').val();
+    let itemtext=$('#product option:selected').text();
+    let quantity=$('#quantity').val();
+    let amount=$('#amount').val();
+    let total=$('#total-amt').val();
+    if(amount==''){
+      return false;
+    }
+    let cond=true;
+    product=$("input[name='product[]']").map(function(){
+        $(this).val();
+        if($(this).val()==item){
+          qtyval=$(this).parent().next().children().val();
+          $(this).parent().next().children().val(parseFloat(qtyval)+1)
+          cond=false;
+        }
+    }).get()
+    if(!cond){
+      return false;
+    }
+    form=`<tr><td><input type="hidden" name="product[]" value="`+item+`">`+itemtext+`</td>`;
+    form+=`<td><input type="number" class="form-control qantity" name="qantity[]" placeholder='0.00' value='`+quantity+`' /></td>`;
+    form+=`<td><input type="number" class="form-control price" name="price[]" placeholder='0.00' value="`+amount+`" disabled/></td>`;
+    form+=`<td><input type="number" class="form-control total" name="total[]" placeholder='0.00' value="`+total+`" disabled/></td>`;
     form+=`<td><button class="btn btn-sm btn-danger removeItem" >X</button></td></tr>`;
    $("#item_table_body").append(form);
    initSelect2()
    total_item=total_item+1;
    $('#total-item').val(total_item)
+   itemClear();
+   calculation();
+   totalCal();
   }
 
   $(document).ready(function(){
@@ -98,10 +132,7 @@ $("#customer").select2({
 
  $("input[name='price[]']")
   .map(function(){
-      mtp=$(this).parent().prev().children().val();
-      b_rate=$(this).parent().prev().prev().children().val();
-      $(this).val(parseFloat(b_rate)*parseFloat(mtp))
-      console.log("mtp-"+mtp,"b_rate-"+b_rate)
+      
       price=(($(this).val()=='')? 0:$(this).val());
       console.log(qantity[x])
       total=(parseFloat(price)*parseFloat(qantity[x])).toFixed(2);
@@ -278,7 +309,7 @@ $('#date,#cheque_issue_date').daterangepicker({
     let hand_bill=$('#hand_bill').val();
     let note=$('#note').val();
     let staff_note=$('#staff_note').val();
-    let product=$("select[name='product[]']").map(function(){
+    let product=$("input[name='product[]']").map(function(){
         return $(this).val();
     }).get();
     let qantity=$("input[name='qantity[]']").map(function(){
@@ -771,7 +802,7 @@ function singleCalc(){
    amount=(parseFloat(brate)*parseFloat(mltp)).toFixed(2);
    total=parseFloat(qty)*parseFloat(amount);
    $('#amount').val(amount);
-   $('#total').val(total);
+   $('#total-amt').val(total);
 }
 
 $(document).on('change keyup','#quantity,#b_rate,#mltp',function(){
