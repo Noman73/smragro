@@ -360,7 +360,7 @@ $(".customer").select2({
       let id='';
       
       res.data[0].forEach(function(d){
-        console.log(d);
+        console.log(d.inovice_id);
         // start switch
         switch (d.transaction_name) {
         case 'journal':
@@ -421,7 +421,6 @@ $(".customer").select2({
 
   function dateFormat(data){
     date=new Date(data);
-
     let dates = ("0" + date.getDate()).slice(-2);
     let month = ("0" + (date.getMonth() + 1)).slice(-2);
     let year = date.getFullYear();
@@ -433,7 +432,7 @@ $(".customer").select2({
     let dates = ("0" + date.getDate()).slice(-2);
     let month = ("0" + (date.getMonth() + 1)).slice(-2);
     let year = date.getFullYear();
-    return(((year).toString()).substring(2,4)+month+dates);
+    return(dates+month+((year).toString()).substring(2,4));
   }
   $('#fromDate,#toDate').daterangepicker({
         showDropdowns: true,

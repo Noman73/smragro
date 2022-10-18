@@ -24,7 +24,6 @@ class CustomerStatementReportController extends Controller
         // return $request->all();
         $data=$request->all();
     
-
         $validator=Validator::make($data,[
             'from_date'=>"required|max:20|date_format:d-m-Y",
             'to_date'=>"required|max:20|date_format:d-m-Y",

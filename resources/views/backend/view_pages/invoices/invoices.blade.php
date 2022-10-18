@@ -227,13 +227,12 @@
                                   @endif
                               </tr>
 
-                              {{-- @if($invoice->sale_type!=0 and $invoice->customer_id!=null)
+                              @if($invoice->sale_type!=0 and $invoice->customer_id!=null)
                               <tr>
                                 <th> Previous Due </th>
                                 <td>৳. {{$previous_due}}</td>
-
                               </tr>
-                              @endif       --}}
+                              @endif      
                               <tr>
                                 @if($invoice->sale_type==1)
                                   <th>Current Due </th>

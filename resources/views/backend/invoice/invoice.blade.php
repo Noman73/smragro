@@ -283,6 +283,13 @@
                                   <div class="invalid-feedback" id='total_payable_msg'></div>
                                 </td>
                             </tr>
+                            <tr class="due d-none">
+                              <th width="50%">Previous Due: </th>
+                              <td>
+                                <input disabled type="number" class="form-control form-control-sm" id="previous_due" placeholder="0.00">
+                                <div class="invalid-feedback" id='total_payable_msg'></div>
+                              </td>
+                            </tr>
                             {{-- payment  --}}
                             <tr id="payment_method_row">
                                 <th width="50%">Payment Method: </th>
@@ -321,6 +328,13 @@
                             <tr>
                               <th width="50%">Paid Amount: </th>
                               <td><input type="number" class="form-control form-control-sm" id="ammount" placeholder="0.00"></td>
+                            </tr>
+                            <tr class="due d-none">
+                              <th width="50%">Current Due: </th>
+                              <td>
+                                <input disabled type="number" class="form-control form-control-sm" id="current_due" placeholder="0.00">
+                                <div class="invalid-feedback" id='total_payable_msg'></div>
+                              </td>
                             </tr>
                         </table>
                     </div>
