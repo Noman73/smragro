@@ -34,11 +34,9 @@ trait BalanceTrait{
 
 	static function previousBalance($id,$invoice_id)
 	{
-		return $total=DB::select("select ifnull(sum(voucers.debit-voucers.credit),0) total from voucers 
-		left join account_ledgers on account_ledgers.id=voucers.ledger_id where  account_ledgers.name='Customer' and subledger_id=:id and voucers.id<:invoice_id
-
-
-		
+		return $total=DB::select("
+		select ifnull(sum(voucers.debit-voucers.credit),0) total from voucers 
+		left join account_ledgers on account_ledgers.id=voucers.ledger_id where account_ledgers.name='Customer' and subledger_id=:id and voucers.id<:invoice_id
 		 ",['id'=>$id,'invoice_id'=>$invoice_id])[0]->total;
 	}
 	static function previousBalanceSupplier($id,$invoice_id)

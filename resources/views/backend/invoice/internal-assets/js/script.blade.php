@@ -198,8 +198,8 @@ function totalCal(){
   console.log(total_discount,vat,transport)
   total_payable=(total+vat+transport)-(total_discount)
   $('#total_payable').val(total_payable)
-  previous_due=(parseFloat($('#previous_due').val())==NaN ? 0 : parseFloat($('#previous_due').val()));
-  amount=(parseFloat($('#ammount').val())==NaN ?0 : parseFloat($('#ammount').val()));
+  previous_due=(parseFloat($('#previous_due').val())==NaN ? '0.00' : parseFloat($('#previous_due').val()));
+  amount=(parseFloat($('#ammount').val())==NaN ? '0.00' : parseFloat($('#ammount').val()).toFixed(2));
   console.log('ssf'+previous_due,total_payable,amount)
   $('#current_due').val(((total_payable+previous_due)-amount).toFixed(2));
   if($("#cash").is(':checked')){

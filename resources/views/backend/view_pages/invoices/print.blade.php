@@ -12,7 +12,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
-    <title>SMRAGRO</title>
+    <title>{{$info->company_name}}</title>
 
     <!--Favicon-->
     <link rel="icon" href="https://2aitautomation.com/meherpur/public/img/favicon.png" type="image/x-icon" />
@@ -51,10 +51,10 @@
 <div class="container-fluid">
     <div id="print" class="print" >
         <div class="row invoice_header">
-          <div class="col-xs-5" style="width: 25%; float:left;">
+          <div class="col-xs-5" style="width: 50%; float:left;">
               @include('layouts.adress')
           </div>
-          <div class="col-xs-7" style="width: 75%; text-align:right">
+          <div class="col-xs-7" style="width: 50%; text-align:right">
               <div style=" width:100%; text-align:right;">
                   <span style="font-size: 16px;">
                       <b>
@@ -204,10 +204,10 @@
 
                   @if($invoice->sale_type!=0 and $invoice->customer_id!=null)
                   <tr>
-                    <th> Previous Due </th>
+                    <th>Previous Due </th>
                     <td>৳. {{$previous_due}}</td>
                   </tr>
-                  @endif      
+                  @endif
                   <tr>
                     @if($invoice->sale_type==1)
                     <th>Current Due </th>
