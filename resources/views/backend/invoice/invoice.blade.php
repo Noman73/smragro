@@ -31,7 +31,7 @@
                        <div class="col-12 col-md-2 ">
                         <select name="" id="sale_type" class="form-control" onchange="customerVisibility()">
                           <option value="0">Cash</option>
-                          <option value="1">Regular</option>
+                          <option selected value="1">Regular</option>
                           <option value="2">Condition</option>
                         </select>
                        </div>

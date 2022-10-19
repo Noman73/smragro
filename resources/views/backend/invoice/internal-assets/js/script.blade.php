@@ -113,7 +113,7 @@ $("#customer").select2({
   }).get();
 }
 
-$(document).on('change keyup','.price,#discount,#vat,.qantity,#transport,.product,#discountCheck,#sale_type',function(e){
+$(document).on('change keyup','.price,#discount,#vat,.qantity,#transport,.product,#discountCheck,#sale_type,#ammount',function(e){
   console.log(e.target.name=='total[]')
   if(e.target.name=="total[]"){
     e.preventDefault();
