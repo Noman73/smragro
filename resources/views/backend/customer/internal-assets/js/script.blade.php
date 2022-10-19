@@ -100,6 +100,7 @@ window.formRequest= function(){
               toastr.success(response.data.message);
               datatable.ajax.reload();
               clear();
+              $('#modal').modal('hide')
           }else if(response.data.error){
               var keys=Object.keys(response.data.error);
               keys.forEach(function(d){
@@ -182,6 +183,5 @@ $('#birth_date').daterangepicker({
 function clear(){
   $("input").removeClass('is-invalid').val('');
   $(".invalid-feedback").text('');
-  $('form select').val('').niceSelect('update');
 }
 </script>
