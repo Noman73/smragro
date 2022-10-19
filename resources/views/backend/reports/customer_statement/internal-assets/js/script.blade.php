@@ -357,19 +357,62 @@ $(".customer").select2({
       balance=parseFloat((res.data[1][0]['balance']==null ? 0: res.data[1][0]['balance']));
       console.log(res.data[1][0]['balance'])
       class_type=res.data[2].class_type;
+      let id='';
+      
       res.data[0].forEach(function(d){
-        console.log(d);
+        console.log(d.inovice_id);
+        // start switch
+        switch (d.transaction_name) {
+        case 'journal':
+          id=d.journal_inv_id;
+          url="<a target='_blank' href='{{URL::to('admin/view-pages/journal-view')}}/"+id+"'>"+(dateFormatInvId(d.date*1000)+id).toString()+"<a>"
+          break;
+        case 'Payment':
+          id=d.v_inv_id;
+          url="<a target='_blank' href='{{URL::to('admin/view-pages/payment-view')}}/"+id+"'>"+(dateFormatInvId(d.date*1000)+id).toString()+"<a>"
+        break;
+        case 'Supplier Payment':
+          id=d.v_inv_id;
+          url="<a target='_blank' href='{{URL::to('admin/view-pages/payment-view')}}/"+id+"'>"+(dateFormatInvId(d.date*1000)+id).toString()+"<a>"
+        break;
+        case 'Customer Receive':
+          id=d.v_inv_id;
+          url="<a target='_blank' href='{{URL::to('admin/view-pages/receive-view')}}/"+id+"'>"+(dateFormatInvId(d.date*1000)+id).toString()+"<a>"
+        break;
+        case 'Receive':
+          id=d.v_inv_id;
+          url="<a target='_blank' href='{{URL::to('admin/view-pages/receive-view')}}/"+id+"'>"+(dateFormatInvId(d.date*1000)+id).toString()+"<a>"
+        break;
+        case 'Sale Invoice':
+          id=d.invoice_id;
+          url="<a target='_blank' href='{{URL::to('admin/view-pages/sales-invoice')}}/"+id+"'>"+(dateFormatInvId(d.date*1000)+id).toString()+"<a>"
+        break;
+        case 'Purchase Invoice':
+          id=d.pinvoice_id;
+          url="<a target='_blank' href='{{URL::to('admin/view-pages/purchase-view')}}/"+id+"'>"+(dateFormatInvId(d.date*1000)+id).toString()+"<a>"
+        break;
+        case 'Fund Transfer':
+          id=d.v_inv_id;
+          url="<a target='_blank' href='{{URL::to('admin/view-pages/fund-transfer-view')}}/"+id+"'>"+(dateFormatInvId(d.date*1000)+id).toString()+"<a>"
+        break;
+        default:
+          id='';
+          url='';
+          break;
+      }
+
+        // end switch
           html+="<tr><td>"+(d.date=='' ? '' : dateFormat(d.date*1000))+"</td>"
           html+="<td>"+(d.created_at=='' ?  '':dateFormat(Date.parse(d.created_at)))+"</td>"
-          html+="<td class='text-left'>"+d.transaction_name+(d.comment!=''? '('+d.comment+')':'' )+"</td>"
-          html+="<td class='text-center'>"+d.id+"</td>"
+          html+="<td class='text-left'>"+d.transaction_name+(d.comment!=null? '('+d.comment+')':'' )+"</td>"
+          html+="<td class='text-center'>"+url+"</td>"
           html+="<td class='text-right'>"+d.debit+"</td>"
           html+="<td class='text-right'>"+d.credit+"</td>"
           if(class_type==1 || class_type==4){
             html+="<td class='text-right'>"+(balance+=parseFloat(d.debit)-parseFloat(d.credit)).toFixed(2)+"</td></tr>";
           }else{
             html+="<td class='text-right'>"+(balance+=parseFloat(d.credit)-parseFloat(d.debit)).toFixed(2)+"</td></tr>";
-          } 
+          }
       })
       $('#data-load').html(html);
     })
@@ -382,6 +425,13 @@ $(".customer").select2({
     let month = ("0" + (date.getMonth() + 1)).slice(-2);
     let year = date.getFullYear();
     return(dates + "-" + month + "-" + year);
+  }
+  function dateFormatInvId(data){
+    date=new Date(data);
+    let dates = ("0" + date.getDate()).slice(-2);
+    let month = ("0" + (date.getMonth() + 1)).slice(-2);
+    let year = date.getFullYear();
+    return(dates+month+((year).toString()).substring(2,4));
   }
   $('#fromDate,#toDate').daterangepicker({
         showDropdowns: true,

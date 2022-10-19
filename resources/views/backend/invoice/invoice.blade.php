@@ -1,7 +1,13 @@
  <!-- Content Wrapper. Contains page content -->
  @extends('layouts.master')
  @section('link')
- 
+  <style>
+    #ammount{
+      /* border:2px solid red; */
+      background-color:#f4c2c2;
+      font-weight: bold;
+    }
+  </style>
  @endsection
  @section('content')
     <!-- Content Header (Page header) -->
@@ -31,7 +37,7 @@
                        <div class="col-12 col-md-2 ">
                         <select name="" id="sale_type" class="form-control" onchange="customerVisibility()">
                           <option value="0">Cash</option>
-                          <option value="1">Regular</option>
+                          <option selected value="1">Regular</option>
                           <option value="2">Condition</option>
                         </select>
                        </div>
@@ -341,7 +347,7 @@
                 </div>
                 <div class="float-right mt-2">
                     <button class="btn btn-secondary" onclick="Clean()">Reset</button>
-                    <button class="btn btn-primary submit" onclick="formRequestTry()">Save</button>
+                    <button class="btn btn-primary submit" onclick="formRequestTry()">Submit</button>
                 </div>
                </div>
             </div>

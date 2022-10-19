@@ -196,7 +196,7 @@
                       @endif
                   </tr>
 
-                  @if($invoice->sale_type!=0 and $invoice->customer_id!=null)
+                  @if($invoice->sale_type!=0 and $invoice->customer_id!=null and date('d-m-Y',$invoice->dates)===date('d-m-Y'))
                   <tr>
                     <th> Previous Due </th>
                     <td>৳. {{$previous_due}}</td>
