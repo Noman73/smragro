@@ -404,7 +404,7 @@ $(".customer").select2({
         // end switch
           html+="<tr><td>"+(d.date=='' ? '' : dateFormat(d.date*1000))+"</td>"
           html+="<td>"+(d.created_at=='' ?  '':dateFormat(Date.parse(d.created_at)))+"</td>"
-          html+="<td class='text-left'>"+d.transaction_name+(d.comment!=''? '('+d.comment+')':'' )+"</td>"
+          html+="<td class='text-left'>"+d.transaction_name+(d.comment!=null? '('+d.comment+')':'' )+"</td>"
           html+="<td class='text-center'>"+url+"</td>"
           html+="<td class='text-right'>"+d.debit+"</td>"
           html+="<td class='text-right'>"+d.credit+"</td>"
