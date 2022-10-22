@@ -2,6 +2,8 @@
 
 window.customerFormRequest= function(){
     $('input,select').removeClass('is-invalid');
+
+    
     let name=$('#name').val();
     let adress=$('#adress').val();
     let phone=$('#phone').val();
