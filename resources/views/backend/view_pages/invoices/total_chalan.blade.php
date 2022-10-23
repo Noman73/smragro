@@ -173,11 +173,11 @@
                 </tr>
                 <tr>
                   <th>Vat</th>
-                  <td>৳. {{($invoice->vat*$invoice->total)/100}}</td>
+                  <td>৳ {{number_format(($invoice->vat*$invoice->total)/100,2)}}</td>
                 </tr>
                 <tr>
                   <th>Transport Income</th>
-                  <td>৳. {{$invoice->transport}}</td>
+                  <td>৳ {{number_format($invoice->transport==null ? 0 : $invoice->transport,2)}}</td>
                 </tr>
                   <tr>
                       <th>Invoice Due</th>
@@ -190,9 +190,9 @@
                       @if($invoice->sale_type==0)
                       <td>৳. {{$invoice->total_payable}}</td>
                       @elseif($invoice->sale_type==1)
-                      <td>৳. {{$invoice->pay->sum('debit')}}</td>
+                      <td>৳ {{number_format($invoice->pay->sum('debit'),2)}}</td>
                       @else
-                      <td>৳. {{$invoice->pay->sum('debit')}}</td>
+                      <td>৳ {{number_format($invoice->pay->sum('debit'),2)}}</td>
                       @endif
                   </tr>
 

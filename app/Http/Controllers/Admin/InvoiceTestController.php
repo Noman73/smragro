@@ -320,7 +320,7 @@ class InvoiceTestController extends Controller
                                     if($data['payment_method_type']==0){
                                         $voucer->ledger_id=$cash_ledger->id;
                                     }
-                                    $voucer->debit =$data['ammount'];
+                                    $voucer->debit =($data['ammount']==null ? 0 : $data['ammount']);
                                     $voucer->credit = 0;
                                     $voucer->cheque_no = $data['cheque_no'];
                                     $voucer->cheque_issue_date = strtotime(strval($data['cheque_issue_date']));
@@ -334,7 +334,7 @@ class InvoiceTestController extends Controller
                                     $voucer->transaction_name = 'Sale Invoice';
                                     $voucer->ledger_id = $customer_ledger->id;
                                     $voucer->subledger_id = $customer_id;
-                                    $voucer->credit = $data['ammount'];
+                                    $voucer->credit = ($data['ammount']==null ? 0 : $data['ammount']);
                                     $voucer->cheque_no = $data['cheque_no'];
                                     $voucer->cheque_issue_date = strtotime(strval($data['cheque_issue_date']));
                                     $voucer->invoice_id = $inv_id;
