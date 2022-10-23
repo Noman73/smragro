@@ -60,30 +60,30 @@
               </div>
             </div> --}}
             <div class="card-body">
-                <form action="">
+                <form action="{{route('road_chalan.store')}}">
                     <div class="row">
                         <div class="col-12 col-md-3">
                             <div class="form-group">
                                 <label for="">Kartoon</label>
-                                <input type="text" class="form-control" name="" placeholder="Enter Kartoon">
+                                <input type="text" class="form-control" name="kartoon" placeholder="Enter Kartoon">
                             </div>
                         </div>
                         <div class="col-12 col-md-3">
                             <div class="form-group">
                                 <label for="">Bundle</label>
-                                <input type="text" class="form-control" name="" placeholder="Enter Bundle">
+                                <input type="text" class="form-control" name="bundle" placeholder="Enter Bundle">
                             </div>
                         </div>
                         <div class="col-12 col-md-3">
                             <div class="form-group">
                                 <label for="">Sack</label>
-                                <input type="text" class="form-control" name="" placeholder="Enter Sack">
+                                <input type="text" class="form-control" name="sack" placeholder="Enter Sack">
                             </div>
                         </div>
                         <div class="col-12 col-md-3">
                             <div class="form-group">
                                 <label for="">Box</label>
-                                <input type="text" class="form-control" name="" placeholder="Enter Box">
+                                <input type="text" class="form-control" name="box" placeholder="Enter Box">
                             </div>
                         </div>
                     </div>
@@ -105,6 +105,7 @@
                 <a target='_blank' class="btn btn-warning" href='{{URL::to('admin/view-pages/sales-invoice-bangla-print/'.$invoice->id)}}'>Bangla Print</a>
                 <a target='_blank' class="btn btn-secondary" href='{{URL::to('admin/view-pages/sales-chalan-invoice-print/'.$invoice->id)}}'>Chalan</a>
                 <a target='_blank' class="btn btn-info" href='{{URL::to('admin/view-pages/sales-total-chalan-invoice-print/'.$invoice->id)}}'>Total Chalan</a>
+                {{-- <button class="btn btn-primary">Road Chalan</button> --}}
               </div>  
                   <div id="print" class="print mt-5" >
                     <div class="row invoice_header">
