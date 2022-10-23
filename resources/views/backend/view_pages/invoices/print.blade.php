@@ -175,7 +175,7 @@
                 </tr>
                 <tr>
                     <th>Discount</th>
-                    <td>৳ {{($invoice->discount_type==0 ? $invoice->discount : floatval($invoice->discount*$invoice->total)/100)}}</td>
+                    <td>৳ {{($invoice->discount_type==0 ? number_format($invoice->discount,2) : number_format(floatval($invoice->discount*$invoice->total)/100,2))}}</td>
                 </tr>
                 <tr>
                   <th>Vat</th>
