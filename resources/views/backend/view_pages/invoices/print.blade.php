@@ -227,6 +227,12 @@
               </table>
           </div>
       </div>
+      <div style="margin-bottom:20px;" class="row">
+        <div class="col-md-6">
+          <span style="text-decoration:overline;margin-right:25px;">Accounts Officer</span>
+          <span style="text-decoration:overline">Athorized Signature</span>
+        </div>
+      </div>
       <div class="row">
           <div class="col-xs-12">
         <b>Total in Word (Invoice Due):</b> {{Terbilang::make($invoice->total_payable)}}

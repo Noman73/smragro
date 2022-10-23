@@ -33,7 +33,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Sales Invoice History</h1>
+            <h1 class="m-0">Sales Road Chalan Invoice</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -60,7 +60,39 @@
               </div>
             </div> --}}
             <div class="card-body">
-              @php 
+                <form action="">
+                    <div class="row">
+                        <div class="col-12 col-md-3">
+                            <div class="form-group">
+                                <label for="">Kartoon</label>
+                                <input type="text" class="form-control" name="" placeholder="Enter Kartoon">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3">
+                            <div class="form-group">
+                                <label for="">Bundle</label>
+                                <input type="text" class="form-control" name="" placeholder="Enter Bundle">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3">
+                            <div class="form-group">
+                                <label for="">Sack</label>
+                                <input type="text" class="form-control" name="" placeholder="Enter Sack">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3">
+                            <div class="form-group">
+                                <label for="">Box</label>
+                                <input type="text" class="form-control" name="" placeholder="Enter Box">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            <div>
+          </div>
+
+          {{-- start invoice --}}
+          @php 
               use Riskihajar\Terbilang\Facades\Terbilang;
               // $number_convert=new Terbilang;
               $info=App\Models\CompanyInformations::first();
@@ -266,8 +298,7 @@
               </div>
 
 
-            </div>
-          </div>
+          {{-- end invoice --}}
       </div><!-- /.container-fluid -->
     </section>
   @endsection

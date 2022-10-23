@@ -50,4 +50,10 @@ class InvoiceViewController extends Controller
         $invoice=Invoice::with('sales','customer','pay','condition_amount','user','shipping_customer','courier','notes')->where('id',$id)->first();
         return view('backend.view_pages.pos.pos',compact('invoice'));
     }
+
+    public function roadChalan($id)
+    {
+        $invoice=Invoice::with('sales','customer','pay','condition_amount','user','shipping_customer','courier','notes')->where('id',$id)->first();
+        return view('backend.view_pages.invoices.road_chalan.road_chalan_form',compact('invoice'));
+    }
 }
