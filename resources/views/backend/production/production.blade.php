@@ -74,12 +74,6 @@
                       <div class="invalid-feedback" id="name_msg">
                       </div>
                     </div>
-                    <div class="form-group">
-                      <label for="recipient-name" class="col-form-label">Name:</label>
-                      <input type="text" class="form-control" id="name" placeholder="Enter Name">
-                      <div class="invalid-feedback" id="name_msg">
-                      </div>
-                    </div>
                   </div>
                 </div>
               </form>
