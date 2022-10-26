@@ -1,7 +1,5 @@
 @php 
     use Riskihajar\Terbilang\Facades\Terbilang;
-    use Rakibhstu\Banglanumber\NumberToBangla;
-    $numto = new NumberToBangla();
     // $number_convert=new Terbilang;
     $info=App\Models\CompanyInformations::first();
     $voucer_invoice=App\Models\Voucer::where('invoice_id',$invoice->id)->first();
@@ -14,7 +12,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
-    <title>SMRAGRO</title>
+    <title>{{$info->company_name}}</title>
 
     <!--Favicon-->
     
@@ -52,22 +50,14 @@
 <body>
 <div class="container-fluid">
     <div id="print" class="print" >
+        <div class="text-center" style="margin-top:20px;"><span style="border:5px solid black;padding:10px;font-size:20px;">Road Chalan</span></div>
         <div class="row invoice_header">
-          <div class="col-xs-5" style="width: 50%; float:left;">
-              <img src="{{asset('storage/logo/'.$info->logo)}}" width="100%" alt="Logo">
-              {{$info->adress}}<br>
-              {{$info->phone}}<br>
-              {{$info->email}}<br>
-              {{$info->web}}<br>
-              বিন নম্বর: {{$info->bin_no}}<br>
+          <div class="col-md-6" style=" float:left;">
+              @include('layouts.adress')
           </div>
-          <div class="col-xs-7" style="width: 50%; text-align:right">
+          <div class="col-md-6" style=" text-align:right">
               <div style=" width:100%; text-align:right;">
-                  <span style="font-size: 16px;">
-                      <b>
-                          বিক্রয় ইনভয়েস
-                      </b>
-                  </span><br>
+                  <br>
                   @php
                   if($invoice->sale_type==0){
                     $sale_type='Cash Sale';
@@ -78,13 +68,13 @@
                   }
                   // dd($invoice);
                   @endphp
-                  ইনভয়েস নম্বর:<b>S-{{date('dm',$invoice->dates).substr(date('Y',$invoice->dates),-2).$invoice->id}}</b> <br>
+                  Invoice No :<b>S-{{date('dm',$invoice->dates).substr(date('Y',$invoice->dates),-2).$invoice->id}}</b> <br>
                   @if($invoice->hand_bill!=null)
-                  হ্যান্ড মেমো নম্বর : <b>{{$invoice->hand_bill}}</b><br>
+                  Hand Memo : <b>{{$invoice->hand_bill}}</b><br>
                   @endif
-                  বিক্রয় ধরন :<b>{{$sale_type}}</b> <br>
-                  তারিখ : {{date('d-m-Y',intval($invoice->dates))}}<br/>
-                  
+                  Sale Type :<b>{{$sale_type}}</b> <br>
+                  Date : {{date('d-m-Y',intval($invoice->dates))}}<br/>
+                  Condition : {{floatval($invoice->total_payable)-floatval( (isset($invoice->condition_amount->debit)? $invoice->condition_amount->debit : 0.00) )}}
               </div>
           </div>
         </div>
@@ -94,9 +84,9 @@
               <br>
               <table class="table table-bordered">
                 @if(isset($invoice->customer->name))
-                  ক্রেতা : <b>{{($invoice->customer->name)}}</b> ,  
-                  মোবাইল নম্বর : <b>{{$invoice->customer->phone}}</b> <br>
-                  ঠিকানা : <b>{{$invoice->customer->adress}}</b>
+                  Customer : <b>{{($invoice->customer->name)}}</b> ,  
+                  Mobile No : <b>{{$invoice->customer->phone}}</b> <br>
+                  Adress : <b>{{$invoice->customer->adress}}</b>
                 @endif
               </table>
           </div>
@@ -106,10 +96,10 @@
             <table class="table table-bordered">
               @if(isset($invoice->shipping_customer->name))
                   <strong>Shipping to :</strong><br/>
-                  ক্রেতা : <b>{{($invoice->shipping_customer->name)}}</b> ,  
-                  মোবাইল : <b>{{$invoice->shipping_customer->phone}}</b> <br/>
-                  ঠিকানা : <b>{{$invoice->shipping_customer->adress}}</b><br/>
-                  কুরিয়ার : <b>{{$invoice->courier->name}}</b>
+                  Customer : <b>{{($invoice->shipping_customer->name)}}</b> ,  
+                  Mobile No : <b>{{$invoice->shipping_customer->phone}}</b> <br>
+                  Adress : <b>{{$invoice->shipping_customer->adress}}</b>
+                  Courier : <b>{{$invoice->shipping_customer->adress}}</b>
               @endif
             </table>
           </div>
@@ -117,23 +107,56 @@
           @if($invoice->sale_by==1)
             <div class="col-xs-6" style="width:50%;text-align:right">
                 <br/>
-                কুরিয়ার : <b>{{$invoice->courier->name}}</b>
+                Courier : <b>{{$invoice->courier->name}}</b>
             </div>
           @endif
       </div>
   
-  
+
       <div class="row">
+        <div class="col-12">
+            <div class="container">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Product Mark</th>
+                            <th>Description of goods</th>
+                            <th>Amount of goods</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="text-center font-weight-bold" style="vertical-align: middle;font-size:22px;">B/A</td>
+                            <td class="text-center">
+                                <p class="font-weight-bold">Motorcycle Parts</p>
+                                Bundle:<span style="text-decoration:underline">{{$invoice->road_chalan->bundle}}</span>
+                                Box:<span style="text-decoration:underline">{{$invoice->road_chalan->box}}</span>
+                            </td>
+                            <td>
+                                <div>Kartoon : <span>{{$invoice->road_chalan->kartoon}}</span></div>
+                                <div>Bundle : <span>{{$invoice->road_chalan->bundle}}</span></div>
+                                <div>Sack : <span>{{$invoice->road_chalan->sack}}</span></div>
+                                <hr/>
+                                <div>total : {{number_format(floatval($invoice->road_chalan->kartoon)+floatval($invoice->road_chalan->bundle)+floatval($invoice->road_chalan->sack),2)}}<div/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+      </div>
+  
+      {{-- <div class="row">
           <div class="col-md-12">
               <div class="table-responsive">
                   <table class="table table-bordered table-striped">
                       <thead>
                           <tr>
-                              <th class="text-center" width="10%">ক্রমিক নং.</th>
-                              <th width="35%">পন্যের নাম</th>
-                              <th class="text-right">পরিমান</th>
-                              <th class="text-right">মূল্য</th>
-                              <th class="text-right">মোট</th>
+                              <th class="text-center">SL.</th>
+                              <th width="35%">Product Name</th>
+                              <th class="text-right">Quantity</th>
+                              <th class="text-right">Price</th>
+                              <th class="text-right">Total</th>
                           </tr>
                       </thead>
   
@@ -154,9 +177,9 @@
                   </table>
               </div>
           </div>
-      </div>
+      </div> --}}
   
-      <div class="row">
+      {{-- <div class="row">
           <div class="col-md-6" style='width: 50%;float:left;'>
               <h4>
                    @if($invoice->sale_type==0)
@@ -172,42 +195,42 @@
                    @endif
               </h4>
               @if($invoice->sale_type==2)
-                <p>কন্ডিশন টাকা : {{floatval($invoice->total_payable)-floatval( (isset($invoice->condition_amount->debit)? $invoice->condition_amount->debit : 0.00) )}}</p>
+                <p class='h4 font-weight-bold'>Condition Taka : {{floatval($invoice->total_payable)-floatval( (isset($invoice->condition_amount->debit)? $invoice->condition_amount->debit : 0.00) )}}</p>
               @endif
               @if($invoice->sale_by==2)
-                <p class='h4 font-weight-bold'>কন্ডিশন টাকা: {{$invoice->cond_amount}}</p> 
+                <p class='h4 font-weight-bold'>Condition Taka: {{$invoice->cond_amount}}</p> 
               @endif
-                <p class="font-weight-bold">নোট : {{($invoice->notes !=null ?$invoice->notes->note : '' )}}</p> 
+                <p class="font-weight-bold">{{($invoice->notes !=null ?'Note : '.$invoice->notes->note : '' )}}</p> 
           </div>
           <div class="col-md-6" style="width:50%;float: right;">
               <table class="table table-bordered">
-              
+                
                 <tr>
-                    <th>মোট ইনভয়েস</th>
-                    <td>৳. {{$invoice->total}}</td>
+                    <th>Invoice Total</th>
+                    <td>৳ {{$invoice->total}}</td>
                 </tr>
                 <tr>
-                    <th>ছাড়</th>
-                    <td>৳. {{($invoice->discount_type==0 ? $invoice->discount : floatval($invoice->discount*$invoice->total)/100)}}</td>
+                    <th>Discount</th>
+                    <td>৳ {{($invoice->discount_type==0 ? $invoice->discount : floatval($invoice->discount*$invoice->total)/100)}}</td>
                 </tr>
                 <tr>
-                  <th>ভ্যাট</th>
+                  <th>Vat</th>
                   <td>৳ {{number_format(($invoice->vat*$invoice->total)/100,2)}}</td>
                 </tr>
                 <tr>
-                  <th>পরিবহন বাবদ</th>
+                  <th>Transport Income</th>
                   <td>৳ {{number_format($invoice->transport==null ? 0 : $invoice->transport,2)}}</td>
                 </tr>
                   <tr>
-                      <th>ইনভয়েসে বাকি </th>
+                      <th>Invoice Due</th>
                      
-                      <td>৳. {{$invoice->total_payable}}</td>
+                      <td>৳ {{$invoice->total_payable}}</td>
                   </tr>
                  
                   <tr>
-                      <th> পরিশোধ </th>
+                      <th> Paid </th>
                       @if($invoice->sale_type==0)
-                      <td>৳. {{$invoice->total_payable}}</td>
+                      <td>৳ {{$invoice->total_payable}}</td>
                       @elseif($invoice->sale_type==1)
                       <td>৳ {{number_format($invoice->pay->sum('debit'),2)}}</td>
                       @else
@@ -217,47 +240,49 @@
 
                   @if($invoice->sale_type!=0 and $invoice->customer_id!=null and date('d-m-Y',$invoice->dates)===date('d-m-Y'))
                   <tr>
-                    <th> আগের বাকি </th>
-                    <td>৳. {{$previous_due}}</td>
+                    <th>Previous Due </th>
+                    <td>৳ {{$previous_due}}</td>
                   </tr>
-                  @endif  
+                  @endif
                   <tr>
                     @if($invoice->sale_type==1)
-                    <th>বর্তমান বাকি </th>
-                                  {{-- <td>৳. {{$previous_due+$invoice->total_payable}}</td> --}}
-                    <td>৳. {{App\Http\Traits\BalanceTrait::customerBalance($invoice->customer_id)}}</td>
+                    <th>Current Due </th>
+                    <td>৳ {{App\Http\Traits\BalanceTrait::customerBalance($invoice->customer_id)}}</td>
                     @elseif($invoice->sale_type==2)
-                    <th>মোট বাকি </th>
-                    <td>৳. {{floatval($invoice->total_payable)-floatval($invoice->pay->sum('debit'))}}</td>
+                    <th>Total Due </th>
+                    <td>৳ {{floatval($invoice->total_payable)-floatval($invoice->pay->sum('debit'))}}</td>
                     @endif
                   </tr>
                   @if($invoice->sale_by==2)
                     <tr>
-                        <th>কন্ডিশন </th>
-                        <td>৳. {{$invoice->cond_amount}}</td>
+                        <th>Condition Amount</th>
+                        <td>৳ {{$invoice->cond_amount}}</td>
                     </tr>
                   @endif
               </table>
           </div>
-      </div>
-      <div style="margin-bottom:20px;" class="row">
+      </div> --}}
+
+
+      <div style="margin-bottom:20px;margin-top:20px;" class="row">
         <div class="col-md-6">
-          <span style="text-decoration:overline;margin-right:25px;">Accounts Officer</span>
+          <span style="text-decoration:overline;margin-right:25px;">Delivery man signature</span>
+          <span style="text-decoration:overline;margin-right:25px;">signature of examinar</span>
           <span style="text-decoration:overline">Athorized Signature</span>
         </div>
       </div>
       <div class="row">
           <div class="col-xs-12">
-        <b>সর্বমোট কথায় (ইনভয়েসে বাকি):</b> {{$numto->bnWord($invoice->total_payable)}}
-         টাকা <br>
+        {{-- <b>Total in Word (Invoice Due):</b> {{Terbilang::make($invoice->total_payable)}}
+        Taka  <br> --}}
                           
-              <b>মন্তব্য :<b> {{$invoice->staff_note}} <br>
-                প্রস্তুতকারক : <b>{{$invoice->user->name}}</b>,প্রিন্ট করেছেন <b>{{auth()->user()->name}}</b>, Print Time : {{date('d-m-Y h:i:s')}}
+              {{-- <b>Comment :<b> {{$invoice->staff_note}} <br> --}}
+              Created By : <b>{{$invoice->user->name}}</b>,Printed By <b>{{auth()->user()->name}}</b>, Print Time : {{date('d-m-Y h:i:s')}}
           </div>
       </div>
       <div class="row footer">
           <div style="text-align:center;" class="col-xs-12 col-12 text-center">
-              সফটওয়ার তৈরী করেছেন অংশ
+              Software Developed by Ongsho
           </div>
       </div>
   </div>

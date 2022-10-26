@@ -107,6 +107,12 @@
             </table>
           </div>
           @endif
+          @if($invoice->sale_by==1)
+            <div class="col-xs-6" style="width:50%;text-align:right">
+                <br/>
+                Courier : <b>{{$invoice->courier->name}}</b>
+            </div>
+          @endif
       </div>
   
   

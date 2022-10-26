@@ -73,6 +73,8 @@
                 <a target='_blank' class="btn btn-warning" href='{{URL::to('admin/view-pages/sales-invoice-bangla-print/'.$invoice->id)}}'>Bangla Print</a>
                 <a target='_blank' class="btn btn-secondary" href='{{URL::to('admin/view-pages/sales-chalan-invoice-print/'.$invoice->id)}}'>Chalan</a>
                 <a target='_blank' class="btn btn-info" href='{{URL::to('admin/view-pages/sales-total-chalan-invoice-print/'.$invoice->id)}}'>Total Chalan</a>
+                <a target='_blank' class="btn btn-primary" href='{{URL::to('admin/view-pages/sales-road-chalan-invoice-print/'.$invoice->id)}}'>Road Chalan</a>
+                <a target='_blank' class="btn btn-primary" href='{{URL::to('admin/view-pages/vat-chalan/'.$invoice->id)}}'>Vat Chalan</a>
               </div>  
                   <div id="print" class="print mt-5" >
                     <div class="row invoice_header">
@@ -128,8 +130,17 @@
                               Adress : <b>{{$invoice->shipping_customer->adress}}</b><br/>
                               Courier : <b>{{$invoice->courier->name}}</b>
                           @endif
+                          
+                          
                         </table>
                       </div>
+                      @endif
+                      @if($invoice->sale_by==1)
+                      
+                          <div class="col-xs-6" style="width:50%;text-align:right">
+                            <br/>
+                          Courier : <b>{{$invoice->courier->name}}</b>
+                          </div>
                       @endif
                   </div>
               

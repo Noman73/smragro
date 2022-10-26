@@ -2,8 +2,6 @@
 
 window.customerFormRequest= function(){
     $('input,select').removeClass('is-invalid');
-
-    
     let name=$('#name').val();
     let adress=$('#adress').val();
     let phone=$('#phone').val();
@@ -747,7 +745,7 @@ function saleByCheck(){
       case 1:
       $('#courier-list').removeClass('d-none')
       $('.shipping').addClass('d-none')
-      $('#ammount').attr('disabled',true);
+      $('#ammount').attr('disabled',false);
       break;
       case 2:
       $('.shipping').removeClass('d-none')

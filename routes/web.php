@@ -145,8 +145,8 @@ Route::group([
     Route::get('/purchase-print/{invoice_id}','PurchaseViewController@print');
     Route::get('/fund-transfer-view/{invoice_id}','FundTransferController@index');
     Route::get('/fund-transfer-print/{invoice_id}','FundTransferController@print');
-    Route::resource('/sales-road-chalan-invoice-print/{invoice_id}','RoadChalanController');
-
+    Route::resource('/road_chalan','RoadChalanController');
+    Route::get('/vat-chalan/{invoice_id}','VatChalanController@print');
 });
 
 

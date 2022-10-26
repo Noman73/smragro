@@ -47,4 +47,9 @@ class Invoice extends Model
     {
         return $this->belongsTo(ShippingCompany::class,'shipping_id','id');
     }
+
+    public function road_chalan()
+    {
+        return $this->belongsTo(RoadChalan::class,'id','invoice_id');
+    }
 }
