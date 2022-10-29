@@ -21,7 +21,7 @@ class ChartDataController extends Controller
         foreach($months as $month){
             $strtotime=strtotime($month);
             $strtotimeLast=strtotime(date('t-m-Y 23:59:59',strtotime($month)));
-            $data[date('M Y',strtotime($month))]=number_format(Invoice::where('dates','>=',$strtotime)->where('dates','<=',$strtotimeLast)->sum('total_payable'),2);
+            $data[date('M Y',strtotime($month))]=number_format(Invoice::where('dates','>=',$strtotime)->where('dates','<=',$strtotimeLast)->sum('total_payable'), 2, '.', '');
         }
         return response()->json($data);
     }
