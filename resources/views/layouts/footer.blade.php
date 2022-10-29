@@ -118,6 +118,45 @@ function fetch()
 $(document).ready(function(){
   fetch();
 })
+$(document).on('click','#micro',function(){
+  speech_recognition();
+})
+function speech_recognition(){
+  let micro=document.getElementById('micro');
+  let SpeechRecognition=new webkitSpeechRecognition();
+  if(SpeechRecognition){
+		micro.addEventListener('click',function(){
+			SpeechRecognition.start();
+
+		})
+
+		SpeechRecognition.addEventListener('result',function(e) {
+			console.log(e.results[0][0].transcript);
+			text=e.results[0][0].transcript;
+      text=text.split(' ');
+
+      let includeInv=['invoice','open'];
+      let includeInvList=['invoice','list'];
+      let length=includeInv.length;
+      let lengthInvList=includeInvList.length;
+      if(contains(text, includeInv)==length){
+        open_url=baseURL+'/admin/invoice';
+        window.location=open_url;
+      }
+      if(contains(text, includeInvList)==lengthInvList){
+        open_url=baseURL+'/admin/invoice-list';
+        window.location=open_url;
+      }
+		})
+	}
+}
+function contains(target, pattern){
+    var value = 0;
+    pattern.forEach(function(word){
+      value += target.includes(word);
+    });
+    return value;
+}
 </script>
 @yield('script')
 </body>
