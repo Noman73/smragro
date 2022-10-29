@@ -48,4 +48,66 @@
             format: 'DD-MM-YYYY',
         }
   });
+//sales bar chart 
+$(document).ready(function(){
+    axios.get(baseURL+"/admin/sales-yearly-bar-chart")
+    .then(res=>{
+        console.log(res)
+        barChart(res.data)
+    })
+})
+function barChart(data)
+{
+    var lebels=Object.keys(data);
+    var values=Object.values(data);
+    var ctx = document.getElementById('sales-chart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: lebels,
+            datasets: [{
+                label: '# Total Sale',
+                data: values,
+                backgroundColor: [
+                    '#8095e8',
+                    '#8095e8',
+                    '#8095e8',
+                    '#8095e8',
+                    '#8095e8',
+                    '#8095e8',
+                    '#8095e8',
+                    '#8095e8',
+                    '#8095e8',
+                    '#8095e8',
+                    '#8095e8',
+                    '#8095e8'
+                ],
+                borderColor: [
+                    '#443826',
+                    '#443826',
+                    '#443826',
+                    '#443826',
+                    '#443826',
+                    '#443826',
+                    '#443826',
+                    '#443826',
+                    '#443826',
+                    '#443826',
+                    '#443826',
+                    '#443826',
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+}
+
+  
 </script>

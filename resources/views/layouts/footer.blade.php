@@ -30,7 +30,7 @@
 <!-- Bootstrap 4 -->
 <script src="{{asset('storage/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 <!-- ChartJS -->
-{{-- <script src="{{asset('storage/adminlte/plugins/chart.js/Chart.min.js')}}"></script> --}}
+<script src="{{asset('storage/adminlte/plugins/chart.js/Chart.min.js')}}"></script>
 <!-- Sparkline -->
 {{-- <script src="p{{asset('storage/adminlte/lugins/sparklines/sparkline.js')}}"></script> --}}
 <!-- JQVMap -->
@@ -157,6 +157,8 @@ function contains(target, pattern){
     });
     return value;
 }
+
+
 </script>
 @yield('script')
 </body>
