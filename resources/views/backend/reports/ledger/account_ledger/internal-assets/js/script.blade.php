@@ -400,19 +400,21 @@ $(".customer").select2({
           url='';
           break;
       }
-
         // end switch
-          html+="<tr><td>"+(d.date=='' ? '' : dateFormat(d.date*1000))+"</td>"
-          html+="<td>"+(d.created_at=='' ?  '':dateFormat(Date.parse(d.created_at)))+"</td>"
-          html+="<td class='text-left'>"+d.transaction_name+(d.comment!=null? '('+d.comment+')':'' )+"</td>"
-          html+="<td class='text-center'>"+url+"</td>"
-          html+="<td class='text-right'>"+d.debit+"</td>"
-          html+="<td class='text-right'>"+d.credit+"</td>"
-          if(class_type==1 || class_type==4){
-            html+="<td class='text-right'>"+(balance+=parseFloat(d.debit)-parseFloat(d.credit)).toFixed(2)+"</td></tr>";
-          }else{
-            html+="<td class='text-right'>"+(balance+=parseFloat(d.credit)-parseFloat(d.debit)).toFixed(2)+"</td></tr>";
-          }
+        if((parseFloat(d.debit)-parseFloat(d.credit))!=0){
+            html+="<tr><td>"+(d.date=='' ? '' : dateFormat(d.date*1000))+"</td>"
+            html+="<td>"+(d.created_at=='' ?  '':dateFormat(Date.parse(d.created_at)))+"</td>"
+            html+="<td class='text-left'>"+d.transaction_name+(d.comment!=null? '('+d.comment+')':'' )+"</td>"
+            html+="<td class='text-center'>"+url+"</td>"
+            html+="<td class='text-right'>"+d.debit+"</td>"
+            html+="<td class='text-right'>"+d.credit+"</td>"
+            if(class_type==1 || class_type==4){
+              html+="<td class='text-right'>"+(balance+=parseFloat(d.debit)-parseFloat(d.credit)).toFixed(2)+"</td></tr>";
+            }else{
+              html+="<td class='text-right'>"+(balance+=parseFloat(d.credit)-parseFloat(d.debit)).toFixed(2)+"</td></tr>";
+            }
+        }
+          
       })
       $('#data-load').html(html);
     })
