@@ -132,7 +132,7 @@ function receivePaymentLineChart(labels,rValue,pValue)
                 borderWidth:2,
                 lineTension:0,
                 spanGaps:true,
-                borderColor:'#efefef',
+                borderColor:'#00A650',
                 pointRadius:3,
                 pointHoverRadius:7,
                 pointColor:'#efefef',
@@ -174,9 +174,9 @@ var salesGraphChartOptions={
         ],
         yAxes:[
             {
-                ticks:{stepSize:5000,fontColor:'#efefef'},
+                ticks:{stepSize:5000,fontColor:'#909090'},
                 gridLines:{
-                    display:true,color:'#efefef',
+                    display:true,color:'#909090',
                     drawBorder:false
                 }
             }

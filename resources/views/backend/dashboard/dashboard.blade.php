@@ -162,7 +162,7 @@
             </div>
             {{-- line chart --}}
             <div class="col-12 col-md-6">
-            <div class="card bg-purple">
+            <div class="card">
               <div class="card-header " style="cursor: move;">
                 <h3 class="card-title">
                   <i class="fas fa-th mr-1"></i>
