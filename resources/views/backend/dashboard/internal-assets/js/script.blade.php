@@ -50,14 +50,24 @@
   });
 //sales bar chart 
 $(document).ready(function(){
+    receivePaymentLineChart()
     axios.get(baseURL+"/admin/sales-yearly-bar-chart")
     .then(res=>{
         console.log(res)
         barChart(res.data)
     })
+    axios.get(baseURL+"/admin/receive-payment-yearly-line-chart")
+    .then(res=>{
+        console.log(Object.keys(res.data.receive))
+        labels=Object.keys(res.data.receive);
+        rValue=Object.values(res.data.receive)
+        pValue=Object.values(res.data.payment)
+        receivePaymentLineChart(labels,rValue,pValue);
+    })
 })
 function barChart(data)
 {
+    // console.log(data)
     var lebels=Object.keys(data);
     var values=Object.values(data);
     var ctx = document.getElementById('sales-chart').getContext('2d');
@@ -107,6 +117,77 @@ function barChart(data)
             }
         }
     });
+}
+
+// line chart 
+function receivePaymentLineChart(labels,rValue,pValue)
+{
+    var salesGraphChartCanvas=$('#line-chart').get(0).getContext('2d')
+    var salesGraphChartData={
+        labels:labels,
+        datasets:[
+            {
+                label:'Receive',
+                fill:false,
+                borderWidth:2,
+                lineTension:0,
+                spanGaps:true,
+                borderColor:'#efefef',
+                pointRadius:3,
+                pointHoverRadius:7,
+                pointColor:'#efefef',
+                pointBackgroundColor:'#efefef',
+                data:rValue
+            },
+            {
+                label:'Payment',
+                fill:false,
+                borderWidth:2,
+                lineTension:0,
+                spanGaps:true,
+                borderColor:'#b4a7d6',
+                pointRadius:3,
+                pointHoverRadius:7,
+                pointColor:'#8e7cc3',
+                pointBackgroundColor:'#351c75',
+                data:pValue
+            }
+        ]
+    }
+var salesGraphChartOptions={
+    maintainAspectRatio:false,
+    responsive:true,
+    legend:{display:false},
+    scales:
+    {
+        xAxes:[
+            {
+                ticks:{
+                    fontColor:'#efefef'
+                },
+                gridLines:{
+                    display:false,
+                    color:'#efefef',
+                    drawBorder:false
+                }
+            }
+        ],
+        yAxes:[
+            {
+                ticks:{stepSize:5000,fontColor:'#efefef'},
+                gridLines:{
+                    display:true,color:'#efefef',
+                    drawBorder:false
+                }
+            }
+        ]
+    }
+}
+    var salesGraphChart=new Chart(salesGraphChartCanvas,{
+        type:'line',
+        data:salesGraphChartData,
+        options:salesGraphChartOptions
+    })
 }
 
   
