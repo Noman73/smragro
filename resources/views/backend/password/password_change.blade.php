@@ -28,50 +28,41 @@
       <div class="container-fluid">
 
         <div class="card ">
-            <div class="card-header bg-dark">
+            <div class="card-header ">
               <div class="row">
                 <div class="col-6">
                   <div class="card-title">Category </div>
                 </div>
                 <div class="col-6">
-                  <button class="btn btn-primary float-right" data-toggle="modal" data-target="#modal" data-whatever="@mdo">নতুন</button>
                 </div>
               </div>
             </div>
             <div class="card-body">
-              <table class="table table-sm text-center table-bordered" id="datatable">
-                <thead>
-                  <tr>
-                    <th>SL.</th>
-                    <th>Category</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                </tbody>
-              </table>
-            </div>
-          </div>
-      </div><!-- /.container-fluid -->
-      {{-- modal --}}
-      <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="modal">
-        <div class="modal-dialog modal-lg">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Add New Category</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
               <form>
                 <input type="hidden" id="id">
                 <div class="row">
                   <div class="col-md-8 mr-auto ml-auto">
                     <div class="form-group">
-                      <label for="recipient-name" class="col-form-label">Name:</label>
-                      <input type="text" class="form-control" id="name" placeholder="Enter Name">
-                      <div class="invalid-feedback" id="name_msg">
+                      <label for="recipient-name" class="col-form-label">Old Password:</label>
+                      <input type="password" class="form-control" id="old_password" placeholder="Enter Name">
+                      <div class="invalid-feedback" id="old_password_msg">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-8 mr-auto ml-auto">
+                    <div class="form-group">
+                      <label for="recipient-name" class="col-form-label">New Password:</label>
+                      <input type="password" class="form-control" id="password" placeholder="Enter Name">
+
+                      <div class="invalid-feedback" id="password_msg">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-8 mr-auto ml-auto">
+                    <div class="form-group">
+                      <label for="recipient-name" class="col-form-label">Confirm Password:</label>
+                      <input type="password" class="form-control" id="password_confirmation" placeholder="Enter Name">
+                      <div class="invalid-feedback" id="password_confirmation_msg">
                       </div>
                     </div>
                   </div>
@@ -83,8 +74,7 @@
               <button type="button" class="btn btn-primary" onclick="formRequest()">Save</button>
             </div>
           </div>
-        </div>
-      </div>
+      </div><!-- /.container-fluid -->
       {{-- endmodal --}}
     </section>
   @endsection
@@ -95,5 +85,5 @@
   <script src="{{asset('storage/adminlte/plugins/datatables-responsive/js/dataTables.responsive.min.js')}}"></script>
   <script src="{{asset('storage/adminlte/plugins/datatables-responsive/js/responsive.bootstrap4.min.js')}}"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.26.0/axios.min.js" integrity="sha512-bPh3uwgU5qEMipS/VOmRqynnMXGGSRv+72H/N260MQeXZIK4PG48401Bsby9Nq5P5fz7hy5UGNmC/W1Z51h2GQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  @include('backend.user.internal-assets.js.script')
+  @include('backend.password.internal-assets.js.script')
   @endsection
