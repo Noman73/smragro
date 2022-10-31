@@ -163,7 +163,7 @@
                     <tr>
                       @if($invoice->purchase_type==1)
                         <th>Total Due </th>
-                        <td>৳. {{$previous_due+$invoice->total_payable}}</td>
+                        <td>৳. {{number_format($previous_due+$invoice->total_payable,2)}}</td>
                       @endif
                     </tr>
                 </table>
