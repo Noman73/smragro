@@ -10,8 +10,8 @@ class SalesReportController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('permission:Sales Report',['only'=>'index']);
-        $this->middleware('permission:Sales Report',['only'=>'getReport']);
+        $this->middleware('permission:Sale Report',['only'=>'index']);
+        $this->middleware('permission:Sale Report',['only'=>'getReport']);
     }
     public function index()
     {

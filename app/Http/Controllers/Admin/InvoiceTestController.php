@@ -37,9 +37,7 @@ class InvoiceTestController extends Controller
     }
     public function index()
     {
-        // auth()->user()->givePermissionTo('Sale Invoice View');
-        $user=User::find(auth()->user()->id);
-        $user->revokePermissionTo('Sale Invoice View');
+        
         return view('backend.invoice.invoice');
     }
 

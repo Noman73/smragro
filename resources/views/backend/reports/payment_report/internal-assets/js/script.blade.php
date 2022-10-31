@@ -358,7 +358,7 @@ $(".customer").select2({
         console.log(d);
           html+="<tr>"
           html+="<td class='text-left'>"+dateFormat(d.date*1000)+"</td>"
-          html+="<td class='text-center'>"+'#'+(d.id).toString().padStart(7,'0')+"</td>"
+          html+="<td class='text-center'>"+"<a href='"+baseURL+"/admin/view-pages/payment-view/"+d.id+"'>"+(dateFormatInvId(d.date*1000)+d.id).toString()+"</td>"
           html+="<td class='text-left'>"+(d.note!=null ? d.note : '')+"</td>"
           html+="<td class='text-right'>"+(parseFloat(d.total).toFixed(2))+"</td></tr>";
          
@@ -378,6 +378,13 @@ $(".customer").select2({
     return(dates + "-" + month + "-" + year);
   }
 
+  function dateFormatInvId(data){
+    date=new Date(data);
+    let dates = ("0" + date.getDate()).slice(-2);
+    let month = ("0" + (date.getMonth() + 1)).slice(-2);
+    let year = date.getFullYear();
+    return(dates+month+((year).toString()).substring(2,4));
+  }
   $('#fromDate,#toDate').daterangepicker({
         showDropdowns: true,
         singleDatePicker: true,

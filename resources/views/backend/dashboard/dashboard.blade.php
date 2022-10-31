@@ -141,6 +141,43 @@
               <a href="{{URL::to('/')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
+          {{-- bar chart --}}
+          <div class="col-lg-6">
+            <div class="card">
+              <div class="card-header border-0">
+                <div class="d-flex justify-content-between">
+                  <h3 class="card-title">Sales</h3>
+                  <a href="javascript:void(0);">View Report</a>
+                </div>
+              </div>
+              <div class="card-body">
+
+                <div class="position-relative mb-4" style="max-height:225px;">
+                  <canvas id="sales-chart" height="260" style="display: block; width: 487px; height: 225px;" width="487" class="chartjs-render-monitor"></canvas>
+                </div>
+                <div class="d-flex flex-row justify-content-end">
+                </div>
+              </div>
+            </div>
+            </div>
+            {{-- line chart --}}
+            <div class="col-12 col-md-6">
+            <div class="card">
+              <div class="card-header " style="cursor: move;">
+                <h3 class="card-title">
+                  <i class="fas fa-th mr-1"></i>
+                  Receive & Payments Graph
+                </h3>
+              </div>
+              <div class="card-body"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+                <canvas class="chart chartjs-render-monitor" id="line-chart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block;" width="396" height="250"></canvas>
+              </div>
+              
+              
+              
+              </div>
+            </div>
+            {{-- line chart --}}
           {{-- table start --}}
             <div class="col-md-6 col-12">
               <div class="card">

@@ -96,6 +96,8 @@ Route::group([
     Route::post('/get-part','PartController@getPart');
     Route::get('/get-role-has-permission','PermissionController@getPermission');
     Route::get('/get-model-has-permission/{user_id}','PermissionController@getModelPermission');
+    Route::get('/sales-yearly-bar-chart','ChartDataController@getYearlyInvoiceData');
+    Route::get('/receive-payment-yearly-line-chart','ChartDataController@last30DaysReceivePayment');
 });
 Route::group([
     'prefix'=>"admin/accounts",

@@ -68,7 +68,7 @@
                     }
                     // dd($invoice);
                     @endphp
-                    Invoice No :<b>S-{{date('dm',$invoice->dates).substr(date('Y',$invoice->dates),-2).$invoice->id}}</b> <br>
+                    Invoice No :<b>P-{{date('dm',$invoice->dates).substr(date('Y',$invoice->dates),-2).$invoice->id}}</b> <br>
                     @if($invoice->hand_bill!=null)
                     Hand Memo : <b>{{$invoice->hand_bill}}</b><br>
                     @endif
