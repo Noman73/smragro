@@ -15,6 +15,12 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('role:Super-Admin',['only'=>'index']);
+        $this->middleware('role:Super-Admin',['only'=>'store']);
+    }
     public function index()
     {
         if(request()->ajax()){
