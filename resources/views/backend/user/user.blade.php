@@ -11,12 +11,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Category</h1>
+            <h1 class="m-0">Create User</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Category</li>
+              <li class="breadcrumb-item active">User</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -31,7 +31,7 @@
             <div class="card-header bg-dark">
               <div class="row">
                 <div class="col-6">
-                  <div class="card-title">Category </div>
+                  <div class="card-title">User </div>
                 </div>
                 <div class="col-6">
                   <button class="btn btn-primary float-right" data-toggle="modal" data-target="#modal" data-whatever="@mdo">নতুন</button>
@@ -43,8 +43,8 @@
                 <thead>
                   <tr>
                     <th>SL.</th>
-                    <th>Category</th>
-                    <th>Action</th>
+                    <th>Name</th>
+                    <th>Email</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -58,7 +58,7 @@
         <div class="modal-dialog modal-lg">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Add New Category</h5>
+              <h5 class="modal-title" id="exampleModalLabel">Add New User</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -72,6 +72,30 @@
                       <label for="recipient-name" class="col-form-label">Name:</label>
                       <input type="text" class="form-control" id="name" placeholder="Enter Name">
                       <div class="invalid-feedback" id="name_msg">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-8 mr-auto ml-auto">
+                    <div class="form-group">
+                      <label for="recipient-name" class="col-form-label">Email:</label>
+                      <input type="text" class="form-control" id="email" placeholder="Enter Email">
+                      <div class="invalid-feedback" id="email_msg">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-8 mr-auto ml-auto">
+                    <div class="form-group">
+                      <label for="recipient-name" class="col-form-label">Password:</label>
+                      <input type="password" class="form-control" id="password" placeholder="Enter Password">
+                      <div class="invalid-feedback" id="password_msg">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-8 mr-auto ml-auto">
+                    <div class="form-group">
+                      <label for="recipient-name" class="col-form-label">Confirm Password:</label>
+                      <input type="password" class="form-control" id="password_confirmation" placeholder="Enter Confirm Password">
+                      <div class="invalid-feedback" id="password_confirmation_msg">
                       </div>
                     </div>
                   </div>

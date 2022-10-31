@@ -587,6 +587,12 @@
                       <p>Asign Role</p>
                     </a>
                   </li>
+                  <li class="nav-item">
+                    <a href="{{URL::to('admin/user')}}" class="nav-link">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>Create User</p>
+                    </a>
+                  </li>
                 </ul>
               </li>
               @endrole

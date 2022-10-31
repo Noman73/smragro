@@ -66,6 +66,10 @@
             <i class="fa fa-home"></i>
             <span class="ml-2">home </span>
           </a>
+          <a href="{{URL::to('/admin/password')}}" class="dropdown-item">
+            <i class="fa fa-lock"></i>
+            <span class="ml-2">Change Password </span>
+          </a>
           <a class="dropdown-item" href="{{ route('logout') }}"
           onclick="event.preventDefault();
                           document.getElementById('logout-form').submit();">

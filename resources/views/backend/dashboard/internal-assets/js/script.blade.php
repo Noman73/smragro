@@ -174,7 +174,7 @@ var salesGraphChartOptions={
         ],
         yAxes:[
             {
-                ticks:{stepSize:5000,fontColor:'#909090'},
+                ticks:{stepSize:0,fontColor:'#909090'},
                 gridLines:{
                     display:true,color:'#909090',
                     drawBorder:false
