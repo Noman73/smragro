@@ -152,7 +152,7 @@
               </div>
               <div class="card-body">
 
-                <div class="position-relative mb-4" style="min-height:225px;">
+                <div class="position-relative mb-4" style="max-height:225px;">
                   <canvas id="sales-chart" height="260" style="display: block; width: 487px; height: 225px;" width="487" class="chartjs-render-monitor"></canvas>
                 </div>
                 <div class="d-flex flex-row justify-content-end">
