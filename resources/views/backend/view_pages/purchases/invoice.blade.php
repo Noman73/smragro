@@ -47,16 +47,7 @@
     <section class="content">
       <div class="container-fluid">
         <div class="card ">
-            {{-- <div class="card-header">
-              <div class="row">
-                <div class="col-6">
-                  <div class="card-title">Supplier </div>
-                </div>
-                <div class="col-6">
-                  <button class="btn btn-primary float-right" data-toggle="modal" data-target="#modal" data-whatever="@mdo">Add New</button>
-                </div>
-              </div>
-            </div> --}}
+            
             <div class="card-body">
               @php 
               use Riskihajar\Terbilang\Facades\Terbilang;
@@ -88,7 +79,7 @@
                               }
                               // dd($invoice);
                               @endphp
-                              Invoice No :<b>S-{{date('dm',$invoice->dates).substr(date('Y',$invoice->dates),-2).$invoice->id}}</b> <br>
+                              Invoice No :<b>P-{{date('dm',$invoice->dates).substr(date('Y',$invoice->dates),-2).$invoice->id}}</b> <br>
                               @if($invoice->hand_bill!=null)
                               Hand Memo : <b>{{$invoice->hand_bill}}</b><br>
                               @endif

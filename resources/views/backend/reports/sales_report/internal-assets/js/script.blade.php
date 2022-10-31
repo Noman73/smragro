@@ -354,14 +354,21 @@ $(".customer").select2({
     .then((res)=>{
       console.log(res)
       html="";
+      total=0;
       res.data.forEach(function(d){
+        total+=parseFloat(d.total_payable)
         console.log(d);
           html+="<tr>"
           html+="<td class='text-left'>"+dateFormat(d.dates*1000)+"</td>";
           html+="<td class='text-left'>"+d.name+"</td>";
-          html+="<td class='text-center'>"+'S-'+dateFormatSalesInvoice(d.dates*1000)+(d.id).toString()+"</td>";
+          html+="<td class='text-center'><a href='"+baseURL+"/admin/view-pages/sales-invoice/"+d.id+"'>"+'S-'+dateFormatSalesInvoice(d.dates*1000)+(d.id).toString()+"</td>";
           html+="<td class='text-right'>"+(parseFloat(d.total_payable).toFixed(2))+"</td></tr>";  
       })
+        html+="<tr>";
+        html+="<th class='text-right' colspan='3'>Total=</th>";
+        html+="<th class='text-right' >"+total.toFixed(2)+"</th></tr>";
+
+
       $('#data-load').html(html);
       $('#printed_user').text("{{auth()->user()->name}}");
       showPrintTime();
