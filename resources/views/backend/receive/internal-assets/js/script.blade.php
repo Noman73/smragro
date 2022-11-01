@@ -106,9 +106,18 @@ window.formRequest= function(){
                 window.location="{{URL::to('admin/view-pages/receive-view/')}}/"+response.data.id
             }else if(response.data.error){
               var keys=Object.keys(response.data.error);
+              var err='';
               keys.forEach(function(d){
                 $('#'+d).addClass('is-invalid');
                 $('#'+d+'_msg').text(response.data.error[d][0]);
+                err+=response.data.error[d][0]+'<br>';
+              })
+              Swal.fire({
+                title: 'Error',
+                html:"<p style='color:red;'>"+err+"</p>",
+                icon: 'warning',
+                showCancelButton: true,
+                cancelButtonColor: '#d33',
               })
               $('.submit').attr('disabled',false);
             }

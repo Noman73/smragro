@@ -94,6 +94,14 @@ window.formRequest= function(event){
                 $('#'+d).addClass('is-invalid');
                 $('#'+d+'_msg').text(response.data.error[d][0]);
                 err+=response.data.error[d][0]+'\n';
+                
+              })
+              Swal.fire({
+                title: 'Error',
+                html:"<p style='color:red;'>"+err+"</p>",
+                icon: 'warning',
+                showCancelButton: true,
+                cancelButtonColor: '#d33',
               })
             }
         })

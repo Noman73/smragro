@@ -11,6 +11,7 @@ use App\Models\AccountLedger;
 use DataTables;
 use URL;
 use App\Rules\ZeroValidationRule;
+use App\Rules\JournalSubledgerRule;
 use App\Rules\CashCheckRule;
 use DB;
 class ReceiveController extends Controller
@@ -86,7 +87,7 @@ class ReceiveController extends Controller
          }
          $validator=Validator::make($data,[
              'ledger'=>"required|array|max:200",
-             'subledger'=>"required|array|max:200",
+             'subledger'=>["required","array","max:200",new JournalSubledgerRule($data['ledger'])],
              'ammount'=>["required","array"],
              'ammount.*'=>["required","max:20",new ZeroValidationRule],
              'comment'=>"required|array|max:200",
