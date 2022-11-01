@@ -8,7 +8,7 @@
   </div>
 </div>
 <footer class="main-footer">
-    <strong>Copyright &copy;  SMRAGRO</strong>
+    <strong>Copyright &copy; <a href="https://www.ongsho.com">ongsho</a></strong>
 </footer>
 
   <!-- Control Sidebar -->
