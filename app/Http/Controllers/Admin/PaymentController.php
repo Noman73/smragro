@@ -8,6 +8,7 @@ use App\Models\Voucer;
 use App\Models\AccountLedger;
 use App\Models\Vinvoice;
 use App\Rules\CashCheckRule;
+use App\Rules\JournalSubledgerRule;
 use App\Rules\ZeroValidationRule;
 use Validator;
 use DataTables;
@@ -86,7 +87,7 @@ class PaymentController extends Controller
         }
         $validator=Validator::make($data,[
             'ledger'=>"required|array|max:200",
-            'subledger'=>"required|array|max:200",
+            'subledger'=>["required","array","max:200",new JournalSubledgerRule($data['ledger'])],
             'ammount'=>["required","array","max:200",new CashCheckRule($data['ledger'])],
             'ammount.*'=>["required","max:200",new ZeroValidationRule],
             'comment'=>"required|array|max:200",
