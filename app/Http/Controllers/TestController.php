@@ -10,6 +10,7 @@ class TestController extends Controller
 {
     public function index()
     {
+      return false;
         ini_set('max_execution_time', '300');
         $x=array (
             0 => 
