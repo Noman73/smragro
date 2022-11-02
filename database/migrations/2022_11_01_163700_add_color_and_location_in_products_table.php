@@ -16,7 +16,7 @@ class AddColorAndLocationInProductsTable extends Migration
         Schema::table('products', function (Blueprint $table) {
             $table->string('color',200)->after('warranty')->nullable();
             $table->string('location',200)->after('color')->nullable();
-            // $table->dropForeign(['category_id']);
+            $table->dropForeign(['category_id']);
             $table->dropColumn('category_id');
         });
     }
