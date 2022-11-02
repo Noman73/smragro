@@ -357,9 +357,9 @@ class ProductController extends Controller
         $brand_id=$request->brand_id;
         if($request->brand_id==null){
             $brand_id='';
-            $search= Product::select('id','model_no')->where('model_no','like','%'.$request->searchTerm.'%')->get();
+            $search= Product::select('id','model_no')->where('model_no','like','%'.$request->searchTerm.'%')->take(30)->get();
         }else{
-            $search= Product::select('id','model_no')->where('model_no','like','%'.$request->searchTerm.'%')->where('brand_id',$brand_id)->get();
+            $search= Product::select('id','model_no')->where('model_no','like','%'.$request->searchTerm.'%')->where('brand_id',$brand_id)->take(30)->get();
         }
         foreach ($search as $value){
             $set_data[]=['id'=>$value->model_no,'text'=>$value->model_no];
@@ -373,9 +373,9 @@ class ProductController extends Controller
         $model=($request->model_id==null? '':$request->model_id);
         $part_id=($request->part_id==null? '':$request->part_id);
         if($part_id=='' ){
-             $search=Product::where('name','like','%'.$request->searchTerm.'%')->where('brand_id',$brand_id)->orWhere('model_no',$model)->get();
+             $search=Product::where('name','like','%'.$request->searchTerm.'%')->where('brand_id',$brand_id)->orWhere('model_no',$model)->take(30)->get();
         }else{
-            $search=Product::where('name','like','%'.$request->searchTerm.'%')->where('part_id',$part_id)->get();
+            $search=Product::where('name','like','%'.$request->searchTerm.'%')->where('part_id',$part_id)->take(30)->get();
         }
         foreach ($search as $value){
             $set_data[]=['id'=>$value->id,'text'=>$value->part_id.'-'.$value->name];
@@ -386,7 +386,7 @@ class ProductController extends Controller
     public function getPartId(Request $request)
     {
         
-        $search=Product::where('part_id','like','%'.$request->searchTerm.'%')->get();
+        $search=Product::where('part_id','like','%'.$request->searchTerm.'%')->take(30)->get();
         foreach ($search as $value){
             $set_data[]=['id'=>$value->part_id,'text'=>$value->part_id];
         }
