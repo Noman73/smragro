@@ -31,7 +31,6 @@ class JournalSubledgerRule implements Rule
         foreach($this->ledger as $ledger){
             $ledger=AccountLedger::where('id',$ledger)->first();
             if($ledger->relation_with!=null or $ledger->sub_account==1){
-                info($ledger);
                 if($value[$i]=='null'){
                     $this->row=$i;
                     return false;
@@ -53,6 +52,6 @@ class JournalSubledgerRule implements Rule
      */
     public function message()
     {
-        return 'Row no '.($this->row+1).' Sub ledger is required';
+        return 'Row no '.($this->row+1).' sub ledger is required.';
     }
 }

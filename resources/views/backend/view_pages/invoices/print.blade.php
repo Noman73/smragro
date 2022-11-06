@@ -12,7 +12,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
-    <title>SMRAGRO</title>
+    <title>{{$info->company_name}}</title>
 
     <!--Favicon-->
     
@@ -51,7 +51,7 @@
 <div class="container-fluid">
     <div id="print" class="print" >
         <div class="row invoice_header">
-          <div class="col-xs-5" style="width:50%; float:left;">
+          <div class="col-xs-5" style="width: 50%; float:left;">
               @include('layouts.adress')
           </div>
           <div class="col-xs-7" style="width: 50%; text-align:right">
@@ -171,57 +171,57 @@
                 
                 <tr>
                     <th>Invoice Total</th>
-                    <td>৳. {{$invoice->total}}</td>
+                    <td>৳ {{$invoice->total}}</td>
                 </tr>
                 <tr>
                     <th>Discount</th>
-                    <td>৳. {{($invoice->discount_type==0 ? $invoice->discount : floatval($invoice->discount*$invoice->total)/100)}}</td>
+                    <td>৳ {{($invoice->discount_type==0 ? number_format($invoice->discount,2) : number_format(floatval($invoice->discount*$invoice->total)/100,2))}}</td>
                 </tr>
                 <tr>
                   <th>Vat</th>
-                  <td>৳. {{($invoice->vat*$invoice->total)/100}}</td>
+                  <td>৳ {{number_format(($invoice->vat*$invoice->total)/100,2)}}</td>
                 </tr>
                 <tr>
                   <th>Transport Income</th>
-                  <td>৳. {{$invoice->transport}}</td>
+                  <td>৳ {{number_format($invoice->transport==null ? 0 : $invoice->transport,2)}}</td>
                 </tr>
                   <tr>
                       <th>Invoice Due</th>
                      
-                      <td>৳. {{$invoice->total_payable}}</td>
+                      <td>৳ {{$invoice->total_payable}}</td>
                   </tr>
                  
                   <tr>
                       <th> Paid </th>
                       @if($invoice->sale_type==0)
-                      <td>৳. {{$invoice->total_payable}}</td>
+                      <td>৳ {{$invoice->total_payable}}</td>
                       @elseif($invoice->sale_type==1)
-                      <td>৳. {{$invoice->pay->sum('debit')}}</td>
+                      <td>৳ {{number_format($invoice->pay->sum('debit'),2)}}</td>
                       @else
-                      <td>৳. {{$invoice->pay->sum('debit')}}</td>
+                      <td>৳ {{number_format($invoice->pay->sum('debit'),2)}}</td>
                       @endif
                   </tr>
 
-                  @if($invoice->sale_type!=0 and $invoice->customer_id!=null)
+                  @if($invoice->sale_type!=0 and $invoice->customer_id!=null and date('d-m-Y',$invoice->dates)===date('d-m-Y'))
                   <tr>
-                    <th> Previous Due </th>
-                    <td>৳. {{$previous_due}}</td>
+                    <th>Previous Due </th>
+                    <td>৳ {{$previous_due}}</td>
                   </tr>
-                  @endif      
+                  @endif
                   <tr>
                     @if($invoice->sale_type==1)
                     <th>Current Due </th>
                     {{-- <td>৳. {{$previous_due+$invoice->total_payable}}</td> --}}
-                    <td>৳. {{App\Http\Traits\BalanceTrait::customerBalance($invoice->customer_id)}}</td>
+                    <td>৳ {{App\Http\Traits\BalanceTrait::customerBalance($invoice->customer_id)}}</td>
                     @elseif($invoice->sale_type==2)
                     <th>Total Due </th>
-                    <td>৳. {{floatval($invoice->total_payable)-floatval($invoice->pay->sum('debit'))}}</td>
+                    <td>৳ {{floatval($invoice->total_payable)-floatval($invoice->pay->sum('debit'))}}</td>
                     @endif
                   </tr>
                   @if($invoice->sale_by==2)
                     <tr>
                         <th>Condition Amount</th>
-                        <td>৳. {{$invoice->cond_amount}}</td>
+                        <td>৳ {{$invoice->cond_amount}}</td>
                     </tr>
                   @endif
               </table>

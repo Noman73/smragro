@@ -85,13 +85,12 @@ class LedgerReportController extends Controller
                 SELECT if('".$cond."'='dmc',sum(debit)-sum(credit),sum(credit)-sum(debit)) balance from voucers where ledger_id=:ledger_id and subledger_id=:subledger and date<:from_date 
             ",['ledger_id'=>$data['ledger'],'subledger'=>$data['subledger'],'from_date'=>$from_date]);
             $arr= DB::select("
-                    SELECT voucer.id,voucer.date,voucer.debit,voucer.credit,voucer.transaction_name,voucer.comment,voucer.created_at from
+                    SELECT voucer.id,voucer.invoice_id,voucer.v_inv_id,voucer.pinvoice_id,voucer.journal_inv_id,voucer.date,voucer.debit,voucer.credit,voucer.transaction_name,voucer.comment,voucer.created_at from
                     (
-                        SELECT voucers.id,voucers.date,voucers.debit,voucers.credit,voucers.transaction_name,ifnull(voucers.comment,'') comment,voucers.created_at from voucers 
-                        
+                        SELECT voucers.id,voucers.invoice_id,voucers.v_inv_id,voucers.pinvoice_id,voucers.journal_inv_id,voucers.date,voucers.debit,voucers.credit,voucers.transaction_name,voucers.comment,voucers.created_at from voucers 
                         where voucers.ledger_id=:ledger_id and voucers.subledger_id=:subledger and date>=:from_date and date<=:to_date
                         UNION ALL 
-                        SELECT 0,'',0.00,0.00,'P/F','',''
+                        SELECT 0,'','','','','',0.00,0.00,'P/F',null,''
                     ) voucer
                     order by voucer.date,voucer.id
                 ",['ledger_id'=>$data['ledger'],'subledger'=>$data['subledger'],'from_date'=>$from_date,'to_date'=>$to_date]);

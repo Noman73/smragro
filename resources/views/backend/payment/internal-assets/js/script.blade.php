@@ -129,7 +129,6 @@ window.formRequest= function(){
                     }
                   })
                 // end sweetalert
-
               })
             }
         })

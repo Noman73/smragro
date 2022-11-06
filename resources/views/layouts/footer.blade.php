@@ -8,7 +8,7 @@
   </div>
 </div>
 <footer class="main-footer">
-    <strong>Copyright &copy;  SMRAGRO</strong>
+    <strong>Copyright &copy; <a href="https://www.ongsho.com">ongsho</a></strong>
 </footer>
 
   <!-- Control Sidebar -->
@@ -30,7 +30,7 @@
 <!-- Bootstrap 4 -->
 <script src="{{asset('storage/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 <!-- ChartJS -->
-{{-- <script src="{{asset('storage/adminlte/plugins/chart.js/Chart.min.js')}}"></script> --}}
+<script src="{{asset('storage/adminlte/plugins/chart.js/Chart.min.js')}}"></script>
 <!-- Sparkline -->
 {{-- <script src="p{{asset('storage/adminlte/lugins/sparklines/sparkline.js')}}"></script> --}}
 <!-- JQVMap -->
@@ -118,6 +118,47 @@ function fetch()
 $(document).ready(function(){
   fetch();
 })
+$(document).on('click','#micro',function(){
+  speech_recognition();
+})
+function speech_recognition(){
+  let micro=document.getElementById('micro');
+  let SpeechRecognition=new webkitSpeechRecognition();
+  if(SpeechRecognition){
+		micro.addEventListener('click',function(){
+			SpeechRecognition.start();
+
+		})
+
+		SpeechRecognition.addEventListener('result',function(e) {
+			console.log(e.results[0][0].transcript);
+			text=e.results[0][0].transcript;
+      text=text.split(' ');
+
+      let includeInv=['invoice','open'];
+      let includeInvList=['invoice','list'];
+      let length=includeInv.length;
+      let lengthInvList=includeInvList.length;
+      if(contains(text, includeInv)==length){
+        open_url=baseURL+'/admin/invoice';
+        window.location=open_url;
+      }
+      if(contains(text, includeInvList)==lengthInvList){
+        open_url=baseURL+'/admin/invoice-list';
+        window.location=open_url;
+      }
+		})
+	}
+}
+function contains(target, pattern){
+    var value = 0;
+    pattern.forEach(function(word){
+      value += target.includes(word);
+    });
+    return value;
+}
+
+
 </script>
 @yield('script')
 </body>

@@ -360,7 +360,7 @@ $(".customer").select2({
       let id='';
       
       res.data[0].forEach(function(d){
-        console.log(d);
+        console.log(d.inovice_id);
         // start switch
         switch (d.transaction_name) {
         case 'journal':
@@ -400,19 +400,21 @@ $(".customer").select2({
           url='';
           break;
       }
-
         // end switch
-          html+="<tr><td>"+(d.date=='' ? '' : dateFormat(d.date*1000))+"</td>"
-          html+="<td>"+(d.created_at=='' ?  '':dateFormat(Date.parse(d.created_at)))+"</td>"
-          html+="<td class='text-left'>"+d.transaction_name+(d.comment!=''? '('+d.comment+')':'' )+"</td>"
-          html+="<td class='text-center'>"+url+"</td>"
-          html+="<td class='text-right'>"+d.debit+"</td>"
-          html+="<td class='text-right'>"+d.credit+"</td>"
-          if(class_type==1 || class_type==4){
-            html+="<td class='text-right'>"+(balance+=parseFloat(d.debit)-parseFloat(d.credit)).toFixed(2)+"</td></tr>";
-          }else{
-            html+="<td class='text-right'>"+(balance+=parseFloat(d.credit)-parseFloat(d.debit)).toFixed(2)+"</td></tr>";
-          }
+        if((parseFloat(d.debit)-parseFloat(d.credit))!=0){
+            html+="<tr><td>"+(d.date=='' ? '' : dateFormat(d.date*1000))+"</td>"
+            html+="<td>"+(d.created_at=='' ?  '':dateFormat(Date.parse(d.created_at)))+"</td>"
+            html+="<td class='text-left'>"+d.transaction_name+(d.comment!=null? '('+d.comment+')':'' )+"</td>"
+            html+="<td class='text-center'>"+url+"</td>"
+            html+="<td class='text-right'>"+d.debit+"</td>"
+            html+="<td class='text-right'>"+d.credit+"</td>"
+            if(class_type==1 || class_type==4){
+              html+="<td class='text-right'>"+(balance+=parseFloat(d.debit)-parseFloat(d.credit)).toFixed(2)+"</td></tr>";
+            }else{
+              html+="<td class='text-right'>"+(balance+=parseFloat(d.credit)-parseFloat(d.debit)).toFixed(2)+"</td></tr>";
+            }
+        }
+          
       })
       $('#data-load').html(html);
     })
@@ -421,7 +423,6 @@ $(".customer").select2({
 
   function dateFormat(data){
     date=new Date(data);
-
     let dates = ("0" + date.getDate()).slice(-2);
     let month = ("0" + (date.getMonth() + 1)).slice(-2);
     let year = date.getFullYear();
@@ -433,7 +434,7 @@ $(".customer").select2({
     let dates = ("0" + date.getDate()).slice(-2);
     let month = ("0" + (date.getMonth() + 1)).slice(-2);
     let year = date.getFullYear();
-    return(((year).toString()).substring(2,4)+month+dates);
+    return(dates+month+((year).toString()).substring(2,4));
   }
   $('#fromDate,#toDate').daterangepicker({
         showDropdowns: true,

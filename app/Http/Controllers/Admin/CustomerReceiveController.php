@@ -72,7 +72,14 @@ class CustomerReceiveController extends Controller
     public function store(Request $request)
     {
         // return $request->all();
-        $validator=Validator::make($request->all(),[
+        $data=$request->all();
+        if($request->customer=='null'){
+            $data['customer']=null;
+        }
+        if($request->bank=='null'){
+            $data['bank']=null;
+        }
+        $validator=Validator::make($data,[
             'customer'=>"required|max:200",
             'ammount'=>["required",new ZeroValidationRule],
             'date'=>"required|max:200",

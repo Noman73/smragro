@@ -72,15 +72,21 @@ class SPaymentController extends Controller
     public function store(Request $request)
     {
         // return $request->all();
-
-        $validator=Validator::make($request->all(),[
+        $data=$request->all();
+        if($request->supplier=="null"){
+            $data['supplier']=null;
+        }
+        if($request->bank=="null"){
+            $data['bank']=null;
+        }
+        $validator=Validator::make($data,[
             'supplier'=>"required|max:200",
             'ammount'=>["required",new ZeroValidationRule],
             'date'=>"required|max:200",
             'method'=>"required|max:1",
             'note'=>"nullable|max:500",
         ]);
-
+        // if($request->)
         if($validator->passes()){
             $subledger=AccountLedger::where('name','Supplier')->first();
             $v_invoice=new Vinvoice;
@@ -111,10 +117,11 @@ class SPaymentController extends Controller
                 }
                 $voucer=new Voucer;
                 $voucer->date= strtotime($request->date);
+                $voucer->transaction_name="Supplier Payment";
                 $voucer->v_inv_id= $v_invoice->id;
                 $voucer->credit=$request->ammount;
                 $voucer->ledger_id=$ledger->id;
-                $voucer->subledger_id=$request->bank;
+                $voucer->subledger_id=$data['bank'];
                 $voucer->author_id= auth()->user()->id;
                 $voucer->save();
                 if($voucer){

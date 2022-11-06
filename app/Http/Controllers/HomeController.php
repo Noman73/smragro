@@ -48,7 +48,7 @@ class HomeController extends Controller
         $total_sale_amount=Invoice::where('sale_type',0)->orWhere('sale_type',1)->orWhere('sale_type',2)->sum('total_payable');
         $total_buy_amount=PInvoice::sum('total_payable');
         $customer_balance=Voucer::selectRaw('ifnull(sum(debit)-sum(credit),0) total')->where('date','<=',strtotime($to_date))->where('ledger_id',$customer_ledger)->first();
-        $supplier_balance=Voucer::selectRaw('ifnull(sum(debit)-sum(credit),0) total')->where('date','<=',strtotime($to_date))->where('ledger_id',$supplier_ledger)->first();
+        $supplier_balance=Voucer::selectRaw('ifnull(sum(credit)-sum(debit),0) total')->where('date','<=',strtotime($to_date))->where('ledger_id',$supplier_ledger)->first();
         $top_product=DB::select("
             select products.name,products.product_code,sum(sales.deb_qantity-sales.cred_qantity) qantity from products 
             left join sales on products.id=sales.product_id 
