@@ -9,6 +9,7 @@
             
             html='';
             bank_html='';
+            bank_total_balance=0;
             res.data.top_product.forEach(function(d){
                 html+="<tr>"
                 html+="<td>"+d.name+"</td>"
@@ -16,11 +17,13 @@
                 html+="<td>"+(d.qantity==null ? '0.00' :d.qantity)+"</td></tr>"
             })
             res.data.bank.forEach(function(d){
+                bank_total_balance+=parseFloat(d.balance);
                 bank_html+="<tr>"
                 bank_html+="<td>"+d.name+"</td>"
                 bank_html+="<td>"+d.code+"</td>"
                 bank_html+="<td>"+(d.balance==null ? '0.00' :d.balance)+"</td></tr>"
             })
+            bank_html+="<tr><th colspan='2'>Total=</th><th>"+bank_total_balance+"</th></tr>"
             $('#top_product').html(html);
             $('#bank_table').html(bank_html);
             $('#customer').text(res.data.total_customer);
