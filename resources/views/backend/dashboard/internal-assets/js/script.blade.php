@@ -23,7 +23,7 @@
                 bank_html+="<td>"+d.code+"</td>"
                 bank_html+="<td>"+(d.balance==null ? '0.00' :d.balance)+"</td></tr>"
             })
-            bank_html+="<tr><th colspan='2'>Total=</th><th>"+bank_total_balance+"</th></tr>"
+            bank_html+="<tr><th colspan='2'>Total=</th><th>"+(bank_total_balance).toFixed(2)+"</th></tr>"
             $('#top_product').html(html);
             $('#bank_table').html(bank_html);
             $('#customer').text(res.data.total_customer);
