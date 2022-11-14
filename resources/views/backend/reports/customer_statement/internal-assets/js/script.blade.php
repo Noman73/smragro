@@ -402,6 +402,7 @@ $(".customer").select2({
       }
 
         // end switch
+        if((parseFloat(d.debit)-parseFloat(d.credit))!=0 || d.transaction_name=='P/F'){
           html+="<tr><td>"+(d.date=='' ? '' : dateFormat(d.date*1000))+"</td>"
           html+="<td>"+(d.created_at=='' ?  '':dateFormat(Date.parse(d.created_at)))+"</td>"
           html+="<td class='text-left'>"+d.transaction_name+(d.comment!=null? '('+d.comment+')':'' )+"</td>"
@@ -413,6 +414,7 @@ $(".customer").select2({
           }else{
             html+="<td class='text-right'>"+(balance+=parseFloat(d.credit)-parseFloat(d.debit)).toFixed(2)+"</td></tr>";
           }
+        }
       })
       $('#data-load').html(html);
     })

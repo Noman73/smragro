@@ -14,10 +14,19 @@
         <a class="btn btn-sm btn-primary" href="{{URL::to('admin/payment')}}">Payment</a>
     </li>
     <li class="nav-item mt-1 mr-1">
+        <a class="btn btn-sm btn-primary" href="{{URL::to('admin/c-receive')}}">Cus. Receive</a>
+    </li>
+    <li class="nav-item mt-1 mr-1">
+        <a class="btn btn-sm btn-primary" href="{{URL::to('admin/s-payment')}}">Sup. Payment</a>
+    </li>
+    <li class="nav-item mt-1 mr-1">
+        <a class="btn btn-sm btn-primary" href="{{URL::to('admin/ledger-report')}}">Ledger</a>
+    </li>
+    {{-- <li class="nav-item mt-1 mr-1">
         <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#calculator">
             <i class="fas fa-calculator"></i>
         </button>
-    </li>
+    </li> --}}
     <li class="nav-item mt-1 mr-1">
         <button type="button" class="btn btn-sm btn-primary"  id="micro">
             <i class="fas fa-microphone"></i>

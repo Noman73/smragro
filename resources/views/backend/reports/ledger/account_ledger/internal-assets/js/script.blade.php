@@ -401,7 +401,7 @@ $(".customer").select2({
           break;
       }
         // end switch
-        if((parseFloat(d.debit)-parseFloat(d.credit))!=0){
+        if((parseFloat(d.debit)-parseFloat(d.credit))!=0 || d.transaction_name=='P/F'){
             html+="<tr><td>"+(d.date=='' ? '' : dateFormat(d.date*1000))+"</td>"
             html+="<td>"+(d.created_at=='' ?  '':dateFormat(Date.parse(d.created_at)))+"</td>"
             html+="<td class='text-left'>"+d.transaction_name+(d.comment!=null? '('+d.comment+')':'' )+"</td>"
