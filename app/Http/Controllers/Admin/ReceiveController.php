@@ -244,6 +244,7 @@ class ReceiveController extends Controller
                        // return $data['ammount'][$i];
                        if($data['v_id'][$i]!=0){
                         $voucer=Voucer::find($data['v_id'][$i]);
+                        info($data['v_id'][$i]);
                         $voucer->date= strtotime($data['date']);
                         $voucer->transaction_name="Receive";
                         $voucer->v_inv_id= $v_invoice->id;
@@ -275,7 +276,6 @@ class ReceiveController extends Controller
                        $ledger=AccountLedger::where('name','Bank')->first();
                    }
                        $voucer=Voucer::find($request->method_voucer);
-                       info($data['date']);
                        $voucer->date= strtotime($data['date']);
                        $voucer->transaction_name="Receive";
                        $voucer->v_inv_id= $v_invoice->id;
