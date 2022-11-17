@@ -31,7 +31,7 @@ class SPaymentController extends Controller
     public function index()
     {
         if(request()->ajax()){
-            $get=Vinvoice::where('action_type',2)->get();
+            $get=Vinvoice::where('action_type',2)->orderBy('date','desc');
             return DataTables::of($get)
               ->addIndexColumn()
               ->addColumn('action',function($get){
@@ -105,6 +105,7 @@ class SPaymentController extends Controller
                 $voucer->transaction_name="Supplier Payment";
                 $voucer->v_inv_id= $v_invoice->id;
                 $voucer->debit=$request->ammount;
+                $voucer->credit=0;
                 $voucer->ledger_id=$subledger->id;
                 $voucer->subledger_id=$request->supplier;
                 $voucer->author_id = auth()->user()->id;
@@ -120,6 +121,7 @@ class SPaymentController extends Controller
                 $voucer->transaction_name="Supplier Payment";
                 $voucer->v_inv_id= $v_invoice->id;
                 $voucer->credit=$request->ammount;
+                $voucer->debit=0;
                 $voucer->ledger_id=$ledger->id;
                 $voucer->subledger_id=$data['bank'];
                 $voucer->author_id= auth()->user()->id;

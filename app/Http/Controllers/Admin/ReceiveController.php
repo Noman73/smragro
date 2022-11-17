@@ -33,7 +33,7 @@ class ReceiveController extends Controller
     public function index()
     {
         if(request()->ajax()){
-            $get=Vinvoice::where('action_type',1)->get();
+            $get=Vinvoice::where('action_type',1)->orderBy('date','desc');
             return DataTables::of($get)
               ->addIndexColumn()
               ->addColumn('action',function($get){
@@ -115,6 +115,7 @@ class ReceiveController extends Controller
                         $voucer->transaction_name="Receive";
                         $voucer->v_inv_id= $v_invoice->id;
                         $voucer->credit=$data['ammount'][$i];
+                        $voucer->debit=0;
                         $voucer->ledger_id=$data['ledger'][$i];
                         $voucer->subledger_id=($data['subledger'][$i] == 'null' ? null : $data['subledger'][$i]);
                         $voucer->comment=$data['comment'][$i];
@@ -132,6 +133,7 @@ class ReceiveController extends Controller
                         $voucer->transaction_name="Receive";
                         $voucer->v_inv_id= $v_invoice->id;
                         $voucer->debit=$total;
+                        $voucer->credit=0;
                         $voucer->ledger_id=$ledger->id;
                         if($data['bank']=='null'){
                             $data['bank']=null;
@@ -246,6 +248,7 @@ class ReceiveController extends Controller
                         $voucer->transaction_name="Receive";
                         $voucer->v_inv_id= $v_invoice->id;
                         $voucer->credit=$data['ammount'][$i];
+                        $voucer->debit=0;
                         $voucer->ledger_id=$data['ledger'][$i];
                         $voucer->subledger_id=($data['subledger'][$i] == 'null' ? null : $data['subledger'][$i]);
                         $voucer->comment=$data['comment'][$i];
@@ -257,6 +260,7 @@ class ReceiveController extends Controller
                         $voucer->transaction_name="Receive";
                         $voucer->v_inv_id= $v_invoice->id;
                         $voucer->credit=$data['ammount'][$i];
+                        $voucer->debit=0;
                         $voucer->ledger_id=$data['ledger'][$i];
                         $voucer->subledger_id=($data['subledger'][$i] == 'null' ? null : $data['subledger'][$i]);
                         $voucer->comment=$data['comment'][$i];
@@ -276,6 +280,7 @@ class ReceiveController extends Controller
                        $voucer->transaction_name="Receive";
                        $voucer->v_inv_id= $v_invoice->id;
                        $voucer->debit=$total;
+                       $voucer->credit=0;
                        $voucer->ledger_id=$ledger->id;
                        if($data['bank']=='null'){
                            $data['bank']=null;

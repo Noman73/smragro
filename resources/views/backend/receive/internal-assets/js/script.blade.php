@@ -414,6 +414,7 @@ function iterateData(data){
               html+="<td><button class='btn btn-danger btn-sm remove'>X</button></td></tr>";
           }else{
               paymentMethod();
+              if('')
               if(d.ledger_name=="Cash"){
                 $('#method').val(0);
                 $('#voucer_id').val(d.id);

@@ -33,7 +33,7 @@ class PaymentController extends Controller
     public function index()
     {
         if(request()->ajax()){
-            $get=Vinvoice::where('action_type',0)->get();
+            $get=Vinvoice::where('action_type',0)->orderBy('date','desc');
             return DataTables::of($get)
               ->addIndexColumn()
               ->addColumn('action',function($get){
@@ -117,6 +117,7 @@ class PaymentController extends Controller
                         $voucer->transaction_name="Payment";
                         $voucer->v_inv_id= $v_invoice->id;
                         $voucer->debit=$data['ammount'][$i];
+                        $voucer->credit=0;
                         $voucer->ledger_id=$data['ledger'][$i];
                         $voucer->subledger_id=($data['subledger'][$i] == 'null'? null : $data['subledger'][$i]);
                         $voucer->comment=$data['comment'][$i];
@@ -135,6 +136,7 @@ class PaymentController extends Controller
                         $voucer->transaction_name="Payment";
                         $voucer->v_inv_id= $v_invoice->id;
                         $voucer->credit=$total;
+                        $voucer->debit=0;
                         $voucer->ledger_id=$ledger->id;
                         if($data['bank']=='null'){
                             $data['bank']=null;
@@ -178,7 +180,7 @@ class PaymentController extends Controller
         }
         $bank_ledger=AccountLedger::where('name','Bank')->first()->id;
         $invoice=DB::select("
-            SELECT voucers.id,voucers.ledger_id,voucers.subledger_id,voucers.date,cheque_no,cheque_status,cheque_issue_date,voucers.v_inv_id,concat(account_ledgers.code,if(account_ledgers.code<>'','-',''),account_ledgers.name) name,voucers.debit,voucers.credit,voucers.comment,
+            SELECT voucers.id,voucers.ledger_id,voucers.subledger_id,voucers.date,cheque_no,cheque_status,cheque_issue_date,voucers.v_inv_id,concat(account_ledgers.code,if(account_ledgers.code<>'','-',''),account_ledgers.name) name,account_ledgers.name ledger_name,voucers.debit,voucers.credit,voucers.comment,
             ## concat(ifnull(customers.id,''),ifnull(suppliers.id,''),ifnull(banks.id,''),ifnull(account_subledgers.id,''),ifnull(employees.id,'')) sub_id,
             concat(ifnull(customers.code,''),ifnull(suppliers.code,''),ifnull(banks.code,''),ifnull(account_subledgers.code,''),ifnull(employees.code,'')) sub_code,
             concat(ifnull(customers.name,''),ifnull(suppliers.name,''),ifnull(banks.name,''),ifnull(account_subledgers.name,''),ifnull(employees.name,'')) sub_name
@@ -205,12 +207,13 @@ class PaymentController extends Controller
      */
     public function update(Request $request, $id)
     {
-         // return response()->json($request->all());
+        //  return response()->json($request->all());
          $data=$request->all();
          $data['ledger']= explode(',', $request->ledger);
          $data['subledger']= explode(',', $request->subledger);
          $data['ammount']= explode(',', $request->ammount);
          $data['comment']= explode(',', $request->comment);
+         $data['v_id']= explode(',', $request->v_id);
          $data['date']= $request->date;
          if($data['method']==0){
              $bank_cond='nullable';
@@ -246,10 +249,13 @@ class PaymentController extends Controller
                          // return $data['ammount'][$i];
                          if($data['v_id'][$i]!=0){
                             $voucer=Voucer::find($data['v_id'][$i]);
+                            info($data['v_id'][$i]);
+                            // return $voucer->date=122441;
                             $voucer->date= strtotime($data['date']);
                             $voucer->transaction_name="Payment";
                             $voucer->v_inv_id= $v_invoice->id;
                             $voucer->debit=$data['ammount'][$i];
+                            $voucer->credit=0;
                             $voucer->ledger_id=$data['ledger'][$i];
                             $voucer->subledger_id=($data['subledger'][$i] == 'null'? null : $data['subledger'][$i]);
                             $voucer->comment=$data['comment'][$i];
@@ -263,6 +269,7 @@ class PaymentController extends Controller
                             $voucer->transaction_name="Payment";
                             $voucer->v_inv_id= $v_invoice->id;
                             $voucer->debit=$data['ammount'][$i];
+                            $voucer->credit=0;
                             $voucer->ledger_id=$data['ledger'][$i];
                             $voucer->subledger_id=($data['subledger'][$i] == 'null'? null : $data['subledger'][$i]);
                             $voucer->comment=$data['comment'][$i];
@@ -282,6 +289,7 @@ class PaymentController extends Controller
                          $voucer->transaction_name="Payment";
                          $voucer->v_inv_id= $v_invoice->id;
                          $voucer->credit=$total;
+                         $voucer->debit=0;
                          $voucer->ledger_id=$ledger->id;
                          if($data['bank']=='null'){
                              $data['bank']=null;
