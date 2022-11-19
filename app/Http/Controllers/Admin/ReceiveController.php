@@ -40,7 +40,7 @@ class ReceiveController extends Controller
               $button  ='<div class="d-flex justify-content-center">';
                 $button.='<a data-url=""  href="'.URL::to('admin/view-pages/receive-view/'.$get->id).'" class="btn btn-warning shadow btn-xs sharp me-1 editRow"><i class="fas fa-print"></i></a>
                 <a data-url="'.route('receive.edit',$get->id).'"  href="javascript:void(0)" class="btn btn-primary shadow btn-xs sharp ml-1 editRow"><i class="fas fa-pen"></i></a>
-              <a data-url="'.route('receive.destroy',$get->id).'" href="javascript:void(0)" class="btn btn-danger shadow btn-xs sharp ml-1 deleteRow"><i class="fa fa-trash"></i></a>';
+              <a data-id="'.$get->id.'" data-url="'.route('receive.destroy',$get->id).'" href="javascript:void(0)" class="btn btn-danger shadow btn-xs sharp ml-1 deleteRow"><i class="fa fa-trash"></i></a>';
               $button.='</div>';
             return $button;
           })
@@ -100,6 +100,7 @@ class ReceiveController extends Controller
                 foreach($data['ammount'] as $value){
                     $total=$total+floatval($value);
                 }
+                
                 $v_invoice=new Vinvoice;
                 $v_invoice->date=strtotime($data['date']);
                 $v_invoice->total=$total;
@@ -146,6 +147,7 @@ class ReceiveController extends Controller
                         $voucer->subledger_id=$data['bank'];
                         $voucer->author_id = auth()->user()->id;
                         $voucer->save();
+                        
                 }
                  return response()->json(['message'=>'Receive Successfully Added','id'=>$v_invoice->id]); 
          }
@@ -211,6 +213,7 @@ class ReceiveController extends Controller
         $data['ammount']= explode(',', $request->ammount);
         $data['comment']= explode(',', $request->comment);
         $data['v_id']= explode(',', $request->v_id);
+        $data['delete_id']= explode(',', $request->delete_id);
         $data['date']= $request->date;
         if($data['method']==0){
             $bank_cond='nullable';
@@ -293,6 +296,9 @@ class ReceiveController extends Controller
                        $voucer->subledger_id=$data['bank'];
                        $voucer->author_id = auth()->user()->id;
                        $voucer->save();
+                       foreach($data['delete_id'] as $value){
+                            Voucer::where('id',$value)->delete();
+                       }
                }
                 return response()->json(['message'=>'Receive Successfully Updated','id'=>$v_invoice->id]); 
         }

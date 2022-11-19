@@ -1,5 +1,6 @@
 <script>
     var datatable;
+    var deleteRowArr=[];
     $(document).ready(function(){
         datatable= $('#datatable').DataTable({
         processing:true,
@@ -86,6 +87,7 @@ window.formRequest= function(){
     formData.append('issue_date',issue_date);
     formData.append('cheque_photo',cheque_photo);
     formData.append('note',note);
+    formData.append('delete_id',deleteRowArr);
     $('#exampleModalLabel').text('Add New Payment');
     if(id!=''){
       formData.append('_method','PUT');
@@ -187,7 +189,9 @@ $(document).delegate(".editRow", "click", function(){
       // })
     })
 });
+
 $(document).delegate(".deleteRow", "click", function(){
+    
     let route=$(this).data('url');
     Swal.fire({
       title: 'Are you sure?',
@@ -286,6 +290,9 @@ function addItem(){
 }
 
 $(document).on('click','.remove', function(e){
+  del_id=$(this).parent().parent().children("input[name='v_id[]']").val();
+  console.log(del_id);
+  deleteRowArr.push(del_id)
   e.preventDefault();
  console.log($(this).val());
  $(this).parent().parent().remove();
