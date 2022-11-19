@@ -1,5 +1,6 @@
 <script>
     var datatable;
+    var deleteRowArr=[];
     $(document).ready(function(){
         datatable= $('#datatable').DataTable({
         processing:true,
@@ -88,6 +89,7 @@ window.formRequest= function(){
       formData.append('_method','PUT');
       formData.append('v_id',v_id);
       formData.append('method_voucer',method_voucer);
+      formData.append('delete_id',deleteRowArr);
     }
     //axios post request
     if (id==''){
@@ -175,6 +177,7 @@ $(document).delegate("#modalBtn", "click", function(event){
 
 });
 $(document).delegate(".editRow", "click", function(){
+    deleleRowArr=[];
     $('#exampleModalLabel').text('Edit Supplier');
     let route=$(this).data('url');
     axios.get(route)
@@ -292,6 +295,8 @@ function addItem(){
 
 $(document).on('click','.remove', function(e){
   e.preventDefault();
+  del_id=$(this).parent().parent().children("input[name='v_id[]']").val();
+  deleteRowArr.push(del_id);
  console.log($(this).val());
  $(this).parent().parent().remove();
  calculation();
@@ -381,10 +386,10 @@ function paymentMethod(){
   unique_number=0;
   arr=[];
   console.log(data)
-    let html="<tr>";
+    let html="";
     data.voucer.forEach(function(d){
           if(parseFloat(d.debit)!=0){
-              html+="<input type='hidden' name='v_id[]' value='"+d.id+"' /><td><select class='form-control ledger' name='ledger[]'><option value='"+d.ledger_id+"'>"+d.name+"</option></select></td>";
+              html+="<tr><input type='hidden' name='v_id[]' value='"+d.id+"' /><td><select class='form-control ledger' name='ledger[]'><option value='"+d.ledger_id+"'>"+d.name+"</option></select></td>";
               html+="<td><select class='form-control subledger' name='subledger[]' id='subledger"+unique_number+"'><option value='"+d.subledger_id+"'>"+d.sub_name+"</option></select></td>";
               html+="<td><input class='form-control debit' name='ammount[]' placeholder='0.00' value='"+d.debit+"'></td>";
               html+="<td><input class='form-control comment' name='comment[]' placeholder='write comment' value='"+d.comment+"'></td>";

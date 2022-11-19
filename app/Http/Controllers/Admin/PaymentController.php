@@ -214,6 +214,8 @@ class PaymentController extends Controller
          $data['ammount']= explode(',', $request->ammount);
          $data['comment']= explode(',', $request->comment);
          $data['v_id']= explode(',', $request->v_id);
+         $data['delete_id']= explode(',', $request->delete_id);
+         info($data['delete_id']);
          $data['date']= $request->date;
          if($data['method']==0){
              $bank_cond='nullable';
@@ -223,7 +225,7 @@ class PaymentController extends Controller
          $validator=Validator::make($data,[
              'ledger'=>"required|array|max:200",
              'subledger'=>"required|array|max:200",
-             'ammount'=>["required","array","max:200",new CashCheckRule($data['ledger'])],
+             'ammount'=>["required","array","max:200"],
              'ammount.*'=>["required","max:200",new ZeroValidationRule],
              'comment'=>"required|array|max:200",
              'date'=>"required|max:200",
@@ -302,6 +304,9 @@ class PaymentController extends Controller
                          $voucer->subledger_id=$data['bank'];
                          $voucer->author_id= auth()->user()->id;
                          $voucer->save();
+                         foreach($data['delete_id'] as $value){
+                            Voucer::where('id',$value)->delete();
+                         }
                  }
                  return response()->json(['message'=>'Payment Successfully Added']);    
          }
