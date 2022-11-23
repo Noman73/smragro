@@ -17,4 +17,8 @@ class PInvoice extends Model
     {
         return $this->hasMany(Purchase::class,'invoice_id','id')->with('product');
     }
+    public function user()
+    {
+        return $this->belongsTo(User::class,'user_id','id');
+    }
 }

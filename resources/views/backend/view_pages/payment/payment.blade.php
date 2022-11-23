@@ -151,7 +151,7 @@
                           <b>Total in Word (Total):</b> {{Terbilang::make($total)}}
                           Taka  <br>
                           <b>Note :<b> {{$vinvoice->note}} <br>
-                          Created By : <b>{{auth()->user()->name}}</b>,Printed By <b>{{auth()->user()->name}}</b>, Print Time : {{date('d-m-Y h:i:s')}}
+                          Created By : <b>{{$vinvoice->author->name}}</b>,Printed By <b>{{auth()->user()->name}}</b>, Print Time : {{date('d-m-Y h:i:s')}}
                       </div>
                   </div>
                   <div class="footer">
