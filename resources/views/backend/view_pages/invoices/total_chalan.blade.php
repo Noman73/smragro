@@ -15,7 +15,7 @@
     <title>SMRAGRO</title>
 
     <!--Favicon-->
-    
+    <link rel="icon" href="https://2aitautomation.com/meherpur/public/img/favicon.png" type="image/x-icon" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- Bootstrap 3.3.7 -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -222,12 +222,6 @@
               </table>
           </div>
           
-      </div>
-      <div style="margin-bottom:20px;" class="row">
-        <div class="col-md-6">
-          <span style="text-decoration:overline;margin-right:25px;">Accounts Officer</span>
-          <span style="text-decoration:overline">Athorized Signature</span>
-        </div>
       </div>
       <div class="row">
           <div class="col-xs-12">

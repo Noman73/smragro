@@ -27,6 +27,7 @@ Route::group([
 ],function(){
     Route::resource('/category','CategoryController');
     Route::resource('/brand','BrandController');
+    Route::resource('/model','ModelController');
     Route::post('/get-brand','BrandController@getBrand');
     Route::post('/get-model','ProductController@getModel');
     Route::post('/get-product-by-data','ProductController@getProductByData');
@@ -85,7 +86,6 @@ Route::group([
     Route::post('/get-product-price','ProductController@productPrice');
     Route::get('/get-product-sale-price/{product_id}','ProductController@getProductSalePrice');
     Route::resource('/roles','RoleController');
-
     Route::resource('/permission','PermissionController');
     Route::resource('/asign-permission','ApplyPermissionController');
     Route::resource('/asign-role','RoleAsignController');
