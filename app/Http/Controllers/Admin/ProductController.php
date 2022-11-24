@@ -11,6 +11,7 @@ use Auth;
 use DB;
 use App\Models\Price;
 use App\Models\Sale;
+use App\Models\Models;
 class ProductController extends Controller
 {
     /**
@@ -357,23 +358,23 @@ class ProductController extends Controller
         $brand_id=$request->brand_id;
         if($request->brand_id==null){
             $brand_id='';
-            $search= Product::select('id','model_no')->where('model_no','like','%'.$request->searchTerm.'%')->take(30)->get();
+            $search= Models::select('id','name')->where('name','like','%'.$request->searchTerm.'%')->take(30)->get();
         }else{
-            $search= Product::select('id','model_no')->where('model_no','like','%'.$request->searchTerm.'%')->where('brand_id',$brand_id)->take(30)->get();
+            $search= Models::select('id','name')->where('name','like','%'.$request->searchTerm.'%')->where('brand_id',$brand_id)->take(30)->get();
         }
         foreach ($search as $value){
-            $set_data[]=['id'=>$value->model_no,'text'=>$value->model_no];
+            $set_data[]=['id'=>$value->name,'text'=>$value->name];
        }
        return $set_data;
     }
     public function getProductByData(Request $request)
     {
-        // return $request->all();
+        return $request->all();
         $brand_id=($request->brand_id==null? '':$request->brand_id);
         $model=($request->model_id==null? '':$request->model_id);
         $part_id=($request->part_id==null? '':$request->part_id);
         if($part_id=='' ){
-             $search=Product::where('name','like','%'.$request->searchTerm.'%')->where('brand_id',$brand_id)->orWhere('model_no',$model)->take(30)->get();
+             $search=Product::where('name','like','%'.$request->searchTerm.'%')->where('brand_id',$brand_id)->orWhere('model_id',$model)->take(30)->get();
         }else{
             $search=Product::where('name','like','%'.$request->searchTerm.'%')->where('part_id',$part_id)->take(30)->get();
         }

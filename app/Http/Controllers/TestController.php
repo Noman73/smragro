@@ -6,11 +6,12 @@ use Illuminate\Http\Request;
 use App\Models\Unit;
 use App\Models\Brand;
 use App\Models\Product;
+use App\Models\Models;
 class TestController extends Controller
 {
     public function index()
     {
-      return false;
+      // return false;
         ini_set('max_execution_time', '300');
         $x=array (
             0 => 
@@ -67082,11 +67083,19 @@ class TestController extends Controller
             $brand->author_id = auth()->user()->id;
             $brand->save();
            }
+           $model=Models::where('name',$data[2])->first();
+           if($model==null){
+            $model=new Models;
+            $model->name=$data[2];
+            $model->brand_id=$brand->id;
+            $model->author_id = auth()->user()->id;
+            $model->save();
+           }
            $brandCount=Product::where('brand_id',$brand->id)->count();
            $product=new Product;
            $product->name=$data[3];
            $product->part_id=$data[0];
-           $product->model_no=$data[2];
+           $product->model_id=$model->id;
            $product->color=$data[4];
            $product->name=$data[3];
            $product->unit_id=$unit->id;
