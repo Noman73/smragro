@@ -99,12 +99,19 @@
                       </div>
                    </div>
                    <div class="row">
+                    
                     <div class="col-12 col-md-6 ">
                       <div class="row">
                         <div class="col-12 col-md-4">
                           <div class="form-group">
+                            <label for="">Item Name</label>
+                            <select tabindex='3' class="form-control" name="" id="product"></select>
+                          </div>
+                        </div>
+                        <div class="col-12 col-md-4">
+                          <div class="form-group">
                             <label for="">Brand/Company</label>
-                            <select tabindex='1' class="form-control" name="" id="brand"></select>
+                            <select tabindex='1' class="form-control" name="" id="brand" onfocus="select2Open()"></select>
                           </div>
                         </div>
                         <div class="col-12 col-md-4">
@@ -113,12 +120,7 @@
                             <select tabindex='2' class="form-control" name="" id="model"></select>
                           </div>
                         </div>
-                        <div class="col-12 col-md-4">
-                          <div class="form-group">
-                            <label for="">Item Name</label>
-                            <select tabindex='3' class="form-control" name="" id="product"></select>
-                          </div>
-                        </div>
+                        
                         <div class="col-12 col-md-4">
                           <div class="form-group">
                             <label for="">Part ID</label>

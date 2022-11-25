@@ -60,6 +60,7 @@ class BrandController extends Controller
         if($validator->passes()){
             $category=new Brand;
             $category->name=$request->name;
+            $category->multiply=$request->multiply;
             $category->author_id=auth()->user()->id;
             $category->save();
             if ($category) {
@@ -100,12 +101,14 @@ class BrandController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // return $request->all();
         $validator=Validator::make($request->all(),[
             'name'=>"required|max:200|min:1|unique:brands,name,".$id,
         ]);
         if($validator->passes()){
             $category=Brand::find($id);
             $category->name=$request->name;
+            $category->multiply=$request->multiply;
             $category->author_id=auth()->user()->id;
             $category->save();
             if ($category) {
@@ -132,5 +135,9 @@ class BrandController extends Controller
              $set_data[]=['id'=>$value->id,'text'=>$value->name];
          }
          return $set_data;
+     }
+     public function getMultiply($id)
+     {
+        return Brand::find($id)->multiply;
      }
 }

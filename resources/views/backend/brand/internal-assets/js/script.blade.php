@@ -20,6 +20,10 @@
             name:'name',
           },
           {
+            data:'multiply',
+            name:'multiply',
+          },
+          {
             data:'action',
             name:'action',
           }
@@ -31,9 +35,11 @@
 window.formRequest= function(){
     $('input,select').removeClass('is-invalid');
     let name=$('#name').val();
+    let multiply=$('#multiply').val();
     let id=$('#id').val();
     let formData= new FormData();
     formData.append('name',name);
+    formData.append('multiply',multiply);
     $('#exampleModalLabel').text('Add New Brand');
     console.log(id)
     if(id!=''){

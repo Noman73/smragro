@@ -29,6 +29,7 @@ Route::group([
     Route::resource('/brand','BrandController');
     Route::resource('/model','ModelController');
     Route::post('/get-brand','BrandController@getBrand');
+    Route::get('/brand-multiply/{id}','BrandController@getMultiply');
     Route::post('/get-model','ProductController@getModel');
     Route::post('/get-product-by-data','ProductController@getProductByData');
     Route::post('/get-part-id','ProductController@getPartId');
@@ -100,6 +101,8 @@ Route::group([
     Route::get('/receive-payment-yearly-line-chart','ChartDataController@last30DaysReceivePayment');
     Route::resource('/password','PasswordChangeController');
     Route::resource('/user','UserController');
+    Route::get('/selected-product-data/{id}','ProductController@getAllData');
+    Route::get('/part-id-product-data/{id}','ProductController@getAllPartIdData');
 });
 Route::group([
     'prefix'=>"admin/accounts",

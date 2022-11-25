@@ -639,6 +639,8 @@ $('#date,#cheque_issue_date').daterangepicker({
       cache:true,
     }
   });
+
+
   function paymentMethod(){
     let method_type=$("input[name='payment_method_type[]']:checked").val();
     console.log(method_type)
@@ -800,7 +802,7 @@ $(document).keypress(function(event){
   if(event.keyCode==68){
       addNew();
   }
-  if(event.keyCode==65){
+  if(event.keyCode==65){  
     cond=false;
     let product=$("select[name='product[]']").map(function(){
         if($(this).val()==null && cond===false){
@@ -826,4 +828,62 @@ function singleCalc(){
 $(document).on('change keyup','#quantity,#b_rate,#mltp',function(){
   singleCalc();
 })
+
+
+$('body').on('select2:select',"#product", function (e){
+  id=$(this).val();
+  console.log(id)
+  axios.get("{{URL::to('/admin/selected-product-data')}}/"+id)
+  .then(res=>{
+    console.log(res);
+    model="<option value='"+res.data.model.id+"'>"+res.data.model.name+"</option>";
+    brand="<option value='"+res.data.brand.id+"'>"+res.data.brand.name+"</option>";
+    part_id="<option value='"+res.data.part_id+"'>"+res.data.part_id+"</option>";
+    $('#model').html(model);
+    $('#brand').html(brand);
+    $('#part_id').html(part_id);
+    $('#brand').trigger('select2:select');
+    singleCalc()
+  })
+})
+$('body').on('select2:select',"#part_id", function (e){
+  id=$(this).val();
+  console.log(id)
+  axios.get('admin/get-quantity/'+id)
+      .then(function(response){
+            console.log(response)
+            $('#stock').val(response.data.total);
+            this_cat.parent().next().children("[name='stock[]']").val(response.data.total);
+          })
+          .catch(function(error){
+          console.log(error.request);
+        })
+  axios.get("{{URL::to('/admin/part-id-product-data')}}/"+id)
+  .then(res=>{
+    console.log(res);
+    model="<option value='"+res.data.model.id+"'>"+res.data.model.name+"</option>";
+    brand="<option value='"+res.data.brand.id+"'>"+res.data.brand.name+"</option>";
+    product="<option value='"+res.data.id+"'>"+res.data.name+"</option>";
+    $('#model').html(model);
+    $('#brand').html(brand);
+    $('#product').html(product);
+    $('#brand').trigger('select2:select');
+    $('#b_rate').val(res.data.sale_price)
+    singleCalc()
+  })
+})
+
+$('body').on('select2:select',"#brand",function(e){
+  id=$(this).val();
+  console.log($(this).val())
+  axios.get("{{URL::to('admin/brand-multiply')}}/"+id)
+  .then(res=>{
+    console.log(res);
+    $('#mltp').val(res.data)
+    singleCalc()
+  })
+})
+function select2Open(thisval){
+  $(thisval).trigger('select2:open');
+}
 </script>

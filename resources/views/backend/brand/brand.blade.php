@@ -44,6 +44,7 @@
                   <tr>
                     <th>SL.</th>
                     <th>Brand</th>
+                    <th>Multiply</th>
                     <th>Action</th>
                   </tr>
                 </thead>
@@ -72,6 +73,14 @@
                       <label for="recipient-name" class="col-form-label">Name:</label>
                       <input type="text" class="form-control" id="name" placeholder="Enter Name">
                       <div class="invalid-feedback" id="name_msg">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-8 mr-auto ml-auto">
+                    <div class="form-group">
+                      <label for="recipient-name" class="col-form-label">Multiply :</label>
+                      <input type="number" class="form-control" id="multiply" placeholder="0.00">
+                      <div class="invalid-feedback" id="multiply_msg">
                       </div>
                     </div>
                   </div>

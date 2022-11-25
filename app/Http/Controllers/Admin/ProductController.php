@@ -12,6 +12,7 @@ use DB;
 use App\Models\Price;
 use App\Models\Sale;
 use App\Models\Models;
+use App\Models\Brand;
 class ProductController extends Controller
 {
     /**
@@ -363,17 +364,20 @@ class ProductController extends Controller
             $search= Models::select('id','name')->where('name','like','%'.$request->searchTerm.'%')->where('brand_id',$brand_id)->take(30)->get();
         }
         foreach ($search as $value){
-            $set_data[]=['id'=>$value->name,'text'=>$value->name];
+            $set_data[]=['id'=>$value->id,'text'=>$value->name];
        }
        return $set_data;
     }
     public function getProductByData(Request $request)
     {
-        return $request->all();
+        // return $request->all();
         $brand_id=($request->brand_id==null? '':$request->brand_id);
         $model=($request->model_id==null? '':$request->model_id);
         $part_id=($request->part_id==null? '':$request->part_id);
-        if($part_id=='' ){
+        
+        if($part_id=='' and $model=='' and $brand_id==''){
+            $search=Product::where('name','like','%'.$request->searchTerm.'%')->orWhere('part_id',$part_id)->take(30)->get();
+        }elseif($part_id=='' ){
              $search=Product::where('name','like','%'.$request->searchTerm.'%')->where('brand_id',$brand_id)->orWhere('model_id',$model)->take(30)->get();
         }else{
             $search=Product::where('name','like','%'.$request->searchTerm.'%')->where('part_id',$part_id)->take(30)->get();
@@ -386,11 +390,17 @@ class ProductController extends Controller
 
     public function getPartId(Request $request)
     {
-        
         $search=Product::where('part_id','like','%'.$request->searchTerm.'%')->take(30)->get();
         foreach ($search as $value){
             $set_data[]=['id'=>$value->part_id,'text'=>$value->part_id];
         }
         return $set_data;
+    }
+    public function getAllData($id){
+      return Product::with('brand','model')->where('id',$id)->first();  
+    }
+    public function getAllPartIdData($id)
+    {
+        return Product::with('brand','model')->where('part_id',$id)->first();
     }
 }
