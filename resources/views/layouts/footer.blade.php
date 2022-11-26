@@ -102,13 +102,12 @@ $("#micalc").Calculadora({'EtiquetaBorrar':'Clear'});
 
 // header calculation
 
-function fetch()
-
+function Fetch()
 {
         from_date=$('#fromDate').val();
         to_date=$('#toDate').val();
         axios.post(baseURL+'/admin/dashboard-data',{from_date:from_date,to_date:to_date})
-        .then((res)=>{
+        .then(res=>{
             console.log(res.data.current_balance)
             $('#cash_plus_bank').text(parseFloat(res.data.current_balance).toFixed(2));
         })
@@ -116,7 +115,7 @@ function fetch()
 
 
 $(document).ready(function(){
-  fetch();
+  Fetch();
 })
 $(document).on('click','#micro',function(){
   speech_recognition();
