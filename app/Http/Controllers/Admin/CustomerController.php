@@ -206,8 +206,9 @@ class CustomerController extends Controller
     public function getCustomer(Request $request){
         $searchTerm=$request->searchTerm;
         $customer= Customer::where('type',1)->where(function($query) use ($searchTerm){
-            $query->where('name','like','%'.$searchTerm.'%')
-                     ->orWhere('code','like','%'.$searchTerm.'%');
+            $query->where('name','like',$searchTerm.'%')
+                     ->orWhere('code','like','%'.$searchTerm.'%')
+                     ->orWhere('market','like','%'.$searchTerm);
         })->take(15)->get();
         foreach ($customer as $value){
              $set_data[]=['id'=>$value->id,'text'=>($value->code!=null? $value->code.'-': '').$value->name.'('.$value->phone.')'];

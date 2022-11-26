@@ -53,11 +53,19 @@
                           <div class="total_balance d-none">Balance: <span id="customer-balance"></span></div>
                        </div>
                        <div class="col-12 col-md-2">
+                          <div class="input-group">
+                              <select class="form-control" id="zila">
+                              </select>
+                              <div class="invalid-feedback" id='zila_msg'></div>
+                          </div>
+                          <div class="total_balance d-none">Balance: <span id="customer-balance"></span></div>
+                      </div>
+                       <div class="col-12 col-md-1">
                         <div class="form-group">
                           <input type="text" class="form-control" id="hand_bill" placeholder="Hand Bill">
                         </div>
                        </div>
-                       <div class="col-12 col-md-3 ">
+                       <div class="col-12 col-md-2 ">
                         <div class="form-group">
                           <select name="warehouse" id="warehouse" class="form-control"></select>
                           <div class="invalid-feedback" id="warehouse_msg"></div>
@@ -105,19 +113,19 @@
                         <div class="col-12 col-md-4">
                           <div class="form-group">
                             <label for="">Item Name</label>
-                            <select tabindex='3' class="form-control" name="" id="product"></select>
+                            <select tabindex='1' class="form-control" name="" id="product"></select>
                           </div>
                         </div>
                         <div class="col-12 col-md-4">
                           <div class="form-group">
                             <label for="">Brand/Company</label>
-                            <select tabindex='1' class="form-control" name="" id="brand" onfocus="select2Open()"></select>
+                            <select tabindex='2' class="form-control" name="" id="brand" onfocus="select2Open()"></select>
                           </div>
                         </div>
                         <div class="col-12 col-md-4">
                           <div class="form-group">
                             <label for="">Model</label>
-                            <select tabindex='2' class="form-control" name="" id="model"></select>
+                            <select tabindex='3' class="form-control" name="" id="model"></select>
                           </div>
                         </div>
                         
