@@ -89,12 +89,13 @@
                   <thead>
                     <tr>
                       <th width="20%">Employee</th>
-                      <th width="15%">Attendance</th>
+                      <th width="10%">Attendance</th>
                       <th width="15%">in time</th>
-                      <th width="15%">out time</th>
-                      <th width="15%">Break time</th>
-                      <th width="10%">Total time</th>
-                      <th width="10%">Over time</th>
+                      <th width="15%">Launch out</th>
+                      <th width="15%">Launch in</th>
+                      <th width="15%">Out time</th>
+                      <th width="13%">Total time</th>
+                      <th width="12%">Over time</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -102,11 +103,12 @@
                     <tr>
                       <td>{{$emp->name}}</td>
                       <td><input type="checkbox" name='attendance'></td>
-                      <td><input type="number" class="form-control form-control-sm"></td>
-                      <td><input type="number" class="form-control form-control-sm"></td>
-                      <td><input type="number" class="form-control form-control-sm"></td>
-                      <td><input type="number" class="form-control form-control-sm"></td>
-                      <td><input type="number" class="form-control form-control-sm"></td>
+                      <td><input type="time" class="form-control form-control-sm" name="in_time[]"></td>
+                      <td><input type="time" class="form-control form-control-sm" name="launch_out_time[]"></td>
+                      <td><input type="time" class="form-control form-control-sm" name="launch_in_time[]"></td>
+                      <td><input type="time" class="form-control form-control-sm" name="out_time[]"></td>
+                      <td></td>
+                      <td></td>
                     </tr>
                     @endforeach
                   </tbody>
