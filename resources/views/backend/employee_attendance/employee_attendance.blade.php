@@ -88,10 +88,13 @@
                 <table class="table table-sm text-center table-bordered" id="datatable">
                   <thead>
                     <tr>
-                      <th width="40%">Employee</th>
-                      <th width="20%">Attendance</th>
-                      <th width="20%">in time</th>
-                      <th width="20%">out time</th>
+                      <th width="20%">Employee</th>
+                      <th width="15%">Attendance</th>
+                      <th width="15%">in time</th>
+                      <th width="15%">out time</th>
+                      <th width="15%">Break time</th>
+                      <th width="10%">Total time</th>
+                      <th width="10%">Over time</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -99,6 +102,9 @@
                     <tr>
                       <td>{{$emp->name}}</td>
                       <td><input type="checkbox" name='attendance'></td>
+                      <td><input type="number" class="form-control form-control-sm"></td>
+                      <td><input type="number" class="form-control form-control-sm"></td>
+                      <td><input type="number" class="form-control form-control-sm"></td>
                       <td><input type="number" class="form-control form-control-sm"></td>
                       <td><input type="number" class="form-control form-control-sm"></td>
                     </tr>
