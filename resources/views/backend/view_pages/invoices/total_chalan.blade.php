@@ -154,6 +154,9 @@
                    <img src="{{asset('storage/adminlte/dist/img/due.png')}}" alt="">
                    @endif
               </h4>
+              @if($invoice->sale_type==2)
+                <p class='h4 font-weight-bold'>Condition Taka : {{floatval($invoice->total_payable)-floatval( (isset($invoice->condition_amount->debit)? $invoice->condition_amount->debit : 0.00) )}}</p>
+              @endif
               @if($invoice->sale_by==2)
                 <p class='h4 font-weight-bold'>Condition Taka: {{$invoice->cond_amount}}</p> 
               @endif

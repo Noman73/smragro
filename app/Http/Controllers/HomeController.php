@@ -58,9 +58,9 @@ class HomeController extends Controller
         $bank_data=DB::select("
         SELECT banks.name,ifnull(banks.code,'') code,sum(ifnull(voucers.debit,0)-ifnull(voucers.credit,0)) balance from banks
         left join voucers on voucers.ledger_id=:bank_ledger and voucers.subledger_id=banks.id
-        and voucers.date<=:to_date
+        
         group by banks.id,voucers.subledger_id
-        ",['bank_ledger'=>$bank_ledger,'to_date'=>$to_date]);
+        ",['bank_ledger'=>$bank_ledger]);
         $cash=Voucer::where('ledger_id',$cash_ledger)->selectRaw('ifnull(sum(debit)-sum(credit),0) total')->first();
         $bank=Voucer::where('ledger_id',$bank_ledger)->selectRaw('ifnull(sum(debit)-sum(credit),0) total')->first();
         $total_balance=floatval($cash->total)+floatval($bank->total);

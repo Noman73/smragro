@@ -1,5 +1,6 @@
 <script>
     var datatable;
+    var deleteRowArr=[];
     $(document).ready(function(){
         datatable= $('#datatable').DataTable({
         processing:true,
@@ -86,11 +87,14 @@ window.formRequest= function(){
     formData.append('issue_date',issue_date);
     formData.append('cheque_photo',cheque_photo);
     formData.append('note',note);
+   
     $('#exampleModalLabel').text('Add New Payment');
     if(id!=''){
       formData.append('_method','PUT');
       formData.append('v_id',v_id);
       formData.append('method_voucer',method_voucer);
+      formData.append('delete_id',deleteRowArr);
+      console.log(id+'sajdkfjsdjf')
     }
     //axios post request
     if (id==''){
@@ -166,6 +170,7 @@ $(document).delegate("#modalBtn", "click", function(event){
 
 });
 $(document).delegate(".editRow", "click", function(){
+    deleleRowArr=[];
     $('#exampleModalLabel').text('Edit Receive');
     let route=$(this).data('url');
     axios.get(route)
@@ -187,7 +192,9 @@ $(document).delegate(".editRow", "click", function(){
       // })
     })
 });
+
 $(document).delegate(".deleteRow", "click", function(){
+    
     let route=$(this).data('url');
     Swal.fire({
       title: 'Are you sure?',
@@ -287,9 +294,11 @@ function addItem(){
 
 $(document).on('click','.remove', function(e){
   e.preventDefault();
- console.log($(this).val());
- $(this).parent().parent().remove();
- calculation();
+  del_id=$(this).parent().parent().children("input[name='v_id[]']").val();
+  deleteRowArr.push(del_id);
+  console.log($(this).val());
+  $(this).parent().parent().remove();
+  calculation();
 })
 $("#bank").select2({
     theme:'bootstrap4',
@@ -404,17 +413,17 @@ function iterateData(data){
 
   arr=[];
   console.log(data)
-    let html="<tr>";
+    let html="";
     data.voucer.forEach(function(d){
           if(parseFloat(d.credit)!=0){
-              html+="<input type='hidden' name='v_id[]' value='"+d.id+"' /><td><select class='form-control ledger' name='ledger[]'><option value='"+d.ledger_id+"'>"+d.name+"</option></select></td>";
+              html+="<tr><input type='hidden' name='v_id[]' value='"+d.id+"' /><td><select class='form-control ledger' name='ledger[]'><option value='"+d.ledger_id+"'>"+d.name+"</option></select></td>";
               html+="<td><select class='form-control subledger' name='subledger[]' id='subledger"+unique_number+"'><option value='"+d.subledger_id+"'>"+d.sub_name+"</option></select></td>";
               html+="<td><input class='form-control debit' name='ammount[]' placeholder='0.00' value='"+d.credit+"'></td>";
               html+="<td><input class='form-control comment' name='comment[]' placeholder='write comment' value='"+d.comment+"'></td>";
               html+="<td><button class='btn btn-danger btn-sm remove'>X</button></td></tr>";
           }else{
               paymentMethod();
-              if(d.name=="Cash"){
+              if(d.ledger_name=="Cash"){
                 $('#method').val(0);
                 $('#voucer_id').val(d.id);
                 changeMethod()

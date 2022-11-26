@@ -51,11 +51,11 @@
 <div class="container-fluid">
     <div id="print" class="print" >
         <div class="row invoice_header">
-          <div class="col-xs-5" style="width: 50%; float:left;">
+          <div class="col-xs-6" style="width: 50%; float:left;">
             @include('layouts.adress')
               
           </div>
-          <div class="col-xs-7" style="width: 50%; text-align:right">
+          <div class="col-xs-6" style="width: 50%; text-align:right">
               <div style=" width:100%; text-align:right;">
                   <span style="font-size: 16px;">
                       <b>

@@ -802,6 +802,9 @@ $(document).keypress(function(event){
   if(event.keyCode==68){
       addNew();
   }
+  if(event.keyCode==9){
+      $(document.activeElement).parent().parent().prev().select2('open')
+  }
   if(event.keyCode==65){  
     cond=false;
     let product=$("select[name='product[]']").map(function(){
