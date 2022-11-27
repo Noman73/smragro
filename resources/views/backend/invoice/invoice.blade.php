@@ -54,9 +54,9 @@
                        </div>
                        <div class="col-12 col-md-2">
                           <div class="input-group">
-                              <select class="form-control" id="zila">
+                              <select class="form-control" id="market">
                               </select>
-                              <div class="invalid-feedback" id='zila_msg'></div>
+                              <div class="invalid-feedback" id='market_msg'></div>
                           </div>
                           <div class="total_balance d-none">Balance: <span id="customer-balance"></span></div>
                       </div>

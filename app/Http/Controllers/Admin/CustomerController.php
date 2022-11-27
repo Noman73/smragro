@@ -74,6 +74,7 @@ class CustomerController extends Controller
             'name'=>"required|max:200|min:1",
             'email'=>"nullable|email|max:200|min:1",
             'phone'=>"required|max:200|min:1",
+            'market'=>"required|max:15|min:1",
             'phone2'=>"nullable|max:200|min:1",
             'bank_name'=>"nullable|max:200|min:1",
             'bank_account_no'=>"nullable|max:200|min:1",
@@ -88,6 +89,7 @@ class CustomerController extends Controller
             $customer=new Customer;
             $customer->company_name=$request->company_name;
             $customer->name=$request->name;
+            $customer->market_id=$request->market;
             $customer->email=$request->email;
             $customer->phone=$request->phone;
             $customer->phone2=$request->phone2;
@@ -137,7 +139,7 @@ class CustomerController extends Controller
      */
     public function edit($id)
     {
-        return response()->json(Customer::find($id));
+        return response()->json(Customer::with('market')->find($id));
     }
 
     /**
@@ -153,6 +155,7 @@ class CustomerController extends Controller
         $validator=Validator::make($request->all(),[
             'company_name'=>"nullable|max:200|min:1",
             'name'=>"required|max:200|min:1",
+            'market'=>"required|max:15|min:1",
             'email'=>"nullable|email|max:200|min:1",
             'phone'=>"required|max:200|min:1",
             'phone2'=>"nullable|max:200|min:1",
@@ -167,6 +170,7 @@ class CustomerController extends Controller
             $customer=Customer::find($id);
             $customer->company_name=$request->company_name;
             $customer->name=$request->name;
+            $customer->market_id=$request->market;
             $customer->email=$request->email;
             $customer->phone=$request->phone;
             $customer->phone2=$request->phone2;
@@ -204,11 +208,13 @@ class CustomerController extends Controller
         //
     }
     public function getCustomer(Request $request){
+        // return $request->all();
         $searchTerm=$request->searchTerm;
-        $customer= Customer::where('type',1)->where(function($query) use ($searchTerm){
+        $market=$request->market;
+        $customer= Customer::where('type',1)->where('market_id',$market)->where(function($query) use ($searchTerm,$market){
             $query->where('name','like',$searchTerm.'%')
-                     ->orWhere('code','like','%'.$searchTerm.'%')
-                     ->orWhere('market','like','%'.$searchTerm);
+                    ->orWhere('code','like','%'.$searchTerm.'%');
+                     
         })->take(15)->get();
         foreach ($customer as $value){
              $set_data[]=['id'=>$value->id,'text'=>($value->code!=null? $value->code.'-': '').$value->name.'('.$value->phone.')'];

@@ -127,6 +127,15 @@
                       </div>
                     </div>
                   </div>
+                  <div class="col-md-8 mr-auto ml-auto"> 
+                    <div class="form-group">
+                      <label for="message-text" class="col-form-label">Market:</label>
+                      <select class="form-control" name="market" id="market">
+                      </select>
+                      <div class="invalid-feedback" id="adress_msg">
+                      </div>
+                    </div>
+                  </div>
                   <div class="col-md-8 mr-auto ml-auto">
                     <div class="form-group">
                       <label for="message-text" class="col-form-label">Phone:</label>

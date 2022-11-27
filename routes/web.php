@@ -27,6 +27,8 @@ Route::group([
 ],function(){
     Route::resource('/category','CategoryController');
     Route::resource('/brand','BrandController');
+    Route::resource('/market','MarketsController');
+    Route::post('/get-market','MarketsController@getMarket');
     Route::resource('/model','ModelController');
     Route::post('/get-brand','BrandController@getBrand');
     Route::get('/brand-multiply/{id}','BrandController@getMultiply');

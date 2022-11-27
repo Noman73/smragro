@@ -63,6 +63,7 @@ $("#customer").select2({
       data:function(params){
         return {
           searchTerm:params.term,
+          market:$('#market').val(),
           _token:"{{csrf_token()}}",
           }
       },
@@ -639,8 +640,29 @@ $('#date,#cheque_issue_date').daterangepicker({
       cache:true,
     }
   });
-
-
+  $("#market").select2({
+    theme:'bootstrap4',
+    placeholder:'Market',
+    allowClear:true,
+    ajax:{
+      url:"{{URL::to('/admin/get-market')}}",
+      type:'post',
+      dataType:'json',
+      delay:20,
+      data:function(params){
+        return {
+          searchTerm:params.term,
+          _token:"{{csrf_token()}}",
+          }
+      },
+      processResults:function(response){
+        return {
+          results:response,
+        }
+      },
+      cache:true,
+    }
+  });
   function paymentMethod(){
     let method_type=$("input[name='payment_method_type[]']:checked").val();
     console.log(method_type)

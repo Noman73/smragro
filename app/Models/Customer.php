@@ -16,4 +16,9 @@ class Customer extends Model
     {
         return $this->belongsTo(CreditSetup::class,'id','customer_id');
     }
+    
+    public function market()
+    {
+        return $this->belongsTo(Market::class,'market_id','id');
+    }
 }
