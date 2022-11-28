@@ -839,7 +839,18 @@ $(document).keypress(function(event){
     
   }
 })
-
+$(document).keydown(function(e) {
+  if(e.keyCode==9){
+    setTimeout(() => {
+      el=$(document.activeElement).parent().parent().prev();
+      if(el.val()==null){
+        el.select2('open')
+      }
+      
+    }, 250);
+   
+  }
+});
 function singleCalc(){
    qty=$('#quantity').val();
    brate=$('#b_rate').val();

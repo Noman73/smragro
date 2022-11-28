@@ -17,6 +17,7 @@ Route::get('/', function () {
     return view('auth.login');
 });
 Route::get('/test', [App\Http\Controllers\TestController::class, 'index']);
+Route::get('/test2', [App\Http\Controllers\TestController::class, 'createCustomer']);
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

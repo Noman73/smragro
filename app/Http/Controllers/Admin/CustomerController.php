@@ -211,13 +211,17 @@ class CustomerController extends Controller
         // return $request->all();
         $searchTerm=$request->searchTerm;
         $market=$request->market;
-        $customer= Customer::where('type',1)->where('market_id',$market)->where(function($query) use ($searchTerm,$market){
-            $query->where('name','like',$searchTerm.'%')
+        $customer= Customer::where('type',1)->where(function($query) use ($searchTerm){
+            $query->where('name','like','%'.$searchTerm.'%')
                     ->orWhere('code','like','%'.$searchTerm.'%');
-                     
-        })->take(15)->get();
+        })->where(function($query) use ($market){
+            if($market!=null){
+                $query->orWhere('market_id',$market);
+            }
+        })
+        ->take(15)->get();
         foreach ($customer as $value){
-             $set_data[]=['id'=>$value->id,'text'=>($value->code!=null? $value->code.'-': '').$value->name.'('.$value->phone.')'];
+             $set_data[]=['id'=>$value->id,'text'=>$value->name.'('.$value->phone.')'];
          }
          return $set_data;
      }

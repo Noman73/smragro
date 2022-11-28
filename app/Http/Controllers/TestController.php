@@ -7,6 +7,9 @@ use App\Models\Unit;
 use App\Models\Brand;
 use App\Models\Product;
 use App\Models\Models;
+use App\Models\Market;
+use App\Models\Customer;
+use App\Models\AccountLedger;
 class TestController extends Controller
 {
     public function index()
@@ -67114,15 +67117,7 @@ class TestController extends Controller
     }
 
 
-
-
-
-
-
-
-
-
-
+    
     public function createCustomer()
     {
       $arrayVar = [
@@ -88724,17 +88719,19 @@ class TestController extends Controller
               $market=Market::where('name',$data['Market'])->first();
               if($market==null){
                 $market=new Market;
-                $market->name=$data[5];
+                $market->name=$data['Market'];
                 $market->author_id = auth()->user()->id;
                 $market->save();
               }
               $countCustomer=Customer::count();
               $ledger_code=AccountLedger::where('name','Customer')->first();
               $customer=new Customer;
-              $customer->name=$data['name'];
+              $customer->name=$data['Name'];
+              $customer->market_id=$market->id;
               $customer->phone=$data['phone1'];
               $customer->phone2 =$data['phone2'];
-              $customer->adress =$data['adress'];
+              $customer->adress =$data['Address'];
+              $customer->type =1;
               $customer->code=$ledger_code->code.'-'.(($countCustomer ==null? 0 : $countCustomer)+1);
               $customer->save();
           }

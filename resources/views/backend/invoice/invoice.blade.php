@@ -58,7 +58,6 @@
                               </select>
                               <div class="invalid-feedback" id='market_msg'></div>
                           </div>
-                          <div class="total_balance d-none">Balance: <span id="customer-balance"></span></div>
                       </div>
                        <div class="col-12 col-md-1">
                         <div class="form-group">
@@ -174,6 +173,7 @@
                       </div>
                      </div>
                      <div class="col-12 col-md-6 border ">
+                      <input type="text" class="form-control form-control-sm mt-2" id='search_key' placeholder="Search">
                       <div class="table-responsive">
                           <table class="table table-sm text-center table-bordered mt-2" id="add_product">
                               <thead>
