@@ -588,7 +588,7 @@ $('#date,#cheque_issue_date').daterangepicker({
           results:response,
         }
       },
-      cache:true,
+      cache:false,
     }
   });
   $("#part_id").select2({
@@ -921,5 +921,17 @@ $('body').on('select2:select',"#brand",function(e){
 })
 function select2Open(thisval){
   $(thisval).trigger('select2:open');
+}
+
+function searchText(text){
+  console.log(text)
+      el=$("td:contains('"+text+"')")
+      el
+      for (let index = 0; index < el.length; index++) {
+        elofdoc = el[index];
+        elofdoc.parentElement.style.background = "red";
+        console.log(elofdoc)
+        
+      }
 }
 </script>

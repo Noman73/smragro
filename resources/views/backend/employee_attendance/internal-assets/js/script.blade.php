@@ -46,7 +46,6 @@ window.formRequest= function(){
     let experience=$('#experience').val();
     let department=$('#department').val();
     let salary=$('#salary').val();
-    let image=document.getElementById('file').files;
     let id=$('#id').val();
     let formData= new FormData();
     formData.append('name',name);
@@ -67,7 +66,7 @@ window.formRequest= function(){
     }
     //axios post request
     if (id==''){
-         axios.post("{{route('employee.store')}}",formData)
+         axios.post("{{route('attendance.store')}}",formData)
         .then(function (response){
             if(response.data.message){
                 toastr.success(response.data.message)
@@ -83,7 +82,7 @@ window.formRequest= function(){
             }
         })
     }else{
-      axios.post("{{URL::to('admin/employee/')}}/"+id,formData)
+      axios.post("{{URL::to('admin/attendance/')}}/"+id,formData)
         .then(function (response){
           if(response.data.message){
               toastr.success(response.data.message);
@@ -99,7 +98,7 @@ window.formRequest= function(){
         })
     }
 }
-function readURL(input) {
+function readURL(input){
   if (input.files && input.files[0]) {
       var reader = new FileReader();
       reader.onload = function (e) {
