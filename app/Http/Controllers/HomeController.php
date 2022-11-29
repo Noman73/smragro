@@ -43,7 +43,7 @@ class HomeController extends Controller
         $cash_ledger=AccountLedger::where('name','Cash')->first()->id;
         $from_date=date('d-m-Y 00:00:00',strtotime($request->from_date));
         $to_date=date('d-m-Y 23:59:59',strtotime($request->to_date));
-        $total_customer=Customer::where('type',0)->where('created_at','>=',strval(strtotime($to_date)))->count();
+        $total_customer=Customer::where('type',1)->where('created_at','>=',strval(strtotime($to_date)))->count();
         $total_supplier=Supplier::where('created_at','>=',strval(strtotime($to_date)))->count();
         $total_sale_amount=Invoice::where('sale_type',0)->orWhere('sale_type',1)->orWhere('sale_type',2)->sum('total_payable');
         $total_buy_amount=PInvoice::sum('total_payable');
