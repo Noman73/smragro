@@ -14,7 +14,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
-    <title>SMRAGRO</title>
+    <title>{{$info->company_name}}</title>
 
     <!--Favicon-->
     <link rel="icon" href="https://2aitautomation.com/meherpur/public/img/favicon.png" type="image/x-icon" />
@@ -94,7 +94,7 @@
               <br>
               <table class="table table-bordered">
                 @if(isset($invoice->customer->name))
-                  ক্রেতা : <b>{{($invoice->customer->name)}}</b> <br>,  
+                  ক্রেতা : <b>{{($invoice->customer->name)}}</b> <br>
                   মোবাইল নম্বর : <b>{{$invoice->customer->phone}}</b> <br>
                   ঠিকানা : <b>{{$invoice->customer->adress}}</b>
                 @endif
