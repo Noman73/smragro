@@ -94,7 +94,7 @@
               <br>
               <table class="table table-bordered">
                 @if(isset($invoice->customer->name))
-                  ক্রেতা : <b>{{($invoice->customer->name)}}</b> ,  
+                  ক্রেতা : <b>{{($invoice->customer->name)}}</b> <br>,  
                   মোবাইল নম্বর : <b>{{$invoice->customer->phone}}</b> <br>
                   ঠিকানা : <b>{{$invoice->customer->adress}}</b>
                 @endif

@@ -87,7 +87,7 @@
               <br>
               <table class="table table-bordered">
                 @if(isset($invoice->customer->name))
-                  Customer : <b>{{($invoice->customer->name)}}</b> ,  
+                  Customer : <b>{{($invoice->customer->name)}}</b> <br>,  
                   Mobile No : <b>{{$invoice->customer->phone}}</b> <br>
                   Adress : <b>{{$invoice->customer->adress}}</b>
                 @endif
