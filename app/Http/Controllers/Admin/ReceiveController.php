@@ -313,6 +313,10 @@ class ReceiveController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $deleteInv=Vinvoice::where('id',$id)->delete();
+        if($deleteInv){
+            $deleteVoucer=Voucer::where('v_inv_id',$id)->delete();
+            return response()->json(['message'=>"Receive Deleted Success"]);
+        }
     }
 }

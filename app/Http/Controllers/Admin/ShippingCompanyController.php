@@ -145,7 +145,7 @@ class ShippingCompanyController extends Controller
     {
         $donors= ShippingCompany::where('name','like','%'.$request->searchTerm.'%')->take(15)->get();
         foreach ($donors as $value){
-             $set_data[]=['id'=>$value->id,'text'=>$value->name];
+             $set_data[]=['id'=>$value->id,'text'=>$value->name.'('.$value->adress.')'];
          }
          return $set_data;
     }
