@@ -12,7 +12,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
-    <title>SMRAGRO</title>
+    <title>{{$info->company_name}}</title>
 
     <!--Favicon-->
     
@@ -51,11 +51,11 @@
 <div class="container-fluid">
     <div id="print" class="print" >
         <div class="row invoice_header">
-          <div class="col-xs-5" style="width: 50%; float:left;">
+          <div class="col-xs-6" style="width: 50%; float:left;">
             @include('layouts.adress')
               
           </div>
-          <div class="col-xs-7" style="width: 50%; text-align:right">
+          <div class="col-xs-6" style="width: 50%; text-align:right">
               <div style=" width:100%; text-align:right;">
                   <span style="font-size: 16px;">
                       <b>
@@ -87,7 +87,7 @@
               <br>
               <table class="table table-bordered">
                 @if(isset($invoice->customer->name))
-                  Customer : <b>{{($invoice->customer->name)}}</b> ,  
+                  Customer : <b>{{($invoice->customer->name)}}</b><br> 
                   Mobile No : <b>{{$invoice->customer->phone}}</b> <br>
                   Adress : <b>{{$invoice->customer->adress}}</b>
                 @endif

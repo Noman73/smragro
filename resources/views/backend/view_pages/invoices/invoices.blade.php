@@ -111,7 +111,7 @@
                           <br>
                           <table class="table table-bordered">
                             @if(isset($invoice->customer->name))
-                              Customer : <b>{{($invoice->customer->name)}}</b> ,  
+                              Customer : <b>{{($invoice->customer->name)}}</b> <br>  
                               Mobile No : <b>{{$invoice->customer->phone}}</b> <br>
                               Adress : <b>{{$invoice->customer->adress}}</b>
                             @endif
@@ -257,7 +257,7 @@
                           <b>Total in Word (Invoice Due):</b> {{Terbilang::make($invoice->total_payable)}}
                           Taka  <br>
                           <b>Comment :<b> {{$invoice->staff_note}} <br>
-                          Created By : <b>{{$invoice->user->name}}</b>,Printed By <b>{{auth()->user()->name}}</b>, Print Time : {{date('d-m-Y h:i:s')}}
+                          Created By : <b>{{$invoice->user->name}}</b>,Printed By <b>{{$invoice->user->name}}</b>, Print Time : {{date('d-m-Y h:i:s')}}
                       </div>
                   </div>
                   <div class="footer">

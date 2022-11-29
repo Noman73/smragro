@@ -31,7 +31,7 @@ class CustomerReceiveController extends Controller
     public function index()
     {
         if(request()->ajax()){
-            $get=Vinvoice::where('action_type',3)->get();
+            $get=Vinvoice::where('action_type',3)->orderBy('date','desc');
             return DataTables::of($get)
               ->addIndexColumn()
               ->addColumn('action',function($get){
@@ -105,6 +105,7 @@ class CustomerReceiveController extends Controller
                 $voucer->transaction_name="Customer Receive";
                 $voucer->v_inv_id= $v_invoice->id;
                 $voucer->credit=$request->ammount;
+                $voucer->debit=0;
                 $voucer->ledger_id=$customer_ledger->id;
                 $voucer->subledger_id=$request->customer;
                 $voucer->author_id= auth()->user()->id;
@@ -120,6 +121,7 @@ class CustomerReceiveController extends Controller
                 $voucer->transaction_name="Customer Receive";
                 $voucer->v_inv_id= $v_invoice->id;
                 $voucer->debit=$request->ammount;
+                $voucer->credit=0;
                 $voucer->ledger_id=$ledger->id;
                 if($request->bank=='null'){
                     $request->bank=null;
@@ -221,6 +223,7 @@ class CustomerReceiveController extends Controller
                 $voucer->transaction_name="Customer Receive";
                 $voucer->v_inv_id= $v_invoice->id;
                 $voucer->credit=$request->ammount;
+                $voucer->debit=0;
                 $voucer->ledger_id=$customer_ledger->id;
                 $voucer->subledger_id=$request->customer;
                 $voucer->author_id= auth()->user()->id;
@@ -236,6 +239,7 @@ class CustomerReceiveController extends Controller
                 $voucer->transaction_name="Customer Receive";
                 $voucer->v_inv_id= $v_invoice->id;
                 $voucer->debit=$request->ammount;
+                $voucer->credit=0;
                 $voucer->ledger_id=$ledger->id;
                 $voucer->subledger_id=$request->bank;
 

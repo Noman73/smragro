@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Bank;
 use DataTables;
 use Validator;
+use App\Models\AccountLedger;
 class BankAccountController extends Controller
 {
     /**
@@ -80,7 +81,7 @@ class BankAccountController extends Controller
             $bank->details=$request->details;
             $bank->open_ammount=$request->opening_balance;
             $bank->account_type=$request->account_type;
-            $bank->code=$bank_ledger->code.'-'.$count+1;
+            $bank->code=$bank_ledger->code.'-'.($count+1);
             $bank->author_id=auth()->user()->id;
             $bank->save();
             if ($bank) {

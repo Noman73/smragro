@@ -33,14 +33,14 @@ class ReceiveController extends Controller
     public function index()
     {
         if(request()->ajax()){
-            $get=Vinvoice::where('action_type',1)->get();
+            $get=Vinvoice::where('action_type',1)->orderBy('date','desc');
             return DataTables::of($get)
               ->addIndexColumn()
               ->addColumn('action',function($get){
               $button  ='<div class="d-flex justify-content-center">';
                 $button.='<a data-url=""  href="'.URL::to('admin/view-pages/receive-view/'.$get->id).'" class="btn btn-warning shadow btn-xs sharp me-1 editRow"><i class="fas fa-print"></i></a>
                 <a data-url="'.route('receive.edit',$get->id).'"  href="javascript:void(0)" class="btn btn-primary shadow btn-xs sharp ml-1 editRow"><i class="fas fa-pen"></i></a>
-              <a data-url="'.route('receive.destroy',$get->id).'" href="javascript:void(0)" class="btn btn-danger shadow btn-xs sharp ml-1 deleteRow"><i class="fa fa-trash"></i></a>';
+              <a data-id="'.$get->id.'" data-url="'.route('receive.destroy',$get->id).'" href="javascript:void(0)" class="btn btn-danger shadow btn-xs sharp ml-1 deleteRow"><i class="fa fa-trash"></i></a>';
               $button.='</div>';
             return $button;
           })
@@ -100,6 +100,7 @@ class ReceiveController extends Controller
                 foreach($data['ammount'] as $value){
                     $total=$total+floatval($value);
                 }
+                
                 $v_invoice=new Vinvoice;
                 $v_invoice->date=strtotime($data['date']);
                 $v_invoice->total=$total;
@@ -115,6 +116,7 @@ class ReceiveController extends Controller
                         $voucer->transaction_name="Receive";
                         $voucer->v_inv_id= $v_invoice->id;
                         $voucer->credit=$data['ammount'][$i];
+                        $voucer->debit=0;
                         $voucer->ledger_id=$data['ledger'][$i];
                         $voucer->subledger_id=($data['subledger'][$i] == 'null' ? null : $data['subledger'][$i]);
                         $voucer->comment=$data['comment'][$i];
@@ -132,6 +134,7 @@ class ReceiveController extends Controller
                         $voucer->transaction_name="Receive";
                         $voucer->v_inv_id= $v_invoice->id;
                         $voucer->debit=$total;
+                        $voucer->credit=0;
                         $voucer->ledger_id=$ledger->id;
                         if($data['bank']=='null'){
                             $data['bank']=null;
@@ -144,6 +147,7 @@ class ReceiveController extends Controller
                         $voucer->subledger_id=$data['bank'];
                         $voucer->author_id = auth()->user()->id;
                         $voucer->save();
+                        
                 }
                  return response()->json(['message'=>'Receive Successfully Added','id'=>$v_invoice->id]); 
          }
@@ -175,7 +179,7 @@ class ReceiveController extends Controller
         }
         $bank_ledger=AccountLedger::where('name','Bank')->first()->id;
         $invoice=DB::select("
-            SELECT voucers.id,voucers.ledger_id,voucers.subledger_id,voucers.date,cheque_no,cheque_status,cheque_issue_date,voucers.v_inv_id,concat(account_ledgers.code,if(account_ledgers.code<>'','-',''),account_ledgers.name) name,voucers.debit,voucers.credit,voucers.comment,
+            SELECT voucers.id,voucers.ledger_id,voucers.subledger_id,voucers.date,cheque_no,cheque_status,cheque_issue_date,voucers.v_inv_id,concat(account_ledgers.code,if(account_ledgers.code<>'','-',''),account_ledgers.name) name,account_ledgers.name ledger_name,voucers.debit,voucers.credit,voucers.comment,
             ## concat(ifnull(customers.id,''),ifnull(suppliers.id,''),ifnull(banks.id,''),ifnull(account_subledgers.id,''),ifnull(employees.id,'')) sub_id,
             concat(ifnull(customers.code,''),ifnull(suppliers.code,''),ifnull(banks.code,''),ifnull(account_subledgers.code,''),ifnull(employees.code,'')) sub_code,
             concat(ifnull(customers.name,''),ifnull(suppliers.name,''),ifnull(banks.name,''),ifnull(account_subledgers.name,''),ifnull(employees.name,'')) sub_name
@@ -209,6 +213,7 @@ class ReceiveController extends Controller
         $data['ammount']= explode(',', $request->ammount);
         $data['comment']= explode(',', $request->comment);
         $data['v_id']= explode(',', $request->v_id);
+        $data['delete_id']= explode(',', $request->delete_id);
         $data['date']= $request->date;
         if($data['method']==0){
             $bank_cond='nullable';
@@ -242,10 +247,12 @@ class ReceiveController extends Controller
                        // return $data['ammount'][$i];
                        if($data['v_id'][$i]!=0){
                         $voucer=Voucer::find($data['v_id'][$i]);
+                        info($data['v_id'][$i]);
                         $voucer->date= strtotime($data['date']);
                         $voucer->transaction_name="Receive";
                         $voucer->v_inv_id= $v_invoice->id;
                         $voucer->credit=$data['ammount'][$i];
+                        $voucer->debit=0;
                         $voucer->ledger_id=$data['ledger'][$i];
                         $voucer->subledger_id=($data['subledger'][$i] == 'null' ? null : $data['subledger'][$i]);
                         $voucer->comment=$data['comment'][$i];
@@ -257,6 +264,7 @@ class ReceiveController extends Controller
                         $voucer->transaction_name="Receive";
                         $voucer->v_inv_id= $v_invoice->id;
                         $voucer->credit=$data['ammount'][$i];
+                        $voucer->debit=0;
                         $voucer->ledger_id=$data['ledger'][$i];
                         $voucer->subledger_id=($data['subledger'][$i] == 'null' ? null : $data['subledger'][$i]);
                         $voucer->comment=$data['comment'][$i];
@@ -271,11 +279,11 @@ class ReceiveController extends Controller
                        $ledger=AccountLedger::where('name','Bank')->first();
                    }
                        $voucer=Voucer::find($request->method_voucer);
-                       info($data['date']);
                        $voucer->date= strtotime($data['date']);
                        $voucer->transaction_name="Receive";
                        $voucer->v_inv_id= $v_invoice->id;
                        $voucer->debit=$total;
+                       $voucer->credit=0;
                        $voucer->ledger_id=$ledger->id;
                        if($data['bank']=='null'){
                            $data['bank']=null;
@@ -288,6 +296,9 @@ class ReceiveController extends Controller
                        $voucer->subledger_id=$data['bank'];
                        $voucer->author_id = auth()->user()->id;
                        $voucer->save();
+                       foreach($data['delete_id'] as $value){
+                            Voucer::where('id',$value)->delete();
+                       }
                }
                 return response()->json(['message'=>'Receive Successfully Updated','id'=>$v_invoice->id]); 
         }
@@ -302,6 +313,10 @@ class ReceiveController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $deleteInv=Vinvoice::where('id',$id)->delete();
+        if($deleteInv){
+            $deleteVoucer=Voucer::where('v_inv_id',$id)->delete();
+            return response()->json(['message'=>"Receive Deleted Success"]);
+        }
     }
 }

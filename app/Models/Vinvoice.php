@@ -8,5 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Vinvoice extends Model
 {
     use HasFactory;
-
+    public function author()
+    {
+        return $this->belongsTo(User::class,'author_id','id');
+    }
 }
