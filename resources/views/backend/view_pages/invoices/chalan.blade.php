@@ -12,7 +12,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
-    <title>SMRAGRO</title>
+    <title>{{$info->company_name}}</title>
 
     <!--Favicon-->
     
@@ -87,7 +87,7 @@
               <br>
               <table class="table table-bordered">
                 @if(isset($invoice->customer->name))
-                  Customer : <b>{{($invoice->customer->name)}}</b> ,  
+                  Customer : <b>{{($invoice->customer->name)}}</b><br> 
                   Mobile No : <b>{{$invoice->customer->phone}}</b> <br>
                   Adress : <b>{{$invoice->customer->adress}}</b>
                 @endif
