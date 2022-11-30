@@ -207,7 +207,7 @@
                                   <input type="number" class="form-control " id="discount" placeholder="0.00" aria-describedby="validationTooltipUsernamePrepend" required>
                                   <div class="input-group-append">
                                     <div class="input-group-text">
-                                      % <input id="discountCheck" type="checkbox" class="ml-1">
+                                      % <input id="discountCheck" type="checkbox" class="ml-1" {{($invoice[0]['discount_type']==1 ? 'checked' : '')}}>
                                     </div>
                                   </div>
                                 </div>
