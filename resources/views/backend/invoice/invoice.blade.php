@@ -7,6 +7,8 @@
       background-color:#f4c2c2;
       font-weight: bold;
     }
+    
+
   </style>
  @endsection
  @section('content')
@@ -105,8 +107,10 @@
                         </div>
                       </div>
                    </div>
+                   <div class="item-details">
+
+                   </div>
                    <div class="row">
-                    
                     <div class="col-12 col-md-6 ">
                       <div class="row">
                         <div class="col-12 col-md-4">

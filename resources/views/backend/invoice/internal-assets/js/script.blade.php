@@ -934,4 +934,14 @@ function searchText(text){
         
       }
 }
+
+function itemDetails()
+{
+  
+  items=`<table>
+    
+    
+    </table>`
+  $('.item-details').html()
+}
 </script>
