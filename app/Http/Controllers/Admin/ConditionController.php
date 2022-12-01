@@ -71,7 +71,7 @@ class ConditionController extends Controller
           ]);
         
         if($validator->passes()){
-            $subledger=AccountLedger::where('name','Condition Sale')->first();
+            $subledger=AccountLedger::where('name','Condition Customer')->first();
             $v_invoice=new Vinvoice;
             $v_invoice->date=strtotime($request->date);
             $v_invoice->total=$request->ammount;
@@ -81,12 +81,14 @@ class ConditionController extends Controller
             $v_invoice->save();
             if($v_invoice){
                 //condition credit
+                $invoice=Invoice::find($request->invoice_id);
                 $voucer=new Voucer;
                 $voucer->date= strtotime($request->date);
                 $voucer->transaction_name="Condition Sale Receipt";
                 $voucer->v_inv_id= $v_invoice->id;
                 $voucer->credit=$request->ammount;
                 $voucer->ledger_id=$subledger->id;
+                $voucer->subledger_id=$invoice->customer_id;
                 $voucer->save();
                 // Cash/Bank dabit
                 if($request->method==0){

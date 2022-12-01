@@ -592,6 +592,7 @@ class InvoiceTestController extends Controller
                     $sales_ledger=AccountLedger::where('name','Sales')->first();
                     $cash_ledger=AccountLedger::where('name','Cash')->first();
                     $customer_ledger=AccountLedger::where('name','Customer')->first();
+                    $cond_customer_ledger=AccountLedger::where('name','Condition Customer')->first();
                     $sales_amt_without_discount=$total-($data['discount_type']==0? floatval($data['discount']) : ($total*floatval($data['discount']))/100);
                     // vat journal
                     if($data['vat']!=null and $data['vat']!=0){
@@ -685,7 +686,7 @@ class InvoiceTestController extends Controller
                                     $voucer = new Voucer();
                                     $voucer->date= strtotime(strval($data['date']));
                                     $voucer->transaction_name = 'Sale Invoice';
-                                    $voucer->ledger_id=$customer_ledger->id;
+                                    $voucer->ledger_id=$cond_customer_ledger->id;
                                     $voucer->subledger_id=$customer_id;
                                     $voucer->debit = $total_payable;
                                     $voucer->credit = 0;
@@ -712,7 +713,7 @@ class InvoiceTestController extends Controller
                                     $voucer->account_id = $data['payment_method'];
                                     $voucer->date= strtotime(strval($data['date']));
                                     $voucer->transaction_name = 'Sale Invoice';
-                                    $voucer->ledger_id = $customer_ledger->id;
+                                    $voucer->ledger_id=$cond_customer_ledger->id;
                                     $voucer->subledger_id = $customer_id;
                                     $voucer->credit = $data['ammount'];
                                     $voucer->cheque_no = $data['cheque_no'];
