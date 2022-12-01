@@ -84,25 +84,23 @@
             </div>
             <div class="modal-body">
               <form>
+                <div class="form-group">
+                  <select name="form-control" id="employee"></select>
+                </div>
                 <input type="hidden" id="id">
                 <table class="table table-sm text-center table-bordered" id="datatable">
                   <thead>
                     <tr>
-                      <th width="20%">Employee</th>
-                      <th width="10%">Attendance</th>
-                      <th width="15%">in time</th>
-                      <th width="15%">Launch out</th>
-                      <th width="15%">Launch in</th>
-                      <th width="15%">Out time</th>
-                      <th width="13%">Total time</th>
-                      <th width="12%">Over time</th>
+                      <th width="20%">in time</th>
+                      <th width="20%">Launch out</th>
+                      <th width="20%">Launch in</th>
+                      <th width="20%">Out time</th>
+                      <th width="10%">Total time</th>
+                      <th width="10%">Over time</th>
                     </tr>
                   </thead>
                   <tbody>
-                    @foreach($employee as $emp)
                     <tr>
-                      <td>{{$emp->name}}</td>
-                      <td><input type="checkbox" name='attendance'></td>
                       <td><input type="time" class="form-control form-control-sm" name="in_time[]"></td>
                       <td><input type="time" class="form-control form-control-sm" name="launch_out_time[]"></td>
                       <td><input type="time" class="form-control form-control-sm" name="launch_in_time[]"></td>
@@ -110,7 +108,6 @@
                       <td></td>
                       <td></td>
                     </tr>
-                    @endforeach
                   </tbody>
                 </table>
                   

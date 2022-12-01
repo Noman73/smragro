@@ -39,6 +39,7 @@ class HomeController extends Controller
     {
         // return $request->all();
         $customer_ledger=AccountLedger::where('name','Customer')->first()->id;
+        $cond_customer_ledger=AccountLedger::where('name','Condition Customer')->first()->id;
         $supplier_ledger=AccountLedger::where('name','Supplier')->first()->id;
         $cash_ledger=AccountLedger::where('name','Cash')->first()->id;
         $from_date=date('d-m-Y 00:00:00',strtotime($request->from_date));
@@ -48,6 +49,8 @@ class HomeController extends Controller
         $total_sale_amount=Invoice::where('sale_type',0)->orWhere('sale_type',1)->orWhere('sale_type',2)->sum('total_payable');
         $total_buy_amount=PInvoice::sum('total_payable');
         $customer_balance=Voucer::selectRaw('ifnull(sum(debit)-sum(credit),0) total')->where('date','<=',strtotime($to_date))->where('ledger_id',$customer_ledger)->first();
+        $cond_customer_balance=Voucer::selectRaw('ifnull(sum(debit)-sum(credit),0) total')->where('date','<=',strtotime($to_date))->where('ledger_id',$cond_customer_ledger)->first();
+        $customer_balance=$customer_balance->total+$cond_customer_balance->total;
         $supplier_balance=Voucer::selectRaw('ifnull(sum(credit)-sum(debit),0) total')->where('date','<=',strtotime($to_date))->where('ledger_id',$supplier_ledger)->first();
         $top_product=DB::select("
             select products.name,products.product_code,sum(sales.deb_qantity-sales.cred_qantity) qantity from products 
@@ -64,6 +67,6 @@ class HomeController extends Controller
         $cash=Voucer::where('ledger_id',$cash_ledger)->selectRaw('ifnull(sum(debit)-sum(credit),0) total')->first();
         $bank=Voucer::where('ledger_id',$bank_ledger)->selectRaw('ifnull(sum(debit)-sum(credit),0) total')->first();
         $total_balance=floatval($cash->total)+floatval($bank->total);
-        return response()->json(['total_customer'=>$total_customer,'total_supplier'=>$total_supplier,'total_sale_amount'=>$total_sale_amount,'top_product'=>$top_product,'total_buy_amount'=>$total_buy_amount,'customer_balance'=>$customer_balance->total,'supplier_balance'=>$supplier_balance->total,'bank'=>$bank_data,'current_balance'=>$total_balance,'total_bank'=>$bank->total]);
+        return response()->json(['total_customer'=>$total_customer,'total_supplier'=>$total_supplier,'total_sale_amount'=>$total_sale_amount,'top_product'=>$top_product,'total_buy_amount'=>$total_buy_amount,'customer_balance'=>$customer_balance,'supplier_balance'=>$supplier_balance->total,'bank'=>$bank_data,'current_balance'=>$total_balance,'total_bank'=>$bank->total]);
     }
 }

@@ -194,7 +194,7 @@ function clear(){
   $(".invalid-feedback").text('');
   $('form select').val('').niceSelect('update');
 }
-
+function 
 
 
 </script>
