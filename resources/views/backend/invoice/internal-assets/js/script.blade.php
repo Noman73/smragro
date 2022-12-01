@@ -821,6 +821,9 @@ $('body').on('select2:select',"#product", function (e){
 // });
 $(document).keypress(function(event){
  console.log(event.which)
+ if(event.keyCode==13){
+      $('.item-details').css('visibility','hidden')
+  }
   if(event.keyCode==68){
       addNew();
   }
@@ -935,13 +938,28 @@ function searchText(text){
       }
 }
 
-function itemDetails()
-{
-  
-  items=`<table>
-    
-    
-    </table>`
-  $('.item-details').html()
-}
+$(document).on('select2:select',"#product", function (e){
+   text=$('#product option:selected').text();
+   axios.post("{{URL::to('admin/product-details')}}",{text:text})
+   .then((res)=>{
+      console.log(res);
+      html="";
+      res.data.forEach(function(d){
+        html+="<tr class='details-row'>"
+        html+='<td>'+d.name+'</td>';
+        html+='<td>'+d.brand.name+'</td>';
+        html+='<td>'+d.model.name+'</td>';
+        html+='<td class="details-part-id">'+d.part_id+'</td></tr>';
+      })
+      $('.item-details tbody').html(html)
+      $('.item-details').css('visibility','visible')
+   })
+})
+
+
+$(document).on('','.details-row',function(d){
+  part_id=$(this).children().next().next().next().text();
+  console.log(part_id)
+})
+
 </script>

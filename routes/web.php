@@ -37,6 +37,7 @@ Route::group([
     Route::post('/get-product-by-data','ProductController@getProductByData');
     Route::post('/get-part-id','ProductController@getPartId');
     Route::post('/get-all-products','ProductController@getAllProduct');
+    Route::post('/product-details','ProductController@productDetails');
     Route::get('/get-product-by-code/{code}','ProductController@getProductByCode');
     Route::resource('/multi_note','MultiNoteController');
     Route::post('/get-multi-note','MultiNoteController@getMultiNote');

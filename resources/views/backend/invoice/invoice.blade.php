@@ -7,13 +7,42 @@
       background-color:#f4c2c2;
       font-weight: bold;
     }
-    
-
+    /* .item-details:hover + .item-details{
+      width:500px;
+      height:100px;
+      border:1px solid red;
+      display:block;
+    } */
+    .item-details{
+      width:500px;
+      height:200px;
+      border:1px solid blue;
+      overflow:scroll;
+      position:absolute;
+      z-index:5;
+      left:42px;
+      visibility:hidden;
+      background-color:white;
+    }
   </style>
  @endsection
  @section('content')
     <!-- Content Header (Page header) -->
-    <div class="content-header">
+    <div class="content-header" style="position:relative;z-index:1;">
+      <div class="item-details">
+        <table class="table table-sm">
+          <thead>
+            <tr>
+              <th >Name</th>
+              <th >Brand</th>
+              <th >Model</th>
+              <th >Part ID</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
@@ -30,12 +59,14 @@
     </div>
     <!-- /.content-header -->
     <!-- Main content -->
+    
     <section class="content">
       <div class="container-fluid">
         <div class="card ">
             <div class="card-body">
-               <div class="container">
-                   <div class="row">
+               <div class="container" >
+                
+                <div class="row">
                        <div class="col-12 col-md-2 ">
                         <select name="" id="sale_type" class="form-control" onchange="customerVisibility()">
                           <option value="0">Cash</option>
@@ -107,9 +138,7 @@
                         </div>
                       </div>
                    </div>
-                   <div class="item-details">
-
-                   </div>
+                   
                    <div class="row">
                     <div class="col-12 col-md-6 ">
                       <div class="row">

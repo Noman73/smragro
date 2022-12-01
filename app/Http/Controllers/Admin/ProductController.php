@@ -383,7 +383,7 @@ class ProductController extends Controller
             $search=Product::where('name','like','%'.$request->searchTerm.'%')->where('part_id',$part_id)->take(30)->get();
         }
         foreach ($search as $value){
-            $set_data[]=['id'=>$value->id,'text'=>$value->part_id.'-'.$value->name];
+            $set_data[]=['id'=>$value->id,'text'=>$value->name];
         }
         return $set_data;
     }
@@ -402,5 +402,10 @@ class ProductController extends Controller
     public function getAllPartIdData($id)
     {
         return Product::with('brand','model')->where('part_id',$id)->first();
+    }
+    public function productDetails(Request $request){
+        // return $request->text;
+        $post=Product::with('model','brand')->where('name',$request->text)->get();
+        return $post;
     }
 }
