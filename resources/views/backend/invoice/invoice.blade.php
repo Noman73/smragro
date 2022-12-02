@@ -19,7 +19,7 @@
       border:1px solid blue;
       overflow:scroll;
       position:absolute;
-      z-index:5;
+      z-index:100;
       left:42px;
       visibility:hidden;
       background-color:white;
@@ -79,7 +79,7 @@
                               <select class="form-control" id="customer" onchange="balance(this)">
                               </select>
                               <div class="input-group-append">
-                                <button class="btn btn-outline-primary" type="button" data-toggle="modal" id="customerModal" data-target='#modal'>Add <i class="fas fa-plus"></i></button>
+                                <button class="btn btn-outline-primary" type="button" data-toggle="modal" id="customerModal" data-target='#modal' style="z-index:0;">Add <i class="fas fa-plus"></i></button>
                               </div>
                               <div class="invalid-feedback" id='customer_msg'></div>
                           </div>

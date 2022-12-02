@@ -869,22 +869,23 @@ $(document).on('change keyup','#quantity,#b_rate,#mltp',function(){
 })
 
 
-$('body').on('select2:select',"#product", function (e){
-  id=$(this).val();
-  console.log(id)
-  axios.get("{{URL::to('/admin/selected-product-data')}}/"+id)
-  .then(res=>{
-    console.log(res);
-    model="<option value='"+res.data.model.id+"'>"+res.data.model.name+"</option>";
-    brand="<option value='"+res.data.brand.id+"'>"+res.data.brand.name+"</option>";
-    part_id="<option value='"+res.data.part_id+"'>"+res.data.part_id+"</option>";
-    $('#model').html(model);
-    $('#brand').html(brand);
-    $('#part_id').html(part_id);
-    $('#brand').trigger('select2:select');
-    singleCalc()
-  })
-})
+// $('body').on('select2:select',"#product", function (e){
+//   id=$(this).val();
+//   console.log(id)
+//   id
+//   axios.get("{{URL::to('/admin/selected-product-data')}}/"+id)
+//   .then(res=>{
+//     console.log(res);
+//     model="<option value='"+res.data.model.id+"'>"+res.data.model.name+"</option>";
+//     brand="<option value='"+res.data.brand.id+"'>"+res.data.brand.name+"</option>";
+//     part_id="<option value='"+res.data.part_id+"'>"+res.data.part_id+"</option>";
+//     $('#model').html(model);
+//     $('#brand').html(brand);
+//     $('#part_id').html(part_id);
+//     $('#brand').trigger('select2:select');
+//     singleCalc()
+//   })
+// })
 $('body').on('select2:select',"#part_id", function (e){
   id=$(this).val();
   console.log(id)
@@ -949,7 +950,7 @@ $(document).on('select2:select',"#product", function (e){
         html+='<td>'+d.name+'</td>';
         html+='<td>'+d.brand.name+'</td>';
         html+='<td>'+d.model.name+'</td>';
-        html+='<td class="details-part-id">'+d.part_id+'</td></tr>';
+        html+='<td>'+d.part_id+'</td></tr>';
       })
       $('.item-details tbody').html(html)
       $('.item-details').css('visibility','visible')
@@ -957,9 +958,12 @@ $(document).on('select2:select',"#product", function (e){
 })
 
 
-$(document).on('','.details-row',function(d){
+$(document).on('click','.details-row',function(d){
   part_id=$(this).children().next().next().next().text();
-  console.log(part_id)
+  console.log(part_id);
+  $('#part_id').html("<option value='"+part_id+"'>"+part_id+"<option>")
+  $('#part_id').trigger('select2:select');
+  $('.item-details').css('visibility','hidden');
 })
 
 </script>
