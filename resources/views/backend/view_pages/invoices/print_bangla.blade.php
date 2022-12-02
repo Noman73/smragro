@@ -131,6 +131,8 @@
                           <tr>
                               <th class="text-center" width="10%">ক্রমিক নং.</th>
                               <th width="35%">পন্যের নাম</th>
+                              <th width="10%">ব্র্র্যান্ড</th>
+                              <th width="10%">মডেল</th>
                               <th class="text-right">পরিমান</th>
                               <th class="text-right">মূল্য</th>
                               <th class="text-right">মোট</th>
@@ -144,7 +146,9 @@
                         @foreach($invoice->sales as $sales)
                               <tr>
                                   <td class="text-center">{{$i=$i+1}}</td>
-                                  <td>{{$sales->product->product_code.'-'.$sales->product->name}}</td>
+                                  <td>{{$sales->product->part_id.'-'.$sales->product->name}}</td>
+                                  <td>{{$sales->product->brand->name}}</td>
+                                  <td>{{$sales->product->model->name}}</td>
                                   <td class="text-right">{{$sales->deb_qantity}} {{$sales->product->unit->name}}</td>
                                   <td class="text-right">৳{{$sales->price}}</td>
                                   <td class="text-right">৳{{($sales->deb_qantity*$sales->price)}}</td>

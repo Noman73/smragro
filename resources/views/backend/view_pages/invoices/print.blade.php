@@ -124,6 +124,8 @@
                           <tr>
                               <th class="text-center">SL.</th>
                               <th width="35%">Product Name</th>
+                              <th width="10%">Brand</th>
+                              <th width="10%">Model</th>
                               <th class="text-right">Quantity</th>
                               <th class="text-right">Price</th>
                               <th class="text-right">Total</th>
@@ -137,7 +139,9 @@
                         @foreach($invoice->sales as $sales)
                               <tr>
                                   <td class="text-center">{{$i=$i+1}}</td>
-                                  <td>{{$sales->product->product_code.'-'.$sales->product->name}}</td>
+                                  <td>{{$sales->product->part_id.'-'.$sales->product->name}}</td>
+                                  <td>{{$sales->product->brand->name}}</td>
+                                  <td>{{$sales->product->model->name}}</td>
                                   <td class="text-right">{{$sales->deb_qantity}} {{$sales->product->unit->name}}</td>
                                   <td class="text-right">৳{{$sales->price}}</td>
                                   <td class="text-right">৳{{($sales->deb_qantity*$sales->price)}}</td>

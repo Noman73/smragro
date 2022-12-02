@@ -753,6 +753,7 @@ $(document).on('change keyup','#w_mobile',function(){
 })
 
 function saleByCheck(){
+    $('#courier').val(null).trigger('change')
     function clearSaleBy(){
       $('#courier-list').val(null).trigger('change');
       $('#shipping_name,#shipping_mobile,#shipping_adress,#condition_amount').val('');
@@ -761,8 +762,8 @@ function saleByCheck(){
     console.log(checkedInput.val())
     switch (parseInt(checkedInput.val())) {
       case 0:
-      $('#courier-list').addClass('d-none')
-      $('.shipping').addClass('d-none')
+      $('#courier-list').addClass('d-none');
+      $('.shipping').addClass('d-none');
       $('#ammount').attr('disabled',true);
       clearSaleBy();
       break;

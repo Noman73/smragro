@@ -123,7 +123,9 @@
                       <thead>
                           <tr>
                               <th width="30%" class="text-center">SL.</th>
-                              <th width="50%">Product Name</th>
+                              <th width="30%">Product Name</th>
+                              <th width="10%">Brand</th>
+                              <th width="10%">Model</th>
                               <th width="20%" class="text-right">Quantity</th>
                           </tr>
                       </thead>
@@ -136,6 +138,8 @@
                               <tr>
                                   <td class="text-center">{{$i=$i+1}}</td>
                                   <td>{{$sales->product->product_code.'-'.$sales->product->name}}</td>
+                                  <td>{{$sales->product->brand->name}}</td>
+                                  <td>{{$sales->product->model->name}}</td>
                                   <td class="text-right">{{$sales->deb_qantity}} {{$sales->product->unit->name}}</td>
                               </tr>
                           </tbody>

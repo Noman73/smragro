@@ -229,7 +229,7 @@
                    
                    
                    <div class="col-12 col-md-1">
-                    <button tabindex='8' class="btn btn-primary btn-sm" onclick="addNew()">Add <i class="fas fa-plus"></i></button>
+                    <button tabindex='8' class="btn btn-primary btn-sm" id="addnewbtn" onclick="addNew()">Add <i class="fas fa-plus"></i></button>
                   </div>
                    <div class="row mt-3">
                      {{-- note  --}}
