@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\ShippingCompany;
 use Validator;
 use DataTables;
+use DB;
 class ShippingCompanyController extends Controller
 {
     /**
@@ -148,5 +149,20 @@ class ShippingCompanyController extends Controller
              $set_data[]=['id'=>$value->id,'text'=>$value->name.'('.$value->adress.')'];
          }
          return $set_data;
+    }
+    public function getTopShippingCompany($customer_id)
+    {
+        $courier=DB::select("
+        SELECT shipping_companies.id,shipping_companies.name,shipping_companies.adress,count(invoices.shipping_id) count from invoices
+        inner join shipping_companies on invoices.shipping_id=shipping_companies.id
+        where invoices.customer_id=:customer_id
+        group by invoices.shipping_id
+        order by count(invoices.shipping_id) desc limit 1
+        ",['customer_id'=>$customer_id]);
+        if(count($courier)>0){
+            return $courier[0];
+        }else{
+            return [];
+        }
     }
 }

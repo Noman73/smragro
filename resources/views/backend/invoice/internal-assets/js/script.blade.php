@@ -82,9 +82,10 @@ $("#customer").select2({
     let item=$('#product').val();
     let itemtext=$('#product option:selected').text();
     let quantity=$('#quantity').val();
+    let part_id=$('#part_id').val();
     let amount=$('#amount').val();
     let total=$('#total-amt').val();
-    if(amount==''){
+    if(amount=='' || item=='' || part_id==''){
       return false;
     }
     let cond=true;
@@ -111,6 +112,8 @@ $("#customer").select2({
    itemClear();
    calculation();
    totalCal();
+
+   $('#product').select2('open');
   }
 
   $(document).ready(function(){
@@ -754,6 +757,7 @@ $(document).on('change keyup','#w_mobile',function(){
 
 function saleByCheck(){
     $('#courier').val(null).trigger('change')
+    courierSelection();
     function clearSaleBy(){
       $('#courier-list').val(null).trigger('change');
       $('#shipping_name,#shipping_mobile,#shipping_adress,#condition_amount').val('');
@@ -827,6 +831,7 @@ $(document).keypress(function(event){
   }
   if(event.keyCode==68){
       addNew();
+      $('.item-details').css('visibility','hidden')
   }
   if(event.keyCode==9){
       $(document.activeElement).parent().parent().prev().select2('open')
@@ -942,6 +947,7 @@ function searchText(text){
 
 $(document).on('select2:select',"#product", function (e){
    text=$('#product option:selected').text();
+   part_id=$('#part_id option:selected').text();
    axios.post("{{URL::to('admin/product-details')}}",{text:text})
    .then((res)=>{
       console.log(res);
@@ -956,6 +962,9 @@ $(document).on('select2:select',"#product", function (e){
       $('.item-details tbody').html(html)
       $('.item-details').css('visibility','visible')
    })
+   if(part_id!=null){
+    $('#addnewbtn').attr('disabled',true);
+   }
 })
 
 
@@ -965,6 +974,23 @@ $(document).on('click','.details-row',function(d){
   $('#part_id').html("<option value='"+part_id+"'>"+part_id+"<option>")
   $('#part_id').trigger('select2:select');
   $('.item-details').css('visibility','hidden');
+  $('#addnewbtn').attr('disabled',false);
 })
+function courierSelection()
+{
+  customer=$('#customer').val();
+  if(customer!=null){
+     axios.get("{{URL::to('admin/courier-top')}}/"+customer)
+     .then(res=>{
+      console.log(res);
+      $('#courier').html("<option value='"+res.data.id+"'>"+res.data.name+'('+res.data.adress+")</option>")
+     })
+  }
+}
 
+$(document).on('select2:unselect','#product', function(e){
+  $('#brand').val(null).trigger('change')
+  $('#model').val(null).trigger('change')
+  $('#part_id').val(null).trigger('change')
+})
 </script>

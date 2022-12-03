@@ -81,6 +81,7 @@ Route::group([
     Route::post('/get-customer','CustomerController@getCustomer');
     Route::post('/check-customer','CustomerController@checkCustomer');
     Route::post('/get-shipping-company','ShippingCompanyController@getShippingCompany');
+    Route::get('/courier-top/{customer}','ShippingCompanyController@getTopShippingCompany');
     Route::get('/stock','StockController@index');
     Route::get('/get-sale/{inv_id}','InvoiceController@searchInvoice');
     Route::get('/count_product/{category_id}','ProductController@productCountByCat');
@@ -108,7 +109,7 @@ Route::group([
     Route::resource('/user','UserController');
     Route::get('/selected-product-data/{id}','ProductController@getAllData');
     Route::get('/part-id-product-data/{id}','ProductController@getAllPartIdData');
-});
+}); 
 Route::group([
     'prefix'=>"admin/accounts",
     'namespace' => 'App\Http\Controllers\Admin',

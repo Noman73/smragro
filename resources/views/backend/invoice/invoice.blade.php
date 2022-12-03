@@ -314,14 +314,14 @@
                                 {{-- <input type="number" class="form-control form-control-sm" id="vat" placeholder="0.00"> --}}
                               </td>
                           </tr>
-                            <tr>
+                            <tr class="d-none">
                                 <th width="50%">VAT: </th>
                                 <td>
                                   <input type="number" class="form-control form-control-sm" id="vat" placeholder="0.00">
                                   <div class="invalid-feedback" id='vat_msg'></div>
                                 </td>
                             </tr>
-                            <tr>
+                            <tr class="d-none">
                                 <th width="50%">Transport: </th>
                                 <td><input type="number" class="form-control form-control-sm" id="transport" placeholder="0.00"></td>
                             </tr>
