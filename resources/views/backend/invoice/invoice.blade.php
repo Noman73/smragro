@@ -30,13 +30,15 @@
     <!-- Content Header (Page header) -->
     <div class="content-header" style="position:relative;z-index:1;">
       <div class="item-details">
-        <table class="table table-sm">
+        <table class="table table-sm table-bordered" style="font-size:14px;">
           <thead>
             <tr>
               <th >Name</th>
               <th >Brand</th>
               <th >Model</th>
               <th >Part ID</th>
+              <th >Color</th>
+              <th >Rate</th>
             </tr>
           </thead>
           <tbody>

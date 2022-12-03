@@ -957,7 +957,9 @@ $(document).on('select2:select',"#product", function (e){
         html+='<td>'+d.name+'</td>';
         html+='<td>'+d.brand.name+'</td>';
         html+='<td>'+d.model.name+'</td>';
-        html+='<td>'+d.part_id+'</td></tr>';
+        html+='<td id="part_id_row">'+d.part_id+'</td>';
+        html+='<td>'+d.color+'</td>';
+        html+='<td>'+d.sale_price+'</td></tr>';
       })
       $('.item-details tbody').html(html)
       $('.item-details').css('visibility','visible')
@@ -969,7 +971,7 @@ $(document).on('select2:select',"#product", function (e){
 
 
 $(document).on('click','.details-row',function(d){
-  part_id=$(this).children().next().next().next().text();
+  part_id=$(this).children().next().next().next('#part_id_row').text();
   console.log(part_id);
   $('#part_id').html("<option value='"+part_id+"'>"+part_id+"<option>")
   $('#part_id').trigger('select2:select');
