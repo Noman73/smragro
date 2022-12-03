@@ -232,6 +232,7 @@ class InvoiceTestController extends Controller
                     $sales_ledger=AccountLedger::where('name','Sales')->first();
                     $cash_ledger=AccountLedger::where('name','Cash')->first();
                     $customer_ledger=AccountLedger::where('name','Customer')->first();
+                    $cond_customer_ledger=AccountLedger::where('name','Condition Customer')->first();
                     $sales_amt_without_discount=$total-($data['discount_type']==0? floatval($data['discount']) : ($total*floatval($data['discount']))/100);
                     // vat journal
                     if($data['vat']!=null and $data['vat']!=0){
@@ -285,59 +286,57 @@ class InvoiceTestController extends Controller
                         $voucer->save();
                         return ['message' => 'Invoice Added Success', 'id' => $inv_id];
                     }else{
-                           
-                               
-                                    $due_ammount=$total_payable-floatval($data['ammount']);
-                                    // sales credit
-                                    $voucer = new Voucer();
-                                    $voucer->date= strtotime(strval($data['date']));
-                                    $voucer->transaction_name="Sale Invoice";
-                                    $voucer->ledger_id = $sales_ledger->id;
-                                    $voucer->debit = 0;
-                                    $voucer->credit =$sales_amt_without_discount;
-                                    $voucer->invoice_id = $inv_id;
-                                    $voucer->author_id = auth()->user()->id;
-                                    $voucer->save();
-                                    // customer dabit 
-                                    $voucer = new Voucer();
-                                    $voucer->date= strtotime(strval($data['date']));
-                                    $voucer->transaction_name = 'Sale Invoice';
-                                    $voucer->ledger_id=$customer_ledger->id;
-                                    $voucer->subledger_id=$customer_id;
-                                    $voucer->debit = $total_payable;
-                                    $voucer->credit = 0;
-                                    $voucer->invoice_id = $inv_id;
-                                    $voucer->author_id = auth()->user()->id;
-                                    $voucer->save();
-                                    // cash/bank debit
-                                    $voucer = new Voucer();
-                                    $voucer->account_id = $data['payment_method'];
-                                    $voucer->date= strtotime(strval($data['date']));
-                                    $voucer->transaction_name="Sale Invoice";
-                                    if($data['payment_method_type']==0){
-                                        $voucer->ledger_id=$cash_ledger->id;
-                                    }
-                                    $voucer->debit =($data['ammount']==null ? 0 : $data['ammount']);
-                                    $voucer->credit = 0;
-                                    $voucer->cheque_no = $data['cheque_no'];
-                                    $voucer->cheque_issue_date = strtotime(strval($data['cheque_issue_date']));
-                                    $voucer->invoice_id = $inv_id;
-                                    $voucer->author_id = auth()->user()->id;
-                                    $voucer->save();
-                                    // customer credit
-                                    $voucer = new Voucer();
-                                    $voucer->account_id = $data['payment_method'];
-                                    $voucer->date= strtotime(strval($data['date']));
-                                    $voucer->transaction_name = 'Sale Invoice';
-                                    $voucer->ledger_id = $customer_ledger->id;
-                                    $voucer->subledger_id = $customer_id;
-                                    $voucer->credit = ($data['ammount']==null ? 0 : $data['ammount']);
-                                    $voucer->cheque_no = $data['cheque_no'];
-                                    $voucer->cheque_issue_date = strtotime(strval($data['cheque_issue_date']));
-                                    $voucer->invoice_id = $inv_id;
-                                    $voucer->author_id = auth()->user()->id;
-                                    $voucer->save();
-                                    return ['message' => 'Invoice Added Success', 'id' => $inv_id];
+                        $due_ammount=$total_payable-floatval($data['ammount']);
+                        // sales credit
+                        $voucer = new Voucer();
+                        $voucer->date= strtotime(strval($data['date']));
+                        $voucer->transaction_name="Sale Invoice";
+                        $voucer->ledger_id = $sales_ledger->id;
+                        $voucer->debit = 0;
+                        $voucer->credit =$sales_amt_without_discount;
+                        $voucer->invoice_id = $inv_id;
+                        $voucer->author_id = auth()->user()->id;
+                        $voucer->save();
+                        // customer dabit 
+                        $voucer = new Voucer();
+                        $voucer->date= strtotime(strval($data['date']));
+                        $voucer->transaction_name = 'Sale Invoice';
+                        $voucer->ledger_id=($data['sale_type']==2 ? $cond_customer_ledger->id : $customer_ledger->id);
+                        $voucer->subledger_id=$customer_id;
+                        $voucer->debit = $total_payable;
+                        $voucer->credit = 0;
+                        $voucer->invoice_id = $inv_id;
+                        $voucer->author_id = auth()->user()->id;
+                        $voucer->save();
+                        // cash/bank debit
+                        $voucer = new Voucer();
+                        $voucer->account_id = $data['payment_method'];
+                        $voucer->date= strtotime(strval($data['date']));
+                        $voucer->transaction_name="Sale Invoice";
+                        if($data['payment_method_type']==0){
+                            $voucer->ledger_id=$cash_ledger->id;
+                        }
+                        $voucer->debit =($data['ammount']==null ? 0 : $data['ammount']);
+                        $voucer->credit = 0;
+                        $voucer->cheque_no = $data['cheque_no'];
+                        $voucer->cheque_issue_date = strtotime(strval($data['cheque_issue_date']));
+                        $voucer->invoice_id = $inv_id;
+                        $voucer->author_id = auth()->user()->id;
+                        $voucer->save();
+                        // customer credit
+                        $voucer = new Voucer();
+                        $voucer->account_id = $data['payment_method'];
+                        $voucer->date= strtotime(strval($data['date']));
+                        $voucer->transaction_name = 'Sale Invoice';
+                        $voucer->ledger_id = ($data['sale_type']==2 ? $cond_customer_ledger->id : $customer_ledger->id);
+                        $voucer->subledger_id = $customer_id;
+                        $voucer->credit = ($data['ammount']==null ? 0 : $data['ammount']);
+                        $voucer->cheque_no = $data['cheque_no'];
+                        $voucer->cheque_issue_date = strtotime(strval($data['cheque_issue_date']));
+                        $voucer->invoice_id = $inv_id;
+                        $voucer->author_id = auth()->user()->id;
+                        $voucer->save();
+                        return ['message' => 'Invoice Added Success', 'id' => $inv_id];
 
                     }
                 }
@@ -554,7 +553,6 @@ class InvoiceTestController extends Controller
                             $this->comboIteration($product->combobox,$product->comboqty,$data['date'],$inv_id);
                         }
                     }
-                    info(($data['record_type'][$i]).'-'.$i);
                     if($data['record_type'][$i]=='sales'){
                         $stmt = Sale::find($data['sale_id'][$i]);
                         $stmt->invoice_id = $inv_id;
@@ -580,15 +578,13 @@ class InvoiceTestController extends Controller
                         $stmt->sale_type = $data['sale_type'];
                         $stmt->save();
                     }
-                    
-                    
                 }
                 if ($stmt = true) {
                     for ($i=0; $i < count($data['sale_delete']); $i++) { 
                         Sale::find($data['sale_delete'][$i])->delete();
                     }
                     $voucer_delete=Voucer::where('invoice_id',$id)->delete();
-                    // customized code 
+                    // customized code
                     $sales_ledger=AccountLedger::where('name','Sales')->first();
                     $cash_ledger=AccountLedger::where('name','Cash')->first();
                     $customer_ledger=AccountLedger::where('name','Customer')->first();
@@ -623,7 +619,7 @@ class InvoiceTestController extends Controller
                     }
                     // end vat journal
                     if($data['sale_type']==0){
-                        // cash debit
+                        // Cash ledger
                         $voucer = new Voucer();
                         $voucer->date= strtotime(strval($data['date']));
                         $voucer->transaction_name="Sale Invoice";
@@ -634,7 +630,7 @@ class InvoiceTestController extends Controller
                         $voucer->invoice_id = $inv_id;
                         $voucer->author_id = auth()->user()->id;
                         $voucer->save();
-                        // sale credit
+                        // sales ledger
                         $voucer = new Voucer();
                         $voucer->date= strtotime(strval($data['date']));
                         $voucer->transaction_name ="Sale Invoice";
@@ -645,112 +641,58 @@ class InvoiceTestController extends Controller
                         $voucer->author_id = auth()->user()->id;
                         $voucer->save();
                         return ['message' => 'Invoice Added Success', 'id' => $inv_id];
-                    }elseif($data['sale_type']==1){
+                    }else{
+                        $due_ammount=$total_payable-floatval($data['ammount']);
                         // sales credit
                         $voucer = new Voucer();
                         $voucer->date= strtotime(strval($data['date']));
-                        $voucer->transaction_name ="Sale Invoice";
+                        $voucer->transaction_name="Sale Invoice";
                         $voucer->ledger_id = $sales_ledger->id;
-                        $voucer->credit = $sales_amt_without_discount;
+                        $voucer->debit = 0;
+                        $voucer->credit =$sales_amt_without_discount;
                         $voucer->invoice_id = $inv_id;
                         $voucer->author_id = auth()->user()->id;
                         $voucer->save();
-                        // customer debit
+                        // customer dabit 
                         $voucer = new Voucer();
                         $voucer->date= strtotime(strval($data['date']));
-                        $voucer->transaction_name="Sale Invoice";
-                        $voucer->ledger_id = $customer_ledger->id;
-                        $voucer->subledger_id = $customer_id;
+                        $voucer->transaction_name = 'Sale Invoice';
+                        $voucer->ledger_id=($data['sale_type']==2 ? $cond_customer_ledger->id : $customer_ledger->id);
+                        $voucer->subledger_id=$customer_id;
                         $voucer->debit = $total_payable;
+                        $voucer->credit = 0;
                         $voucer->invoice_id = $inv_id;
                         $voucer->author_id = auth()->user()->id;
                         $voucer->save();
-                        if($voucer){
-                            return ['message' => 'Invoice Added Success', 'id' => $inv_id];
+                        // cash/bank debit
+                        $voucer = new Voucer();
+                        $voucer->account_id = $data['payment_method'];
+                        $voucer->date= strtotime(strval($data['date']));
+                        $voucer->transaction_name="Sale Invoice";
+                        if($data['payment_method_type']==0){
+                            $voucer->ledger_id=$cash_ledger->id;
                         }
-                    }else{
-                            if ($data['ammount'] != null or $data['ammount']!=0) {
-                                if(floatval($data['ammount'])<floatval($total_payable)){
-                                    $due_ammount=$total_payable-floatval($data['ammount']);
-                                    // sales credit
-                                    $voucer = new Voucer();
-                                    $voucer->date= strtotime(strval($data['date']));
-                                    $voucer->transaction_name="Sale Invoice";
-                                    $voucer->ledger_id = $sales_ledger->id;
-                                    $voucer->debit = 0;
-                                    $voucer->credit =$sales_amt_without_discount;
-                                    $voucer->invoice_id = $inv_id;
-                                    $voucer->author_id = auth()->user()->id;
-                                    $voucer->save();
-                                    // customer dabit 
-                                    $voucer = new Voucer();
-                                    $voucer->date= strtotime(strval($data['date']));
-                                    $voucer->transaction_name = 'Sale Invoice';
-                                    $voucer->ledger_id=$cond_customer_ledger->id;
-                                    $voucer->subledger_id=$customer_id;
-                                    $voucer->debit = $total_payable;
-                                    $voucer->credit = 0;
-                                    $voucer->invoice_id = $inv_id;
-                                    $voucer->author_id = auth()->user()->id;
-                                    $voucer->save();
-                                    // cash/bank debit
-                                    $voucer = new Voucer();
-                                    $voucer->account_id = $data['payment_method'];
-                                    $voucer->date= strtotime(strval($data['date']));
-                                    $voucer->transaction_name="Sale Invoice";
-                                    if($data['payment_method_type']==0){
-                                        $voucer->ledger_id=$cash_ledger->id;
-                                    }
-                                    $voucer->debit =$data['ammount'];
-                                    $voucer->credit = 0;
-                                    $voucer->cheque_no = $data['cheque_no'];
-                                    $voucer->cheque_issue_date = strtotime(strval($data['cheque_issue_date']));
-                                    $voucer->invoice_id = $inv_id;
-                                    $voucer->author_id = auth()->user()->id;
-                                    $voucer->save();
-                                    // customer credit
-                                    $voucer = new Voucer();
-                                    $voucer->account_id = $data['payment_method'];
-                                    $voucer->date= strtotime(strval($data['date']));
-                                    $voucer->transaction_name = 'Sale Invoice';
-                                    $voucer->ledger_id=$cond_customer_ledger->id;
-                                    $voucer->subledger_id = $customer_id;
-                                    $voucer->credit = $data['ammount'];
-                                    $voucer->cheque_no = $data['cheque_no'];
-                                    $voucer->cheque_issue_date = strtotime(strval($data['cheque_issue_date']));
-                                    $voucer->invoice_id = $inv_id;
-                                    $voucer->author_id = auth()->user()->id;
-                                    $voucer->save();
-                                    return ['message' => 'Invoice Added Success', 'id' => $inv_id];
-                                }else{
-                                    $voucer = new Voucer();
-                                    $voucer->date= strtotime(strval($data['date']));
-                                    $voucer->transaction_name ="Sale Invoice";
-                                    $voucer->ledger_id = $sales_ledger->id;
-                                    $voucer->credit =$sales_amt_without_discount;
-                                    $voucer->invoice_id = $inv_id;
-                                    $voucer->author_id = auth()->user()->id;
-                                    $voucer->save();
-                                    // cash/bank debit
-                                    $voucer = new Voucer();
-                                    $voucer->date= strtotime(strval($data['date']));
-                                    if($data['payment_method_type']==0){
-                                        $voucer->ledger_id=$cash_ledger->id;
-                                    }else{
-                                        $voucer->account_id = $data['payment_method'];
-                                        $voucer->date= strtotime(strval($data['date']));
-                                    }
-                                    $voucer->transaction_name="Sale Invoice";
-                                    $voucer->debit =$data['ammount'];
-                                    $voucer->cheque_no = $data['cheque_no'];
-                                    $voucer->cheque_issue_date = strtotime(strval($data['cheque_issue_date']));
-                                    $voucer->invoice_id = $inv_id;
-                                    $voucer->author_id = auth()->user()->id;
-                                    $voucer->save();
-                                    return ['message' => 'Invoice Added Success', 'id' => $inv_id];
-                                }
-                                return ['message' => 'Invoice Added Success', 'id' => $inv_id];
-                            }
+                        $voucer->debit =($data['ammount']==null ? 0 : $data['ammount']);
+                        $voucer->credit = 0;
+                        $voucer->cheque_no = $data['cheque_no'];
+                        $voucer->cheque_issue_date = strtotime(strval($data['cheque_issue_date']));
+                        $voucer->invoice_id = $inv_id;
+                        $voucer->author_id = auth()->user()->id;
+                        $voucer->save();
+                        // customer credit
+                        $voucer = new Voucer();
+                        $voucer->account_id = $data['payment_method'];
+                        $voucer->date= strtotime(strval($data['date']));
+                        $voucer->transaction_name = 'Sale Invoice';
+                        $voucer->ledger_id = ($data['sale_type']==2 ? $cond_customer_ledger->id : $customer_ledger->id);
+                        $voucer->subledger_id = $customer_id;
+                        $voucer->credit = ($data['ammount']==null ? 0 : $data['ammount']);
+                        $voucer->cheque_no = $data['cheque_no'];
+                        $voucer->cheque_issue_date = strtotime(strval($data['cheque_issue_date']));
+                        $voucer->invoice_id = $inv_id;
+                        $voucer->author_id = auth()->user()->id;
+                        $voucer->save();
+                        return ['message' => 'Invoice Added Success', 'id' => $inv_id];
                     }
                 }
                 
