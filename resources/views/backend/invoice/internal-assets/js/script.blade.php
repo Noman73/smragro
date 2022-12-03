@@ -946,6 +946,7 @@ function searchText(text){
 }
 
 $(document).on('select2:select',"#product", function (e){
+  
    text=$('#product option:selected').text();
    part_id=$('#part_id option:selected').text();
    axios.post("{{URL::to('admin/product-details')}}",{text:text})
@@ -963,6 +964,7 @@ $(document).on('select2:select',"#product", function (e){
       })
       $('.item-details tbody').html(html)
       $('.item-details').css('visibility','visible')
+      $('#item-details-table').focus();
    })
    if(part_id!=null){
     $('#addnewbtn').attr('disabled',true);
