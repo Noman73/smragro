@@ -982,8 +982,9 @@ function courierSelection()
   if(customer!=null){
      axios.get("{{URL::to('admin/courier-top')}}/"+customer)
      .then(res=>{
-      console.log(res);
-      $('#courier').html("<option value='"+res.data.id+"'>"+res.data.name+'('+res.data.adress+")</option>")
+      if(res.data.length>0){
+        $('#courier').html("<option value='"+res.data.id+"'>"+res.data.name+'('+res.data.adress+")</option>")
+      }
      })
   }
 }
