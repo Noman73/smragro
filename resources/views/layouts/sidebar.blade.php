@@ -280,6 +280,23 @@
                     </a>
                   </li>
                   @endcan
+                  @can('Brand View')
+                  <li class="nav-item">
+                    <a href="{{route('category.index')}}" class="nav-link">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>Brand</p>
+                    </a>
+                  </li>
+                  @endcan
+                  @can('Model View')
+                  <li class="nav-item">
+                    <a href="{{route('category.index')}}" class="nav-link">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>Model</p>
+                    </a>
+                  </li>
+                  @endcan
+                  
                   @can('Unit View')
                   <li class="nav-item">
                     <a href="{{route('unit.index')}}" class="nav-link">
