@@ -296,7 +296,6 @@
                     </a>
                   </li>
                   @endcan
-                  
                   @can('Unit View')
                   <li class="nav-item">
                     <a href="{{route('unit.index')}}" class="nav-link">
