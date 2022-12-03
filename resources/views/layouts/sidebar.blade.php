@@ -154,6 +154,16 @@
                 </a>
               </li>
               @endcan
+              @can("Customer View")
+              <li class="nav-item">
+                <a href="{{URL::to('admin/market')}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>
+                    Market
+                  </p>
+                </a>
+              </li>
+              @endcan
               @can('Sale Pricing View')
               <li class="nav-item">
                 <a href="{{URL::to('admin/make-price')}}" class="nav-link">
