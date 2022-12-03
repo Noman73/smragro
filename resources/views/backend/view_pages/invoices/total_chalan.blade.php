@@ -170,18 +170,24 @@
                     <th>Invoice Total</th>
                     <td>৳. {{$invoice->total}}</td>
                 </tr>
+                @if($invoice->discount!=null or $invoice->discount!=0.00)
                 <tr>
                     <th>Discount</th>
                     <td>৳ {{($invoice->discount_type==0 ? number_format($invoice->discount,2) : number_format(floatval($invoice->discount*$invoice->total)/100,2))}}</td>
                 </tr>
+                @endif
+                @if($invoice->vat!=null or $invoice->vat!=0.00)
                 <tr>
                   <th>Vat</th>
                   <td>৳ {{number_format(($invoice->vat*$invoice->total)/100,2)}}</td>
                 </tr>
+                @endif
+                @if($invoice->transport!=null or $invoice->transport!=0.00)
                 <tr>
                   <th>Transport Income</th>
                   <td>৳ {{number_format($invoice->transport==null ? 0 : $invoice->transport,2)}}</td>
                 </tr>
+                @endif
                   <tr>
                       <th>Invoice Due</th>
                      
