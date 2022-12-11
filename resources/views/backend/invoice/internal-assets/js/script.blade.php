@@ -517,19 +517,23 @@ function balance(thisval){
   axios.get('admin/accounts/get-customer-balance/'+id)
   .then((res)=>{
       console.log(res.data[0].total);
+      comment=res.data[0].comment;
+      if(comment==null){
+        comment='';
+      }
       if($('#sale_type').val()==1){
-        $('#previous_due').val(res.data[0].total);
+        $('#previous_due').val(res.data[0].total+' '+comment);
       }
       if(parseFloat(res.data[0].total)<0){
-        $('#customer-balance').text(res.data[0].total);
+        $('#customer-balance').text(res.data[0].total+' '+comment);
         $('#customer-balance').addClass('text-danger')
         $('#customer-balance').removeClass('text-success')
       }else if(parseFloat(res.data[0].total)>=0){
-        $('#customer-balance').text(res.data[0].total);
+        $('#customer-balance').text(res.data[0].total+' '+comment);
         $('#customer-balance').addClass('text-success');
         $('#customer-balance').removeClass('text-danger');
       }else{
-        $('#customer-balance').text('0.00');
+        $('#customer-balance').text('0.00'+' '+comment);
         $('#customer-balance').addClass('text-success');
         $('#customer-balance').removeClass('text-danger');
       }
@@ -538,9 +542,8 @@ function balance(thisval){
       }
   })
 }
-
 $(document).on('select2:unselect','#customer',function(){
-    $('.total_balance').addClass('d-none')
+    $('.total_balance').addClass('d-none');
 })
 $(document).on('change keyup','#w_mobile',function(){
    $('#w_name').val('');
