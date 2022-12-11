@@ -176,6 +176,14 @@
                       </div>
                     </div>
                   </div>
+                  <div class="col-md-8 mr-auto ml-auto">
+                    <div class="form-group">
+                      <label for="recipient-name" class="col-form-label">Comment:</label>
+                      <textarea id="comment" rows="5" class='form-control' placeholder="Write Comment"></textarea>
+                      <div class="invalid-feedback" id="comment_msg">
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </form>
             </div>
