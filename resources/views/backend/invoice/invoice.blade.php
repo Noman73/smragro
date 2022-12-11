@@ -24,6 +24,10 @@
       visibility:hidden;
       background-color:white;
     }
+    #product_added{
+      overflow:auto;
+      height:250px;
+    }
   </style>
  @endsection
  @section('content')
@@ -207,10 +211,10 @@
                         </div>
                       </div>
                      </div>
-                     <div class="col-12 col-md-6 border ">
+                     <div class="col-12 col-md-6 border " id="product_added">
                       <input type="text" class="form-control form-control-sm mt-2" id='search_key' placeholder="Search" onchange="searchText(this.value)">
-                      <div class="table-responsive">
-                          <table class="table table-sm text-center table-bordered mt-2" id="add_product">
+                      <div class="table-responsive" >
+                          <table class="table table-sm text-center table-bordered mt-2" id="add_product" >
                               <thead>
                                   <tr>
                                     <th width='30%'>Product</th>
