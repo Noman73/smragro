@@ -71,6 +71,7 @@ class CustomerController extends Controller
         // return response()->json($request->all());
         $validator=Validator::make($request->all(),[
             'company_name'=>"nullable|max:200|min:1",
+            'comment'=>"required|max:500|min:1",
             'name'=>"required|max:200|min:1",
             'email'=>"nullable|email|max:200|min:1",
             'phone'=>"required|max:200|min:1",
@@ -88,6 +89,7 @@ class CustomerController extends Controller
             $countCustomer=Customer::where('type',1)->count();
             $customer=new Customer;
             $customer->company_name=$request->company_name;
+            $customer->comment=$request->comment;
             $customer->name=$request->name;
             $customer->market_id=$request->market;
             $customer->email=$request->email;
@@ -103,7 +105,7 @@ class CustomerController extends Controller
             $customer->author_id=auth()->user()->id;
             if ($request->hasFile('image')) {
                 $ext = $request->image->getClientOriginalExtension();
-                $name =auth()->user()->id  .'_'. time() . '.' . $ext;
+                $name =auth()->user()->id.'_'. time() . '.' . $ext;
                 $request->image->storeAs('public/customer', $name);
                 $customer->image = $name;
             }
@@ -114,7 +116,6 @@ class CustomerController extends Controller
         }
         return response()->json(['error'=>$validator->getMessageBag()]);
     }
-
     /**
      * Display the specified resource.
      *
@@ -154,6 +155,7 @@ class CustomerController extends Controller
         // return response()->json($request->all());
         $validator=Validator::make($request->all(),[
             'company_name'=>"nullable|max:200|min:1",
+            'comment'=>"nullable|max:500|min:1",
             'name'=>"required|max:200|min:1",
             'market'=>"required|max:15|min:1",
             'email'=>"nullable|email|max:200|min:1",
@@ -169,6 +171,7 @@ class CustomerController extends Controller
         if($validator->passes()){
             $customer=Customer::find($id);
             $customer->company_name=$request->company_name;
+            $customer->comment=$request->comment;
             $customer->name=$request->name;
             $customer->market_id=$request->market;
             $customer->email=$request->email;

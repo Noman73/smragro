@@ -47,6 +47,7 @@
 window.formRequest= function(){
     $('input,select').removeClass('is-invalid');
     let company_name=$('#company_name').val();
+    let comment=$('#comment').val();
     let name=$('#name').val();
     let market=$('#market').val();
     let adress=$('#adress').val();
@@ -61,6 +62,7 @@ window.formRequest= function(){
     let id=$('#id').val();
     let formData= new FormData();
     formData.append('company_name',company_name);
+    formData.append('comment',comment);
     formData.append('name',name);
     formData.append('market',market);
     formData.append('adress',adress);
