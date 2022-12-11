@@ -63,6 +63,7 @@ class BankAccountController extends Controller
         // return $request->all();
         $validator=Validator::make($request->all(),[
             'name'=>"required|max:200|min:1",
+            'account_name'=>"required|max:200|min:1",
             'branch_name'=>"nullable|max:200|min:1",
             'account_no'=>"required|max:200|min:1",
             'account_code'=>"nullable|max:200|min:1",
@@ -75,6 +76,7 @@ class BankAccountController extends Controller
             $count=Bank::count();
             $bank=new Bank;
             $bank->name=$request->name;
+            $bank->account_name=$request->account_name;
             $bank->branch_name=$request->branch_name;
             $bank->account_no=$request->account_no;
             $bank->account_code=$request->account_code;
@@ -124,6 +126,7 @@ class BankAccountController extends Controller
     {
         $validator=Validator::make($request->all(),[
             'name'=>"required|max:200|min:1",
+            'account_name'=>"required|max:200|min:1",
             'branch_name'=>"nullable|max:200|min:1",
             'account_no'=>"required|max:200|min:1",
             'account_code'=>"nullable|max:200|min:1",
@@ -134,6 +137,7 @@ class BankAccountController extends Controller
         if($validator->passes()){
             $category=Bank::find($id);
             $category->name=$request->name;
+            $category->account_name=$request->account_name;
             $category->branch_name=$request->branch_name;
             $category->account_no=$request->account_no;
             $category->account_code=$request->account_code;

@@ -44,6 +44,7 @@
                   <tr>
                     <th>SL</th>
                     <th>Name</th>
+                    <th>Account Name</th>
                     <th>Branch Name</th>
                     <th>Account No.</th>
                     <th>Action</th>
@@ -79,6 +80,14 @@
                   </div>
                   <div class="col-md-8 mr-auto ml-auto">
                     <div class="form-group">
+                      <label for="recipient-name" class="col-form-label">Account Name:</label>
+                      <input type="text" class="form-control" id="account_name" placeholder="Enter Account Name">
+                      <div class="invalid-feedback" id="account_name_msg">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-8 mr-auto ml-auto">
+                    <div class="form-group">
                       <label for="recipient-name" class="col-form-label">Branch Name:</label>
                       <input type="text" class="form-control" id="branch_name" placeholder="Enter Branch Name">
                       <div class="invalid-feedback" id="branch_name_msg">
@@ -104,7 +113,7 @@
                   <div class="col-md-8 mr-auto ml-auto">
                     <div class="form-group">
                       <label for="recipient-name" class="col-form-label">Details:</label>
-                      <input type="text" class="form-control" id="details" placeholder="Enter Account Code">
+                      <input type="text" class="form-control" id="details" placeholder="Enter Details">
                       <div class="invalid-feedback" id="details_msg">
                       </div>
                     </div>

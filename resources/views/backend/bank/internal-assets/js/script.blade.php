@@ -20,6 +20,10 @@
             name:'name',
           },
           {
+            data:'account_name',
+            name:'account_name',
+          },
+          {
             data:'branch_name',
             name:'branch_name',
           },
@@ -34,11 +38,10 @@
         ]
     });
   })
-    
-
 window.formRequest= function(){
     $('input,select').removeClass('is-invalid');
     let name=$('#name').val();
+    let account_name=$('#account_name').val();
     let branch_name=$('#branch_name').val();
     let account_no=$('#account_no').val();
     let account_code=$('#account_code').val();
@@ -48,6 +51,7 @@ window.formRequest= function(){
     let id=$('#id').val();
     let formData= new FormData();
     formData.append('name',name);
+    formData.append('account_name',account_name);
     formData.append('branch_name',branch_name);
     formData.append('account_no',account_no);
     formData.append('account_code',account_code);
@@ -95,7 +99,6 @@ window.formRequest= function(){
 $(document).delegate("#modalBtn", "click", function(event){
     clear();
     $('#exampleModalLabel').text('Add New Bank Account');
-
 });
 $(document).delegate(".editRow", "click", function(){
     $('#exampleModalLabel').text('Edit Bank Account');
