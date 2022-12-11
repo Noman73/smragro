@@ -71,7 +71,7 @@ class CustomerController extends Controller
         // return response()->json($request->all());
         $validator=Validator::make($request->all(),[
             'company_name'=>"nullable|max:200|min:1",
-            'comment'=>"required|max:500|min:1",
+            'comment'=>"nullable|max:500|min:1",
             'name'=>"required|max:200|min:1",
             'email'=>"nullable|email|max:200|min:1",
             'phone'=>"required|max:200|min:1",
