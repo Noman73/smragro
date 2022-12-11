@@ -230,7 +230,9 @@ class CustomerController extends Controller
      }
      public function getBalance($id)
      {
-         return $total=DB::select("select sum(voucers.debit-voucers.credit) total from voucers left join account_ledgers on account_ledgers.id=voucers.ledger_id where (transaction_name='customers' or account_ledgers.name='Customer') and (subledger_id=:id or person_id=:person_id)",['id'=>$id,'person_id'=>$id]);
+         return $total=DB::select("select sum(voucers.debit-voucers.credit) total,customers.comment from voucers
+          inner join customers on customers.id=:cus_id
+          left join account_ledgers on account_ledgers.id=voucers.ledger_id where (transaction_name='customers' or account_ledgers.name='Customer') and (subledger_id=:id or person_id=:person_id)",['id'=>$id,'person_id'=>$id,'cus_id'=>$id]);
      }
      public function checkCustomer(Request $request){
         //  return $request->all();
