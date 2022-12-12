@@ -23,11 +23,12 @@
       left:42px;
       visibility:hidden;
       background-color:white;
+      top:-50px;
     }
     #product_added{
       overflow:auto;
       height:250px;
-      font-size:10px;
+      font-size:12px;
     }
   </style>
  @endsection
@@ -35,7 +36,7 @@
     <!-- Content Header (Page header) -->
     <div class="content-header" style="position:relative;z-index:1;">
       <div class="item-details">
-        <table id="item-details-table" class="table table-sm table-bordered" style="font-size:14px;">
+        <table id="item-details-table" class="table table-sm table-bordered clearfix" style="font-size:14px;">
           <thead>
             <tr>
               <th >Name</th>
@@ -218,10 +219,11 @@
                           <table class="table table-sm text-center table-bordered mt-2" id="add_product" >
                               <thead>
                                   <tr>
-                                    <th width='30%'>Product</th>
+                                    <th width='20%'>Product</th>
+                                    <th width='20%'>Brand/Model</th>
                                     <th width='15%'>Quantity</th>
-                                    <th width='20%'>Price</th>
-                                    <th width='25%'>Total</th>
+                                    <th width='15%'>Price</th>
+                                    <th width='20%'>Total</th>
                                     <th width='10%'>Action</th>
                                   </tr>
                               </thead>

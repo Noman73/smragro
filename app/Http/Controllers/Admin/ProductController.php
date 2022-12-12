@@ -405,7 +405,18 @@ class ProductController extends Controller
     }
     public function productDetails(Request $request){
         // return $request->text;
+        $model=$request->model;
+        $brand=$request->brand;
         $post=Product::with('model','brand')->where('name',$request->text)->get();
+        if($model!=null and $brand!=null){
+            $post=Product::where('model_id',$model)->where('brand_id',$brand)->where('name',$request->text)->get();
+        }
+        if($model==null and $brand!=null){
+            $post=Product::where('brand_id',$brand)->where('name',$request->text)->get();
+        }
+        if($model!=null and $brand==null){
+            $post=Product::where('model_id',$model)->where('name',$request->text)->get();
+        }
         return $post;
     }
 }

@@ -81,6 +81,8 @@ $("#customer").select2({
 
     let item=$('#product').val();
     let itemtext=$('#product option:selected').text();
+    let brandtext=$('#brand option:selected').text();
+    let modeltext=$('#model option:selected').text();
     let quantity=$('#quantity').val();
     let part_id=$('#part_id').val();
     let amount=$('#amount').val();
@@ -100,7 +102,8 @@ $("#customer").select2({
     if(!cond){
       return false;
     }
-    form=`<tr><td><input type="hidden" name="product[]" value="`+item+`">`+itemtext+`</td>`;
+    form=`<tr><td><input type="hidden" name="product[]" value="`+item+`">`+itemtext+`<br/> `+part_id+`</td>`;
+    form+=`<td>`+brandtext+`<br/>`+modeltext+`</td>`
     form+=`<td><input type="number" class="form-control form-control-sm qantity" name="qantity[]" placeholder='0.00' value='`+quantity+`' /></td>`;
     form+=`<td><input type="number" class="form-control form-control-sm price" name="price[]" placeholder='0.00' value="`+amount+`" disabled/></td>`;
     form+=`<td><input type="number" class="form-control form-control-sm total" name="total[]" placeholder='0.00' value="`+total+`" disabled/></td>`;
@@ -112,7 +115,6 @@ $("#customer").select2({
    itemClear();
    calculation();
    totalCal();
-
    $('#product').select2('open');
   }
 
@@ -790,7 +792,7 @@ function saleByCheck(){
 }
 
 $('body').on('select2:select',"#product", function (e){
-  id=e.params.data.id;
+  id=$('#product').val();
   this_cat=$(this);
   customer=$('#customer').val();
   axios.get('admin/get-quantity/'+id)
@@ -945,15 +947,14 @@ function searchText(text){
         elofdoc = el[index];
         elofdoc.parentElement.style.background = "red";
         console.log(elofdoc)
-        
       }
 }
-
 $(document).on('select2:select',"#product", function (e){
-  
    text=$('#product option:selected').text();
+   brand=$('#brand option:selected').val();
+   model=$('#model option:selected').val();
    part_id=$('#part_id option:selected').text();
-   axios.post("{{URL::to('admin/product-details')}}",{text:text})
+   axios.post("{{URL::to('admin/product-details')}}",{text:text,brand:brand,model:model})
    .then((res)=>{
       console.log(res);
       html="";
@@ -1001,5 +1002,9 @@ $(document).on('select2:unselect','#product', function(e){
   $('#brand').val(null).trigger('change')
   $('#model').val(null).trigger('change')
   $('#part_id').val(null).trigger('change')
+})
+
+$(document).on('select2:select','#brand,#model',function(){
+  $('#product').trigger('select2:select');
 })
 </script>
