@@ -84,9 +84,19 @@
             </div>
             <div class="modal-body">
               <form>
-                <div class="form-group">
-                  <select name="form-control" id="employee"></select>
+                <div class="row">
+                  <div class="col-12 col-md-8">
+                    <div class="form-group">
+                      <select name="form-control" id="employee"></select>
+                    </div>
+                  </div>
+                  <div class="col-12 col-md-4">
+                    <div class="form-group">
+                      <input type="text" class="form-control" id="date">
+                    </div>
+                  </div>
                 </div>
+                
                 <input type="hidden" id="id">
                 <table class="table table-sm text-center table-bordered" id="datatable">
                   <thead>
@@ -101,12 +111,12 @@
                   </thead>
                   <tbody>
                     <tr>
-                      <td><input type="time" class="form-control form-control-sm" name="in_time[]"></td>
-                      <td><input type="time" class="form-control form-control-sm" name="launch_out_time[]"></td>
-                      <td><input type="time" class="form-control form-control-sm" name="launch_in_time[]"></td>
-                      <td><input type="time" class="form-control form-control-sm" name="out_time[]"></td>
-                      <td></td>
-                      <td></td>
+                      <td><input type="time" class="form-control form-control-sm" name="in_time" id="in_time"></td>
+                      <td><input type="time" class="form-control form-control-sm" name="launch_out_time" id="launch_out_time"></td>
+                      <td><input type="time" class="form-control form-control-sm" name="launch_in_time" id="launch_in_time"></td>
+                      <td><input type="time" class="form-control form-control-sm" name="out_time" id="out_time"></td>
+                      <td id='total_time'></td>
+                      <td id='over_time'></td>
                     </tr>
                   </tbody>
                 </table>
