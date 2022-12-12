@@ -101,9 +101,9 @@ $("#customer").select2({
       return false;
     }
     form=`<tr><td><input type="hidden" name="product[]" value="`+item+`">`+itemtext+`</td>`;
-    form+=`<td><input type="number" class="form-control qantity" name="qantity[]" placeholder='0.00' value='`+quantity+`' /></td>`;
-    form+=`<td><input type="number" class="form-control price" name="price[]" placeholder='0.00' value="`+amount+`" disabled/></td>`;
-    form+=`<td><input type="number" class="form-control total" name="total[]" placeholder='0.00' value="`+total+`" disabled/></td>`;
+    form+=`<td><input type="number" class="form-control form-control-sm qantity" name="qantity[]" placeholder='0.00' value='`+quantity+`' /></td>`;
+    form+=`<td><input type="number" class="form-control form-control-sm price" name="price[]" placeholder='0.00' value="`+amount+`" disabled/></td>`;
+    form+=`<td><input type="number" class="form-control form-control-sm total" name="total[]" placeholder='0.00' value="`+total+`" disabled/></td>`;
     form+=`<td><button class="btn btn-sm btn-danger removeItem" >X</button></td></tr>`;
    $("#item_table_body").append(form);
    initSelect2()

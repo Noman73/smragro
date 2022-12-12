@@ -27,6 +27,7 @@
     #product_added{
       overflow:auto;
       height:250px;
+      font-size:10px;
     }
   </style>
  @endsection
