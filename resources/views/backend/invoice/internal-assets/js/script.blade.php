@@ -792,7 +792,7 @@ function saleByCheck(){
 }
 
 $('body').on('select2:select',"#product", function (e){
-  id=$('#product').val();
+  id=e.params.data.id;
   this_cat=$(this);
   customer=$('#customer').val();
   axios.get('admin/get-quantity/'+id)
@@ -816,19 +816,14 @@ $('body').on('select2:select',"#product", function (e){
 
 
 //  $(document).on('select2:select',"select[name='product[]']", function (e){
-
-   
 //    product=$(this).val();
 //    console.log(customer,product);
-   
 //  })
-
 // $(document).keypress(function(event) {
 //     if(event.keyCode==100 && !event.shiftKey){
 //       addNew()
 //       return false
-//     }
-    
+//     } 
 // });
 $(document).keypress(function(event){
  console.log(event.which)
@@ -950,6 +945,9 @@ function searchText(text){
       }
 }
 $(document).on('select2:select',"#product", function (e){
+  initDetails();
+})
+function initDetails(){
    text=$('#product option:selected').text();
    brand=$('#brand option:selected').val();
    model=$('#model option:selected').val();
@@ -974,8 +972,7 @@ $(document).on('select2:select',"#product", function (e){
    if(part_id!=null){
     $('#addnewbtn').attr('disabled',true);
    }
-})
-
+}
 
 $(document).on('click','.details-row',function(d){
   part_id=$(this).children().next().next().next('#part_id_row').text();
@@ -1005,6 +1002,6 @@ $(document).on('select2:unselect','#product', function(e){
 })
 
 $(document).on('select2:select','#brand,#model',function(){
-  $('#product').trigger('select2:select');
+  initDetails()
 })
 </script>

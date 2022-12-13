@@ -355,13 +355,13 @@ class ProductController extends Controller
     }
     public function getModel(Request $request)
     {
-        // return $request->all();
+        return $request->all();
         $brand_id=$request->brand_id;
         if($request->brand_id==null){
             $brand_id='';
             $search= Models::select('id','name')->where('name','like','%'.$request->searchTerm.'%')->take(30)->get();
         }else{
-            $search= Models::select('id','name')->where('name','like','%'.$request->searchTerm.'%')->where('brand_id',$brand_id)->take(30)->get();
+            $search= Models::select('id','name')->where('name','like','%'.$request->searchTerm.'%')->where('brand_id',$brand_id)->take(100)->get();
         }
         foreach ($search as $value){
             $set_data[]=['id'=>$value->id,'text'=>$value->name];
@@ -409,13 +409,13 @@ class ProductController extends Controller
         $brand=$request->brand;
         $post=Product::with('model','brand')->where('name',$request->text)->get();
         if($model!=null and $brand!=null){
-            $post=Product::where('model_id',$model)->where('brand_id',$brand)->where('name',$request->text)->get();
+            $post=Product::with('model','brand')->where('model_id',$model)->where('brand_id',$brand)->where('name',$request->text)->get();
         }
         if($model==null and $brand!=null){
-            $post=Product::where('brand_id',$brand)->where('name',$request->text)->get();
+            $post=Product::with('model','brand')->where('brand_id',$brand)->where('name',$request->text)->get();
         }
         if($model!=null and $brand==null){
-            $post=Product::where('model_id',$model)->where('name',$request->text)->get();
+            $post=Product::with('model','brand')->where('model_id',$model)->where('name',$request->text)->get();
         }
         return $post;
     }
