@@ -19,7 +19,7 @@
       border:1px solid blue;
       overflow:scroll;
       position:absolute;
-      z-index:100;
+      z-index:10;
       left:42px;
       visibility:hidden;
       background-color:white;
@@ -29,6 +29,9 @@
       overflow:auto;
       height:250px;
       font-size:12px;
+    }
+    .select2-dropdown{
+      z-index: 11 !important;
     }
   </style>
  @endsection

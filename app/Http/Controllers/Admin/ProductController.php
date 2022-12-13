@@ -355,11 +355,11 @@ class ProductController extends Controller
     }
     public function getModel(Request $request)
     {
-        return $request->all();
+        // return $request->all();
         $brand_id=$request->brand_id;
         if($request->brand_id==null){
             $brand_id='';
-            $search= Models::select('id','name')->where('name','like','%'.$request->searchTerm.'%')->take(30)->get();
+            $search= Models::select('id','name')->where('name','like','%'.$request->searchTerm.'%')->take(100)->get();
         }else{
             $search= Models::select('id','name')->where('name','like','%'.$request->searchTerm.'%')->where('brand_id',$brand_id)->take(100)->get();
         }

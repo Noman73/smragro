@@ -950,8 +950,9 @@ $(document).on('select2:select',"#product", function (e){
     $('#addnewbtn').attr('disabled',true);
   }
 })
+var initDetailsStatus=false;
 function initDetails(){
-   var initDetails=true;
+   initDetailsStatus=true;
    text=$('#product option:selected').text();
    brand=$('#brand option:selected').val();
    model=$('#model option:selected').val();
@@ -982,7 +983,7 @@ $(document).on('click','.details-row',function(d){
   $('#part_id').trigger('select2:select');
   $('.item-details').css('visibility','hidden');
   $('#addnewbtn').attr('disabled',false);
-  initDetails=false;
+  initDetailsStatus=false;
 })
 function courierSelection()
 {
@@ -1003,8 +1004,8 @@ $(document).on('select2:unselect','#product', function(e){
   $('#part_id').val(null).trigger('change')
 })
 $(document).on('select2:select','#brand,#model',function(){
-  if(initDetails==true){
-    initDetails()
+  if(initDetailsStatus==true){
+    initDetails();
   }
 })
 </script>

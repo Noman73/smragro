@@ -67070,6 +67070,29 @@ class TestController extends Controller
         //   7 => 'sales_rate',
         //   8 => 'reorder',
         //   9 => 'location',
+        foreach($x as $data){
+          $brand=Brand::where('name',$data[1])->first();
+           if($brand==null){
+            $brand=new Brand;
+            $brand->name=$data[1];
+            $brand->author_id = auth()->user()->id;
+            $brand->save();
+           }
+           $model=Models::where('name',$data[2])->first();
+           if($model==null){
+            $model=new Models;
+            $model->name=$data[2];
+            $model->brand_id=$brand->id;
+            $model->author_id = auth()->user()->id;
+            $model->save();
+           }
+           $brand_has_models=new BrandHasModels;
+           $brand_has_models->brand_id=$brand->id;
+           $brand_has_models->model_id=$model->id;
+           $brand_has_models->author_id= auth()->user()->id;
+           $brand_has_models->save();
+        }
+        return 'completed';
 
         foreach($x as $data){
            $unit=Unit::where('name',$data[5])->first();
