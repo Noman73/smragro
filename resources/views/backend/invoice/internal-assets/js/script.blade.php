@@ -946,6 +946,9 @@ function searchText(text){
 }
 $(document).on('select2:select',"#product", function (e){
   initDetails();
+  if(part_id!=null){
+    $('#addnewbtn').attr('disabled',true);
+  }
 })
 function initDetails(){
    text=$('#product option:selected').text();
@@ -969,9 +972,7 @@ function initDetails(){
       $('.item-details').css('visibility','visible')
       $('#item-details-table').focus();
    })
-   if(part_id!=null){
-    $('#addnewbtn').attr('disabled',true);
-   }
+   
 }
 
 $(document).on('click','.details-row',function(d){
@@ -1000,7 +1001,6 @@ $(document).on('select2:unselect','#product', function(e){
   $('#model').val(null).trigger('change')
   $('#part_id').val(null).trigger('change')
 })
-
 $(document).on('select2:select','#brand,#model',function(){
   initDetails()
 })
