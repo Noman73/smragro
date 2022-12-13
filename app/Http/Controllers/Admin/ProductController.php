@@ -359,9 +359,19 @@ class ProductController extends Controller
         $brand_id=$request->brand_id;
         if($request->brand_id==null){
             $brand_id='';
-            $search= Models::select('id','name')->where('name','like','%'.$request->searchTerm.'%')->take(100)->get();
+            // $search= Models::select('id','name')->where('name','like','%'.$request->searchTerm.'%')->take(100)->get();
+            $search=DB::select("
+                SELECT models.id,models.name from brand_has_models
+                inner join models on models.id=brand_has_models.model_id
+                where models.name like :query group by models.id
+            ",['query'=>'%'.$request->searchTerm.'%']);
         }else{
-            $search= Models::select('id','name')->where('name','like','%'.$request->searchTerm.'%')->where('brand_id',$brand_id)->take(100)->get();
+            // $search= Models::select('id','name')->where('name','like','%'.$request->searchTerm.'%')->where('brand_id',$brand_id)->take(100)->get();
+            $search=DB::select("
+                SELECT models.id,models.name from brand_has_models
+                inner join models on brand_has_models.model_id=models.id
+                where models.name like :query and brand_has_models.brand_id=:brand_id  group by models.id
+            ",['query'=>'%'.$request->searchTerm.'%','brand_id'=>$brand_id]);
         }
         foreach ($search as $value){
             $set_data[]=['id'=>$value->id,'text'=>$value->name];

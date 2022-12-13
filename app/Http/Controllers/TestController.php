@@ -10,6 +10,7 @@ use App\Models\Models;
 use App\Models\Market;
 use App\Models\Customer;
 use App\Models\AccountLedger;
+use App\Models\BrandHasModel;
 class TestController extends Controller
 {
     public function index()
@@ -67086,14 +67087,16 @@ class TestController extends Controller
             $model->author_id = auth()->user()->id;
             $model->save();
            }
-           $brand_has_models=new BrandHasModels;
-           $brand_has_models->brand_id=$brand->id;
-           $brand_has_models->model_id=$model->id;
-           $brand_has_models->author_id= auth()->user()->id;
-           $brand_has_models->save();
+           $existbrandhasmodel=BrandHasModel::where('brand_id',$brand->id)->where('model_id',$model->id)->first();
+           if($existbrandhasmodel==null){
+            $brand_has_models=new BrandHasModel;
+            $brand_has_models->brand_id=$brand->id;
+            $brand_has_models->model_id=$model->id;
+            $brand_has_models->author_id= auth()->user()->id;
+            $brand_has_models->save();
+           }
         }
         return 'completed';
-
         foreach($x as $data){
            $unit=Unit::where('name',$data[5])->first();
            if($unit==null){
