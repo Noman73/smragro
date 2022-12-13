@@ -951,6 +951,7 @@ $(document).on('select2:select',"#product", function (e){
   }
 })
 function initDetails(){
+   var initDetails=true;
    text=$('#product option:selected').text();
    brand=$('#brand option:selected').val();
    model=$('#model option:selected').val();
@@ -972,7 +973,6 @@ function initDetails(){
       $('.item-details').css('visibility','visible')
       $('#item-details-table').focus();
    })
-   
 }
 
 $(document).on('click','.details-row',function(d){
@@ -982,6 +982,7 @@ $(document).on('click','.details-row',function(d){
   $('#part_id').trigger('select2:select');
   $('.item-details').css('visibility','hidden');
   $('#addnewbtn').attr('disabled',false);
+  initDetails=false;
 })
 function courierSelection()
 {
@@ -1002,6 +1003,8 @@ $(document).on('select2:unselect','#product', function(e){
   $('#part_id').val(null).trigger('change')
 })
 $(document).on('select2:select','#brand,#model',function(){
-  initDetails()
+  if(initDetails==true){
+    initDetails()
+  }
 })
 </script>
