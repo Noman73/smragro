@@ -375,8 +375,8 @@ class ProductController extends Controller
         }
         foreach ($search as $value){
             $set_data[]=['id'=>$value->id,'text'=>$value->name];
-       }
-       return $set_data;
+        }
+        return $set_data;
     }
     public function getProductByData(Request $request)
     {
