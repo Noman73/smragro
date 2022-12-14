@@ -209,8 +209,8 @@ function timeCalc(){
   var first_hours = Math.floor(first_hour_second / 3600);
   var first_hour_minutes = Math.floor(first_hour_second % 3600 / 60);
   var seconds = first_hour_second % 60;
-  $('#total_time').text(first_hours+":"+first_hour_minutes+':'+seconds)
-  overtime_second=
+  $('#total_time').text(first_hours+":"+first_hour_minutes+':'+seconds);
+  
 }
 $(document).on('change','#in_time,#launch_out_time,#launch_out_time,out_time',function(){
   timeCalc();
