@@ -263,19 +263,23 @@
         }else if(sale_type==1){
           $('#init-customer').addClass('visible')
           $('#init-customer').removeClass('invisible')
-          $('#ammount').attr('disabled',false);
-          $('#ammount').parent().parent().addClass('d-none');
-          $("#payment_method_row").addClass('d-none');
           $("#w_customer").addClass('d-none');
           $("#w_mobile").val('');
-        }else if(sale_type==2){
-          $('#init-customer').addClass('invisible')
-          $('#init-customer').removeClass('visible')
+          $('.due').removeClass('d-none')
           $("#payment_method_row").removeClass('d-none');
-          $("#w_customer").removeClass('d-none');
           $('#ammount').attr('disabled',false);
-          
           $('#ammount').parent().parent().removeClass('d-none');
+          $('#ammount').val('');
+        }else if(sale_type==2){
+          $('#init-customer').addClass('visible')
+          $('#init-customer').removeClass('invisible')
+          $("#w_customer").addClass('d-none');
+          $("#w_mobile").val('');
+          $('.due').removeClass('d-none')
+          $("#payment_method_row").removeClass('d-none');
+          $('#ammount').attr('disabled',false);
+          $('#ammount').parent().parent().removeClass('d-none');
+          $('#ammount').val('');
         }
       }
       $('#sale_type').change(function(){
@@ -638,12 +642,12 @@
         $('#total').val(invoices.total);
         $('#total-item').val(invoices.total_item);
         total_item=parseInt(invoices.total_item)
-        if(invoices.sale_type==2){
-          console.log(parseInt(invoices.customer.phone))
-          $('#w_mobile').val('5454512121');
-          $('#w_name').val(invoices.customer.name);
-          $('#w_adress').val(invoices.customer.adress);
-        }
+        // if(invoices.sale_type==2){
+        //   console.log(parseInt(invoices.customer.phone))
+        //   $('#w_mobile').val('5454512121');
+        //   $('#w_name').val(invoices.customer.name);
+        //   $('#w_adress').val(invoices.customer.adress);
+        // }
         if(invoices.sale_by==2){
           $('#shipping_name').val(invoices.shipping_customer.name);
           $('#shipping_mobile').val(invoices.shipping_customer.phone);

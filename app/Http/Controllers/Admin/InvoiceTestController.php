@@ -394,7 +394,7 @@ class InvoiceTestController extends Controller
         if($r->courier=='null'){
             $data['courier']=null;
         }
-        if($data['sale_type']==1){
+        if($data['sale_type']==1 or $data['sale_type']==2){
             $customer_cond="required";
         }else{
             $customer_cond="nullable";
@@ -405,11 +405,6 @@ class InvoiceTestController extends Controller
             $sale_cond="nullable";
         }
         if($data['mobile']!=null){
-            $wcustomer='required';
-        }else{
-            $wcustomer='nullable';
-        }
-        if($data['sale_type']==2){
             $wcustomer='required';
         }else{
             $wcustomer='nullable';
@@ -651,7 +646,7 @@ class InvoiceTestController extends Controller
                         $voucer = new Voucer();
                         $voucer->date= strtotime(strval($data['date']));
                         $voucer->transaction_name = 'Sale Invoice';
-                        $voucer->ledger_id=($data['sale_type']==2 ? $cond_customer_ledger->id : $customer_ledger->id);
+                        $voucer->ledger_id= $customer_ledger->id;
                         $voucer->subledger_id=$customer_id;
                         $voucer->debit = $total_payable;
                         $voucer->credit = 0;
@@ -678,7 +673,7 @@ class InvoiceTestController extends Controller
                         $voucer->account_id = $data['payment_method'];
                         $voucer->date= strtotime(strval($data['date']));
                         $voucer->transaction_name = 'Sale Invoice';
-                        $voucer->ledger_id = ($data['sale_type']==2 ? $cond_customer_ledger->id : $customer_ledger->id);
+                        $voucer->ledger_id =$customer_ledger->id;
                         $voucer->subledger_id = $customer_id;
                         $voucer->credit = ($data['ammount']==null ? 0 : $data['ammount']);
                         $voucer->cheque_no = $data['cheque_no'];
