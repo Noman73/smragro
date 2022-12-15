@@ -404,13 +404,13 @@ class ProductController extends Controller
                 $search=Product::where('name','like','%'.$request->searchTerm.'%')->where('brand_id',$brand_id)->groupBy('name')->take(30)->get();
                 break;
             case $part_id=='' and $model!='' and $brand_id=='':
-                $search=Product::where('name','like','%'.$request->searchTerm.'%')->where('model_id',$model)->groupBy('name')->groupBy('name')->take(30)->get();
+                $search=Product::where('name','like','%'.$request->searchTerm.'%')->where('model_id',$model)->groupBy('name')->take(30)->get();
                 break;
             case $part_id!='' and $model=='' and $brand_id=='':
                 $search=Product::where('name','like','%'.$request->searchTerm.'%')->where('part_id',$part_id)->groupBy('name')->take(30)->get();
                 break;
             default:
-                # code...
+                $search=Product::where('name','like','%'.$request->searchTerm.'%')->orWhere('part_id',$part_id)->groupBy('name')->take(30)->get();
                 break;
         }
         foreach ($search as $value){

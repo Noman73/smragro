@@ -936,13 +936,13 @@ function select2Open(thisval){
 
 function searchText(text){
   console.log(text)
-      $('td').css('background','#ffffff');
+      // $('td').css('background','#ffffff');
       el=$("td:contains('"+text+"')")
       el
       for (let index = 0; index < el.length; index++) {
         elofdoc = el[index];
         elofdoc.parentElement.style.background = "green";
-        elofdoc.parentElement.style.background = "red";
+        // elofdoc.parentElement.style.background = "red";
         console.log(elofdoc)
       }
 }
@@ -1003,9 +1003,11 @@ function courierSelection()
 }
 
 $(document).on('select2:unselect','#product', function(e){
-  $('#brand').val(null).trigger('change')
-  $('#model').val(null).trigger('change')
+  // $('#brand').val(null).trigger('change')
+  // $('#model').val(null).trigger('change')
+  $('#b_rate').val('');
   $('#part_id').val(null).trigger('change')
+  singleCalc();
 })
 $(document).on('select2:select','#brand,#model',function(){
   if(initDetailsStatus==true){
@@ -1027,4 +1029,31 @@ function getMultiply(){
     })
   }
 }
+
+
+
+
+
+// $('#search').keyup(function(){  
+//     search_table($(this).val());  
+// });
+// function search_table(value){  
+//     $('#employee_table tr').each(function(){  
+//           var found = 'false';  
+//           $(this).each(function(){  
+//               if($(this).text().toLowerCase().indexOf(value.toLowerCase()) >= 0)  
+//               {  
+//                     found = 'true';  
+//               }  
+//           });  
+//           if(found == 'true')  
+//           {  
+//               $(this).show();  
+//           }  
+//           else  
+//           {  
+//               $(this).hide();  
+//           }
+//     });
+// } 
 </script>
