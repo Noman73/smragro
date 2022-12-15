@@ -33,6 +33,9 @@
     .select2-dropdown{
       z-index: 11 !important;
     }
+    #addnewbtn:focus{
+        background-color:red !important;
+    }
   </style>
  @endsection
  @section('content')
@@ -181,13 +184,13 @@
                         <div class="col-12 col-md-3">
                           <div class="form-group">
                             <label for="">Quantity</label>
-                            <input tabindex='5' type="number" class="form-control" id="quantity" placeholder="0.00" value="1">
+                            <input tabindex='5' type="number" class="form-control" id="quantity" placeholder="0.00" >
                           </div>
                         </div>
                         <div class="col-12 col-md-3">
                           <div class="form-group">
                             <label for="">B.Rate</label>
-                            <input tabindex='6' type="number" class="form-control" id="b_rate" placeholder="0.00">
+                            <input disabled tabindex='6' type="number" class="form-control disable" id="b_rate" placeholder="0.00">
                           </div>
                         </div>
                         <div class="col-12 col-md-2">
@@ -199,7 +202,7 @@
                         <div class="col-12 col-md-3">
                           <div class="form-group">
                             <label for="">Amount</label>
-                            <input  type="number" class="form-control" id="amount" placeholder="0.00" disabled>
+                            <input  type="number" class="form-control" id="amount" placeholder="0.00">
                           </div>
                         </div>
                         <div class="col-12 col-md-3">

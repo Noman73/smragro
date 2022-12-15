@@ -68,7 +68,6 @@ $("#customer").select2({
           }
       },
       processResults:function(response){
-        
         return {
           results:response,
         }
@@ -928,6 +927,7 @@ $('body').on('select2:select',"#brand",function(e){
     console.log(res);
     $('#mltp').val(res.data)
     singleCalc()
+    getMultiply();
   })
 })
 function select2Open(thisval){
@@ -936,10 +936,12 @@ function select2Open(thisval){
 
 function searchText(text){
   console.log(text)
+      $('td').css('background','#ffffff');
       el=$("td:contains('"+text+"')")
       el
       for (let index = 0; index < el.length; index++) {
         elofdoc = el[index];
+        elofdoc.parentElement.style.background = "green";
         elofdoc.parentElement.style.background = "red";
         console.log(elofdoc)
       }
@@ -984,6 +986,8 @@ $(document).on('click','.details-row',function(d){
   $('.item-details').css('visibility','hidden');
   $('#addnewbtn').attr('disabled',false);
   initDetailsStatus=false;
+  $('#quantity').focus();
+  getMultiply();
 })
 function courierSelection()
 {
@@ -1008,4 +1012,19 @@ $(document).on('select2:select','#brand,#model',function(){
     initDetails();
   }
 })
+$(document).on('select2:select','#customer,#product',function(){
+  getMultiply();
+})
+
+
+function getMultiply(){
+  customer=$('#customer').val();  
+  console.log(customer)
+  if(customer!=null){
+    axios.get("{{URL::to('admin/get-customer-multiply')}}/"+customer)
+    .then(res=>{
+      $('#mltp').val(res.data.multiply);
+    })
+  }
+}
 </script>

@@ -385,12 +385,33 @@ class ProductController extends Controller
         $model=($request->model_id==null? '':$request->model_id);
         $part_id=($request->part_id==null? '':$request->part_id);
         
-        if($part_id=='' and $model=='' and $brand_id==''){
-            $search=Product::where('name','like','%'.$request->searchTerm.'%')->orWhere('part_id',$part_id)->groupBy('name')->take(30)->get();
-        }elseif($part_id=='' ){
-             $search=Product::where('name','like','%'.$request->searchTerm.'%')->where('brand_id',$brand_id)->orWhere('model_id',$model)->groupBy('name')->take(30)->get();
-        }else{
-            $search=Product::where('name','like','%'.$request->searchTerm.'%')->where('part_id',$part_id)->groupBy('name')->take(30)->get();
+        // if($part_id=='' and $model=='' and $brand_id==''){
+        //     $search=Product::where('name','like','%'.$request->searchTerm.'%')->orWhere('part_id',$part_id)->groupBy('name')->take(30)->get();
+        // }elseif($part_id==''){
+        //      $search=Product::where('name','like','%'.$request->searchTerm.'%')->where('brand_id',$brand_id)->orWhere('model_id',$model)->groupBy('name')->take(30)->get();
+        // }else{
+        //     $search=Product::where('name','like','%'.$request->searchTerm.'%')->where('part_id',$part_id)->groupBy('name')->take(30)->get();
+        // }
+
+        switch ($request) {
+            case $part_id=='' and $model=='' and $brand_id=='':
+                $search=Product::where('name','like','%'.$request->searchTerm.'%')->orWhere('part_id',$part_id)->groupBy('name')->take(30)->get();
+                break;
+            case $part_id=='' and $model!='' and $brand_id!='':
+                $search=Product::where('name','like','%'.$request->searchTerm.'%')->where('brand_id',$brand_id)->where('model_id',$model)->groupBy('name')->take(30)->get();
+                break;
+            case $part_id=='' and $model=='' and $brand_id!='':
+                $search=Product::where('name','like','%'.$request->searchTerm.'%')->where('brand_id',$brand_id)->groupBy('name')->take(30)->get();
+                break;
+            case $part_id=='' and $model!='' and $brand_id=='':
+                $search=Product::where('name','like','%'.$request->searchTerm.'%')->where('model_id',$model)->groupBy('name')->groupBy('name')->take(30)->get();
+                break;
+            case $part_id!='' and $model=='' and $brand_id=='':
+                $search=Product::where('name','like','%'.$request->searchTerm.'%')->where('part_id',$part_id)->groupBy('name')->take(30)->get();
+                break;
+            default:
+                # code...
+                break;
         }
         foreach ($search as $value){
             $set_data[]=['id'=>$value->id,'text'=>$value->name];

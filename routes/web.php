@@ -97,6 +97,8 @@ Route::group([
     Route::resource('/asign-permission','ApplyPermissionController');
     Route::resource('/asign-role','RoleAsignController');
     Route::resource('/part','PartController');
+    Route::resource('/customer-multiply','CustomerWiseMultiplyController');
+    Route::get("get-customer-multiply/{customer_id}",'CustomerWiseMultiplyController@getMultiply');
     Route::resource('/asign-permission-user','UserDirectPermissionController');
     Route::post('/get-role','RoleAsignController@getRole');
     Route::post('/get-user','RoleAsignController@getUser');
