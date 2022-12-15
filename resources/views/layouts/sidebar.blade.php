@@ -153,6 +153,14 @@
                   </p>
                 </a>
               </li>
+              <li class="nav-item">
+                <a href="{{URL::to('admin/customer-multiply')}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>
+                    Customer Muliply
+                  </p>
+                </a>
+              </li>
               @endcan
               @can("Customer View")
               <li class="nav-item">
