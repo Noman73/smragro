@@ -676,7 +676,5 @@
         initSelect2();
         calculation();
     }
-
-    public function 
   </script>
     
