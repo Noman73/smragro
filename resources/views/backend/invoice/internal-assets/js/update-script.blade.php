@@ -677,6 +677,6 @@
         calculation();
     }
 
-
-    </script>
+    public function 
+  </script>
     
