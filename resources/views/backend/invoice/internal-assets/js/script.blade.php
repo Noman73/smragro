@@ -1017,8 +1017,6 @@ $(document).on('select2:select','#brand,#model',function(){
 $(document).on('select2:select','#customer,#product',function(){
   getMultiply();
 })
-
-
 function getMultiply(){
   customer=$('#customer').val();  
   console.log(customer)
@@ -1029,17 +1027,13 @@ function getMultiply(){
     })
   }
 }
-
-
-
-
-
 $('#search_key').keyup(function(){  
     search_table($(this).val());  
 });
-function search_table(value){  
+function search_table(value){
+  console.log(value)
     $('#product_added tr').each(function(){  
-          var found = 'false';  
+          var found = 'false';
           $(this).each(function(){  
               if($(this).text().toLowerCase().indexOf(value.toLowerCase()) >= 0)  
               {  

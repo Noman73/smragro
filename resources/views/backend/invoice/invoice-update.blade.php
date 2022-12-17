@@ -1,18 +1,66 @@
  <!-- Content Wrapper. Contains page content -->
-
-
  @extends('layouts.master')
  @section('link')
- 
+  <style>
+    #ammount{
+      /* border:2px solid red; */
+      background-color:#f4c2c2;
+      font-weight: bold;
+    }
+    /* .item-details:hover + .item-details{
+      width:500px;
+      height:100px;
+      border:1px solid red;
+      display:block;
+    } */
+    .item-details{
+      width:500px;
+      height:200px;
+      border:1px solid blue;
+      overflow:scroll;
+      position:absolute;
+      z-index:10;
+      left:42px;
+      visibility:hidden;
+      background-color:white;
+      top:-50px;
+    }
+    #product_added{
+      overflow:auto;
+      height:250px;
+      font-size:12px;
+    }
+    .select2-dropdown{
+      z-index: 11 !important;
+    }
+    #addnewbtn:focus{
+        background-color:red !important;
+    }
+  </style>
  @endsection
  @section('content')
     <!-- Content Header (Page header) -->
-    <div class="content-header">
+    <div class="content-header" style="position:relative;z-index:1;">
+      <div class="item-details">
+        <table id="item-details-table" class="table table-sm table-bordered clearfix" style="font-size:14px;">
+          <thead>
+            <tr>
+              <th >Name</th>
+              <th >Brand</th>
+              <th >Model</th>
+              <th >Part ID</th>
+              <th >Color</th>
+              <th >Rate</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            {{-- {{trim(json_encode($invoice),'[]')}} --}}
-            <h1 class="m-0">Invoice Edit</h1>
+            <h1 class="m-0">Manage Invoice</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -25,55 +73,50 @@
     </div>
     <!-- /.content-header -->
     <!-- Main content -->
+    
     <section class="content">
       <div class="container-fluid">
         <div class="card ">
-            {{-- <div class="card-header">
-              <div class="row">
-                <div class="col-6">
-                  <div class="card-title">Supplier </div>
-                </div>
-                <div class="col-6">
-                  <button class="btn btn-primary float-right" data-toggle="modal" data-target="#modal" data-whatever="@mdo">Add New</button>
-                </div>
-              </div>
-            </div> --}}
             <div class="card-body">
-               <div class="container">
-                   <div class="row">
+               <div class="container" >
+                
+                <div class="row">
                        <div class="col-12 col-md-2 ">
                         <select name="" id="sale_type" class="form-control" onchange="customerVisibility()">
                           <option value="0">Cash</option>
-                          <option value="1">Regular</option>
+                          <option selected value="1">Regular</option>
                           <option value="2">Condition</option>
                         </select>
-                           {{-- <input type="radio" onchange="customerVisibility()"  name="sale_type[]" id="cash" value="0" checked>
-                           <label for="walking">Cash</label>
-                           <input type="radio" onchange="customerVisibility()" name="sale_type[]" id="regular" value="1">
-                           <label for="regular">Regular</label> --}}
-                           {{-- <input type="radio" onchange="customerVisibility()" name="sale_type[]" id="condition" value="2">
-                           <label for="condition">Condition</label>
-                           <div class="invalid-feedback" id='purchase_type_msg'></div> --}}
                        </div>
                        <div class="col-12 col-md-3 invisible" id="init-customer">
                           <div class="input-group">
                               <select class="form-control" id="customer" onchange="balance(this)">
                               </select>
                               <div class="input-group-append">
-                                <button class="btn btn-outline-primary" type="button" id="customerModal">Add <i class="fas fa-plus"></i></button>
+                                <button class="btn btn-outline-primary" type="button" data-toggle="modal" id="customerModal" data-target='#modal' style="z-index:0;">Add <i class="fas fa-plus"></i></button>
                               </div>
                               <div class="invalid-feedback" id='customer_msg'></div>
                           </div>
                           <div class="total_balance d-none">Balance: <span id="customer-balance"></span></div>
                        </div>
                        <div class="col-12 col-md-2">
+                          <div class="input-group">
+                              <select class="form-control" id="market">
+                              </select>
+                              <div class="invalid-feedback" id='market_msg'></div>
+                          </div>
+                      </div>
+                       <div class="col-12 col-md-1">
                         <div class="form-group">
                           <input type="text" class="form-control" id="hand_bill" placeholder="Hand Bill">
                         </div>
                        </div>
-                       <div class="col-12 col-md-2 mt-2">
+                       <div class="col-12 col-md-2 ">
+                        <div class="form-group">
+                          <select name="warehouse" id="warehouse" class="form-control"></select>
+                          <div class="invalid-feedback" id="warehouse_msg"></div>
+                        </div>
                          <div class="float-right d-none">
-
                             <input type="radio" name="action[]" value="0" checked>
                             <label for="">Sale</label>
                             <input type="radio" name="action[]" value="1">
@@ -86,10 +129,6 @@
                            <input type="text" class="form-control" id="date" placeholder="Date">
                          </div>
                        </div>
-
-                       <div class="col-12 col-md-1">
-                        <button class="btn btn-primary float-right" onclick="addNew()">Add <i class="fas fa-plus"></i></button>
-                      </div>
                    </div>
                    <div class="row" id="w_customer">
                       <div class="col-12 col-md-3 mt-2">
@@ -113,24 +152,100 @@
                         </div>
                       </div>
                    </div>
-                   <div class="table-responsive">
-                       <table class="table table-sm text-center table-bordered" id="add_product">
-                           <thead>
-                               <tr>
-                                   <th width='40%'>Product</th>
-                                   <th width='15%'>Stock</th>
-                                   <th width='10%'>Quantity</th>
-                                   <th width='10%'>Price</th>
-                                   <th width='15%'>Total</th>
-                                   <th width='10%'>Action</th>
-                               </tr>
-                           </thead>
-                           <tbody id="item_table_body">
+                   
+                   <div class="row">
+                    <div class="col-12 col-md-6 ">
+                      <div class="row">
+                        <div class="col-12 col-md-4">
+                          <div class="form-group">
+                            <label for="">Item Name</label>
+                            <select tabindex='1' class="form-control" name="" id="product"></select>
+                          </div>
+                        </div>
+                        <div class="col-12 col-md-4">
+                          <div class="form-group">
+                            <label for="">Brand/Company</label>
+                            <select tabindex='2' class="form-control" name="" id="brand" onfocus="select2Open()"></select>
+                          </div>
+                        </div>
+                        <div class="col-12 col-md-4">
+                          <div class="form-group">
+                            <label for="">Model</label>
+                            <select tabindex='3' class="form-control" name="" id="model"></select>
+                          </div>
+                        </div>
+                        
+                        <div class="col-12 col-md-4">
+                          <div class="form-group">
+                            <label for="">Part ID</label>
+                            <select tabindex='4' class="form-control" name="" id="part_id"></select>
+                          </div>
+                        </div>
+                        <div class="col-12 col-md-3">
+                          <div class="form-group">
+                            <label for="">Quantity</label>
+                            <input tabindex='5' type="number" class="form-control" id="quantity" placeholder="0.00" >
+                          </div>
+                        </div>
+                        <div class="col-12 col-md-3">
+                          <div class="form-group">
+                            <label for="">B.Rate</label>
+                            <input disabled tabindex='6' type="number" class="form-control disable" id="b_rate" placeholder="0.00">
+                          </div>
+                        </div>
+                        <div class="col-12 col-md-2">
+                          <div class="form-group">
+                            <label for="">MLTP</label>
+                            <input tabindex='7' type="number" class="form-control" id="mltp" placeholder="0.00">
+                          </div>
+                        </div>
+                        <div class="col-12 col-md-3">
+                          <div class="form-group">
+                            <label for="">Amount</label>
+                            <input  type="number" class="form-control" id="amount" placeholder="0.00">
+                          </div>
+                        </div>
+                        <div class="col-12 col-md-3">
+                          <div class="form-group">
+                            <label for="">Total</label>
+                            <input  type="number" class="form-control" id="total-amt" placeholder="0.00" disabled>
+                          </div>
+                        </div>
+                        <div class="col-12 col-md-3">
+                          <div class="form-group">
+                            <label for="">Stock</label>
+                            <input disabled type="number" class="form-control" id="stock" placeholder="0.00">
+                          </div>
+                        </div>
+                      </div>
+                     </div>
+                     <div class="col-12 col-md-6 border " id="product_added">
+                      <input type="text" class="form-control form-control-sm mt-2" id='search_key' placeholder="Search">
+                      <div class="table-responsive" >
+                          <table class="table table-sm text-center table-bordered mt-2" id="add_product" >
+                              <thead>
+                                  <tr>
+                                    <th width='20%'>Product</th>
+                                    <th width='20%'>Brand/Model</th>
+                                    <th width='15%'>Quantity</th>
+                                    <th width='15%'>Price</th>
+                                    <th width='20%'>Total</th>
+                                    <th width='10%'>Action</th>
+                                  </tr>
+                              </thead>
+                              <tbody id="item_table_body">
 
-                           </tbody>
-                       </table>
+                              </tbody>
+                          </table>
+                      </div>
+                   </div>
                    </div>
                    
+                   
+                   
+                   <div class="col-12 col-md-1">
+                    <button tabindex='8' class="btn btn-primary btn-sm" id="addnewbtn" onclick="addNew()">Add <i class="fas fa-plus"></i></button>
+                  </div>
                    <div class="row mt-3">
                      {{-- note  --}}
                     <div class="col-12 col-md-8">
@@ -193,7 +308,7 @@
                                   <div class="invalid-feedback" id='total_msg'></div>
                                 </td>
                             </tr>
-                            <tr class=''>
+                            <tr class="d-none">
                                 <th width="50%">Total Item: </th>
                                 <td>
                                   <input disabled type="number" class="form-control form-control-sm" id="total-item" placeholder="0.00">
@@ -207,21 +322,21 @@
                                   <input type="number" class="form-control " id="discount" placeholder="0.00" aria-describedby="validationTooltipUsernamePrepend" required>
                                   <div class="input-group-append">
                                     <div class="input-group-text">
-                                      % <input id="discountCheck" type="checkbox" class="ml-1" {{($invoice[0]['discount_type']==1 ? 'checked' : '')}}>
+                                      % <input id="discountCheck" type="checkbox" class="ml-1">
                                     </div>
                                   </div>
                                 </div>
                                 {{-- <input type="number" class="form-control form-control-sm" id="vat" placeholder="0.00"> --}}
                               </td>
                           </tr>
-                            <tr>
+                            <tr class="d-none">
                                 <th width="50%">VAT: </th>
                                 <td>
                                   <input type="number" class="form-control form-control-sm" id="vat" placeholder="0.00">
                                   <div class="invalid-feedback" id='vat_msg'></div>
                                 </td>
                             </tr>
-                            <tr>
+                            <tr class="d-none">
                                 <th width="50%">Transport: </th>
                                 <td><input type="number" class="form-control form-control-sm" id="transport" placeholder="0.00"></td>
                             </tr>
@@ -231,6 +346,13 @@
                                   <input disabled type="number" class="form-control form-control-sm" id="total_payable" placeholder="0.00">
                                   <div class="invalid-feedback" id='total_payable_msg'></div>
                                 </td>
+                            </tr>
+                            <tr class="due d-none">
+                              <th width="50%">Previous Due: </th>
+                              <td>
+                                <input disabled type="number" class="form-control form-control-sm" id="previous_due" placeholder="0.00">
+                                <div class="invalid-feedback" id='total_payable_msg'></div>
+                              </td>
                             </tr>
                             {{-- payment  --}}
                             <tr id="payment_method_row">
@@ -268,15 +390,22 @@
                                   </td>
                               </tr>
                             <tr>
-                              <th width="50%">Ammount: </th>
+                              <th width="50%">Paid Amount: </th>
                               <td><input type="number" class="form-control form-control-sm" id="ammount" placeholder="0.00"></td>
+                            </tr>
+                            <tr class="due d-none">
+                              <th width="50%">Current Due: </th>
+                              <td>
+                                <input disabled type="number" class="form-control form-control-sm" id="current_due" placeholder="0.00">
+                                <div class="invalid-feedback" id='total_payable_msg'></div>
+                              </td>
                             </tr>
                         </table>
                     </div>
                 </div>
                 <div class="float-right mt-2">
                     <button class="btn btn-secondary" onclick="Clean()">Reset</button>
-                    <button class="btn btn-primary" onclick="formRequestTry()">Save</button>
+                    <button class="btn btn-primary submit" onclick="formRequestTry()">Submit</button>
                 </div>
                </div>
             </div>
@@ -288,7 +417,7 @@
         <div class="modal-dialog modal-lg">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Add New Supplier</h5>
+              <h5 class="modal-title" id="exampleModalLabel">Add New Customer</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -329,45 +458,12 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-md-8 mr-auto ml-auto">
-                    <div class="form-group">
-                      <label for="opening_balance" class="font-weight-bold">Opening Balance:</label>
-                      <div class='row'>
-                        <div class='col-sm-9'>
-                            <input class="form-control " id="opening_balance"  type="number" placeholder="Opening Balance">
-                            <div id="opening_balance_msg" class="invalid-feedback">
-                            </div>
-                          </div>
-                          <div class='col-sm-3'>
-                            <select class="form-control" id="balance_type" >
-                            <option value="1">Balance</option>
-                            <option value="0">Due</option>
-                            </select>
-                            <div id="balance_type_msg" class="invalid-feedback">
-                            </div>
-                          </div>
-                        </div>
-                    </div>
-                  </div>
-                  <div class="col-md-8 mr-auto ml-auto">
-                    <div class="form-group">
-                      <label for="adress" class="font-weight-bold">Supplier Type:</label>
-                      <select class="form-control " id="supplier_type">
-                        <option value="">--select--</option>
-                        <option value="Distributor">Distributor</option>
-                        <option value="Whole Saler">Whole Saler</option>
-                        <option value="Company">Company</option>
-                      </select>
-                      <div id="supplier_type_msg" class="invalid-feedback">
-                      </div>
-                    </div>
-                  </div>
                 </div>
               </form>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary" onclick="supplierFormRequest()">Save</button>
+              <button type="button" class="btn btn-primary" onclick="customerFormRequest()">Save</button>
             </div>
           </div>
         </div>
@@ -379,6 +475,4 @@
   @section('script')
   
   @include('backend.invoice.internal-assets.js.update-script')
-
-
   @endsection
