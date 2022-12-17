@@ -1106,6 +1106,7 @@
             html+=`<td><input type="number" class="form-control total" name="total[]" placeholder='0.00'/></td>`;
             html+=`<td><button class="btn btn-sm btn-danger removeItem" >X</button></td></tr>`;
         }
+        console.log(html)
         $("#item_table_body").html(html);
         initSelect2();
         calculation();
