@@ -44,7 +44,7 @@ function itemClear(){
   $('#model').val(null).trigger('change');
   $('#product').val(null).trigger('change');
   $('#part_id').val(null).trigger('change');
-  $('#quantity').val(1);
+  $('#quantity').val('');
   $('#b_rate').val('');
   $('#mltp').val('');
   $('#amount').val('');
