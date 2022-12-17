@@ -220,7 +220,7 @@
                       </div>
                      </div>
                      <div class="col-12 col-md-6 border " id="product_added">
-                      <input type="text" class="form-control form-control-sm mt-2" id='search_key' placeholder="Search" onchange="searchText(this.value)">
+                      <input type="text" class="form-control form-control-sm mt-2" id='search_key' placeholder="Search">
                       <div class="table-responsive" >
                           <table class="table table-sm text-center table-bordered mt-2" id="add_product" >
                               <thead>

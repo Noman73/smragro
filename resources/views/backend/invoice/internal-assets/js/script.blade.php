@@ -934,18 +934,18 @@ function select2Open(thisval){
   $(thisval).trigger('select2:open');
 }
 
-function searchText(text){
-  console.log(text)
-      // $('td').css('background','#ffffff');
-      el=$("td:contains('"+text+"')")
-      el
-      for (let index = 0; index < el.length; index++) {
-        elofdoc = el[index];
-        elofdoc.parentElement.style.background = "green";
-        // elofdoc.parentElement.style.background = "red";
-        console.log(elofdoc)
-      }
-}
+// function searchText(text){
+//   console.log(text)
+//       // $('td').css('background','#ffffff');
+//       el=$("td:contains('"+text+"')")
+//       el
+//       for (let index = 0; index < el.length; index++) {
+//         elofdoc = el[index];
+//         elofdoc.parentElement.style.background = "green";
+//         // elofdoc.parentElement.style.background = "red";
+//         console.log(elofdoc)
+//       }
+// }
 $(document).on('select2:select',"#product", function (e){
   initDetails();
   if(part_id!=null){
@@ -1034,26 +1034,26 @@ function getMultiply(){
 
 
 
-// $('#search').keyup(function(){  
-//     search_table($(this).val());  
-// });
-// function search_table(value){  
-//     $('#employee_table tr').each(function(){  
-//           var found = 'false';  
-//           $(this).each(function(){  
-//               if($(this).text().toLowerCase().indexOf(value.toLowerCase()) >= 0)  
-//               {  
-//                     found = 'true';  
-//               }  
-//           });  
-//           if(found == 'true')  
-//           {  
-//               $(this).show();  
-//           }  
-//           else  
-//           {  
-//               $(this).hide();  
-//           }
-//     });
-// } 
+$('#search_key').keyup(function(){  
+    search_table($(this).val());  
+});
+function search_table(value){  
+    $('#product_added tr').each(function(){  
+          var found = 'false';  
+          $(this).each(function(){  
+              if($(this).text().toLowerCase().indexOf(value.toLowerCase()) >= 0)  
+              {  
+                    found = 'true';  
+              }  
+          });  
+          if(found == 'true')  
+          {  
+              $(this).css('background','red');  
+          }  
+          else  
+          {  
+              $(this).css('background','white');
+          }
+    });
+} 
 </script>
