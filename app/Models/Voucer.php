@@ -19,6 +19,7 @@ class Voucer extends Model
 
     public function ledgers()
     {
-        return $this->belongsTo(AccountLedger::class,'ledgers_id','id');
+
+        return $this->belongsTo(AccountLedger::class,'ledger_id','id');
     }
 }

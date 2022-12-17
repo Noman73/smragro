@@ -16,6 +16,10 @@
                 html+="<td>"+d.product_code+"</td>"
                 html+="<td>"+(d.qantity==null ? '0.00' :d.qantity)+"</td></tr>"
             })
+                bank_html+="<tr>"
+                bank_html+="<td>"+res.data.cash_ledger_info.name+"</td>"
+                bank_html+="<td>"+res.data.cash_ledger_info.code+"</td>"
+                bank_html+="<td>"+res.data.total_cash.total+"</td></tr>"
             res.data.bank.forEach(function(d){
                 bank_total_balance+=parseFloat(d.balance);
                 bank_html+="<tr>"
@@ -23,7 +27,7 @@
                 bank_html+="<td>"+d.code+"</td>"
                 bank_html+="<td>"+(d.balance==null ? '0.00' :d.balance)+"</td></tr>"
             })
-            bank_html+="<tr><th colspan='2'>Total=</th><th>"+(bank_total_balance).toFixed(2)+"</th></tr>"
+            bank_html+="<tr><th colspan='2'>Total=</th><th>"+(bank_total_balance+parseFloat(res.data.total_cash.total)).toFixed(2)+"</th></tr>"
             $('#top_product').html(html);
             $('#bank_table').html(bank_html);
             $('#customer').text(res.data.total_customer);
