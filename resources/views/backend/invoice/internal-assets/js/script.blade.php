@@ -722,7 +722,7 @@ function balance(thisval){
         comment='';
       }
       if($('#sale_type').val()==1){
-        $('#previous_due').val(res.data[0].total+' '+comment);
+        $('#previous_due').val(res.data[0].total);
       }
       if(parseFloat(res.data[0].total)<0){
         $('#customer-balance').text(res.data[0].total+' '+comment);

@@ -86,7 +86,7 @@ class ConditionController extends Controller
                 $voucer->date= strtotime($request->date);
                 $voucer->transaction_name="Condition Sale Receipt";
                 $voucer->v_inv_id= $v_invoice->id;
-                $voucer->invoice_id= $request->invoice_id;
+                $voucer->invoice_id=$request->invoice_id;
                 $voucer->credit=$request->ammount;
                 $voucer->ledger_id=$subledger->id;
                 $voucer->subledger_id=$invoice->customer_id;

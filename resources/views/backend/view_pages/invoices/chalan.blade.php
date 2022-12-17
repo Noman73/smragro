@@ -122,10 +122,8 @@
                   <table class="table table-bordered table-striped">
                       <thead>
                           <tr>
-                              <th width="30%" class="text-center">SL.</th>
-                              <th width="30%">Product Name</th>
-                              <th width="10%">Brand</th>
-                              <th width="10%">Model</th>
+                              <th width="10%" class="text-center">SL.</th>
+                              <th width="70%">Product Name</th>
                               <th width="20%" class="text-right">Quantity</th>
                           </tr>
                       </thead>

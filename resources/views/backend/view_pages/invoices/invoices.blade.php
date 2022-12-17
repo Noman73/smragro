@@ -152,12 +152,10 @@
                                   <thead>
                                       <tr>
                                           <th class="text-center" width="10%">SL.</th>
-                                          <th width="25%">Product Name</th>
-                                          <th width="10%">Brand</th>
-                                          <th width="10%">Model</th>
-                                          <th class="text-right">Quantity</th>
-                                          <th class="text-right">Price</th>
-                                          <th class="text-right">Total</th>
+                                          <th width="45%">Product Name</th>
+                                          <th width="15%" class="text-right">Quantity</th>
+                                          <th width="15%" class="text-right">Price</th>
+                                          <th width="15%" class="text-right">Total</th>
                                       </tr>
                                   </thead>
               

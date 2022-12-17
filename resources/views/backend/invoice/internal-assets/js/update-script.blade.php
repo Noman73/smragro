@@ -1110,7 +1110,5 @@
         initSelect2();
         calculation();
     }
-
-
-    </script>
+  </script>
     

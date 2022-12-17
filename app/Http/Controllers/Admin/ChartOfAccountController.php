@@ -30,7 +30,7 @@ class ChartOfAccountController extends Controller
         group by account_ledgers.id,account_ledgers.name,account_groups.name,classes.name
         order by classes.id,account_groups.id,account_ledgers.id
        ";
-        $data=DB::select($query);
+        // $data=DB::select($query);
         // return array_unique($data);
         if(request()->ajax()){
             $get=DB::select($query);
@@ -46,7 +46,7 @@ class ChartOfAccountController extends Controller
             })
               ->make(true);
         }
-        return view('backend.accounts.chartofaccount.chartofaccount',compact($data));
+        return view('backend.accounts.chartofaccount.chartofaccount');
     }
     /**
      * Show the form for creating a new resource.

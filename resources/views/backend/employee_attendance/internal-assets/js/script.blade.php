@@ -194,7 +194,33 @@ function clear(){
   $(".invalid-feedback").text('');
   $('form select').val('').niceSelect('update');
 }
-function 
 
+function timeCalc(){
+  const getSeconds = s => s.split(":").reduce((acc, curr) => acc * 60 + +curr, 0);
+  intime=$('#in_time').val();
+  launch_out_time=$('#launch_out_time').val();
+  launch_in_time=$('#launch_in_time').val();
+  out_time=$('#out_time').val();
+  intime_second=getSeconds(intime)*60;
+  launch_out_time_second=getSeconds(launch_out_time)*60;
+  var first_hour_second = Math.abs(intime_second - launch_out_time_second);
+  console.log(intime_second);
+  var first_hours = Math.floor(first_hour_second / 3600);
+  var first_hour_minutes = Math.floor(first_hour_second % 3600 / 60);
+  var seconds = first_hour_second % 60;
+  $('#total_time').text(first_hours+":"+first_hour_minutes+':'+seconds);
+  
+}
+$(document).on('change','#in_time,#launch_out_time,#launch_out_time,out_time',function(){
+  timeCalc();
+})
+$('#date').daterangepicker({
+        showDropdowns: true,
+        singleDatePicker: true,
+        // parentEl: ".bd-example-modal-lg .modal-body",
+        locale: {
+            format: 'DD-MM-YYYY',
+        }
+  });
 
 </script>
