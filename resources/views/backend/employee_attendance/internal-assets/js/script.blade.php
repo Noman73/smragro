@@ -204,13 +204,17 @@ function timeCalc(){
   out_time=$('#out_time').val();
   intime_second=getSeconds(intime)*60;
   launch_out_time_second=getSeconds(launch_out_time)*60;
-  var first_hour_second = Math.abs(intime_second - launch_out_time_second);
-  console.log(intime_second);
+  if(intime_second>launch_out_time_second){
+    alert('cannot less than in time')
+    
+  }
+  var first_hour_second = Math.abs(launch_out_time_second-intime_second);
+  console.log(first_hour_second);
   var first_hours = Math.floor(first_hour_second / 3600);
   var first_hour_minutes = Math.floor(first_hour_second % 3600 / 60);
   var seconds = first_hour_second % 60;
   $('#total_time').text(first_hours+":"+first_hour_minutes+':'+seconds);
-  
+  $
 }
 $(document).on('change','#in_time,#launch_out_time,#launch_out_time,out_time',function(){
   timeCalc();
