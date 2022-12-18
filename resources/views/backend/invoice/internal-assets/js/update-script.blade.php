@@ -1107,8 +1107,8 @@
             // console.log(invoices.sales[0]);
             // console.log(d);
             
-            html+='<tr><td><input type="hidden" name="record_type[]" value="sales" /><input type="hidden" name="sale_id[]" value="'+d.id+'"" /><select class="form-control product" name="product[]"><option value="'+d.product_id+'">'+d.product.name+'</option></select></td>';
-            html+=`<td><input type="number" disabled class="form-control bg-secondary text-light" name="stock[]" placeholder='0.00'/></td>`;
+            html+='<tr><td><input type="hidden" name="record_type[]" value="sales" /><input type="hidden" name="sale_id[]" value="'+d.id+'"" />'+d.product.name+'<br/>'+d.product.part_id+'</td>';
+            html+=`<td>`+d.product.brand.name+'/'+d.product.model.name+`</td>`;
             html+=`<td><input type="number" class="form-control qantity" name="qantity[]" placeholder='0.00' value='`+d.deb_qantity+`'/></td>`;
             html+=`<td><input type="number" class="form-control price" name="price[]" placeholder='0.00'  value='`+d.price+`'/></td>`;
             html+=`<td><input type="number" class="form-control total" name="total[]" placeholder='0.00'/></td>`;
