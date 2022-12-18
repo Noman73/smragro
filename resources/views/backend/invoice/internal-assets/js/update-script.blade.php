@@ -1027,6 +1027,14 @@
       })
     }
   }
+
+  function dateFormat(data){
+        date=new Date(data);
+        let dates = ("0" + date.getDate()).slice(-2);
+        let month = ("0" + (date.getMonth() + 1)).slice(-2);
+        let year = date.getFullYear();
+        return(dates + "-" + month + "-" + year);
+    }
   $('#search_key').keyup(function(){  
       search_table($(this).val());  
   });
