@@ -1025,8 +1025,8 @@ function courierSelection()
 //     })
 // }
 $(document).on('select2:unselect','#product', function(e){
-  // $('#brand').val(null).trigger('change')
-  // $('#model').val(null).trigger('change')
+  $('#brand').val(null).trigger('change')
+  $('#model').val(null).trigger('change')
   $('#b_rate').val('');
   $('#part_id').val(null).trigger('change')
   singleCalc();
