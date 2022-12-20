@@ -44,6 +44,7 @@
                   <tr>
                     <th>SL.</th>
                     <th>Customer</th>
+                    <th>Brand</th>
                     <th>Multiply</th>
                     <th>Action</th>
                   </tr>
@@ -73,6 +74,14 @@
                       <label for="recipient-name" class="col-form-label">Customer:</label>
                       <select class="form-control" name="" id="customer"></select>
                       <div class="invalid-feedback" id="customer_msg">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-8 mr-auto ml-auto">
+                    <div class="form-group">
+                      <label for="recipient-name" class="col-form-label">Brand:</label>
+                      <select class="form-control" name="" id="brand"></select>
+                      <div class="invalid-feedback" id="brand_msg">
                       </div>
                     </div>
                   </div>

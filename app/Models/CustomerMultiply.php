@@ -12,4 +12,8 @@ class CustomerMultiply extends Model
     {
         return $this->belongsTo(Customer::class,'customer_id','id');
     }
+    public function brand()
+    {
+        return $this->belongsTo(Brand::class,'brand_id','id');
+    }
 }

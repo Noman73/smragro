@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\CustomerMultiply;
 use Validator;
 use DataTables;
+use App\Rules\CustomerMultiplyRule;
 class CustomerWiseMultiplyController extends Controller
 {
     /**
@@ -17,7 +18,7 @@ class CustomerWiseMultiplyController extends Controller
     public function index()
     {
         if(request()->ajax()){
-            $get=CustomerMultiply::with('customer');
+            $get=CustomerMultiply::with('customer','brand');
             return DataTables::of($get)
               ->addIndexColumn()
               ->addColumn('action',function($get){
@@ -30,6 +31,9 @@ class CustomerWiseMultiplyController extends Controller
           ->addColumn('name',function($get){
           return $get->customer->name;
         })
+        ->addColumn('brand',function($get){
+            return $get->brand->name;
+          })
           ->rawColumns(['action'])->make(true);
         }
         return view('backend.customer_multiplies.customer_multiplies');
@@ -55,12 +59,14 @@ class CustomerWiseMultiplyController extends Controller
     {
         // return $request->all();
         $validator=Validator::make($request->all(),[
-            'customer'=>"required|max:15|min:1|unique:customer_multiplies,customer_id",
-            'multiply'=>"required|max:200|min:1",
+            'customer'=>"required|max:15|min:1",
+            'brand'=>["required","max:15","min:1",new CustomerMultiplyRule($request->customer)],
+            'multiply'=>["required","max:200","min:1"],
         ]);
         if($validator->passes()){
             $multiply=new CustomerMultiply;
             $multiply->customer_id=$request->customer;
+            $multiply->brand_id=$request->brand;
             $multiply->multiply=$request->multiply;
             $multiply->author_id=auth()->user()->id;
             $multiply->save();
@@ -90,7 +96,7 @@ class CustomerWiseMultiplyController extends Controller
      */
     public function edit($id)
     {
-        return response()->json(CustomerMultiply::with('customer')->find($id));
+        return response()->json(CustomerMultiply::with('customer','brand')->find($id));
     }
 
     /**
@@ -131,8 +137,8 @@ class CustomerWiseMultiplyController extends Controller
         //
     }
 
-    public function getMultiply($customer_id)
+    public function getMultiply($customer_id,$brand_id)
     {
-       return CustomerMultiply::where('customer_id',$customer_id)->first(); 
+       return CustomerMultiply::where('customer_id',$customer_id)->where('brand_id',$brand_id)->first(); 
     }
 }

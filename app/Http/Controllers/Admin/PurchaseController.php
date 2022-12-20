@@ -50,7 +50,6 @@ class PurchaseController extends Controller
      */
     public function store(Request $r)
     {
-
         return response()->json($r->all());
         $data=$r->all();
         $data['product'] = explode(',', $r->product);

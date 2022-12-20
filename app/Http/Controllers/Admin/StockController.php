@@ -23,7 +23,7 @@ class StockController extends Controller
               return $get->qantity.' '.$get->unit_name;
           })
           ->addColumn('name',function($get){
-            return $get->product_code.'-'.$get->name;
+            return $get->part_id.'-'.$get->name;
         })
         ->setRowClass(function ($get) {
             return $get->qantity<=$get->reorder_level ? 'bg-danger' : '';
@@ -36,7 +36,7 @@ class StockController extends Controller
     public function stockWithoutWarehouse()
     {
         return $get = DB::select("
-            SELECT units.name unit_name,products.reorder_level,products.product_code,products.name,if(products.combo=1,'N/A',ifnull(sum(purchases.deb_qantity-purchases.cred_qantity),0)-ifnull(sales1.deb_qantity,0)) qantity from
+            SELECT units.name unit_name,products.part_id,products.reorder_level,products.product_code,products.name,if(products.combo=1,'N/A',ifnull(sum(purchases.deb_qantity-purchases.cred_qantity),0)-ifnull(sales1.deb_qantity,0)) qantity from
             products
             left join purchases on purchases.product_id=products.id and (purchases.action_id=0 or purchases.action_id=2 or purchases.action_id=3)
             left join (
@@ -50,7 +50,7 @@ class StockController extends Controller
     public function stockWithWarehouse()
     {
         return $get = DB::select("
-        SELECT units.name unit_name,warehouses.name store,products.name,products.product_code,products.reorder_level ,ifnull(sum(purchases.deb_qantity-purchases.cred_qantity),0)-ifnull(sales1.deb_qantity,0) qantity from
+        SELECT units.name unit_name,products.part_id,warehouses.name store,products.name,products.product_code,products.reorder_level ,ifnull(sum(purchases.deb_qantity-purchases.cred_qantity),0)-ifnull(sales1.deb_qantity,0) qantity from
         products
         left join purchases on purchases.product_id=products.id and (purchases.action_id=0 or purchases.action_id=2 or purchases.action_id=3)
         left join (

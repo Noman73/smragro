@@ -20,6 +20,10 @@
             name:'name',
           },
           {
+            data:'brand',
+            name:'brand',
+          },
+          {
             data:'multiply',
             name:'multiply',
           },
@@ -35,10 +39,12 @@
 window.formRequest= function(){
     $('input,select').removeClass('is-invalid');
     let customer=$('#customer').val();
+    let brand=$('#brand').val();
     let multiply=$('#multiply').val();
     let id=$('#id').val();
     let formData= new FormData();
     formData.append('customer',customer);
+    formData.append('brand',brand);
     formData.append('multiply',multiply);
     $('#exampleModalLabel').text('Add New Category');
     console.log(id)
@@ -92,16 +98,14 @@ $(document).delegate(".editRow", "click", function(){
     .then((data)=>{
       var editKeys=Object.keys(data.data);
       editKeys.forEach(function(key){
-        
-        if(key=='category_id'){
-          $('#category').val(data.data[key]).niceSelect('update');
-        }
          $('#'+key).val(data.data[key]);
          $('#modal').modal('show');
          $('#id').val(data.data.id);
          if(key=='customer'){
-          console.log(data.data[key].id)
           $('#'+'customer').html("<option value='"+data.data[key].id+"'>"+data.data[key].name+'('+data.data[key].phone+')'+"</option>")
+         }
+         if(key=='brand'){
+          $('#'+'brand').html("<option value='"+data.data[key].id+"'>"+data.data[key].name+"</option>")
          }
       })
     })
@@ -130,6 +134,29 @@ $(document).delegate(".deleteRow", "click", function(){
       }
     })
 });
+$("#brand").select2({
+    theme:'bootstrap4',
+    placeholder:'Brand',
+    allowClear:true,
+    ajax:{
+      url:"{{URL::to('/admin/get-brand')}}",
+      type:'post',
+      dataType:'json',
+      delay:20,
+      data:function(params){
+        return {
+          searchTerm:params.term,
+          _token:"{{csrf_token()}}",
+          }
+      },
+      processResults:function(response){
+        return {
+          results:response,
+        }
+      },
+      cache:true,
+    }
+  });
 $("#customer").select2({
     theme:'bootstrap4',
     placeholder:'Customer',

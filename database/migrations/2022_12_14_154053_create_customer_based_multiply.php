@@ -16,9 +16,11 @@ class CreateCustomerBasedMultiply extends Migration
         Schema::create('customer_multiplies', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('customer_id');
+            $table->unsignedBigInteger('brand_id');
             $table->decimal('multiply',20,2);
             $table->unsignedBigInteger('author_id');
             $table->timestamps();
+            
         });
     }
 

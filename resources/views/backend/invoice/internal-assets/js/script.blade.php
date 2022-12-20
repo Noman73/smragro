@@ -534,7 +534,7 @@ $('#date,#cheque_issue_date').daterangepicker({
       data:function(params){
         return {
           searchTerm:params.term,
-          _token:"{{csrf_token()}}",
+            _token:"{{csrf_token()}}",
           }
       },
       processResults:function(response){
@@ -962,6 +962,15 @@ function initDetails(){
    axios.post("{{URL::to('admin/product-details')}}",{text:text,brand:brand,model:model})
    .then((res)=>{
       console.log(res);
+      if(res.data.length==1){
+        $('#part_id').html("<option value='"+res.data[0].part_id+"'>"+res.data[0].part_id+"<option>")
+        $('#product').html("<option value='"+res.data[0].id+"'>"+res.data[0].name+"<option>")
+        $('#part_id').trigger('select2:select');
+        $('.item-details').css('visibility','hidden');
+        $('#addnewbtn').attr('disabled',false);
+        initDetailsStatus=false;
+        return false;
+      }
       html="";
       res.data.forEach(function(d){
         html+="<tr class='details-row'>"
@@ -1001,7 +1010,19 @@ function courierSelection()
      })
   }
 }
+// function selectFill()
+// {
+//     product=$('#product option:selected').text();
+//     model=$('#brand').val();
+//     brand=$('#brand').val();
+//     if(product!='' || model!=null || brand!=null){
+//       return false;
+//     }
+//     axios.post("{{URL::to('admin/get-part-id')}}",{product:product,model:model,brand:brand})
+//     .then(res=>{
 
+//     })
+// }
 $(document).on('select2:unselect','#product', function(e){
   // $('#brand').val(null).trigger('change')
   // $('#model').val(null).trigger('change')
@@ -1018,12 +1039,16 @@ $(document).on('select2:select','#customer,#product',function(){
   getMultiply();
 })
 function getMultiply(){
-  customer=$('#customer').val();  
+  customer=$('#customer').val();
+  brand=$('#brand').val();
   console.log(customer)
-  if(customer!=null){
-    axios.get("{{URL::to('admin/get-customer-multiply')}}/"+customer)
+  if(customer!=null && brand!=null){
+    axios.get("{{URL::to('admin/get-customer-multiply')}}/"+customer+'/'+brand)
     .then(res=>{
-      $('#mltp').val(res.data.multiply);
+      console.log(res)
+      if(res.data.multiply!=''){
+        $('#mltp').val(res.data.multiply);
+      }
     })
   }
 }
