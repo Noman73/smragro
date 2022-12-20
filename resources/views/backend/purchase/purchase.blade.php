@@ -135,7 +135,7 @@
                                   <div class="invalid-feedback" id='total-item_msg'></div>
                                 </td>
                             </tr>
-                            <tr>
+                            <tr >
                               <th width="50%">Discount: </th>
                               <td>
                                 <div class="input-group input-group-sm">
@@ -148,7 +148,7 @@
                                 </div>
                               </td>
                           </tr>
-                            <tr>
+                            <tr class="d-none">
                                 <th width="50%">VAT: </th>
                                 <td>
                                   <input type="number" class="form-control form-control-sm" id="vat" placeholder="0.00">
