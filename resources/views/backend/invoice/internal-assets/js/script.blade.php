@@ -534,6 +534,7 @@ $('#date,#cheque_issue_date').daterangepicker({
       data:function(params){
         return {
           searchTerm:params.term,
+          item:$('#product option:selected').text(),
             _token:"{{csrf_token()}}",
           }
       },

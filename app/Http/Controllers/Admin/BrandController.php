@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Validator;
 use App\Models\Brand;
 use DataTables;
+use DB;
 class BrandController extends Controller
 {
     /**
@@ -130,7 +131,15 @@ class BrandController extends Controller
     }
 
     public function getBrand(Request $request){
-        $donors= Brand::where('name','like','%'.$request->searchTerm.'%')->take(15)->get();
+        // return $request->all();
+        $donors= Brand::where('name','like','%'.$request->searchTerm.'%')->take(100)->get();
+        if($request->item!=null){
+            $donors= Brand::where('name','like','%'.$request->searchTerm.'%')->take(100)->get();
+            $donors=DB::select("SELECT brands.id,brands.name FROM brands
+                inner join products on products.brand_id=brands.id
+                where brands.name like :term and products.name=:item group by brands.id
+             ",['term'=>'%'.$request->searchTerm.'%','item'=>$request->item]);
+        }
         foreach ($donors as $value){
              $set_data[]=['id'=>$value->id,'text'=>$value->name];
          }
