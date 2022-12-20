@@ -93,6 +93,7 @@ class ReceiveController extends Controller
              'comment'=>"required|array|max:200",
              'date'=>"required|max:200",
              'note'=>"nullable|max:500",
+             'bank'=>$bank_cond."|max:500",
          ]);
          if($validator->passes()){
                  $total=0;
@@ -228,6 +229,7 @@ class ReceiveController extends Controller
             'comment'=>"required|array|max:200",
             'date'=>"required|max:200",
             'note'=>"nullable|max:500",
+            'bank'=>$bank_cond."|max:500",
         ]);
         if($validator->passes()){
                $total=0;
