@@ -968,6 +968,7 @@ function initDetails(){
         $('#part_id').trigger('select2:select');
         $('.item-details').css('visibility','hidden');
         $('#addnewbtn').attr('disabled',false);
+        $('#quantity').focus();
         initDetailsStatus=false;
         return false;
       }
