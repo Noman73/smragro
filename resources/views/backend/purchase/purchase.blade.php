@@ -90,13 +90,14 @@
                            <thead>
                                <tr>
                                    <th width='20%'>Product</th>
-                                   <th width='15%'>Stock</th>
+                                   <th width='17%'>Brand/Model</th>
+                                   <th width='8%'>Stock</th>
                                    <th width='10%'>Quantity</th>
                                    <th width='10%'>B.Rate</th>
                                    <th width='10%'>MTP</th>
                                    <th width='10%'>Price</th>
-                                   <th width='15%'>Total</th>
-                                   <th width='10%'>Action</th>
+                                   <th width='10%'>Total</th>
+                                   <th width='5%'>Action</th>
                                </tr>
                            </thead>
                            <tbody id="item_table_body">

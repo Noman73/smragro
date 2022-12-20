@@ -74,6 +74,7 @@ $("#supplier").select2({
   let total_item=0;
   function addNew(){
     form=`<tr><td><select class="form-control product" name="product[]"></select></td>`;
+    form+=`<td></td>`;
     form+=`<td><input type="number" disabled class="form-control bg-secondary text-light" name="stock[]" placeholder='0.00'/></td>`;
     form+=`<td><input type="number" class="form-control" name="qantity[]" placeholder='0.00' value='1'/></td>`;
     form+=`<td><input type="number" class="form-control b_rate" name="b_rate[]" placeholder='0.00'/></td>`;
@@ -458,15 +459,17 @@ $('body').on('select2:select',"select[name='product[]']", function (e){
   axios.get('admin/get-quantity/'+id)
       .then(function(response){
             console.log(response)
-            this_cat.parent().next().children("[name='stock[]']").val(response.data.total);
+            this_cat.parent().next().next().children("[name='stock[]']").val(response.data.total);
           })
           .catch(function(error){
           console.log(error.request);
         })
-  axios.get('admin/get-product-sale-price/'+id)
+  axios.get('admin/selected-product-data/'+id)
    .then(res=>{
     console.log(res);
-    this_cat.parent().next().next().next().children("[name='b_rate[]']").val(parseFloat(res.data).toFixed(2));
+    this_cat.parent().next().text(res.data.brand.name+'/'+res.data.model.name)
+    this_cat.parent().next().next().next().next().children("[name='b_rate[]']").val(parseFloat(res.data.sale_price).toFixed(2));
+    this_cat.parent().next().next().next().next().next().children("[name='mtp[]']").val(parseFloat(res.data.brand.multiply).toFixed(2));
     calculation()
     totalCal();
    })
