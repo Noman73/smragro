@@ -931,6 +931,9 @@ $('body').on('select2:select',"#brand",function(e){
     getMultiply();
   })
 })
+$(document).on('select2:unselect','#brand',function(){
+  $('#model').val(null).trigger('change')
+})
 function select2Open(thisval){
   $(thisval).trigger('select2:open');
 }
