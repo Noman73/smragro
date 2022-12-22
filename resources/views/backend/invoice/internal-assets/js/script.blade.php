@@ -931,25 +931,9 @@ $('body').on('select2:select',"#brand",function(e){
     getMultiply();
   })
 })
-$(document).on('select2:unselect','#brand',function(){
-  $('#model').val(null).trigger('change')
-})
 function select2Open(thisval){
   $(thisval).trigger('select2:open');
 }
-
-// function searchText(text){
-//   console.log(text)
-//       // $('td').css('background','#ffffff');
-//       el=$("td:contains('"+text+"')")
-//       el
-//       for (let index = 0; index < el.length; index++) {
-//         elofdoc = el[index];
-//         elofdoc.parentElement.style.background = "green";
-//         // elofdoc.parentElement.style.background = "red";
-//         console.log(elofdoc)
-//       }
-// }
 $(document).on('select2:select',"#product", function (e){
   initDetails();
   if(part_id!=null){
@@ -969,11 +953,16 @@ function initDetails(){
       if(res.data.length==1){
         $('#part_id').html("<option value='"+res.data[0].part_id+"'>"+res.data[0].part_id+"<option>")
         $('#product').html("<option value='"+res.data[0].id+"'>"+res.data[0].name+"<option>")
-        $('#part_id').trigger('select2:select');
+        $('#model').html("<option value='"+res.data[0].model.id+"'>"+res.data[0].model.name+"<option>")
+        $('#brand').html("<option value='"+res.data[0].brand.id+"'>"+res.data[0].brand.name+"<option>")
+        // $('#part_id').trigger('select2:select');
         $('.item-details').css('visibility','hidden');
         $('#addnewbtn').attr('disabled',false);
         $('#quantity').focus();
         initDetailsStatus=false;
+        return false;
+      }else if(res.data.length==0){
+        $('#part_id').val(null).trigger('change');
         return false;
       }
       html="";
@@ -991,7 +980,9 @@ function initDetails(){
       $('#item-details-table').focus();
    })
 }
-
+$(document).on('select2:unselect','#brand',function(){
+  $('#model').val(null).trigger('change')
+})
 $(document).on('click','.details-row',function(d){
   part_id=$(this).children().next().next().next('#part_id_row').text();
   console.log(part_id);
@@ -1015,19 +1006,7 @@ function courierSelection()
      })
   }
 }
-// function selectFill()
-// {
-//     product=$('#product option:selected').text();
-//     model=$('#brand').val();
-//     brand=$('#brand').val();
-//     if(product!='' || model!=null || brand!=null){
-//       return false;
-//     }
-//     axios.post("{{URL::to('admin/get-part-id')}}",{product:product,model:model,brand:brand})
-//     .then(res=>{
 
-//     })
-// }
 $(document).on('select2:unselect','#product', function(e){
   $('#brand').val(null).trigger('change')
   $('#model').val(null).trigger('change')
