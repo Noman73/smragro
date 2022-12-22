@@ -74,7 +74,7 @@ class EmployeeController extends Controller
             'image'=>'nullable|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
         ]);
         if($validator->passes()){
-            $ledger_code=AccountLedger::where('name','Employee')->first();
+            $ledger_code=AccountLedger::where('name','Employee Salary Account')->first();
             $countEmployee=Employee::count();
             $customer=new Employee;
             $customer->name=$request->name;
