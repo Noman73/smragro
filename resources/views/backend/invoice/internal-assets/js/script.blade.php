@@ -982,8 +982,8 @@ function initDetails(){
         html+='<td>'+d.color+'</td>';
         html+='<td>'+d.sale_price+'</td></tr>';
       })
-      $('.item-details tbody').html(html)
-      $('.item-details').css('visibility','visible')
+      $('.item-details tbody').html(html);
+      $('.item-details').css('visibility','visible');
       $('#item-details-table').focus();
    })
 }
@@ -1001,6 +1001,7 @@ $(document).on('click','.details-row',function(d){
   initClicked=true;
   $('#quantity').focus();
   getMultiply();
+  getStock();
 })
 function courierSelection()
 {
@@ -1022,7 +1023,18 @@ $(document).on('select2:unselect','#product', function(e){
   $('#part_id').val(null).trigger('change')
   singleCalc();
 })
-
+function getStock(){
+  id=$('#product').val();
+  axios.get('admin/get-quantity/'+id)
+      .then(function(response){
+            console.log('stock',response)
+            $('#stock').val(response.data.total);
+            // this_cat.parent().next().children("[name='stock[]']").val(response.data.total);
+          })
+          .catch(function(error){
+          console.log(error.request);
+        })
+}
 $(document).on('select2:select','#brand,#model',function(){
   // if(initDetailsStatus==false){
     initDetails();
