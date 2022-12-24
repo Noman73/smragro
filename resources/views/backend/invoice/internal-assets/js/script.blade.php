@@ -969,6 +969,7 @@ function initDetails(){
         getMultiply();
       }else if(res.data.length==0){
         $('#part_id').val(null).trigger('change');
+        $('#addnewbtn').attr('disabled',true);
         return false;
       }
       html="";
