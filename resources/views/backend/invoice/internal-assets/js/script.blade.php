@@ -961,6 +961,7 @@ function initDetails(){
         $('#quantity').focus();
         initDetailsStatus=false;
         return false;
+        getMultiply();
       }else if(res.data.length==0){
         $('#part_id').val(null).trigger('change');
         return false;
@@ -1015,9 +1016,9 @@ $(document).on('select2:unselect','#product', function(e){
   singleCalc();
 })
 $(document).on('select2:select','#brand,#model',function(){
-  if(initDetailsStatus==true){
+  // if(initDetailsStatus==true){
     initDetails();
-  }
+  // }
 })
 $(document).on('select2:select','#customer,#product',function(){
   getMultiply();
