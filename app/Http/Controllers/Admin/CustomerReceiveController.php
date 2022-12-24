@@ -283,6 +283,10 @@ class CustomerReceiveController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $delete=Vinvoice::where('id',$id)->delete();
+        if($delete){
+            Voucer::where('v_inv_id',$id)->delete();
+            return response()->json(['message'=>"Data Deleted Success"]);
+        }
     }
 }
