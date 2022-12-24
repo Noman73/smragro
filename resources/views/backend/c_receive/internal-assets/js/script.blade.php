@@ -379,7 +379,7 @@ function paymentMethod(){
           }else{
               paymentMethod();
               html_id+="<input type='hidden' id='v_id_method' value='"+d.id+"'>"
-              if(d.name=="Cash"){
+              if(d.ledger_name=="Cash"){
                 $('#method').val(0);
                 $('#voucer_id').val(d.id);
                 changeMethod();
