@@ -935,13 +935,18 @@ function select2Open(thisval){
   $(thisval).trigger('select2:open');
 }
 $(document).on('select2:select',"#product", function (e){
+  initClicked=false;
   initDetails();
   if(part_id!=null){
     $('#addnewbtn').attr('disabled',true);
   }
 })
 var initDetailsStatus=false;
+var initClicked=false;
 function initDetails(){
+   if(initClicked){
+    return false;
+   }
    initDetailsStatus=true;
    text=$('#product option:selected').text();
    brand=$('#brand option:selected').val();
@@ -992,6 +997,7 @@ $(document).on('click','.details-row',function(d){
   $('.item-details').css('visibility','hidden');
   $('#addnewbtn').attr('disabled',false);
   initDetailsStatus=false;
+  initClicked=true;
   $('#quantity').focus();
   getMultiply();
 })
@@ -1015,9 +1021,11 @@ $(document).on('select2:unselect','#product', function(e){
   $('#part_id').val(null).trigger('change')
   singleCalc();
 })
+
 $(document).on('select2:select','#brand,#model',function(){
-  // if(initDetailsStatus==true){
+  // if(initDetailsStatus==false){
     initDetails();
+    initClicked=false;
   // }
 })
 $(document).on('select2:select','#customer,#product',function(){
