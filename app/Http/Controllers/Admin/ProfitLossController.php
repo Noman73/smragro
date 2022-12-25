@@ -1,5 +1,6 @@
 <?php
 
+<<<<<<< HEAD
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
@@ -28,6 +29,24 @@ class ProfitLossController extends Controller
         inner join products on products.id=purchases.product_id
         group by purchases.product_id
         ) purchase on purchase.product_id=sale.product_id 
+=======
+namespace App\Http\Controllers\admin;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+
+class ProfitLossController extends Controller
+{
+    public  function __construct()
+    {
+       $this->middleware('auth'); 
+    }
+
+    public function ProfitLossAccount()
+    {
+        $gross_profit=DB::select("
+            select sum(purchases.deb_qantity-purchases.cred_qantity) purchase_qty,
+>>>>>>> smragro
         ");
     }
 }

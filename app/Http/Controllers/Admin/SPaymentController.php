@@ -79,12 +79,19 @@ class SPaymentController extends Controller
         if($request->bank=="null"){
             $data['bank']=null;
         }
+        if($data['method']==0){
+            $bank_cond='nullable';
+        }else{
+            $bank_cond="required";
+        }
         $validator=Validator::make($data,[
             'supplier'=>"required|max:200",
             'ammount'=>["required",new ZeroValidationRule],
             'date'=>"required|max:200",
             'method'=>"required|max:1",
             'note'=>"nullable|max:500",
+            'bank'=>$bank_cond."|max:500",
+
         ]);
         // if($request->)
         if($validator->passes()){
@@ -188,12 +195,19 @@ class SPaymentController extends Controller
     public function update(Request $request, $id)
     {
         // return $request->all();
+        $data=$request->all();
+        if($data['method']==0){
+            $bank_cond='nullable';
+        }else{
+            $bank_cond="required";
+        }
         $validator=Validator::make($request->all(),[
             'supplier'=>"required|max:200",
             'ammount'=>["required",new ZeroValidationRule],
             'date'=>"required|max:200",
             'method'=>"required|max:1",
             'note'=>"nullable|max:500",
+            'bank'=>$bank_cond."|max:500",
         ]);
 
         if($validator->passes()){

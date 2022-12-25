@@ -152,10 +152,11 @@
                                   <thead>
                                       <tr>
                                           <th class="text-center" width="10%">SL.</th>
-                                          <th width="45%">Product Name</th>
-                                          <th width="15%" class="text-right">Quantity</th>
-                                          <th width="15%" class="text-right">Price</th>
-                                          <th width="15%" class="text-right">Total</th>
+                                          <th width="30%">Product Name</th>
+                                          <th width="30%">Brand/Model</th>
+                                          <th width="10%" class="text-right">Quantity</th>
+                                          <th width="10%" class="text-right">Price</th>
+                                          <th width="10%" class="text-right">Total</th>
                                       </tr>
                                   </thead>
               
@@ -167,8 +168,7 @@
                                           <tr>
                                               <td class="text-center">{{$i=$i+1}}</td>
                                               <td>{{$sales->product->part_id.'-'.$sales->product->name}}</td>
-                                              <td>{{$sales->product->brand->name}}</td>
-                                              <td>{{$sales->product->model->name}}</td>
+                                              <td>{{$sales->product->brand->name.'/'.$sales->product->model->name}}</td>
                                               <td class="text-right">{{$sales->deb_qantity}} {{$sales->product->unit->name}}</td>
                                               <td class="text-right">৳{{$sales->price}}</td>
                                               <td class="text-right">৳{{($sales->deb_qantity*$sales->price)}}</td>

@@ -370,9 +370,7 @@ function paymentMethod(){
               $('#customer').html(html);
               $('#ammount').val(d.credit);
               html_id+="<input type='hidden' id='v_id_cus' value='"+d.id+"'>"
-              
               // console.log('ok')
-
               // html+="<input type='hidden' name='v_id[]' value='"+d.id+"' /><td><select class='form-control ledger' name='ledger[]'><option value='"+d.ledger_id+"'>"+d.name+"</option></select></td>";
               // html+="<td><select class='form-control subledger' name='subledger[]' id='subledger"+unique_number+"'><option value='"+d.subledger_id+"'>"+d.sub_name+"</option></select></td>";
               // html+="<td><input class='form-control debit' name='ammount[]' placeholder='0.00' value='"+d.credit+"'></td>";
@@ -381,7 +379,7 @@ function paymentMethod(){
           }else{
               paymentMethod();
               html_id+="<input type='hidden' id='v_id_method' value='"+d.id+"'>"
-              if(d.name=="Cash"){
+              if(d.ledger_name=="Cash"){
                 $('#method').val(0);
                 $('#voucer_id').val(d.id);
                 changeMethod();
@@ -404,9 +402,6 @@ function paymentMethod(){
     calculation();
   
 }
-
-
-
   function dateFormat(data){
     date=new Date(data);
     let dates = ("0" + date.getDate()).slice(-2);

@@ -67,7 +67,7 @@ class HomeController extends Controller
         $cash=Voucer::where('ledger_id',$cash_ledger)->selectRaw('ifnull(sum(debit)-sum(credit),0) total')->first();
         $cash_ledger_info=AccountLedger::where('name','Cash')->first();
         $bank=Voucer::where('ledger_id',$bank_ledger)->selectRaw('ifnull(sum(debit)-sum(credit),0) total')->first();
-        $total_balance=floatval($cash->total)+floatval($bank->total);
+        $total_balance=number_format(floatval($cash->total)+floatval($bank->total),2,".","");
         return response()->json(['total_customer'=>$total_customer,'total_supplier'=>$total_supplier,'total_sale_amount'=>$total_sale_amount,'top_product'=>$top_product,'total_buy_amount'=>$total_buy_amount,'customer_balance'=>$customer_balance,'supplier_balance'=>$supplier_balance->total,'bank'=>$bank_data,'current_balance'=>$total_balance,'total_bank'=>$bank->total,'total_cash'=>$cash,'cash_ledger_info'=>$cash_ledger_info]);
     }
 

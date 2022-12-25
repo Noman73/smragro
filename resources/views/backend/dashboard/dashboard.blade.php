@@ -66,7 +66,7 @@
             <!-- small box -->
             <div class="small-box bg-warning">
               <div class="inner">
-                <h3 id="total_sale_amount">{{$total_supplier}}</h3>
+                <h3 id="total_sale_amount">0.00</h3>
                 <p><strong>Total Sale</strong></p>
               </div>
               <div class="icon">
