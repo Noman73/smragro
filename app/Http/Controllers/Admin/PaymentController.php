@@ -80,6 +80,9 @@ class PaymentController extends Controller
         $data['ammount']= explode(',', $request->ammount);
         $data['comment']= explode(',', $request->comment);
         $data['date']= $request->date;
+        if($data['bank']=="null"){
+            $data['bank']=null;
+        }
         if($data['method']==0){
             $bank_cond='nullable';
         }else{
@@ -216,8 +219,10 @@ class PaymentController extends Controller
          $data['comment']= explode(',', $request->comment);
          $data['v_id']= explode(',', $request->v_id);
          $data['delete_id']= explode(',', $request->delete_id);
-         info($data['delete_id']);
          $data['date']= $request->date;
+         if($data['bank']=="null"){
+            $data['bank']=null;
+         }
          if($data['method']==0){
              $bank_cond='nullable';
          }else{

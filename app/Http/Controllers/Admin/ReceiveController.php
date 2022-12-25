@@ -80,6 +80,9 @@ class ReceiveController extends Controller
          $data['ammount']= explode(',', $request->ammount);
          $data['comment']= explode(',', $request->comment);
          $data['date']= $request->date;
+         if($data['bank']=="null"){
+            $data['bank']=null;
+         }
          if($data['method']==0){
              $bank_cond='nullable';
          }else{
@@ -216,6 +219,9 @@ class ReceiveController extends Controller
         $data['v_id']= explode(',', $request->v_id);
         $data['delete_id']= explode(',', $request->delete_id);
         $data['date']= $request->date;
+        if($data['bank']=="null"){
+            $data['bank']=null;
+        }
         if($data['method']==0){
             $bank_cond='nullable';
         }else{
