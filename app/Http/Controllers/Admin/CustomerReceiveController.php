@@ -254,11 +254,10 @@ class CustomerReceiveController extends Controller
                 $voucer->debit=$request->ammount;
                 $voucer->credit=0;
                 $voucer->ledger_id=$ledger->id;
-                $voucer->subledger_id=$request->bank;
-
                 if($request->bank=='null'){
                     $request->bank=null;
                 }
+                $voucer->subledger_id=$request->bank;
                 if($request->method==1){
                     $voucer->cheque_no=$request->cheque_no;
                     $voucer->cheque_issue_date=strtotime($request->issue_date);
