@@ -235,7 +235,7 @@
       console.log(total_discount,vat,transport)
       total_payable=(total+vat+transport)-(total_discount)
       $('#total_payable').val(total_payable)
-      if($("#cash").is(':checked')){
+      if($("sale_type").val()==0){
          $('#ammount').val(total_payable);
       }
     }
@@ -262,12 +262,18 @@
           $('#ammount').parent().parent().removeClass('d-none');
         }else if(sale_type==1){
           $('#init-customer').addClass('visible')
-          $('#init-customer').removeClass('invisible')
-          $('#ammount').attr('disabled',false);
-          $('#ammount').parent().parent().addClass('d-none');
-          $("#payment_method_row").addClass('d-none');
-          $("#w_customer").addClass('d-none');
-          $("#w_mobile").val('');
+      $('#init-customer').removeClass('invisible')
+      // $('#ammount').attr('disabled',false);
+      // $('#ammount').parent().parent().addClass('d-none');
+      // $("#payment_method_row").addClass('d-none');
+      $("#w_customer").addClass('d-none');
+      $("#w_mobile").val('');
+      // 
+      $('.due').removeClass('d-none')
+      $("#payment_method_row").removeClass('d-none');
+      $('#ammount').attr('disabled',false);
+      $('#ammount').parent().parent().removeClass('d-none');
+
         }else if(sale_type==2){
           $('#init-customer').addClass('invisible')
           $('#init-customer').removeClass('visible')
@@ -394,7 +400,7 @@
             if(response.data.message){
                 toastr.success(response.data.message);
                 Clean();
-                // window.location="{{URL::to('admin/view-pages/sales-invoice')}}/"+response.data.id;
+                window.location="{{URL::to('admin/view-pages/sales-invoice')}}/"+response.data.id;
             }else if(response.data.error){
                 var keys=Object.keys(response.data.error);
                 keys.forEach(function(d){
@@ -569,13 +575,11 @@
           case 0:
           $('#courier-list').addClass('d-none')
           $('.shipping').addClass('d-none')
-          $('#ammount').attr('disabled',true);
           clearSaleBy();
           break;
           case 1:
           $('#courier-list').removeClass('d-none')
           $('.shipping').addClass('d-none')
-          $('#ammount').attr('disabled',true);
           break;
           case 2:
           $('.shipping').removeClass('d-none')
@@ -622,6 +626,8 @@
         return(dates + "-" + month + "-" + year);
     }
     function showInvoice(invoices){
+      console.log(invoices)
+        amount=0;
         $('#sale_type').val(invoices.sale_type)
         if(invoices.customer!=null){
           $('#customer').html('<option value="'+invoices.customer.id+'">'+invoices.customer.name+'</option>');
@@ -653,7 +659,10 @@
         if(invoices.courier!=null){
           $('#courier').html('<option value="'+invoices.courier.id+'">'+invoices.courier.name+'</option>')
         }
-        
+        invoices.paid.forEach(function(d){
+           amount+=parseFloat(d.credit);
+        })
+        $('#ammount').val(amount);
         $("input[name='sale_by[]'][value='"+invoices.sale_by+"']").attr('checked',true);
         customerVisibility();
         saleByCheck()
