@@ -91,8 +91,8 @@ class ProfitLossController extends Controller
 
 
         $expenses=DB::select("
-        select account_ledgers.name,ifnull(sum(voucers.debit-voucers.credit),0.00) total from account_ledgers
-        inner join account_groups on account_groups.id=account_ledgers.group_id 
+        select account_ledgers.name,ifnull(sum(voucers.debit-voucers.credit),0.00) total from account_groups
+        inner join account_ledgers on account_groups.id=account_ledgers.group_id 
         left join voucers on voucers.ledger_id=account_ledgers.id
         and voucers.date>=:from_date and voucers.date<=:to_date
         where account_groups.name='Indirect Expenses'
