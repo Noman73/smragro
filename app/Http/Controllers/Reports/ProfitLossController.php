@@ -44,7 +44,28 @@ class ProfitLossController extends Controller
         // ) product on sales.product_id=product.id where sales.dates>=:from_date and sales.dates<=:to_date
         // ) gross_profit
         // ",['from_date'=>$from_date,'to_date'=>$to_date]);
-
+        $opening_stock=DB::select("
+        select 'Opening stock' name,ifnull(sum(stocks.stock*stocks.buy_price),0.00) total from 
+        (
+        select product.id,product.name, (sales.deb_qantity-sales.cred_qantity) sale_qty,product.qty,product.total,(product.total/product.qty) buy_price,
+        product.qty-(sales.deb_qantity-sales.cred_qantity) stock
+        from purchases
+        left join sales on sales.product_id=purchases.product_id
+        inner join 
+        (
+        select 
+        products.name,
+        products.id,
+        sum(purchases.deb_qantity-purchases.cred_qantity) qty,
+        purchases.price,
+        sum((purchases.deb_qantity-purchases.cred_qantity)*purchases.price) total
+        from products
+        left join purchases on purchases.product_id=products.id
+        where purchases.dates<:from_date2 group by products.id
+        ) product on purchases.product_id=product.id
+        where sales.dates < :from_date  group by purchases.product_id
+        ) stocks
+        ",['from_date'=>$from_date,'from_date2'=>$from_date])[0]->total;
 
         $closing_stock=DB::select("
         select 'closing stock' name,sum(stocks.stock*stocks.buy_price) total from 
@@ -76,20 +97,6 @@ class ProfitLossController extends Controller
         and voucers.date>=:from_date and voucers.date<=:to_date
         group by account_ledgers.id
         ",['from_date'=>$from_date,'to_date'=>$to_date]);
-        
-
-
-        $prev_purchase=DB::select("
-        select ifnull(sum(voucers.debit-voucers.credit),0.00) total from account_ledgers 
-        inner join voucers on voucers.ledger_id=account_ledgers.id
-        where account_ledgers.name='Purchase' and voucers.date <:from_date
-        ",['from_date'=>$from_date]);
-        $prev_sales=DB::select("
-        select ifnull(sum(voucers.credit-voucers.debit),0.00) total from account_ledgers 
-        inner join voucers on voucers.ledger_id=account_ledgers.id
-        where account_ledgers.name='Sales' and voucers.date <:from_date
-        ",['from_date'=>$from_date]);
-        $opening_stock=floatval($prev_purchase[0]->total)-floatval($prev_sales[0]->total);
 
         $purchase=DB::select("
         select ifnull(sum(voucers.debit-voucers.credit),0.00) total from account_ledgers 
