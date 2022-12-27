@@ -359,7 +359,7 @@ class InvoiceTestController extends Controller
      */
     public function edit($id)
     {
-        $invoice=Invoice::with('sales','customer','pay','condition_amount','notes','shipping_customer','courier')->where('id',$id)->get()->toArray();
+        $invoice=Invoice::with('sales','customer','pay','condition_amount','notes','shipping_customer','courier','paid')->where('id',$id)->get()->toArray();
         return view('backend.invoice.invoice-update',compact('invoice'));
     }
 

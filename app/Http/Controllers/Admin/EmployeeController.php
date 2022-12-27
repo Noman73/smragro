@@ -63,7 +63,7 @@ class EmployeeController extends Controller
         // return response()->json($request->all());
         $validator=Validator::make($request->all(),[
             'name'=>"required|max:200|min:1",
-            'email'=>"nullable|email|max:200|min:1",
+            'email'=>"nullable|email|max:200|min:1|unique:employees,email",
             'phone'=>"required|max:200|min:1",
             'adress'=>"nullable|max:200|min:1",
             'birth_date'=>"nullable|max:200|min:1",
@@ -74,7 +74,7 @@ class EmployeeController extends Controller
             'image'=>'nullable|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
         ]);
         if($validator->passes()){
-            $ledger_code=AccountLedger::where('name','Employee')->first();
+            $ledger_code=AccountLedger::where('name','Employee Salary Account')->first();
             $countEmployee=Employee::count();
             $customer=new Employee;
             $customer->name=$request->name;
@@ -89,6 +89,9 @@ class EmployeeController extends Controller
             $customer->salary=$request->salary;
             $customer->author_id=auth()->user()->id;
             if ($request->hasFile('image')) {
+                if($customer->image!=null){
+                    unlink(storage_path('app/public/employee/'.$customer->image));
+                }
                 $ext = $request->image->getClientOriginalExtension();
                 $name =auth()->user()->id  .'_'. time() . '.' . $ext;
                 $request->image->storeAs('public/employee', $name);
@@ -121,7 +124,7 @@ class EmployeeController extends Controller
      */
     public function edit($id)
     {
-        //
+        return response()->json(Employee::find($id));
     }
 
     /**
@@ -133,7 +136,46 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // return response()->json($request->all());
+        $validator=Validator::make($request->all(),[
+            'name'=>"required|max:200|min:1",
+            'email'=>"nullable|email|max:200|min:1|unique:employees,email,".$id,
+            'phone'=>"required|max:200|min:1",
+            'adress'=>"nullable|max:200|min:1",
+            'birth_date'=>"nullable|max:200|min:1",
+            'nid'=>"nullable|max:200|min:1",
+            'experience'=>"nullable|max:200|min:1",
+            'department'=>"nullable|max:200|min:1",
+            'salary'=>"required|max:20|min:1",
+            'image'=>'nullable|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+        ]);
+        if($validator->passes()){
+            $ledger_code=AccountLedger::where('name','Employee Salary Account')->first();
+            $countEmployee=Employee::count();
+            $customer=Employee::find($id);
+            $customer->name=$request->name;
+            $customer->email=$request->email;
+            $customer->phone=$request->phone;
+            // $customer->code=$ledger_code->code.'-'.(($countEmployee ==null? 0 : $countEmployee)+1);
+            $customer->adress=$request->adress;
+            $customer->nid=$request->nid;
+            $customer->birth_date=$request->birth_date;
+            $customer->experience=$request->experience;
+            $customer->department=$request->department;
+            $customer->salary=$request->salary;
+            $customer->author_id=auth()->user()->id;
+            if ($request->hasFile('image')) {
+                $ext = $request->image->getClientOriginalExtension();
+                $name =auth()->user()->id  .'_'. time() . '.' . $ext;
+                $request->image->storeAs('public/employee', $name);
+                $customer->image = $name;
+            }
+            $customer->save();
+            if ($customer) {
+                return response()->json(['message'=>'Employee Updated Success']);
+            }
+        }
+        return response()->json(['error'=>$validator->getMessageBag()]);
     }
 
     /**

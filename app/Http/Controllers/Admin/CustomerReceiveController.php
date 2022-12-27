@@ -79,12 +79,18 @@ class CustomerReceiveController extends Controller
         if($request->bank=='null'){
             $data['bank']=null;
         }
+        if($data['method']==0){
+            $bank_cond='nullable';
+        }else{
+            $bank_cond="required";
+        }
         $validator=Validator::make($data,[
             'customer'=>"required|max:200",
             'ammount'=>["required",new ZeroValidationRule],
             'date'=>"required|max:200",
             'method'=>"required|max:1",
             'note'=>"nullable|max:500",
+            'bank'=>$bank_cond."|max:500"
         ]);
 
         if($validator->passes()){
@@ -169,7 +175,7 @@ class CustomerReceiveController extends Controller
         }
         $bank_ledger=AccountLedger::where('name','Bank')->first()->id;
         $invoice=DB::select("
-            SELECT voucers.id,voucers.ledger_id,voucers.subledger_id,voucers.date,cheque_no,cheque_status,cheque_issue_date,voucers.v_inv_id,concat(account_ledgers.code,if(account_ledgers.code<>'','-',''),account_ledgers.name) name,voucers.debit,voucers.credit,voucers.comment,
+            SELECT voucers.id,voucers.ledger_id,voucers.subledger_id,voucers.date,cheque_no,cheque_status,cheque_issue_date,voucers.v_inv_id,concat(account_ledgers.code,if(account_ledgers.code<>'','-',''),account_ledgers.name) name,account_ledgers.name ledger_name,voucers.debit,voucers.credit,voucers.comment,
             ## concat(ifnull(customers.id,''),ifnull(suppliers.id,''),ifnull(banks.id,''),ifnull(account_subledgers.id,''),ifnull(employees.id,'')) sub_id,
             concat(ifnull(customers.code,''),ifnull(suppliers.code,''),ifnull(banks.code,''),ifnull(account_subledgers.code,''),ifnull(employees.code,'')) sub_code,
             concat(ifnull(customers.name,''),ifnull(suppliers.name,''),ifnull(banks.name,''),ifnull(account_subledgers.name,''),ifnull(employees.name,'')) sub_name
@@ -197,12 +203,19 @@ class CustomerReceiveController extends Controller
     public function update(Request $request, $id)
     {
         // return $request->all();
+        $data=$request->all();
+        if($data['method']==0){
+            $bank_cond='nullable';
+        }else{
+            $bank_cond="required";
+        }
         $validator=Validator::make($request->all(),[
             'customer'=>"required|max:200",
             'ammount'=>["required",new ZeroValidationRule],
             'date'=>"required|max:200",
             'method'=>"required|max:1",
             'note'=>"nullable|max:500",
+            'bank'=>$bank_cond."|max:500",
         ]);
 
         if($validator->passes()){
@@ -241,11 +254,10 @@ class CustomerReceiveController extends Controller
                 $voucer->debit=$request->ammount;
                 $voucer->credit=0;
                 $voucer->ledger_id=$ledger->id;
-                $voucer->subledger_id=$request->bank;
-
                 if($request->bank=='null'){
                     $request->bank=null;
                 }
+                $voucer->subledger_id=$request->bank;
                 if($request->method==1){
                     $voucer->cheque_no=$request->cheque_no;
                     $voucer->cheque_issue_date=strtotime($request->issue_date);
@@ -270,6 +282,10 @@ class CustomerReceiveController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $delete=Vinvoice::where('id',$id)->delete();
+        if($delete){
+            Voucer::where('v_inv_id',$id)->delete();
+            return response()->json(['message'=>"Data Deleted Success"]);
+        }
     }
 }

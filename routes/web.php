@@ -186,4 +186,6 @@ Route::group([
     Route::post('/customer-balance-analysis-report','CustomerBalanceAnalysisController@getReport');
     Route::get('/chart-of-account-report','ChartOfAccountController@index');
     Route::post('/chart-of-account-report','ChartOfAccountController@getReport');
+    Route::get('/profit_loss','ProfitLossController@index');
+    Route::post('/profit_loss','ProfitLossController@getReport');
 });

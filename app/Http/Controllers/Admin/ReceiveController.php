@@ -80,6 +80,9 @@ class ReceiveController extends Controller
          $data['ammount']= explode(',', $request->ammount);
          $data['comment']= explode(',', $request->comment);
          $data['date']= $request->date;
+         if($data['bank']=="null"){
+            $data['bank']=null;
+         }
          if($data['method']==0){
              $bank_cond='nullable';
          }else{
@@ -93,6 +96,7 @@ class ReceiveController extends Controller
              'comment'=>"required|array|max:200",
              'date'=>"required|max:200",
              'note'=>"nullable|max:500",
+             'bank'=>$bank_cond."|max:500",
          ]);
          if($validator->passes()){
                  $total=0;
@@ -215,6 +219,9 @@ class ReceiveController extends Controller
         $data['v_id']= explode(',', $request->v_id);
         $data['delete_id']= explode(',', $request->delete_id);
         $data['date']= $request->date;
+        if($data['bank']=="null"){
+            $data['bank']=null;
+        }
         if($data['method']==0){
             $bank_cond='nullable';
         }else{
@@ -228,6 +235,7 @@ class ReceiveController extends Controller
             'comment'=>"required|array|max:200",
             'date'=>"required|max:200",
             'note'=>"nullable|max:500",
+            'bank'=>$bank_cond."|max:500",
         ]);
         if($validator->passes()){
                $total=0;

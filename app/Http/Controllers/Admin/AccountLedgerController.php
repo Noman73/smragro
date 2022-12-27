@@ -8,8 +8,10 @@ use App\Models\AccountLedger;
 use App\Models\AccountGroup;
 use DataTables;
 use App\Rules\RelationWithRule;
+use App\Rules\AccountLedgerRule;
 use Validator;
 use DB;
+
 class AccountLedgerController extends Controller
 {
     /**
@@ -128,15 +130,16 @@ class AccountLedgerController extends Controller
     public function update(Request $request, $id)
     {
         // return response()->json(['message'=>'Account Ledger Cannot Edit']);
+
         $validator=Validator::make($request->all(),[
-            'name'=>"required|max:200|min:1|unique:account_ledgers,name,".$id,
+            'name'=>["required","max:200","min:1","unique:account_ledgers,name,".$id,new AccountLedgerRule($id)],
             'account_group'=>"required|max:200|min:1",
             'status'=>"required|max:1|min:1",
             // 'relation_with'=>["nullable","max:200","min:1",new RelationWithRule],
         ]);
         if($validator->passes()){
             $class=AccountLedger::find($id);
-            // $class->name=$request->name;
+            $class->name=$request->name;
             $class->group_id=$request->account_group;
             // $class->relation_with=$request->relation_with;
             $class->author_id=auth()->user()->id;
