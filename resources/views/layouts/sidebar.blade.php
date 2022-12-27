@@ -451,6 +451,12 @@
                   <p>Cash in Hand</p>
                 </a>
               </li>
+              <li class="nav-item">
+                <a href="{{URL::to('/admin/profit_loss')}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Profit Loss</p>
+                </a>
+              </li>
               @endcan
               @can('Total Transaction Report')
               <li class="nav-item">

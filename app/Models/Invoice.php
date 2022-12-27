@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\AccountLedger;
+use SebastianBergmann\CodeCoverage\Report\Xml\Totals;
+
 class Invoice extends Model
 {
     use HasFactory;
@@ -47,9 +49,9 @@ class Invoice extends Model
     {
         return $this->belongsTo(ShippingCompany::class,'shipping_id','id');
     }
-
-    public function road_chalan()
+    public function paid()
     {
-        return $this->belongsTo(RoadChalan::class,'id','invoice_id');
+        $cus_ledger=AccountLedger::where('name','Customer')->first();
+        return $this->hasMany(Voucer::class,'invoice_id','id')->where('ledger_id',$cus_ledger->id)->where('credit','<>',0.00);
     }
 }

@@ -68,7 +68,7 @@ class AccountGroupController extends Controller
     public function store(Request $request)
     {
         $validator=Validator::make($request->all(),[
-            'name'=>"required|max:200|min:1",
+            'name'=>"required|max:200|min:1|unique:account_groups,name",
             'class'=>"required|max:200|min:1",
             'start_code'=>"required|max:200|min:1",
             'end_code'=>"required|max:200|min:1",
@@ -119,6 +119,7 @@ class AccountGroupController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // group name cannot be edit
         $validator=Validator::make($request->all(),[
             'name'=>"required|max:200|min:1",
             'class'=>"required|max:200|min:1",
@@ -127,7 +128,6 @@ class AccountGroupController extends Controller
         ]);
         if($validator->passes()){
             $class=AccountGroup::find($id);
-            $class->name=$request->name;
             $class->class_id=$request->class;
             $class->start_code=$request->start_code;
             $class->end_code=$request->end_code;
