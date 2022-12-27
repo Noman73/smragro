@@ -110,7 +110,7 @@ class ProfitLossController extends Controller
         where account_ledgers.name='Sales' and voucers.date >= :from_date and voucers.date<=:to_date;
         ",['from_date'=>$from_date,'to_date'=>$to_date]);
         $indirect_income=DB::select("
-        select account_ledgers.name,ifnull(sum(voucers.debit-voucers.credit),0.00) total from account_groups
+        select account_ledgers.name,ifnull(sum(voucers.credit-voucers.debit),0.00) total from account_groups
         inner join account_ledgers on account_groups.id=account_ledgers.group_id 
         left join voucers on voucers.ledger_id=account_ledgers.id
         and voucers.date>=:from_date and voucers.date<=:to_date
