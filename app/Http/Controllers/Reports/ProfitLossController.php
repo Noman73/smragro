@@ -49,7 +49,7 @@ class ProfitLossController extends Controller
         $closing_stock=DB::select("
         select 'closing stock' name,sum(stocks.stock*stocks.buy_price) total from 
         (
-        select product.id,product.part_id,product.name, (sales.deb_qantity-sales.cred_qantity) sale_qty,product.qty,product.total,(product.total/product.qty) buy_price,
+        select product.id,product.name, (sales.deb_qantity-sales.cred_qantity) sale_qty,product.qty,product.total,(product.total/product.qty) buy_price,
         product.qty-(sales.deb_qantity-sales.cred_qantity) stock
         from purchases
         left join sales on sales.product_id=purchases.product_id
@@ -58,7 +58,6 @@ class ProfitLossController extends Controller
         select 
         products.name,
         products.id,
-        products.part_id,
         sum(purchases.deb_qantity-purchases.cred_qantity) qty,
         purchases.price,
         sum((purchases.deb_qantity-purchases.cred_qantity)*purchases.price) total
