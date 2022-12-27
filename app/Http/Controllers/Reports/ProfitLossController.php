@@ -92,7 +92,7 @@ class ProfitLossController extends Controller
 
         $expenses=DB::select("
         select account_ledgers.name,ifnull(sum(voucers.debit-voucers.credit),0.00) total from account_ledgers
-        inner join account_groups on account_groups.id=account_ledgers.group_id and account_groups.name='Indirect Expenses'
+        left join account_groups on account_groups.id=account_ledgers.group_id and account_groups.name='Indirect Expenses'
         left join voucers on voucers.ledger_id=account_ledgers.id
         and voucers.date>=:from_date and voucers.date<=:to_date
         group by account_ledgers.id
@@ -100,17 +100,17 @@ class ProfitLossController extends Controller
 
         $purchase=DB::select("
         select ifnull(sum(voucers.debit-voucers.credit),0.00) total from account_ledgers 
-        inner join voucers on voucers.ledger_id=account_ledgers.id
+        left join voucers on voucers.ledger_id=account_ledgers.id
         where account_ledgers.name='Purchase' and voucers.date >= :from_date and voucers.date<=:to_date;
         ",['from_date'=>$from_date,'to_date'=>$to_date]);
         $sales=DB::select("
         select ifnull(sum(voucers.credit-voucers.debit),0.00) total from account_ledgers 
-        inner join voucers on voucers.ledger_id=account_ledgers.id
+        left join voucers on voucers.ledger_id=account_ledgers.id
         where account_ledgers.name='Sales' and voucers.date >= :from_date and voucers.date<=:to_date;
         ",['from_date'=>$from_date,'to_date'=>$to_date]);
         $indirect_income=DB::select("
         select account_ledgers.name,(voucers.debit-voucers.credit) total from account_ledgers
-        inner join voucers on voucers.ledger_id=account_ledgers.id
+        left join voucers on voucers.ledger_id=account_ledgers.id
         where account_ledgers.name='Other Revenue' and voucers.date >= :from_date and voucers.date<=:to_date;
         ",['from_date'=>$from_date,'to_date'=>$to_date]);
 
