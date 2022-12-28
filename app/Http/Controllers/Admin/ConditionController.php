@@ -71,7 +71,7 @@ class ConditionController extends Controller
           ]);
         
         if($validator->passes()){
-            $subledger=AccountLedger::where('name','Condition Customer')->first();
+            $subledger=AccountLedger::where('name','Customer')->first();
             $v_invoice=new Vinvoice;
             $v_invoice->date=strtotime($request->date);
             $v_invoice->total=$request->ammount;

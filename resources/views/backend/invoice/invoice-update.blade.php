@@ -1,8 +1,8 @@
  <!-- Content Wrapper. Contains page content -->
  @extends('layouts.master')
  @section('link')
-  <style>
-    #ammount{
+ <style>
+  #ammount{
       /* border:2px solid red; */
       background-color:#f4c2c2;
       font-weight: bold;
