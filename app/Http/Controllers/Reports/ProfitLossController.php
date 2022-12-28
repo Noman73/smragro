@@ -68,7 +68,7 @@ class ProfitLossController extends Controller
         ",['from_date'=>$from_date,'from_date2'=>$from_date])[0]->total;
 
         $closing_stock=DB::select("
-        select 'closing stock' name,sum(stocks.stock*stocks.buy_price) total from 
+        select 'closing stock' name,ifnull(sum(stocks.stock*stocks.buy_price),0.00) total from 
         (
         select product.id,product.name, (sales.deb_qantity-sales.cred_qantity) sale_qty,product.qty,product.total,(product.total/product.qty) buy_price,
         product.qty-(sales.deb_qantity-sales.cred_qantity) stock
