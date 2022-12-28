@@ -423,6 +423,12 @@
                   <p>Profit Loss</p>
                 </a>
               </li>
+              <li class="nav-item">
+                <a href="{{URL::to('/admin/user-wise-amount')}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>User Wise Amount</p>
+                </a>
+              </li>
               @endcan
               @can('Total Transaction Report')
               <li class="nav-item">
