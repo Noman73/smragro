@@ -226,6 +226,7 @@ class InvoiceTestController extends Controller
                     // customized code 
                     $sales_ledger=AccountLedger::where('name','Sales')->first();
                     $cash_ledger=AccountLedger::where('name','Cash')->first();
+                    $bank_ledger=AccountLedger::where('name','Bank')->first();
                     $customer_ledger=AccountLedger::where('name','Customer')->first();
                     $cond_customer_ledger=AccountLedger::where('name','Condition Customer')->first();
                     $sales_amt_without_discount=$total-($data['discount_type']==0? floatval($data['discount']) : ($total*floatval($data['discount']))/100);
@@ -310,6 +311,9 @@ class InvoiceTestController extends Controller
                         $voucer->transaction_name="Sale Invoice";
                         if($data['payment_method_type']==0){
                             $voucer->ledger_id=$cash_ledger->id;
+                        }else{
+                            $voucer->ledger_id=$bank_ledger->id;
+                            $voucer->subledger_id=$data['payment_method'];
                         }
                         $voucer->debit =($data['ammount']==null ? 0 : $data['ammount']);
                         $voucer->credit = 0;
@@ -576,6 +580,7 @@ class InvoiceTestController extends Controller
                     // customized code
                     $sales_ledger=AccountLedger::where('name','Sales')->first();
                     $cash_ledger=AccountLedger::where('name','Cash')->first();
+                    $bank_ledger=AccountLedger::where('name','Bank')->first();
                     $customer_ledger=AccountLedger::where('name','Customer')->first();
                     $cond_customer_ledger=AccountLedger::where('name','Condition Customer')->first();
                     $sales_amt_without_discount=$total-($data['discount_type']==0? floatval($data['discount']) : ($total*floatval($data['discount']))/100);
@@ -660,6 +665,9 @@ class InvoiceTestController extends Controller
                         $voucer->transaction_name="Sale Invoice";
                         if($data['payment_method_type']==0){
                             $voucer->ledger_id=$cash_ledger->id;
+                        }else{
+                            $voucer->ledger_id=$bank_ledger->id;
+                            $voucer->subledger_id=$data['payment_method'];
                         }
                         $voucer->debit =($data['ammount']==null ? 0 : $data['ammount']);
                         $voucer->credit = 0;
