@@ -262,25 +262,17 @@
           $('#ammount').parent().parent().removeClass('d-none');
         }else if(sale_type==1){
           $('#init-customer').addClass('visible')
-      $('#init-customer').removeClass('invisible')
-      // $('#ammount').attr('disabled',false);
-      // $('#ammount').parent().parent().addClass('d-none');
-      // $("#payment_method_row").addClass('d-none');
-      $("#w_customer").addClass('d-none');
-      $("#w_mobile").val('');
-      // 
-      $('.due').removeClass('d-none')
-      $("#payment_method_row").removeClass('d-none');
-      $('#ammount').attr('disabled',false);
-      $('#ammount').parent().parent().removeClass('d-none');
-
-        }else if(sale_type==2){
-          $('#init-customer').addClass('invisible')
-          $('#init-customer').removeClass('visible')
+          $('#init-customer').removeClass('invisible')
+          // $('#ammount').attr('disabled',false);
+          // $('#ammount').parent().parent().addClass('d-none');
+          // $("#payment_method_row").addClass('d-none');
+          $("#w_customer").addClass('d-none');
+          $("#w_mobile").val('');
+          // 
+          $('.due').removeClass('d-none')
           $("#payment_method_row").removeClass('d-none');
           $('#ammount').attr('disabled',false);
           $('#ammount').parent().parent().removeClass('d-none');
-          $('#ammount').val('');
         }else if(sale_type==2){
           $('#init-customer').addClass('visible')
           $('#init-customer').removeClass('invisible')
@@ -290,7 +282,6 @@
           $("#payment_method_row").removeClass('d-none');
           $('#ammount').attr('disabled',false);
           $('#ammount').parent().parent().removeClass('d-none');
-          $('#ammount').val('');
         }
       }
       $('#sale_type').change(function(){

@@ -3,7 +3,13 @@
 
  @extends('layouts.master')
  @section('link')
- 
+ <style>
+  #ammount{
+      /* border:2px solid red; */
+      background-color:#f4c2c2;
+      font-weight: bold;
+    }
+ </style>
  @endsection
  @section('content')
     <!-- Content Header (Page header) -->
