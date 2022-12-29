@@ -45,6 +45,7 @@
                     <th>SL.</th>
                     <th>Sms</th>
                     <th>Area</th>
+                    <th>Status</th>
                     <th>Action</th>
                   </tr>
                 </thead>
@@ -68,9 +69,14 @@
               <form>
                 <input type="hidden" id="id">
                 <div class="row">
+
+                  
                   <div class="col-md-8 mr-auto ml-auto">
+                    <div>
+                      Replace code :  <span class="text-danger">#total_payable#,#invoice_due#,#balance#,#receive#</span>
+                    </div>
                     <div class="form-group">
-                      <label for="recipient-name" class="col-form-label">Name:</label>
+                      <label for="recipient-name" class="col-form-label">SMS:</label>
                       <textarea type="text" rows='5' class="form-control" id="sms" placeholder="Enter SMS"></textarea>
                       <div class="invalid-feedback" id="sms_msg">
                       </div>

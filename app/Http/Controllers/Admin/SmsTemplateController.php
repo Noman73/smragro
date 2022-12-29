@@ -27,7 +27,10 @@ class SmsTemplateController extends Controller
               $button.='</div>';
             return $button;
           })
-          ->rawColumns(['action'])->make(true);
+          ->addColumn('status',function($get){
+            return ($get->status==1? "<span class='bg-success p-1 rounded'>Active</span>" : "<span class='bg-danger p-1 rounded'>Deactive</span>");
+          })
+          ->rawColumns(['status','action'])->make(true);
         }
         return view('backend.sms_template.sms_template');
     }

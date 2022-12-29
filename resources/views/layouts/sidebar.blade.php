@@ -557,6 +557,12 @@
                 </a>
               </li>
               @endcan
+              <li class="nav-item">
+                <a href="{{URL::to('admin/sms_template')}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Sms Template</p>
+                </a>
+              </li>
               @can("Shipping Company View")
               <li class="nav-item">
                 <a href="{{URL::to('admin/shipping-company')}}" class="nav-link">

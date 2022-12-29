@@ -809,13 +809,15 @@ class InvoiceTestController extends Controller
     public function sms($total_payable,$invoice_due,$receive,$customer_id){
         if($customer_id!=null){
             $balance=BalanceTrait::customerBalance($customer_id);
-            $sms=SmsTemplate::where('area','invoice')->first()->sms;
-            $sms=str_replace("#total_payable#",$total_payable,$sms);
-            $sms=str_replace("#invoice_due#",$invoice_due,$sms);
-            $sms=str_replace("#receive#",$receive,$sms);
-            $sms=str_replace("#balance#",$balance,$sms);
-            $this->sendSms($sms,Customer::find($customer_id)->phone);
-            return $sms;
+            $sms=SmsTemplate::where('area','invoice')->first();
+            if($sms->status==1){
+                $sms=$sms->sms;
+                $sms=str_replace("#total_payable#",$total_payable,$sms);
+                $sms=str_replace("#invoice_due#",$invoice_due,$sms);
+                $sms=str_replace("#receive#",$receive,$sms);
+                $sms=str_replace("#balance#",$balance,$sms);
+                $this->sendSms($sms,Customer::find($customer_id)->phone);
+            }
         }
         return false;
     }
