@@ -7,14 +7,15 @@ trait SendSmsTrait{
 	public function sendSms($sms,$number)
 	{
         info($sms);
-        $api_key="C2001593632a9d8ed9db24.24710771";
-        $sender_id="8809601003570";
+        $api_key="HOB2tfILEQWzSumTbiG8Gozihzaf52Ok";
+        $api_token="Sagc1672290805";
+        $sender_id="SMR Agro";
         $contacts=$number;
-        $type="application/json";
+        $type="unicode";
         $msg=$sms;
-        $fields='api_key='.$api_key.'&type='.$type.'&contacts='.$contacts.'&senderid='.$sender_id.'&msg='.$msg;
+        $fields='sendsms&apikey='.$api_key.'&apitoken='.$api_token.'&type='.$type.'&from='.$sender_id.'&to='.$contacts.'&text='.$msg;
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL,"https://isms.mimsms.com/smsapi");
+        curl_setopt($ch, CURLOPT_URL,"https://app.mimsms.com/smsAPI");
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_POSTFIELDS,$fields);
         // In real life you should use something like:
@@ -25,6 +26,7 @@ trait SendSmsTrait{
         $server_output = curl_exec($ch);
         curl_close ($ch);
         // Further processing ...
+        info($server_output);
         return $server_output;
 	}
 
