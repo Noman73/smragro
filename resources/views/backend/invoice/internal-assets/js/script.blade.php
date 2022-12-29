@@ -1043,10 +1043,11 @@ $(document).on('select2:select','#customer,#product',function(){
   getMultiply();
 })
 function getMultiply(){
+  console.log('sdfdf')
   customer=$('#customer').val();
   brand=$('#brand').val();
   console.log(customer)
-  if(customer!=null && brand!=null){
+  if(brand!=null){
     axios.get("{{URL::to('admin/get-customer-multiply')}}/"+customer+'/'+brand)
     .then(res=>{
       console.log(res)
