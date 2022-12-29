@@ -5,6 +5,7 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\CustomerMultiply;
+use App\Models\Brand;
 use Validator;
 use DataTables;
 use App\Rules\CustomerMultiplyRule;
@@ -139,6 +140,10 @@ class CustomerWiseMultiplyController extends Controller
 
     public function getMultiply($customer_id,$brand_id)
     {
-       return CustomerMultiply::where('customer_id',$customer_id)->where('brand_id',$brand_id)->first(); 
+       $customerwise=CustomerMultiply::where('customer_id',$customer_id)->where('brand_id',$brand_id)->first();
+       if($customerwise==null){
+        return Brand::where('id',$brand_id)->first();
+       }
+       return $customerwise;
     }
 }
