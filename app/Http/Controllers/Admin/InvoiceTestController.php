@@ -12,12 +12,15 @@ use App\Models\Product;
 use App\Models\AccountLedger;
 use App\Rules\CheckCreditLimit;
 use App\Models\ShippingAdress;
+use App\Models\SmsTemplate;
 use Validator;
 use Auth;
 use DataTables;
 use Illuminate\Foundation\Console\ChannelMakeCommand;
 use URL;
 use App\Models\User;
+use App\Http\Traits\BalanceTrait;
+use App\Http\Traits\SendSmsTrait;
 class InvoiceTestController extends Controller
 {
     /**
@@ -25,6 +28,7 @@ class InvoiceTestController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    use BalanceTrait,SendSmsTrait;
     public function __construct()
     {
         $this->middleware('auth');
@@ -335,6 +339,7 @@ class InvoiceTestController extends Controller
                         $voucer->invoice_id = $inv_id;
                         $voucer->author_id = auth()->user()->id;
                         $voucer->save();
+                        $this->sms($total_payable,$due_ammount,$data['ammount'],$customer_id);
                         return ['message' => 'Invoice Added Success', 'id' => $inv_id];
                     }
                 }
@@ -788,5 +793,21 @@ class InvoiceTestController extends Controller
           ->rawColumns(['action'])->make(true);
         }
         return view('backend.invoice.invoice-list');
+    }
+
+    public function sms($total_payable,$invoice_due,$receive,$customer_id){
+        if($customer_id!=null){
+            $balance=BalanceTrait::customerBalance($customer_id);
+            $sms=SmsTemplate::where('area','invoice')->first();
+            if($sms->status==1){
+                $sms=$sms->sms;
+                $sms=str_replace("#total_payable#",$total_payable,$sms);
+                $sms=str_replace("#invoice_due#",$invoice_due,$sms);
+                $sms=str_replace("#receive#",$receive,$sms);
+                $sms=str_replace("#balance#",$balance,$sms);
+                $this->sendSms($sms,Customer::find($customer_id)->phone);
+            }
+        }
+        return false;
     }
 }

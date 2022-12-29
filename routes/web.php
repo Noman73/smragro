@@ -109,9 +109,8 @@ Route::group([
     Route::get('/receive-payment-yearly-line-chart','ChartDataController@last30DaysReceivePayment');
     Route::resource('/password','PasswordChangeController');
     Route::resource('/user','UserController');
-    Route::get('/selected-product-data/{id}','ProductController@getAllData');
-    Route::get('/part-id-product-data/{id}','ProductController@getAllPartIdData');
-}); 
+    Route::resource('/sms_template','SmsTemplateController');
+});
 Route::group([
     'prefix'=>"admin/accounts",
     'namespace' => 'App\Http\Controllers\Admin',
