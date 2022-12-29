@@ -10,7 +10,7 @@ trait SendSmsTrait{
         $api_key="HOB2tfILEQWzSumTbiG8Gozihzaf52Ok";
         $api_token="Sagc1672290805";
         $sender_id="SMR Agro";
-        $contacts=$number;
+        $contacts='88'.$number;
         $type="unicode";
         $msg=$sms;
         $fields='sendsms&apikey='.$api_key.'&apitoken='.$api_token.'&type='.$type.'&from='.$sender_id.'&to='.$contacts.'&text='.$msg;
