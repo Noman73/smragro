@@ -266,6 +266,8 @@ $('#date,#cheque_issue_date').daterangepicker({
       $('#ammount').attr('disabled',true);
       $('#ammount').parent().parent().removeClass('d-none');
       $('.due').addClass('d-none');
+      calculation();
+      totalCal();
     }else if(sale_type==1){
       $('#init-customer').addClass('visible')
       $('#init-customer').removeClass('invisible')
