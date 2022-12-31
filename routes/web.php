@@ -90,6 +90,7 @@ Route::group([
     Route::get('/receive-payment-yearly-line-chart','ChartDataController@last30DaysReceivePayment');
     Route::resource('/password','PasswordChangeController');
     Route::resource('/user','UserController');
+    Route::resource('/sms_template','SmsTemplateController');
 });
 Route::group([
     'prefix'=>"admin/accounts",
@@ -188,4 +189,6 @@ Route::group([
     Route::post('/chart-of-account-report','ChartOfAccountController@getReport');
     Route::get('/profit_loss','ProfitLossController@index');
     Route::post('/profit_loss','ProfitLossController@getReport');
+    Route::get('/user-wise-amount','UserWiseAmountController@index');
+    Route::post('/user-wise-amount','UserWiseAmountController@getReport');
 });

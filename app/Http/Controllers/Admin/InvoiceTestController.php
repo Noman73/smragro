@@ -12,12 +12,15 @@ use App\Models\Product;
 use App\Models\AccountLedger;
 use App\Rules\CheckCreditLimit;
 use App\Models\ShippingAdress;
+use App\Models\SmsTemplate;
 use Validator;
 use Auth;
 use DataTables;
 use Illuminate\Foundation\Console\ChannelMakeCommand;
 use URL;
 use App\Models\User;
+use App\Http\Traits\BalanceTrait;
+use App\Http\Traits\SendSmsTrait;
 class InvoiceTestController extends Controller
 {
     /**
@@ -25,6 +28,7 @@ class InvoiceTestController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    use BalanceTrait,SendSmsTrait;
     public function __construct()
     {
         $this->middleware('auth');
@@ -335,6 +339,7 @@ class InvoiceTestController extends Controller
                         $voucer->invoice_id = $inv_id;
                         $voucer->author_id = auth()->user()->id;
                         $voucer->save();
+                        $this->sms($total_payable,$due_ammount,$data['ammount'],$customer_id);
                         return ['message' => 'Invoice Added Success', 'id' => $inv_id];
                     }
                 }
@@ -755,7 +760,7 @@ class InvoiceTestController extends Controller
               ->addIndexColumn()
               ->addColumn('action',function($get){
               $button  ='<div class="d-flex justify-content-center">';
-              $button.='<a href="'.URL::to('admin/view-pages/sales-invoice/'.$get->id).'" class="btn btn-warning shadow btn-xs sharp me-1"><i class="fas fa-print"></i></a>
+              $button.='<a href="'.URL::to('admin/view-pages/sales-invoice/'.$get->id).'" class="btn btn-warning shadow btn-xs sharp me-1"><i class="fas fa-eye"></i></a>
               <a href="'.route('invoice.edit',$get->id).'" class="btn btn-primary shadow btn-xs sharp ml-1 editRow"><i class="fas fa-pencil-alt"></i></a>
               <a data-url="'.route('invoice.destroy',$get->id).'" href="javascript:void(0)" class="btn btn-danger shadow btn-xs sharp ml-1 deleteRow"><i class="fa fa-trash"></i></a>';
               $button.='</div>';
@@ -788,5 +793,21 @@ class InvoiceTestController extends Controller
           ->rawColumns(['action'])->make(true);
         }
         return view('backend.invoice.invoice-list');
+    }
+
+    public function sms($total_payable,$invoice_due,$receive,$customer_id){
+        if($customer_id!=null){
+            $balance=BalanceTrait::customerBalance($customer_id);
+            $sms=SmsTemplate::where('area','invoice')->first();
+            if($sms->status==1){
+                $sms=$sms->sms;
+                $sms=str_replace("#total_payable#",$total_payable,$sms);
+                $sms=str_replace("#invoice_due#",$invoice_due,$sms);
+                $sms=str_replace("#receive#",$receive,$sms);
+                $sms=str_replace("#balance#",$balance,$sms);
+                $this->sendSms($sms,Customer::find($customer_id)->phone);
+            }
+        }
+        return false;
     }
 }
