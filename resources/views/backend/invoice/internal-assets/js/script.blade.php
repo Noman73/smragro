@@ -364,9 +364,11 @@ $('#date,#cheque_issue_date').daterangepicker({
       console.log(response);
         if(response.data.message){
             toastr.success(response.data.message);
-            Clean();
             $('.submit').attr('disabled',false);
+            Clean()
+            setTimeout(() => {
             window.location="{{URL::to('admin/view-pages/sales-invoice')}}/"+response.data.id;
+            }, 250);
         }else if(response.data.error){
           $('.submit').attr('disabled',false);
             var keys=Object.keys(response.data.error);
@@ -493,6 +495,7 @@ function Clean(){
     $("#note,#staff_note").val('')
     $('select').val('').trigger('change')
     $('#sale_type').val(0).trigger('change')
+    customerVisibility();
     addNew();
     $('#date,#cheque_issue_date').daterangepicker({
         showDropdowns: true,
@@ -642,4 +645,6 @@ $(document).keypress(function(event){
     
   }
 })
+
+
 </script>
