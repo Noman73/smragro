@@ -64,17 +64,16 @@
               use Riskihajar\Terbilang\Facades\Terbilang;
               // $number_convert=new Terbilang;
               $info=App\Models\CompanyInformations::first();
-               $voucer_invoice=App\Models\Voucer::where('invoice_id',$invoice->id)->first();
+              $voucer_invoice=App\Models\Voucer::where('invoice_id',$invoice->id)->first();
               //  dd($voucer_invoice->id);
               $previous_due=App\Http\Traits\BalanceTrait::previousBalance($invoice->customer_id,$voucer_invoice->id,$voucer_invoice->dates);
               @endphp
               <div class="float-right clearfix">
-                <a target='_blank' class="btn btn-warning" href='{{URL::to('admin/view-pages/sales-invoice-print/'.$invoice->id)}}'>Print</a>
-                <a target='_blank' class="btn btn-warning" href='{{URL::to('admin/view-pages/sales-invoice-bangla-print/'.$invoice->id)}}'>Bangla Print</a>
-                <a target='_blank' class="btn btn-secondary" href='{{URL::to('admin/view-pages/sales-chalan-invoice-print/'.$invoice->id)}}'>Chalan</a>
-                <a target='_blank' class="btn btn-info" href='{{URL::to('admin/view-pages/sales-total-chalan-invoice-print/'.$invoice->id)}}'>Total Chalan</a>
-                <a target='_blank' class="btn btn-primary" href='{{URL::to('admin/view-pages/sales-road-chalan-invoice-print/'.$invoice->id)}}'>Road Chalan</a>
-                <a target='_blank' class="btn btn-primary" href='{{URL::to('admin/view-pages/vat-chalan/'.$invoice->id)}}'>Vat Chalan</a>
+                <a target='_blank' class="btn btn-warning" href='{{URL::to('admin/view-pages/sales-invoice-print/'.$invoice->id)}}'><i class="fa fa-print" aria-hidden="true"></i></a>
+                <a target='_blank' class="btn btn-warning" href='{{URL::to('admin/view-pages/sales-invoice-pos-print/'.$invoice->id)}}'>Pos <i class="fa fa-print" aria-hidden="true"></i></a>
+                <a target='_blank' class="btn btn-warning" href='{{URL::to('admin/view-pages/sales-invoice-bangla-print/'.$invoice->id)}}'>বাংলা <i class="fa fa-print ml-1" aria-hidden="true"></i></a>
+                <a target='_blank' class="btn btn-secondary" href='{{URL::to('admin/view-pages/sales-chalan-invoice-print/'.$invoice->id)}}'><i class="fa fa-file-invoice"></i></a>
+                <a target='_blank' class="btn btn-info" href='{{URL::to('admin/view-pages/sales-total-chalan-invoice-print/'.$invoice->id)}}'>Total <i class="fa fa-file-invoice ml-1"></i></a>
               </div>  
                   <div id="print" class="print mt-5" >
                     <div class="row invoice_header">
@@ -173,8 +172,8 @@
                                               <td class="text-right">৳{{$sales->price}}</td>
                                               <td class="text-right">৳{{($sales->deb_qantity*$sales->price)}}</td>
                                           </tr>
-                                      </tbody>
                                     @endforeach
+                                  </tbody>
                               </table>
                           </div>
                       </div>
