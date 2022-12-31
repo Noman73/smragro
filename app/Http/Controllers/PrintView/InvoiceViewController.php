@@ -45,4 +45,11 @@ class InvoiceViewController extends Controller
         $invoice=Invoice::with('sales','customer','pay','condition_amount','user','shipping_customer','courier','notes')->where('id',$id)->first();
         return view('backend.view_pages.invoices.total_chalan',compact('invoice'));
     }
+    public function posPrint($id)
+    {
+        $invoice=Invoice::with('sales','customer','pay','condition_amount','user','shipping_customer','courier','notes')->where('id',$id)->first();
+
+        return view('backend.view_pages.invoices.pos-print',compact('invoice'));
+    }
+
 }
