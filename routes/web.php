@@ -112,6 +112,7 @@ Route::group([
     Route::get('/selected-product-data/{id}','ProductController@getAllData');
     Route::get('/part-id-product-data/{id}','ProductController@getAllPartIdData');
     Route::resource('/sms_template','SmsTemplateController');
+    Route::get('/send-invoice-sms/{invoice_id}','SmsTemplateController@sendInvoiceSms');
 });
 Route::group([
     'prefix'=>"admin/accounts",
