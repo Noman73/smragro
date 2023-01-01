@@ -645,9 +645,6 @@ $(document).keypress(function(event){
 })
 function sendSms(invoice_id){
    axios.get('admin/send-invoice-sms/'+invoice_id)
-   .then(res=>{
-    console.log(res);
-   })
    setTimeout(() => {
       window.location="{{URL::to('admin/view-pages/sales-invoice')}}/"+invoice_id;
    }, 250);
