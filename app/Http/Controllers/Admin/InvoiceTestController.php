@@ -344,9 +344,7 @@ class InvoiceTestController extends Controller
                         $voucer->invoice_id = $inv_id;
                         $voucer->author_id = auth()->user()->id;
                         $voucer->save();
-                        $this->sms($total_payable,$due_ammount,$data['ammount'],$customer_id);
                         return ['message' => 'Invoice Added Success', 'id' => $inv_id];
-
                     }
                 }
                 

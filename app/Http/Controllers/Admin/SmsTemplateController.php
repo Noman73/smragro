@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use App\Models\SmsTemplate;
 use DataTables;
 use Validator;
+use App\Models\Invoice;
+use App\Http\Traits\BalanceTrait;
+use App\Http\Traits\SendSmsTrait;
 class SmsTemplateController extends Controller
 {
     /**
@@ -14,6 +17,7 @@ class SmsTemplateController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    use BalanceTrait,SendSmsTrait;
     public function index()
     {
         if(request()->ajax()){
@@ -118,5 +122,28 @@ class SmsTemplateController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function sendInvoiceSms($invoice_id){
+        $invoice=Invoice::with('customer','paid')->where('id',$invoice_id)->first();
+        $invoice_due=floatval($invoice->total_payable)-floatval($invoice->paid->sum('credit'));
+        $receive=$invoice->paid->sum('credit');
+        return $this->sms($invoice->total_payable,$invoice_due,$receive,$invoice->customer_id,$invoice->customer->phone);
+    }
+    public function sms($total_payable,$invoice_due,$receive,$customer_id,$number){
+
+        if($customer_id!=null){
+            $balance=BalanceTrait::customerBalance($customer_id);
+            $sms=SmsTemplate::where('area','invoice')->first();
+            if($sms->status==1){
+                $sms=$sms->sms;
+                $sms=str_replace("#total_payable#",$total_payable,$sms);
+                $sms=str_replace("#invoice_due#",$invoice_due,$sms);
+                $sms=str_replace("#receive#",$receive,$sms);
+                $sms=str_replace("#balance#",$balance,$sms);
+                $this->sendSms($sms,$number);
+                return true;
+            }
+        }
+        return false;
     }
 }
