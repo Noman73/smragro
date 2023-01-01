@@ -91,6 +91,7 @@ Route::group([
     Route::resource('/password','PasswordChangeController');
     Route::resource('/user','UserController');
     Route::resource('/sms_template','SmsTemplateController');
+    Route::get('/send-invoice-sms/{invoice_id}','SmsTemplateController@sendInvoiceSms');
 });
 Route::group([
     'prefix'=>"admin/accounts",

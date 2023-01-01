@@ -359,12 +359,10 @@ $('#date,#cheque_issue_date').daterangepicker({
     .then(response=>{
       console.log(response);
         if(response.data.message){
+            sendSms(response.data.id);
             toastr.success(response.data.message);
             $('.submit').attr('disabled',false);
             Clean()
-            setTimeout(() => {
-            window.location="{{URL::to('admin/view-pages/sales-invoice')}}/"+response.data.id;
-            }, 250);
         }else if(response.data.error){
           $('.submit').attr('disabled',false);
             var keys=Object.keys(response.data.error);
@@ -641,6 +639,11 @@ $(document).keypress(function(event){
     
   }
 })
-
+function sendSms(invoice_id){
+   axios.get('admin/send-invoice-sms/'+invoice_id)
+   setTimeout(() => {
+      window.location="{{URL::to('admin/view-pages/sales-invoice')}}/"+invoice_id;
+   }, 250);
+}
 
 </script>
