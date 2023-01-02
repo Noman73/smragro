@@ -965,7 +965,8 @@ function initDetails(){
         $('#product').html("<option value='"+res.data[0].id+"'>"+res.data[0].name+"<option>")
         $('#model').html("<option value='"+res.data[0].model.id+"'>"+res.data[0].model.name+"<option>")
         $('#brand').html("<option value='"+res.data[0].brand.id+"'>"+res.data[0].brand.name+"<option>")
-        // $('#part_id').trigger('select2:select');
+        $('#b_rate').val(res.data[0].sale_price);
+          // $('#part_id').trigger('select2:select');
         $('.item-details').css('visibility','hidden');
         $('#addnewbtn').attr('disabled',false);
         $('#quantity').focus();
