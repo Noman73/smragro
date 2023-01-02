@@ -155,7 +155,7 @@
         placeholder:'select',
         allowClear:true,
         ajax:{
-          url:"{{URL::to('/admin/get-product-without-combo')}}",
+          url:"{{URL::to('/admin/get-product/'.'2')}}",
           type:'post',
           dataType:'json',
           delay:20,

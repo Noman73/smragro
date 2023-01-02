@@ -145,7 +145,7 @@ function initSelect2(){
     placeholder:'select',
     allowClear:true,
     ajax:{
-      url:"{{URL::to('/admin/get-product')}}",
+      url:"{{URL::to('/admin/get-product/'.'1')}}",
       type:'post',
       dataType:'json',
       delay:20,

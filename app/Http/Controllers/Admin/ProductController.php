@@ -232,9 +232,26 @@ class ProductController extends Controller
             return response()->json(['warning'=>'Something Wrong']);
         }
     }
-    public function getProduct(Request $request)
+    public function getProduct(Request $request,$position)
     {
-        $products= Product::where('name','like','%'.$request->searchTerm.'%')->orWhere('product_code','like','%'.$request->searchTerm.'%')->where('status',1)->take(15)->get();
+        switch ($position) {
+            case 1:
+                $col='sale';
+                break;
+            case 2:
+                $col='purchase';
+                break;
+            case 3:
+                $col='production';
+                break;
+            case 4:
+                $col='combo';
+                break;
+            default:
+                $col='sale';
+                break;
+        }
+        $products= Product::where('name','like','%'.$request->searchTerm.'%')->orWhere('product_code','like','%'.$request->searchTerm.'%')->where('status',1)->where($col,1)->take(15)->get();
         foreach ($products as $value){
              $set_data[]=['id'=>$value->id,'text'=>$value->product_code.'-'.$value->name];
         }
