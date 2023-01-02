@@ -73,6 +73,7 @@
                 <a target='_blank' class="btn btn-warning" href='{{URL::to('admin/view-pages/sales-invoice-pos-print/'.$invoice->id)}}'>Pos <i class="fa fa-print" aria-hidden="true"></i></a>
                 <a target='_blank' class="btn btn-warning" href='{{URL::to('admin/view-pages/sales-invoice-bangla-print/'.$invoice->id)}}'>বাংলা <i class="fa fa-print ml-1" aria-hidden="true"></i></a>
                 <a target='_blank' class="btn btn-secondary" href='{{URL::to('admin/view-pages/sales-chalan-invoice-print/'.$invoice->id)}}'><i class="fa fa-file-invoice"></i></a>
+                <a target='_blank' class="btn btn-secondary" href='{{URL::to('admin/view-pages/sales-road-chalan-invoice-print/'.$invoice->id)}}'>Road <i class="fa fa-file-invoice"></i></a>
                 <a target='_blank' class="btn btn-info" href='{{URL::to('admin/view-pages/sales-total-chalan-invoice-print/'.$invoice->id)}}'>Total <i class="fa fa-file-invoice ml-1"></i></a>
               </div>  
                   <div id="print" class="print mt-5" >
