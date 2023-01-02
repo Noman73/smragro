@@ -151,11 +151,16 @@
                                 <th>Invoice Total</th>
                                 <td>৳. {{$invoice->total}}</td>
                             </tr>
+                              @if($invoice->transport!=null or $invoice->transport==0.00)
                               <tr>
-                                  <th>Invoice Due</th>
-                                  <td>৳. {{$invoice->total_payable}}</td>
+                                  <th>Transport</th>
+                                  <td>৳. {{$invoice->transport}}</td>
                               </tr>
-                             
+                              @endif
+                              <tr>
+                                <th>Invoice Due</th>
+                                <td>৳. {{$invoice->টপৃ}}</td>
+                              </tr>
                               <tr>
                                   <th> Paid </th>
                                   @if($invoice->purchase_type==0)
