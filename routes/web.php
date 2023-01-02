@@ -58,7 +58,7 @@ Route::group([
     Route::resource('/employee-salary','EmployeeSalaryController');
     Route::post('/get-category','CategoryController@getCategory');
     Route::post('/get-unit','UnitController@getUnit');
-    Route::post('/get-product','ProductController@getProduct');
+    Route::post('/get-product/{position}','ProductController@getProduct');
     Route::post('/get-product-without-combo','ProductController@getProductWithoutCombo');
     Route::post('/get-payment-method','BankAccountController@getPaymentMethod');
     Route::get('/get-bank-details/{id}','BankAccountController@getBankDetails');
