@@ -159,7 +159,7 @@
                               @endif
                               <tr>
                                 <th>Invoice Due</th>
-                                <td>৳. {{$invoice->টপৃ}}</td>
+                                <td>৳. {{$invoice->total_payable}}</td>
                               </tr>
                               <tr>
                                   <th> Paid </th>
