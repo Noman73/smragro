@@ -119,7 +119,7 @@
                           <table class="table table-bordered table-striped">
                               <thead>
                                   <tr>
-                                      <th class="text-center" width="10%">ক্রমিক নং.</th>
+                                      <th class="text-center" width="10%">ক্র. নং.</th>
                                       <th width="35%">পন্যের নাম</th>
                                       <th class="text-right">পরিমান</th>
                                       <th class="text-right">মূল্য</th>
@@ -320,7 +320,7 @@
                       <table class="table table-bordered table-striped">
                           <thead>
                               <tr>
-                                  <th class="text-center" width="10%">ক্রমিক নং.</th>
+                                  <th class="text-center" width="10%">ক্র. নং.</th>
                                   <th width="35%">পন্যের নাম</th>
                                   <th class="text-right">পরিমান</th>
                                   <th class="text-right">মূল্য</th>
