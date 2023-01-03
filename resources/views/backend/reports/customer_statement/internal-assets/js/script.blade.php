@@ -405,7 +405,7 @@ $(".customer").select2({
         if((parseFloat(d.debit)-parseFloat(d.credit))!=0 || d.transaction_name=='P/F'){
           html+="<tr><td>"+(d.date=='' ? '' : dateFormat(d.date*1000))+"</td>"
           html+="<td>"+(d.created_at=='' ?  '':dateFormat(Date.parse(d.created_at)))+"</td>"
-          html+="<td class='text-left'>"+d.transaction_name+(d.comment!=null? '('+d.comment+')':'' )+"</td>"
+          html+="<td class='text-left'>"+d.transaction_name+(d.comment!=null? '('+(d.comment).substr(0,35)+')':'' )+"</td>"
           html+="<td class='text-center'>"+url+"</td>"
           html+="<td class='text-right'>"+d.debit+"</td>"
           html+="<td class='text-right'>"+d.credit+"</td>"
@@ -435,7 +435,7 @@ $(".customer").select2({
     let year = date.getFullYear();
     return(dates+month+((year).toString()).substring(2,4));
   }
-  $('#fromDate,#toDate').daterangepicker({
+  $('#toDate').daterangepicker({
         showDropdowns: true,
         singleDatePicker: true,
         // parentEl: ".bd-example-modal-lg .modal-body",
@@ -443,5 +443,13 @@ $(".customer").select2({
             format: 'DD-MM-YYYY',
         }
   });
-  
+  $('#fromDate').daterangepicker({
+        showDropdowns: true,
+        singleDatePicker: true,
+        // parentEl: ".bd-example-modal-lg .modal-body",
+        startDate: moment().add(-30, 'day'),
+        locale: {
+            format: 'DD-MM-YYYY',
+        }
+  });
 </script>

@@ -118,7 +118,7 @@ class InvoiceTestController extends Controller
             'qantity.*' => 'required|regex:/^([0-9.]+)$/',
             'price' => 'required|array',
             'price.*' => 'required|regex:/^([0-9.]+)$/',
-            'transport' => 'nullable|regex:/^([0-9]+)$/',
+            'transport' => 'nullable|regex:/^([0-9.]+)$/',
             'sale_type' => 'required|regex:/^([0-2]+)$/',
             'discount_type' => 'required|regex:/^([0-2]+)$/',
             'customer' => $customer_cond.'|regex:/^([0-9]+)$/',
@@ -251,6 +251,7 @@ class InvoiceTestController extends Controller
                         $vat_journal->credit =(floatval($data['vat'])*$total)/100;
                         $vat_journal->invoice_id = $inv_id;
                         $vat_journal->author_id = auth()->user()->id;
+                        $vat_journal->comment=$data['staff_note'];
                         $vat_journal->save();
                     }
                     if($data['transport']!=null and $data['transport']!=0){
@@ -264,6 +265,7 @@ class InvoiceTestController extends Controller
                         $vat_journal->credit =$data['transport'];
                         $vat_journal->invoice_id = $inv_id;
                         $vat_journal->author_id = auth()->user()->id;
+                        $vat_journal->comment=$data['staff_note'];
                         $vat_journal->save();
                     }
                     // end vat journal
@@ -278,6 +280,7 @@ class InvoiceTestController extends Controller
                         $voucer->credit = 0;
                         $voucer->invoice_id = $inv_id;
                         $voucer->author_id = auth()->user()->id;
+                        $voucer->comment=$data['staff_note'];
                         $voucer->save();
                         // sales ledger
                         $voucer = new Voucer();
@@ -288,6 +291,7 @@ class InvoiceTestController extends Controller
                         $voucer->credit = $sales_amt_without_discount;
                         $voucer->invoice_id = $inv_id;
                         $voucer->author_id = auth()->user()->id;
+                        $voucer->comment=$data['staff_note'];
                         $voucer->save();
                         return ['message' => 'Invoice Added Success', 'id' => $inv_id];
                     }else{
@@ -301,6 +305,7 @@ class InvoiceTestController extends Controller
                         $voucer->credit =$sales_amt_without_discount;
                         $voucer->invoice_id = $inv_id;
                         $voucer->author_id = auth()->user()->id;
+                        $voucer->comment=$data['staff_note'];
                         $voucer->save();
                         // customer dabit 
                         $voucer = new Voucer();
@@ -312,6 +317,7 @@ class InvoiceTestController extends Controller
                         $voucer->credit = 0;
                         $voucer->invoice_id = $inv_id;
                         $voucer->author_id = auth()->user()->id;
+                        $voucer->comment=$data['staff_note'];
                         $voucer->save();
                         // cash/bank debit
                         $voucer = new Voucer();
@@ -330,6 +336,7 @@ class InvoiceTestController extends Controller
                         $voucer->cheque_issue_date = strtotime(strval($data['cheque_issue_date']));
                         $voucer->invoice_id = $inv_id;
                         $voucer->author_id = auth()->user()->id;
+                        $voucer->comment=$data['staff_note'];
                         $voucer->save();
                         // customer credit
                         $voucer = new Voucer();
@@ -343,6 +350,7 @@ class InvoiceTestController extends Controller
                         $voucer->cheque_issue_date = strtotime(strval($data['cheque_issue_date']));
                         $voucer->invoice_id = $inv_id;
                         $voucer->author_id = auth()->user()->id;
+                        $voucer->comment=$data['staff_note'];
                         $voucer->save();
                         return ['message' => 'Invoice Added Success', 'id' => $inv_id];
                     }
@@ -610,6 +618,7 @@ class InvoiceTestController extends Controller
                         $vat_journal->credit =(floatval($data['vat'])*$total)/100;
                         $vat_journal->invoice_id = $inv_id;
                         $vat_journal->author_id = auth()->user()->id;
+                        $vat_journal->comment=$data['staff_note'];
                         $vat_journal->save();
                     }
                     if($data['transport']!=null and $data['transport']!=0){
@@ -623,6 +632,7 @@ class InvoiceTestController extends Controller
                         $vat_journal->credit =$data['transport'];
                         $vat_journal->invoice_id = $inv_id;
                         $vat_journal->author_id = auth()->user()->id;
+                        $vat_journal->comment=$data['staff_note'];
                         $vat_journal->save();
                     }
                     // end vat journal
@@ -637,6 +647,7 @@ class InvoiceTestController extends Controller
                         $voucer->credit = 0;
                         $voucer->invoice_id = $inv_id;
                         $voucer->author_id = auth()->user()->id;
+                        $voucer->comment=$data['staff_note'];
                         $voucer->save();
                         // sales ledger
                         $voucer = new Voucer();
@@ -647,6 +658,7 @@ class InvoiceTestController extends Controller
                         $voucer->credit = $sales_amt_without_discount;
                         $voucer->invoice_id = $inv_id;
                         $voucer->author_id = auth()->user()->id;
+                        $voucer->comment=$data['staff_note'];
                         $voucer->save();
                         return ['message' => 'Invoice Added Success', 'id' => $inv_id];
                     }else{
@@ -660,6 +672,7 @@ class InvoiceTestController extends Controller
                         $voucer->credit =$sales_amt_without_discount;
                         $voucer->invoice_id = $inv_id;
                         $voucer->author_id = auth()->user()->id;
+                        $voucer->comment=$data['staff_note'];
                         $voucer->save();
                         // customer dabit 
                         $voucer = new Voucer();
@@ -671,6 +684,7 @@ class InvoiceTestController extends Controller
                         $voucer->credit = 0;
                         $voucer->invoice_id = $inv_id;
                         $voucer->author_id = auth()->user()->id;
+                        $voucer->comment=$data['staff_note'];
                         $voucer->save();
                         // cash/bank debit
                         $voucer = new Voucer();
@@ -689,6 +703,7 @@ class InvoiceTestController extends Controller
                         $voucer->cheque_issue_date = strtotime(strval($data['cheque_issue_date']));
                         $voucer->invoice_id = $inv_id;
                         $voucer->author_id = auth()->user()->id;
+                        $voucer->comment=$data['staff_note'];
                         $voucer->save();
                         // customer credit
                         $voucer = new Voucer();
@@ -702,6 +717,7 @@ class InvoiceTestController extends Controller
                         $voucer->cheque_issue_date = strtotime(strval($data['cheque_issue_date']));
                         $voucer->invoice_id = $inv_id;
                         $voucer->author_id = auth()->user()->id;
+                        $voucer->comment=$data['staff_note'];
                         $voucer->save();
                         return ['message' => 'Invoice Added Success', 'id' => $inv_id];
                     }

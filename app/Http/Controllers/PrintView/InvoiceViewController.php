@@ -52,4 +52,17 @@ class InvoiceViewController extends Controller
         return view('backend.view_pages.invoices.pos-print',compact('invoice'));
     }
 
+    public function doublePrint($id)
+    {
+        $invoice=Invoice::with('sales','customer','pay','condition_amount','user','shipping_customer','courier','notes')->where('id',$id)->first();
+
+        return view('backend.view_pages.invoices.double_print_bn',compact('invoice'));
+    }
+    public function doublePrintBn($id)
+    {
+        $invoice=Invoice::with('sales','customer','pay','condition_amount','user','shipping_customer','courier','notes')->where('id',$id)->first();
+
+        return view('backend.view_pages.invoices.double_print',compact('invoice'));
+    }
+
 }

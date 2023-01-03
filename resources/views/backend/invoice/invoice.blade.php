@@ -41,7 +41,7 @@
                           <option value="2">Condition</option>
                         </select>
                        </div>
-                       <div class="col-12 col-md-3 invisible" id="init-customer">
+                       <div class="col-12 col-md-4 invisible" id="init-customer">
                           <div class="input-group">
                               <select class="form-control" id="customer" onchange="balance(this)">
                               </select>
@@ -53,11 +53,12 @@
                           <div class="total_balance d-none">Balance: <span id="customer-balance"></span></div>
                        </div>
                        <div class="col-12 col-md-2">
-                        <div class="form-group">
-                          <input type="text" class="form-control" id="hand_bill" placeholder="Hand Bill">
+                          <div class="form-group">
+                            <input type="text" class="form-control" id="date" placeholder="Date">
+                          </div>
                         </div>
-                       </div>
-                       <div class="col-12 col-md-2 mt-2">
+                       
+                       <div class="col-12 col-md-1 mt-2">
                          <div class="float-right d-none">
 
                             <input type="radio" name="action[]" value="0" checked>
@@ -70,9 +71,9 @@
                        <div class="col-12 col-md-1">
                        </div>
                        <div class="col-12 col-md-2">
-                         <div class="form-group">
-                           <input type="text" class="form-control" id="date" placeholder="Date">
-                         </div>
+                        <div class="form-group">
+                          <input type="text" class="form-control" id="hand_bill" placeholder="Hand Bill">
+                        </div>
                        </div>
                    </div>
                    <div class="row" id="w_customer">
@@ -125,7 +126,7 @@
                         <select class="form-control" name="" id="note"></select>
                       </div>
                       <div class="form-group">
-                        <label for="">staff Note :</label>
+                        <label for="">Comment :</label>
                         <textarea class="form-control" name="" id="staff_note" rows="2" placeholder="write something..."></textarea>
                       </div>
                       <div>
@@ -187,7 +188,7 @@
                                 </td>
                             </tr>
                             <tr>
-                              <th width="50%">Discount: </th>
+                              <th width="50%">Discount: <input style='max-width:45% !important' id="discount-total" disabled type="text" class="form-control form-control-sm d-inline invisible" >  </th>
                               <td>
                                 <div class="input-group input-group-sm">
                                   <input type="number" class="form-control " id="discount" placeholder="0.00" aria-describedby="validationTooltipUsernamePrepend" required>
