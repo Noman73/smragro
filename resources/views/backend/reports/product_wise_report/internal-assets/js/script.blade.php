@@ -254,18 +254,19 @@ $(document).on('click','.remove', function(e){
    console.log($(this));
     $(this).empty();
   });
-  $("#category").select2({
+  $("#brand").select2({
     theme:'bootstrap4',
     placeholder:'select',
     allowClear:true,
     ajax:{
-      url:"{{URL::to('/admin/get-category')}}",
+      url:"{{URL::to('/admin/get-brand')}}",
       type:'post',
       dataType:'json',
       delay:20,
       data:function(params){
         return {
           searchTerm:params.term,
+          item:$('#product option:selected').val(),
           _token:"{{csrf_token()}}",
           }
       },
