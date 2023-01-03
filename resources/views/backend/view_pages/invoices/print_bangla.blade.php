@@ -246,7 +246,7 @@
          টাকা <br>
                           
               <b>মন্তব্য :<b> {{$invoice->staff_note}} <br>
-                প্রস্তুতকারক : <b>{{$invoice->user->name}}</b>,প্রিন্ট করেছেন <b>{{auth()->user()->name}}</b>, Print Time : {{date('d-m-Y h:i:s')}}
+                প্রস্তুতকারক : <b>{{$invoice->user->name}}</b>, প্রিন্ট করেছেন: <b>{{auth()->user()->name}}</b>, Print Time : {{date('d-m-Y h:i:s')}}
           </div>
       </div>
       <div class="row footer">
