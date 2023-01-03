@@ -268,7 +268,9 @@
                           Created By : <b>{{$invoice->user->name}}</b>,Printed By <b>{{$invoice->user->name}}</b>, Print Time : {{date('d-m-Y h:i:s')}}
                       </div>
                   </div>
+
                   <div class="footer">
+        <span>This report has been taken from ERP, hence No signature required. </span>
                           Software Developed by Ongsho
                   </div>
               </div>

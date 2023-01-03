@@ -445,6 +445,7 @@
             </div>
         </div>
         <div class="row footer">
+        <span>This report has been taken from ERP, hence No signature required. </span>
             <div style="text-align:center;" class="col-xs-12 col-12 text-center">
                 Software Developed by Ongsho
             </div>

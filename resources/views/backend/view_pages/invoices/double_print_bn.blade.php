@@ -246,6 +246,7 @@
                   </div>
               </div>
               <div class="row footer">
+                <span>এই রিপোর্টটি  ইআরপি থেকে নেওয়া হয়েছে, তাই কোন স্বাক্ষরের প্রয়োজন নেই। </span>
                   <div style="text-align:center;" class="col-xs-12 col-12 text-center">
                       সফটওয়ার তৈরী করেছেন অংশ
                   </div>
@@ -447,6 +448,7 @@
               </div>
           </div>
           <div class="row footer">
+            <span>এই রিপোর্টটি  ইআরপি থেকে নেওয়া হয়েছে, তাই কোন স্বাক্ষরের প্রয়োজন নেই। </span>
               <div style="text-align:center;" class="col-xs-12 col-12 text-center">
                   সফটওয়ার তৈরী করেছেন অংশ
               </div>
