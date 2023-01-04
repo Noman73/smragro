@@ -53,6 +53,7 @@ window.formRequest= function(){
     let date=$('#date').val();
     let from_bank=$('#from_bank').val();
     let to_bank=$('#to_bank').val();
+    let note=$('#note').val();
     let id=$('#id').val();
     let formData= new FormData();
     formData.append('ammount',ammount);
@@ -61,6 +62,7 @@ window.formRequest= function(){
     formData.append('date',date);
     formData.append('from_bank',from_bank);
     formData.append('to_bank',to_bank);
+    formData.append('note',note);
     $('#exampleModalLabel').text('Fund Transfer');
     if(id!=''){
       formData.append('_method','PUT');
@@ -92,6 +94,9 @@ window.formRequest= function(){
               datatable.ajax.reload();
               remove();
               $('.submit').attr('disabled',false);
+              setTimeout(() => {
+                    window.location="{{URL::to('admin/view-pages/fund-transfer-view/')}}/"+response.data.id;
+              }, 250);
           }else if(response.data.error){
               var keys=Object.keys(response.data.error);
               keys.forEach(function(d){
@@ -105,6 +110,8 @@ window.formRequest= function(){
 }
 
 function formRequestTry(){
+  let from_method=$('#from_method').val();
+  let to_method=$("#to_method").val();
   let date=$('#date').val();
   let amount=($('#ammount').val()=='' ? '0.00' : $('#ammount').val());
   Swal.fire({

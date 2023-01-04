@@ -111,10 +111,10 @@
                         <tr style="color:black;" class="">
                             <th width="10%">Txr. Date</th>
                             <th width="10%">Post Date</th>
-                            <th width="20%">Particular</th>
-                            <th width="15%">Instrument</th>
-                            <th width="15%">Debit</th>
-                            <th width="15%">Credit</th>
+                            <th width="35%">Particular</th>
+                            <th width="10%">Instrument</th>
+                            <th width="10%">Debit</th>
+                            <th width="10%">Credit</th>
                             <th width="15%">Balance</th>
                         </tr>
                         </thead>

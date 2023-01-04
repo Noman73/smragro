@@ -123,7 +123,7 @@
                   <table class="table table-bordered table-striped">
                       <thead>
                           <tr>
-                              <th class="text-center" width="10%">ক্রমিক নং.</th>
+                              <th class="text-center" width="10%">ক্র. নং.</th>
                               <th width="35%">পন্যের নাম</th>
                               <th class="text-right">পরিমান</th>
                               <th class="text-right">মূল্য</th>
@@ -246,10 +246,11 @@
          টাকা <br>
                           
               <b>মন্তব্য :<b> {{$invoice->staff_note}} <br>
-                প্রস্তুতকারক : <b>{{$invoice->user->name}}</b>,প্রিন্ট করেছেন <b>{{auth()->user()->name}}</b>, Print Time : {{date('d-m-Y h:i:s')}}
+                প্রস্তুতকারক : <b>{{$invoice->user->name}}</b>, প্রিন্ট করেছেন: <b>{{auth()->user()->name}}</b>, Print Time : {{date('d-m-Y h:i:s')}}
           </div>
       </div>
       <div class="row footer">
+        <span>এই রিপোর্টটি  ইআরপি থেকে নেওয়া হয়েছে, তাই কোন স্বাক্ষরের প্রয়োজন নেই। </span> 
           <div style="text-align:center;" class="col-xs-12 col-12 text-center">
               সফটওয়ার তৈরী করেছেন অংশ
           </div>

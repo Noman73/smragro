@@ -79,13 +79,15 @@ window.formRequest= function(event){
          axios.post("{{route('journal.store')}}",formData)
         .then(function (response){
             if(response.data.message){
-
                 toastr.success(response.data.message)
                 datatable.ajax.reload();
                 clear();
                 Clean();
                 $('#modal').modal('hide');
                 $('.submit').attr('disabled',false);
+                setTimeout(() => {
+                    window.location="{{URL::to('admin/view-pages/journal-view/')}}/"+response.data.id;
+                }, 250);
             }else if(response.data.error){
               $('.submit').attr('disabled',false);
               var keys=Object.keys(response.data.error);
