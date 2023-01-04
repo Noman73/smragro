@@ -354,7 +354,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{URL::to('/admin/customer-statement-report')}}" class="nav-link">
+                <a href="{{URL::to('/admin/employee-list')}}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Employee List</p>
                 </a>
