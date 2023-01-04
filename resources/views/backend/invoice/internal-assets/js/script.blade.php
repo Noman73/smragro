@@ -194,14 +194,14 @@ function totalCal(){
     }
     console.log('noman')
     $('#discount-total').removeClass('invisible')
-      total_discount=((total*discount)/100);
+      total_discount=((total*discount)/100).toFixed(2);
   }else{
     $('#discount-total').addClass('invisible')
-      total_discount=discount;
+      total_discount=(discount).toFixed(2);
   }
   vat=(total*vat)/100;
   console.log(total_discount,vat,transport)
-  total_payable=(total+vat+transport)-(total_discount)
+  total_payable=((total+vat+transport)-(total_discount)).toFixed(2);
   $('#total_payable').val(total_payable)
   $('#discount-total').val(total_discount)
   previous_due=($('#previous_due').val()=='' ? 0.00 : $('#previous_due').val());

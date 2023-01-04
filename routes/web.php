@@ -194,4 +194,6 @@ Route::group([
     Route::post('/profit_loss','ProfitLossController@getReport');
     Route::get('/user-wise-amount','UserWiseAmountController@index');
     Route::post('/user-wise-amount','UserWiseAmountController@getReport');
+    Route::get('/employee-list','EmployeeListController@index');
+    Route::get('/employee-list-all','EmployeeListController@getReport');
 });
