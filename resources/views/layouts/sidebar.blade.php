@@ -353,6 +353,12 @@
                   <p>Customer List</p>
                 </a>
               </li>
+              <li class="nav-item">
+                <a href="{{URL::to('/admin/customer-statement-report')}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Employee List</p>
+                </a>
+              </li>
               @endcan
               @can("Supplier List Report")
               <li class="nav-item">
