@@ -112,10 +112,11 @@ class JournalController extends Controller
                     $journal->subledger_id=($data['subledger'][$i] == 'null'? null : $data['subledger'][$i]);
                     $journal->debit=($data['debit'][$i]==''? 0 : $data['debit'][$i]);
                     $journal->credit=($data['credit'][$i]==''? 0 : $data['credit'][$i]);
+                    $journal->comment=$data['comment'][$i];
                     $journal->save();
                     $i=$i+1;
                 }
-                return response()->json(['message'=>"Journal Added Success"]);
+                return response()->json(['message'=>"Journal Added Success",'id'=>$inv->id]);
             }
 
         }

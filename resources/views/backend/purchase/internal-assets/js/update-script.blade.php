@@ -155,7 +155,7 @@
         placeholder:'select',
         allowClear:true,
         ajax:{
-          url:"{{URL::to('/admin/get-product-without-combo')}}",
+          url:"{{URL::to('/admin/get-product/'.'2')}}",
           type:'post',
           dataType:'json',
           delay:20,
@@ -471,6 +471,7 @@
         $('#chalan_no').val(invoices.chalan_no);
         $('#date').val(dateFormat(invoices.dates*1000))
         $('#discount').val(invoices.discount);
+        $('#transport').val(invoices.transport);
         $('#vat').val(invoices.vat);
         $('#staff_note').val(invoices.staff_note);
         $('#note').val(invoices.note);
@@ -495,6 +496,7 @@
         $("#item_table_body").html(html);
         initSelect2();
         calculation();
+        totalCal();
     }
 </script>
     

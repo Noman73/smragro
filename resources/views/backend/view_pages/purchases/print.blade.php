@@ -140,6 +140,12 @@
                       <th>Invoice Total</th>
                       <td>৳. {{$invoice->total}}</td>
                   </tr>
+                  @if($invoice->transport!=null or $invoice->transport==0.00)
+                  <tr>
+                      <th>Transport</th>
+                      <td>৳. {{$invoice->transport}}</td>
+                  </tr>
+                  @endif
                     <tr>
                         <th>Invoice Due</th>
                         <td>৳. {{$invoice->total_payable}}</td>

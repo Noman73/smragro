@@ -155,7 +155,7 @@ function initSelect2(){
     placeholder:'select',
     allowClear:true,
     ajax:{
-      url:"{{URL::to('/admin/get-product-without-combo')}}",
+      url:"{{URL::to('/admin/get-product/'.'2')}}",
       type:'post',
       dataType:'json',
       delay:20,
@@ -313,6 +313,9 @@ $('#date,#cheque_issue_date').daterangepicker({
             $('.submit').attr('disabled',false);
             toastr.success(response.data.message);
             Clean();
+            setTimeout(() => {
+                window.location="{{URL::to('admin/view-pages/purchase-view')}}/"+response.data.id;
+            }, 250);
         }else if(response.data.error){
             var keys=Object.keys(response.data.error);
             keys.forEach(function(d){

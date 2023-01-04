@@ -81,7 +81,7 @@ class PurchaseInvoiceTest extends Controller
             'qantity.*' => 'required|regex:/^([0-9.]+)$/',
             'price' => 'required|array',
             'price.*' => 'required|regex:/^([0-9.]+)$/',
-            'transport' => 'nullable|regex:/^([0-9]+)$/',
+            'transport' => 'nullable|regex:/^([0-9.]+)$/',
             'purchase_type' => 'required|regex:/^([0-2]+)$/',
             'supplier' => $supplier_cond.'|regex:/^([0-9]+)$/',
             'date' => 'required|max:10|date_format:d-m-Y',

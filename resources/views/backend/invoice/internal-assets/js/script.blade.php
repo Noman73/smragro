@@ -164,9 +164,9 @@ $(document).on('change keyup','.price,#discount,#vat,.qantity,#transport,.produc
 $(document).on('focusout','.total',function(){
   totalValDivision(this);
 })
-// $(document).on('change keyup','#discount',function(){
-//   discountCheck()
-// })
+$(document).on('change keyup','#discount',function(){
+  discountCheck()
+})
 function totalValDivision(thisval){
    qantity=$(thisval).parent().prev().prev().children().val();
    console.log(qantity)
@@ -182,7 +182,7 @@ function initSelect2(){
     placeholder:'select',
     allowClear:true,
     ajax:{
-      url:"{{URL::to('/admin/get-product')}}",
+      url:"{{URL::to('/admin/get-product/'.'1')}}",
       type:'post',
       dataType:'json',
       delay:20,
@@ -229,14 +229,18 @@ function totalCal(){
       $('#discount').val(100);
       totalCal();
     }
+    console.log('noman')
+    $('#discount-total').removeClass('invisible')
       total_discount=((total*discount)/100);
   }else{
+    $('#discount-total').addClass('invisible')
       total_discount=discount;
   }
   vat=(total*vat)/100;
   console.log(total_discount,vat,transport)
   total_payable=(total+vat+transport)-(total_discount)
   $('#total_payable').val(total_payable)
+  $('#discount-total').val(total_discount)
   previous_due=($('#previous_due').val()=='' ? 0.00 : $('#previous_due').val());
   amount=($('#ammount').val()=='' ? 0.00 : $('#ammount').val());
   console.log('ssf'+previous_due,total_payable,amount)

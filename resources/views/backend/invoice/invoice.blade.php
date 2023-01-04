@@ -125,9 +125,9 @@
                          </div>
                        </div>
                        <div class="col-12 col-md-2">
-                         <div class="form-group">
-                           <input type="text" class="form-control" id="date" placeholder="Date">
-                         </div>
+                        <div class="form-group">
+                          <input type="text" class="form-control" id="date" placeholder="date">
+                        </div>
                        </div>
                    </div>
                    <div class="row" id="w_customer">
@@ -254,7 +254,7 @@
                         <select class="form-control" name="" id="note"></select>
                       </div>
                       <div class="form-group">
-                        <label for="">staff Note :</label>
+                        <label for="">Comment :</label>
                         <textarea class="form-control" name="" id="staff_note" rows="2" placeholder="write something..."></textarea>
                       </div>
                       <div>
@@ -316,7 +316,7 @@
                                 </td>
                             </tr>
                             <tr>
-                              <th width="50%">Discount: </th>
+                              <th width="50%">Discount: <input style='max-width:45% !important' id="discount-total" disabled type="text" class="form-control form-control-sm d-inline invisible" >  </th>
                               <td>
                                 <div class="input-group input-group-sm">
                                   <input type="number" class="form-control " id="discount" placeholder="0.00" aria-describedby="validationTooltipUsernamePrepend" required>

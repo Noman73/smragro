@@ -73,7 +73,7 @@ Route::group([
     Route::resource('/employee-salary','EmployeeSalaryController');
     Route::post('/get-category','CategoryController@getCategory');
     Route::post('/get-unit','UnitController@getUnit');
-    Route::post('/get-product','ProductController@getProduct');
+    Route::post('/get-product/{position}','ProductController@getProduct');
     Route::post('/get-product-without-combo','ProductController@getProductWithoutCombo');
     Route::post('/get-payment-method','BankAccountController@getPaymentMethod');
     Route::get('/get-bank-details/{id}','BankAccountController@getBankDetails');
@@ -147,6 +147,7 @@ Route::group([
 ],function(){
     Route::get('/sales-invoice/{invoice_id}','InvoiceViewController@index');
     Route::get('/sales-invoice-print/{invoice_id}','InvoiceViewController@print');
+    Route::get('/sales-invoice-double-print/{invoice_id}','InvoiceViewController@doublePrint');
     Route::get('/sales-invoice-pos-print/{invoice_id}','InvoiceViewController@posPrint');
     Route::get('/sales-invoice-bangla-print/{invoice_id}','InvoiceViewController@printInBangla');
     Route::get('/sales-chalan-invoice-print/{invoice_id}','InvoiceViewController@chalan');

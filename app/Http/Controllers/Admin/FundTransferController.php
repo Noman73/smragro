@@ -81,6 +81,7 @@ class FundTransferController extends Controller
             'to_method'=>["nullable","max:1",new FundTransferToMethodRule($request->from_method,$request->from_bank,$request->to_bank)],
             'from_bank'=>"nullable|max:20",
             'to_bank'=>["nullable","max:20",new FundTransferToBankRule($request->from_bank)],
+            'note'=>"nullable|max:200",
         ]);
 
         if($validator->passes()){
@@ -114,6 +115,7 @@ class FundTransferController extends Controller
                     $voucer->subledger_id=$request->to_bank;
                 }
                 $voucer->author_id = auth()->user()->id;
+                $voucer->comment=$request->note;
                 $voucer->save();
                 // from_method credit
                 $voucer=new Voucer;
@@ -126,9 +128,10 @@ class FundTransferController extends Controller
                     $voucer->subledger_id=$request->from_bank;
                 }
                 $voucer->author_id = auth()->user()->id;
+                $voucer->comment=$request->note;
                 $voucer->save();
                 if($voucer){
-                    return response()->json(['message'=>'Fund Transfer Added']);
+                    return response()->json(['message'=>'Fund Transfer Added','id'=>$v_invoice->id]);
                 }
             }
             

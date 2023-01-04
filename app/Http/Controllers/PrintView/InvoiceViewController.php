@@ -56,4 +56,17 @@ class InvoiceViewController extends Controller
         $invoice=Invoice::with('sales','customer','pay','condition_amount','user','shipping_customer','courier','notes','road_chalan')->where('id',$id)->first();
         return view('backend.view_pages.invoices.road_chalan.road_chalan_form',compact('invoice'));
     }
+    public function doublePrint($id)
+    {
+        $invoice=Invoice::with('sales','customer','pay','condition_amount','user','shipping_customer','courier','notes')->where('id',$id)->first();
+
+        return view('backend.view_pages.invoices.double_print_bn',compact('invoice'));
+    }
+    public function doublePrintBn($id)
+    {
+        $invoice=Invoice::with('sales','customer','pay','condition_amount','user','shipping_customer','courier','notes')->where('id',$id)->first();
+
+        return view('backend.view_pages.invoices.double_print',compact('invoice'));
+    }
+
 }

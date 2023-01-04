@@ -3,7 +3,13 @@
  @section('link')
  <link rel="stylesheet" href="{{asset('storage/adminlte/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
   <link rel="stylesheet" href="{{asset('storage/adminlte/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
-  
+  <style>
+    #ammount{
+      /* border:2px solid red; */
+      background-color:#f4c2c2;
+      font-weight: bold;
+    }
+  </style>
  @endsection
  @section('content')
     <!-- Content Header (Page header) -->
@@ -70,27 +76,21 @@
               <form>
                 <input type="hidden" id="id">
                 <div class="row">
-                    <div class="col-12 col-md-6 ">
+                    <div class="col-12 col-md-3 m-auto m-0 ">
                         <div class="form-group">
-                        <label for="">Date</label>
-                        <input type="text" class="form-control" id="date">
+                        <label for="" class="text-center d-block">Date</label>
+                        <input type="text" class="font-weight-bold form-control text-center" id="date">
                         <div class="invalid-feedback" id="date_msg"></div>
 
                         </div>
                     </div>
-                    <div class="col-12 col-md-6">
-                      <div class="form-group">
-                        <label for="">Amount</label>
-                        <input name="ammount" id="ammount" class="form-control" placeholder="0.00">
-                        <div class="invalid-feedback" id="ammount_msg"></div>
-
-                      </div>
-                    </div>
+                    
                   </div>
+            <div class="row">
+              <div class="col-12 col-md-6">
                 <h4>From</h4><hr>
                 <div class="row">
-                    
-                    <div class="col-12 col-md-6 ">
+                    <div class="col-12 col-md-12 ">
                         <div class="form-group">
                         <label for="">Method</label>
                         <select name="" id="from_method" class="form-control" onchange="paymentMethod(this);getBalance(this.value);">
@@ -101,7 +101,7 @@
                         <div class="invalid-feedback" id="from_method_msg"></div>
                         </div>
                     </div>
-                  <div class="col-12 col-md-6 from_bank">
+                  <div class="col-12 col-md-12 from_bank">
                     <div class="form-group">
                       <label for="">Bank</label>
                       <select name="" id="from_bank" class="form-control" onchange="getBalance(1,this.value)">
@@ -109,21 +109,22 @@
                     </div>
                   </div>
                 </div>
+              </div>
+              <div class="col-12 col-md-6">
                 <h4>To</h4><hr>
                 <div class="row">
-                  <div class="col-12 col-md-6 ">
-                    <div class="form-group">
-                      <label for="">Method</label>
-                      <select name="" id="to_method" class="form-control" onchange="paymentMethod(this);getBalance(this.value);">
-                        <option value="">--select--</option>
-                        <option value="0">Cash</option>
-                        <option value="1">Bank</option>
-                      </select>
-                      <div class="invalid-feedback" id="to_method_msg"></div>
-
+                    <div class="col-12 col-md-12">
+                      <div class="form-group">
+                        <label for="">Method</label>
+                        <select name="" id="to_method" class="form-control" onchange="paymentMethod(this);getBalance(this.value);">
+                          <option value="">--select--</option>
+                          <option value="0">Cash</option>
+                          <option value="1">Bank</option>
+                        </select>
+                        <div class="invalid-feedback" id="to_method_msg"></div>
+                      </div>
                     </div>
-                  </div>
-                  <div class="col-12 col-md-6 to_bank">
+                  <div class="col-12 col-md-12 to_bank">
                     <div class="form-group">
                       <label for="">Bank</label>
                       <select name="" id="to_bank" class="form-control" onchange="getBalance(1,this.value)">
@@ -131,8 +132,28 @@
                       <div class="invalid-feedback" id="to_bank_msg"></div>
                     </div>
                   </div>
+                  
+                </div>
+              </div>
+              </div>
+                {{--  --}}
+                <div class="row">
+                  <div class="col-12 col-md-12">
+                    <div class="form-group">
+                      <label for="" class="">Note:</label>
+                      <input name="note" id="note" class="form-control" placeholder="Note">
+                      <div class="invalid-feedback" id="note_msg"></div>
+                    </div>
+                  </div>
+                <div class="col-12 col-md-3 m-auto m-0">
+                  <div class="form-group">
+                    <label for="" class="text-center d-block">Amount</label>
+                    <input name="ammount" id="ammount" class="form-control" placeholder="0.00">
+                    <div class="invalid-feedback" id="ammount_msg"></div>
+                  </div>
                 </div>
                 
+              </div>
               </form>
             </div>
             <div class="modal-footer">
