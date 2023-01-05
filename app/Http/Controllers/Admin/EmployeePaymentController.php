@@ -280,6 +280,14 @@ class EmployeePaymentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $inv=Vinvoice::where('id',$id)->first();
+        if($inv->action_type==5){
+            $deleteInv=Vinvoice::where('id',$id)->delete();
+            if($deleteInv){
+                $deleteVoucer=Voucer::where('v_inv_id',$id)->delete();
+                return response()->json(['message'=>"Receive Deleted Success"]);
+            }
+        }
+        return response()->json(['error'=>"Something else"]);
     }
 }
