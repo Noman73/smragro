@@ -112,7 +112,7 @@ window.formRequest= function(){
 function formRequestTry(){
   let date=$('#date').val();
   let amount=($('#ammount').val() =='' ? '0.00' : $('#ammount').val());
-  let supplier=($('#supplier').text() =='' ? "Not Selected" : $('#supplier').text() );
+  let supplier=($('#supplier option:selected').text() =='' ? "Not Selected" : $('#supplier option:selected').text() );
   Swal.fire({
       title: 'Are you sure?',
       html: "<p >Supplier : <b class='text-danger'>"+supplier+"</b></p><p>Total Amount: <b class='text-danger'>"+amount+"</b> Date: <b class='text-danger'>"+date+"</b></p><p>You Want Save this ?</p>",

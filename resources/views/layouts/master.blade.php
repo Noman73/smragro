@@ -1,6 +1,6 @@
 @include('layouts.header')
 @include('layouts.sidebar')
-<div class="content-wrapper">
+<div class="content-wrapper ">
     @yield('content')
 </div>
 

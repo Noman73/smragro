@@ -6,7 +6,7 @@
         serverSide:true,
         responsive:true,
         ajax:{
-          url:"{{route('c-receive.index')}}"
+          url:"{{route('employee-payment.index')}}"
         },
         columns:[
           {
@@ -45,7 +45,7 @@
 });  
 
 window.formRequest= function(){
-    let customer=$('#customer').val();
+    let employee=$('#employee').val();
     let ammount=$('#ammount').val();
     let method=$('#method').val();
     let date=$('#date').val();
@@ -54,12 +54,12 @@ window.formRequest= function(){
     let cheque_photo=$('#cheque_photo').val();
     let issue_date=$('#issue_date').val();
     let note=$('#note').val();
+    let id=$('#id').val();
     let v_id_cus=$('#v_id_cus').val();
     let v_id_method=$('#v_id_method').val();
-    let id=$('#id').val();
     let formData= new FormData();
    
-    formData.append('customer',customer);
+    formData.append('employee',employee);
     formData.append('ammount',ammount);
     formData.append('method',method);
     formData.append('date',date);
@@ -68,7 +68,7 @@ window.formRequest= function(){
     formData.append('issue_date',issue_date);
     formData.append('cheque_photo',cheque_photo);
     formData.append('note',note);
-    $('#exampleModalLabel').text('Add New Receive');
+    $('#exampleModalLabel').text('Add New Payment');
     if(id!=''){
       formData.append('_method','PUT');
       formData.append('v_id_cus',v_id_cus);
@@ -76,7 +76,7 @@ window.formRequest= function(){
     }
     //axios post request
     if (id==''){
-         axios.post("{{route('c-receive.store')}}",formData)
+         axios.post("{{route('employee-payment.store')}}",formData)
         .then(function (response){
             if(response.data.message){
                 toastr.success(response.data.message)
@@ -92,7 +92,7 @@ window.formRequest= function(){
             }
         })
     }else{
-      axios.post("{{URL::to('admin/c-receive/')}}/"+id,formData)
+      axios.post("{{URL::to('admin/employee-payment/')}}/"+id,formData)
         .then(function (response){
           if(response.data.message){
               toastr.success(response.data.message);
@@ -112,10 +112,10 @@ window.formRequest= function(){
 function formRequestTry(){
   let date=$('#date').val();
   let amount=($('#ammount').val() =='' ? '0.00' : $('#ammount').val());
-  let customer=($('#customer option:selected').text() =='' ? "Not Selected" : $('#customer option:selected').text() );
+  let employee=($('#employee option:selected').text() =='' ? "Not Selected" : $('#employee option:selected').text() );
   Swal.fire({
       title: 'Are you sure?',
-      html: "<p >Customer : <b class='text-danger'>"+customer+"</b></p><p>Total Amount: <b class='text-danger'>"+amount+"</b> Date: <b class='text-danger'>"+date+"</b></p><p>You Want Save this ?</p>",
+      html: "<p >Employee : <b class='text-danger'>"+employee+"</b></p><p>Total Amount: <b class='text-danger'>"+amount+"</b> Date: <b class='text-danger'>"+date+"</b></p><p>You Want Save this ?</p>",
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -137,7 +137,6 @@ $(document).delegate(".editRow", "click", function(){
     let route=$(this).data('url');
     axios.get(route)
     .then((data)=>{
-      console.log(data)
       iterateData(data.data);
       $('#id').val(data.data.vinvoice.id);
       // var editKeys=Object.keys(data.data);
@@ -181,6 +180,7 @@ $(document).delegate(".deleteRow", "click", function(){
 function clear(){
   $("input").removeClass('is-invalid').val('');
   $(".invalid-feedback").text('');
+  $('#employee').val(null).trigger('change');
 }
 
 function initSelect2(){
@@ -277,12 +277,12 @@ $("#bank").select2({
       cache:true,
     }
   });
-  $("#customer").select2({
+  $("#employee").select2({
     theme:'bootstrap4',
-    placeholder:'Customer',
+    placeholder:'Employee',
     allowClear:true,
     ajax:{
-      url:"{{URL::to('/admin/get-customer')}}",
+      url:"{{URL::to('/admin/get-employee')}}",
       type:'post',
       dataType:'json',
       delay:20,
@@ -314,10 +314,11 @@ function paymentMethod(){
   }
 
   function remove(){
-      $("input,textarea").removeClass('is-invalid').val('');
+      $("input").removeClass('is-invalid').val('');
       $(".invalid-feedback").text('');
       $('#method').val(0).trigger('change')
-      $('#customer').val(null).trigger('change')
+      $('#employee').val(null).trigger('change')
+      $('#payment-body').empty();
       console.log('fired');
       $('input').val('');
       $('#date,#issue_date').daterangepicker({
@@ -347,8 +348,6 @@ function paymentMethod(){
     $(this).empty();
   });
 
-
-
   function changeMethod(){
     let method_type=$('#method').val()
     if(method_type==1){
@@ -358,19 +357,20 @@ function paymentMethod(){
     }
   }
   function iterateData(data){
-
-    console.log(data);
   unique_number=0;
   arr=[];
+  console.log(data)
     let html="";
     let html_id='';
     data.voucer.forEach(function(d){
-          if(parseFloat(d.credit)!=0){
+          if(parseFloat(d.debit)!=0){
               html="<option value='"+d.subledger_id+"'>"+d.sub_name+"</option>";
-              $('#customer').html(html);
-              $('#ammount').val(d.credit);
+              $('#employee').html(html);
+              $('#ammount').val(d.debit);
               html_id+="<input type='hidden' id='v_id_cus' value='"+d.id+"'>"
+              
               // console.log('ok')
+
               // html+="<input type='hidden' name='v_id[]' value='"+d.id+"' /><td><select class='form-control ledger' name='ledger[]'><option value='"+d.ledger_id+"'>"+d.name+"</option></select></td>";
               // html+="<td><select class='form-control subledger' name='subledger[]' id='subledger"+unique_number+"'><option value='"+d.subledger_id+"'>"+d.sub_name+"</option></select></td>";
               // html+="<td><input class='form-control debit' name='ammount[]' placeholder='0.00' value='"+d.credit+"'></td>";
@@ -407,8 +407,7 @@ function paymentMethod(){
     let dates = ("0" + date.getDate()).slice(-2);
     let month = ("0" + (date.getMonth() + 1)).slice(-2);
     let year = date.getFullYear();
-    return(dates + "-" + month + "-" + year);
+    return (dates + "-" + month + "-" + year);
     // return date;
   }
-
 </script>
