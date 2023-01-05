@@ -259,7 +259,7 @@ function addItem(){
   let html="<tr>";
       html+="<input type='hidden' name='v_id[]' value='0'><td><select class='form-control ledger' name='ledger[]'></select></td>";
       html+="<td><select class='form-control subledger' name='subledger[]' id='subledger"+unique_number+"'></select></td>";
-      html+="<td><input class='form-control debit' name='ammount[]' placeholder='0.00'></td>";
+      html+="<td><input type='number' class='form-control debit' name='ammount[]' placeholder='0.00'></td>";
       html+="<td><input class='form-control comment' name='comment[]' placeholder='Write Comment.'></td>";
       html+="<td><button class='btn btn-danger btn-sm remove'>X</button></td></tr>";
       $('#payment-body').append(html);
