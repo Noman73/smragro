@@ -319,6 +319,7 @@ function paymentMethod(){
       $('#payment-body').empty();
       console.log('fired');
       $('input').val('');
+      $('#note').val('');
       $('#date,#issue_date').daterangepicker({
         showDropdowns: true,
         singleDatePicker: true,

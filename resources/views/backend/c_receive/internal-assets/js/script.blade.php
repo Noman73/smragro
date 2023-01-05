@@ -320,6 +320,7 @@ function paymentMethod(){
       $('#customer').val(null).trigger('change')
       console.log('fired');
       $('input').val('');
+      $('#note').val('');
       $('#date,#issue_date').daterangepicker({
         showDropdowns: true,
         singleDatePicker: true,

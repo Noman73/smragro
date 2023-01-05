@@ -98,6 +98,7 @@ window.formRequest= function(){
               toastr.success(response.data.message);
               datatable.ajax.reload();
               remove();
+              $('#modal').modal('hide');
           }else if(response.data.error){
               var keys=Object.keys(response.data.error);
               keys.forEach(function(d){
@@ -321,6 +322,7 @@ function paymentMethod(){
       $('#payment-body').empty();
       console.log('fired');
       $('input').val('');
+      $('#note').val('');
       $('#date,#issue_date').daterangepicker({
         showDropdowns: true,
         singleDatePicker: true,
