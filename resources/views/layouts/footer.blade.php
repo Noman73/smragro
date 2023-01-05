@@ -158,7 +158,22 @@ function contains(target, pattern){
     return value;
 }
 
+var tempDiv = $("<div id='tempOverlayDiv'></div>");
+		tempDiv.css({
+			"background-color": "#000",
+			"opacity": "0.2",
+			"position": "absolute",
+			"left": 0,
+			"top": 0,
+			"width": $(document).width(),
+			"height": $(document).height()
+		});
+		$("body").append(tempDiv);
 
+		// remove div on document ready:
+		$(document).ready(function () {
+			  tempDiv.remove();
+		});
 </script>
 @yield('script')
 </body>

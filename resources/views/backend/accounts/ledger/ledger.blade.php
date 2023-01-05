@@ -45,6 +45,7 @@
                     <th>Account Group</th>
                     <th>Ledger Name</th>
                     <th>Code</th>
+                    <th>Status</th>
                     <th>Action</th>
                   </tr>
                 </thead>

@@ -194,20 +194,20 @@ function totalCal(){
     }
     console.log('noman')
     $('#discount-total').removeClass('invisible')
-      total_discount=((total*discount)/100);
+      total_discount=((total*discount)/100).toFixed(2);
   }else{
     $('#discount-total').addClass('invisible')
-      total_discount=discount;
+      total_discount=(discount).toFixed(2);
   }
   vat=(total*vat)/100;
   console.log(total_discount,vat,transport)
-  total_payable=(total+vat+transport)-(total_discount)
+  total_payable=((total+vat+transport)-(total_discount)).toFixed(2);
   $('#total_payable').val(total_payable)
   $('#discount-total').val(total_discount)
   previous_due=($('#previous_due').val()=='' ? 0.00 : $('#previous_due').val());
   amount=($('#ammount').val()=='' ? 0.00 : $('#ammount').val());
-  console.log('ssf'+previous_due,total_payable,amount)
-  $('#current_due').val(((total_payable+parseFloat(previous_due))-parseFloat(amount)).toFixed(2));
+  // console.log('ssf'+previous_due,total_payable,amount)
+  $('#current_due').val(((parseFloat(total_payable)+parseFloat(previous_due))-parseFloat(amount)).toFixed(2));
   if($("#cash").is(':checked')){
     if($('#sale_type').val()==0){
       $('#ammount').val(total_payable);

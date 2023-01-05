@@ -91,7 +91,6 @@ class SPaymentController extends Controller
             'method'=>"required|max:1",
             'note'=>"nullable|max:500",
             'bank'=>$bank_cond."|max:500",
-
         ]);
         // if($request->)
         if($validator->passes()){
@@ -163,7 +162,7 @@ class SPaymentController extends Controller
     {
         $vinvoice=Vinvoice::where('id',$id)->first();
         if($vinvoice->action_type!=2){
-            return redirect(URL::to('admin/s-pyment'));
+            return redirect(URL::to('admin/s-payment'));
         }
         $bank_ledger=AccountLedger::where('name','Bank')->first()->id;
         $invoice=DB::select("
@@ -262,7 +261,7 @@ class SPaymentController extends Controller
                 $voucer->author_id= auth()->user()->id;
                 $voucer->save();
                 if($voucer){
-                    return response()->json(['message'=>'Customer Receive Updated']);
+                    return response()->json(['message'=>'Supplier Payment Updated']);
                 }
             }
         }
@@ -277,6 +276,14 @@ class SPaymentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $inv=Vinvoice::where('id',$id)->first();
+        if($inv->action_type==2){
+            $deleteInv=Vinvoice::where('id',$id)->delete();
+            if($deleteInv){
+                $deleteVoucer=Voucer::where('v_inv_id',$id)->delete();
+                return response()->json(['message'=>"Receive Deleted Success"]);
+            }
+        }
+        return response()->json(['error'=>"Something else"]);
     }
 }

@@ -46,7 +46,10 @@ class AccountLedgerController extends Controller
           ->addColumn('group',function($get){
           return $get->group->name;
         })
-          ->rawColumns(['action'])->make(true);
+        ->addColumn('status',function($get){
+            return ($get->status==1 ? "<span class='bg-success rounded p-1'>Active</span>" : "<span class='bg-danger rounded p-1'>Deactive</span>");
+          })
+          ->rawColumns(['action','status'])->make(true);
         }
         return view('backend.accounts.ledger.ledger');
     }
@@ -165,7 +168,7 @@ class AccountLedgerController extends Controller
 
     public function getAccountLedger(Request $request){
 
-        $ledger= AccountLedger::where('name','like','%'.$request->searchTerm.'%')->orWhere('code','like','%'.$request->searchTerm.'%')->where('status',1)->take(15)->get();
+        $ledger= AccountLedger::where('status',1)->where('name','like','%'.$request->searchTerm.'%')->orWhere('code','like','%'.$request->searchTerm.'%')->take(15)->get();
         foreach ($ledger as $value){
              $set_data[]=['id'=>$value->id,'text'=>($value->code!=null? $value->code.'-' :'').$value->name];
          }

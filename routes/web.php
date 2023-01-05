@@ -45,6 +45,7 @@ Route::group([
     Route::resource('/shipping-company','ShippingCompanyController');
     Route::resource('/payment','PaymentController');
     Route::resource('/s-payment','SPaymentController');
+    Route::resource('/employee-payment','EmployeePaymentController');
     Route::resource('/receive','ReceiveController');
     Route::resource('/c-receive','CustomerReceiveController');
     Route::resource('/sub_ledger','AccountSubLedgerController');
@@ -194,4 +195,8 @@ Route::group([
     Route::post('/profit_loss','ProfitLossController@getReport');
     Route::get('/user-wise-amount','UserWiseAmountController@index');
     Route::post('/user-wise-amount','UserWiseAmountController@getReport');
+    Route::get('/employee-list','EmployeeListController@index');
+    Route::get('/employee-list-all','EmployeeListController@getReport');
+    Route::get('/employee-loan','EmployeeLoanReportController@index');
+    Route::get('/employee-loan-all','EmployeeLoanReportController@getReport');
 });
