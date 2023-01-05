@@ -206,8 +206,8 @@ function totalCal(){
   $('#discount-total').val(total_discount)
   previous_due=($('#previous_due').val()=='' ? 0.00 : $('#previous_due').val());
   amount=($('#ammount').val()=='' ? 0.00 : $('#ammount').val());
-  console.log('ssf'+previous_due,total_payable,amount)
-  $('#current_due').val(((total_payable+parseFloat(previous_due))-parseFloat(amount)).toFixed(2));
+  // console.log('ssf'+previous_due,total_payable,amount)
+  $('#current_due').val(((parseFloat(total_payable)+parseFloat(previous_due))-parseFloat(amount)).toFixed(2));
   if($("#cash").is(':checked')){
     if($('#sale_type').val()==0){
       $('#ammount').val(total_payable);
