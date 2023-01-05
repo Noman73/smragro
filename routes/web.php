@@ -60,6 +60,7 @@ Route::group([
     Route::resource('/shipping-company','ShippingCompanyController');
     Route::resource('/payment','PaymentController');
     Route::resource('/s-payment','SPaymentController');
+    Route::resource('/employee-payment','EmployeePaymentController');
     Route::resource('/receive','ReceiveController');
     Route::resource('/c-receive','CustomerReceiveController');
     Route::resource('/sub_ledger','AccountSubLedgerController');
@@ -223,4 +224,8 @@ Route::group([
     Route::post('/user-wise-amount','UserWiseAmountController@getReport');
     Route::get('/product-wise-sale-report','ProductWiseSaleReportController@index');
     Route::post('/product-wise-sale-report','ProductWiseSaleReportController@getReport');
+    Route::get('/employee-list','EmployeeListController@index');
+    Route::get('/employee-list-all','EmployeeListController@getReport');
+    Route::get('/employee-loan','EmployeeLoanReportController@index');
+    Route::get('/employee-loan-all','EmployeeLoanReportController@getReport');
 });

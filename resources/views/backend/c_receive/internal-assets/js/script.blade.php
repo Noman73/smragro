@@ -98,6 +98,7 @@ window.formRequest= function(){
               toastr.success(response.data.message);
               datatable.ajax.reload();
               remove();
+              $('#modal').modal('hide');
           }else if(response.data.error){
               var keys=Object.keys(response.data.error);
               keys.forEach(function(d){
@@ -112,7 +113,7 @@ window.formRequest= function(){
 function formRequestTry(){
   let date=$('#date').val();
   let amount=($('#ammount').val() =='' ? '0.00' : $('#ammount').val());
-  let customer=($('#customer').text() =='' ? "Not Selected" : $('#customer').text() );
+  let customer=($('#customer option:selected').text() =='' ? "Not Selected" : $('#customer option:selected').text() );
   Swal.fire({
       title: 'Are you sure?',
       html: "<p >Customer : <b class='text-danger'>"+customer+"</b></p><p>Total Amount: <b class='text-danger'>"+amount+"</b> Date: <b class='text-danger'>"+date+"</b></p><p>You Want Save this ?</p>",
@@ -320,6 +321,7 @@ function paymentMethod(){
       $('#customer').val(null).trigger('change')
       console.log('fired');
       $('input').val('');
+      $('#note').val('');
       $('#date,#issue_date').daterangepicker({
         showDropdowns: true,
         singleDatePicker: true,

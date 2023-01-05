@@ -43,6 +43,14 @@
                 </a>
               </li>
               @endcan
+              @can('Employee Payment View')
+              <li class="nav-item">
+                <a href="{{URL::to('admin/employee-payment')}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Employee Pay</p>
+                </a>
+              </li>
+              @endcan
               @can('Payment View')
               <li class="nav-item">
                 <a href="{{URL::to('admin/payment')}}" class="nav-link">
@@ -385,6 +393,18 @@
                 <a href="{{URL::to('/admin/customer-list')}}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Customer List</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{URL::to('/admin/employee-list')}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Employee List</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{URL::to('/admin/employee-loan')}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Employee Loan</p>
                 </a>
               </li>
               @endcan

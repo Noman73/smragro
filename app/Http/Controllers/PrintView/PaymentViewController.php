@@ -19,7 +19,7 @@ class PaymentViewController extends Controller
     {
 
         $vinvoice=Vinvoice::where('id',$id)->first();
-        if($vinvoice->action_type!=0 and $vinvoice->action_type!=2){
+        if($vinvoice->action_type!=0 and $vinvoice->action_type!=2 and $vinvoice->action_type!=5){
             return redirect(URL::to('admin/payment'));
         }
         $invoice=DB::select("
@@ -43,7 +43,7 @@ class PaymentViewController extends Controller
     }
     public function print($id){
         $vinvoice=Vinvoice::where('id',$id)->first();
-        if($vinvoice->action_type!=0 and $vinvoice->action_type!=2){
+        if($vinvoice->action_type!=0 and $vinvoice->action_type!=2 and $vinvoice->action_type!=5){
             return redirect(URL::to('admin/payment'));
         }
         $invoice=DB::select("

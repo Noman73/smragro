@@ -11,12 +11,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Customer Receive</h1>
+            <h1 class="m-0">Employee Payment</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Customer Receive</li>
+              <li class="breadcrumb-item active">Supplier Payment</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -31,7 +31,7 @@
             <div class="card-header bg-dark">
               <div class="row">
                 <div class="col-6">
-                  <div class="card-title">Customer Receive </div>
+                  <div class="card-title">Employee Payment </div>
                 </div>
                 <div class="col-6">
                   <button class="btn btn-primary float-right" data-toggle="modal" data-target="#modal" data-whatever="@mdo">Add New</button>
@@ -51,6 +51,7 @@
                 </thead>
                 <tbody>
                 </tbody>
+                
               </table>
             </div>
           </div>
@@ -60,12 +61,12 @@
         <div class="modal-dialog modal-lg">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Add New Customer Receive</h5>
+              <h5 class="modal-title" id="exampleModalLabel">Add New Employee Payment</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-            <div class="modal-body mr-5 ml-5">
+            <div class="modal-body">
 
               <form>
                 <div id="data_id">
@@ -88,7 +89,7 @@
                     </div>
                   </div>
                   <div class="col-12 col-md-6 ">
-                    {{-- <button class="btn btn-sm btn-primary float-right  mb-1 " onclick="event.preventDefault();addItem()"><i class='fa fa-plus'></i> Add</button> --}}
+                    <button class="btn btn-sm btn-primary float-right  mb-1 " onclick="event.preventDefault();addItem()"><i class='fa fa-plus'></i> Add</button>
                   </div>
                 </div>
                 <div class="row">
@@ -107,7 +108,7 @@
                     </div>
                     <div class="col-12 col-md-3 bank">
                       <div class="form-group">
-                        <label for="">Receive Date</label>
+                        <label for="">Payment Date</label>
                         <input type="text" name="" id="issue_date" class="form-control">
                       </div>
                     </div>
@@ -119,21 +120,20 @@
                     </div>
                 </div>
                 <div class="row">
-                  <div class="col-12 col-md-8">
-                    <div class="form-group">
-                      <label for="">Customer</label>
-                      <select name="customer" id="customer" class="form-control"></select>
-                    </div>
-                  </div>
                   <div class="col-12 col-md-4">
                     <div class="form-group">
-                      <label for="">Receive Amount</label>
+                      <label for="">Employee</label>
+                      <select name="employee" id="employee" class="form-control"></select>
+                    </div>
+                  </div>
+                  <div class="col-12 col-md-8">
+                    <div class="form-group">
+                      <label for="">Pay Amount</label>
                       <input type='number' name="ammount" id="ammount" class="form-control" placeholder="0.00">
                     </div>
                   </div>
                 </div>
                 <textarea name="note" id="note" cols="30" rows="2" class="form-control" placeholder="Write Note."></textarea>
-               
               </form>
             </div>
             <div class="modal-footer">
@@ -153,5 +153,5 @@
   <script src="{{asset('storage/adminlte/plugins/datatables-responsive/js/dataTables.responsive.min.js')}}"></script>
   <script src="{{asset('storage/adminlte/plugins/datatables-responsive/js/responsive.bootstrap4.min.js')}}"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.26.0/axios.min.js" integrity="sha512-bPh3uwgU5qEMipS/VOmRqynnMXGGSRv+72H/N260MQeXZIK4PG48401Bsby9Nq5P5fz7hy5UGNmC/W1Z51h2GQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  @include('backend.c_receive.internal-assets.js.script')
+  @include('backend.employee_pay.internal-assets.js.script')
   @endsection

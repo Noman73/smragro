@@ -6,7 +6,7 @@
         serverSide:true,
         responsive:true,
         ajax:{
-          url:"{{route('s-payment.index')}}"
+          url:"{{route('employee-payment.index')}}"
         },
         columns:[
           {
@@ -45,7 +45,7 @@
 });  
 
 window.formRequest= function(){
-    let supplier=$('#supplier').val();
+    let employee=$('#employee').val();
     let ammount=$('#ammount').val();
     let method=$('#method').val();
     let date=$('#date').val();
@@ -59,7 +59,7 @@ window.formRequest= function(){
     let v_id_method=$('#v_id_method').val();
     let formData= new FormData();
    
-    formData.append('supplier',supplier);
+    formData.append('employee',employee);
     formData.append('ammount',ammount);
     formData.append('method',method);
     formData.append('date',date);
@@ -76,7 +76,7 @@ window.formRequest= function(){
     }
     //axios post request
     if (id==''){
-         axios.post("{{route('s-payment.store')}}",formData)
+         axios.post("{{route('employee-payment.store')}}",formData)
         .then(function (response){
             if(response.data.message){
                 toastr.success(response.data.message)
@@ -92,7 +92,7 @@ window.formRequest= function(){
             }
         })
     }else{
-      axios.post("{{URL::to('admin/s-payment/')}}/"+id,formData)
+      axios.post("{{URL::to('admin/employee-payment/')}}/"+id,formData)
         .then(function (response){
           if(response.data.message){
               toastr.success(response.data.message);
@@ -113,10 +113,10 @@ window.formRequest= function(){
 function formRequestTry(){
   let date=$('#date').val();
   let amount=($('#ammount').val() =='' ? '0.00' : $('#ammount').val());
-  let supplier=($('#supplier option:selected').text() =='' ? "Not Selected" : $('#supplier option:selected').text() );
+  let employee=($('#employee option:selected').text() =='' ? "Not Selected" : $('#employee option:selected').text() );
   Swal.fire({
       title: 'Are you sure?',
-      html: "<p >Supplier : <b class='text-danger'>"+supplier+"</b></p><p>Total Amount: <b class='text-danger'>"+amount+"</b> Date: <b class='text-danger'>"+date+"</b></p><p>You Want Save this ?</p>",
+      html: "<p >Employee : <b class='text-danger'>"+employee+"</b></p><p>Total Amount: <b class='text-danger'>"+amount+"</b> Date: <b class='text-danger'>"+date+"</b></p><p>You Want Save this ?</p>",
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -181,6 +181,7 @@ $(document).delegate(".deleteRow", "click", function(){
 function clear(){
   $("input").removeClass('is-invalid').val('');
   $(".invalid-feedback").text('');
+  $('#employee').val(null).trigger('change');
 }
 
 function initSelect2(){
@@ -277,12 +278,12 @@ $("#bank").select2({
       cache:true,
     }
   });
-  $("#supplier").select2({
+  $("#employee").select2({
     theme:'bootstrap4',
-    placeholder:'Supplier',
+    placeholder:'Employee',
     allowClear:true,
     ajax:{
-      url:"{{URL::to('/admin/get-supplier')}}",
+      url:"{{URL::to('/admin/get-employee')}}",
       type:'post',
       dataType:'json',
       delay:20,
@@ -317,6 +318,7 @@ function paymentMethod(){
       $("input").removeClass('is-invalid').val('');
       $(".invalid-feedback").text('');
       $('#method').val(0).trigger('change')
+      $('#employee').val(null).trigger('change')
       $('#payment-body').empty();
       console.log('fired');
       $('input').val('');
@@ -365,7 +367,7 @@ function paymentMethod(){
     data.voucer.forEach(function(d){
           if(parseFloat(d.debit)!=0){
               html="<option value='"+d.subledger_id+"'>"+d.sub_name+"</option>";
-              $('#supplier').html(html);
+              $('#employee').html(html);
               $('#ammount').val(d.debit);
               html_id+="<input type='hidden' id='v_id_cus' value='"+d.id+"'>"
               
