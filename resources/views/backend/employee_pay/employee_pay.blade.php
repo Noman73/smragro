@@ -129,7 +129,7 @@
                   <div class="col-12 col-md-8">
                     <div class="form-group">
                       <label for="">Pay Amount</label>
-                      <input name="ammount" id="ammount" class="form-control" placeholder="0.00">
+                      <input type='number' name="ammount" id="ammount" class="form-control" placeholder="0.00">
                     </div>
                   </div>
                 </div>

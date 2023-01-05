@@ -128,7 +128,7 @@
                   <div class="col-12 col-md-4">
                     <div class="form-group">
                       <label for="">Receive Amount</label>
-                      <input name="ammount" id="ammount" class="form-control" placeholder="0.00">
+                      <input type='number' name="ammount" id="ammount" class="form-control" placeholder="0.00">
                     </div>
                   </div>
                 </div>
