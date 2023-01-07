@@ -55,6 +55,9 @@ window.formRequest= function(event){
     comment=$("input[name='comment[]']").map(function(){
         return $(this).val();
     }).get();
+    v_id=$("input[name='v_id[]']").map(function(){
+        return $(this).val();
+    }).get();
     console.log(ledger,subledger,debit,credit,comment);
     $('input,select').removeClass('is-invalid');
     let date=$('#date').val();
@@ -68,6 +71,7 @@ window.formRequest= function(event){
     formData.append('comment',comment);
     formData.append('date',date);
     formData.append('note',note);
+    formData.append('v_id',v_id);
     $('#exampleModalLabel').text('Add New Account Journal');
     console.log(id)
     if(id!=''){
@@ -116,6 +120,9 @@ window.formRequest= function(event){
               clear();
               Clean();
               $('#modal').modal('hide');
+              setTimeout(() => {
+                    window.location="{{URL::to('admin/view-pages/journal-view/')}}/"+response.data.id;
+              }, 250);
           }else if(response.data.error){
               var keys=Object.keys(response.data.error);
               keys.forEach(function(d){
@@ -154,18 +161,9 @@ $(document).delegate(".editRow", "click", function(){
     let route=$(this).data('url');
     axios.get(route)
     .then((data)=>{
-      var editKeys=Object.keys(data.data);
-      editKeys.forEach(function(key){
-        if(key=='name'){
-          $('#'+'name').val(data.data[key]);
-        }
-        if(key=='category_id'){
-          $('#category').val(data.data[key]).niceSelect('update');
-        }
-         $('#'+key).val(data.data[key]);
-         $('#modal').modal('show');
-         $('#id').val(data.data.id);
-      })
+      iterateData(data.data);
+      $('#id').val(data.data.vinvoice.id);
+      
     })
 });
 $(document).delegate(".deleteRow", "click", function(){
@@ -228,7 +226,7 @@ function clear(){
 var unique_number=0;
 function addItem(){
   let html="<tr>";
-      html+="<td><select class='form-control ledger' name='ledger[]'></select></td>";
+      html+="<input type='hidden' name='v_id[]' value='0'><td><select class='form-control ledger' name='ledger[]'></select></td>";
       html+="<td><select class='form-control subledger' name='subledger[]' id='subledger"+unique_number+"'></select></td>";
       html+="<td><input class='form-control debit' name='debit[]' placeholder='0.00'></td>";
       html+="<td><input class='form-control credit' name='credit[]' placeholder='0.00'></td>";
@@ -337,6 +335,68 @@ $(document).on('select2:unselect','.ledger', function (e) {
     console.log($(this).parent().next().children().val());
   });
 
+  function iterateData(data){
+  unique_number=0;
 
+  arr=[];
+  console.log(data)
+    let html="";
+    data.voucer.forEach(function(d){
+      deb_status=(parseFloat(d.debit)==0.00 ? 'disabled' : '');
+      cred_status=(parseFloat(d.credit)==0.00 ? 'disabled' : '');
+              html+="<tr><input type='hidden' name='v_id[]' value='"+d.id+"' /><td><select class='form-control ledger' name='ledger[]'><option value='"+d.ledger_id+"'>"+d.name+"</option></select></td>";
+              html+="<td><select class='form-control subledger' name='subledger[]' id='subledger"+unique_number+"'><option value='"+d.subledger_id+"'>"+d.sub_name+"</option></select></td>"; 
+              html+="<td><input "+deb_status+" class='form-control debit' name='debit[]' placeholder='0.00' value='"+d.debit+"'></td>";
+              html+="<td><input "+cred_status+" class='form-control credit' name='credit[]' placeholder='0.00' value='"+d.credit+"'></td>";
+              html+="<td><input class='form-control comment' name='comment[]' placeholder='write comment' value='"+d.comment+"'></td>";
+              html+="<td><button class='btn btn-danger btn-sm remove'>X</button></td></tr>";
+        
+        arr.push('#subledger'+unique_number);
+        unique_number=unique_number+1;
+    })
+    $('#date').val(dateFormat(parseInt(data.vinvoice.date)*1000))
+    $('#journal-body').html(html);
+    $('#modal').modal('show');
+    calculation();
+    initSelect2();
+    arr.forEach((thisArr)=>{
+          $(thisArr).select2({
+            theme:'bootstrap4',
+            placeholder:'Sub Ledger',
+            allowClear:true,
+            ajax:{
+              url:"{{URL::to('/admin/accounts/get-sub-ledger')}}",
+              type:'post',
+              dataType:'json',
+              delay:20,
+              data:function(params){
+                ledger_id=$(this).parent().prev().children().val();
+                console.log($(this).parent().prev().children().text())
+                return {
+                  searchTerm:params.term,
+                  ledger_id:ledger_id,
+                  _token:"{{csrf_token()}}",
+                  }
+              },
+              processResults:function(response){
+                return {
+                  results:response,
+                }
+              },
+              cache:true,
+            }
+        });
+    })
+
+    function dateFormat(data){
+      date=new Date(data);
+
+      let dates = ("0" + date.getDate()).slice(-2);
+      let month = ("0" + (date.getMonth() + 1)).slice(-2);
+      let year = date.getFullYear();
+      return(dates + "-" + month + "-" + year);
+      // return date;
+    }
+}
   
 </script>
