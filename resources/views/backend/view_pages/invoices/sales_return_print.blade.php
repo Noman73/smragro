@@ -200,9 +200,9 @@
                       @if($invoice->sale_type==0)
                       <td>৳ {{$invoice->total_payable}}</td>
                       @elseif($invoice->sale_type==1)
-                      <td>৳ {{number_format($invoice->pay->sum('debit'),2)}}</td>
+                      <td>৳ {{number_format($invoice->pay->sum('credit'),2)}}</td>
                       @else
-                      <td>৳ {{number_format($invoice->pay->sum('debit'),2)}}</td>
+                      <td>৳ {{number_format($invoice->pay->sum('credit'),2)}}</td>
                       @endif
                   </tr>
 
