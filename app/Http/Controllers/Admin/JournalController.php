@@ -116,6 +116,7 @@ class JournalController extends Controller
                     $journal->debit=($data['debit'][$i]==''? 0 : $data['debit'][$i]);
                     $journal->credit=($data['credit'][$i]==''? 0 : $data['credit'][$i]);
                     $journal->comment=$data['comment'][$i];
+                    $journal->author_id=auth()->user()->id;
                     $journal->save();
                     $i=$i+1;
                 }
@@ -222,6 +223,7 @@ class JournalController extends Controller
                     $journal->debit=($data['debit'][$i]==''? 0 : $data['debit'][$i]);
                     $journal->credit=($data['credit'][$i]==''? 0 : $data['credit'][$i]);
                     $journal->comment=$data['comment'][$i];
+                    // $journal->author_id=auth()->user()->id;
                     $journal->save();
                     }else{
                     $journal=new Voucer;
@@ -233,6 +235,7 @@ class JournalController extends Controller
                     $journal->debit=($data['debit'][$i]==''? 0 : $data['debit'][$i]);
                     $journal->credit=($data['credit'][$i]==''? 0 : $data['credit'][$i]);
                     $journal->comment=$data['comment'][$i];
+                    // $journal->author_id=auth()->user()->id;
                     $journal->save(); 
                     }
                     $i=$i+1;

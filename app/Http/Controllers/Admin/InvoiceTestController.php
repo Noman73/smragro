@@ -778,9 +778,8 @@ class InvoiceTestController extends Controller
 
     public function invoiceList(){
     // return $get=Invoice::with('customer')->get();
-
         if(request()->ajax()){
-            $get=Invoice::with('customer','user')->orderBy('dates','desc')->get();
+            $get=Invoice::with('customer','user')->where('action_id',0)->orderBy('dates','desc')->get();
             return DataTables::of($get)
               ->addIndexColumn()
               ->addColumn('action',function($get){
@@ -834,5 +833,11 @@ class InvoiceTestController extends Controller
             }
         }
         return false;
+    }
+
+    public function getData($id)
+    {
+        $invoice=Invoice::with('sales','customer','pay','condition_amount','notes','shipping_customer','courier','paid')->where('action_id',0)->where('id',$id)->get();
+        return response()->json($invoice);
     }
 }

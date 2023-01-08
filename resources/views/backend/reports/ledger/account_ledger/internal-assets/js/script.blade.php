@@ -395,6 +395,10 @@ $(".customer").select2({
           id=d.v_inv_id;
           url="<a target='_blank' href='{{URL::to('admin/view-pages/fund-transfer-view')}}/"+id+"'>"+(dateFormatInvId(d.date*1000)+id).toString()+"<a>"
         break;
+        case 'Sale Return Invoice':
+          id=d.invoice_id;
+          url="<a target='_blank' href='{{URL::to('admin/view-pages/sales-return-invoice')}}/"+id+"'>"+(dateFormatInvId(d.date*1000)+id).toString()+"<a>"
+        break;
         default:
           id='';
           url='';
