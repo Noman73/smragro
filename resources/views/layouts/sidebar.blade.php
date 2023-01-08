@@ -123,6 +123,12 @@
                   <p>Sales Return</p>
                 </a>
               </li>
+              <li class="nav-item">
+                <a href="{{URL::to('admin/sales_return_list')}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>S. Return List</p>
+                </a>
+              </li>
               @endcan
               @can('Sale Invoice List')
               <li class="nav-item">

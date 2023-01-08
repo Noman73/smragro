@@ -26,7 +26,9 @@ class InvoiceViewController extends Controller
     public function print($id)
     {
         $invoice=Invoice::with('sales','customer','pay','condition_amount','user','shipping_customer','courier','notes')->where('id',$id)->first();
-
+        if($invoice->action_id==1){
+            $this->saleReturnPrint($id);
+        }
         return view('backend.view_pages.invoices.print',compact('invoice'));
     }
     public function printInBangla($id)
@@ -64,5 +66,14 @@ class InvoiceViewController extends Controller
 
         return view('backend.view_pages.invoices.double_print',compact('invoice'));
     }
-
+    public function saleReturn($id) 
+    {
+        $invoice=Invoice::with('sales','customer','pay','condition_amount','user','shipping_customer','courier','notes')->where('id',$id)->first();
+        return view('backend.view_pages.invoices.sales_return',compact('invoice'));
+    }
+    public function saleReturnPrint($id) 
+    {
+        $invoice=Invoice::with('sales','customer','pay','condition_amount','user','shipping_customer','courier','notes')->where('id',$id)->first();
+        return view('backend.view_pages.invoices.sales_return_print',compact('invoice'));
+    }
 }

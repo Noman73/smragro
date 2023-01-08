@@ -35,12 +35,14 @@ Route::group([
     Route::resource('/bank','BankAccountController');
     Route::resource('/customer','CustomerController');
     Route::resource('/invoice','InvoiceTestController');
+    Route::get('/invoice-data/{id}','InvoiceTestController@getData');
     Route::resource('/pos','PosController');
     Route::resource('/regular-condition-list','RegularConditionListController');
     Route::resource('/regular-receive','RegularReceiveController');
     Route::get('/invoice-list','InvoiceTestController@invoiceList');
     Route::get('/purchase-list','PurchaseInvoiceTest@purchaseList');
     Route::resource('/sales_return','SalesReturnController');
+    Route::get('/sales_return_list','SalesReturnController@returnList');
     Route::resource('/voucer','VoucerController');
     Route::resource('/shipping-company','ShippingCompanyController');
     Route::resource('/payment','PaymentController');
@@ -126,6 +128,8 @@ Route::group([
     'namespace' => 'App\Http\Controllers\PrintView',
 ],function(){
     Route::get('/sales-invoice/{invoice_id}','InvoiceViewController@index');
+    Route::get('/sales-return-invoice/{invoice_id}','InvoiceViewController@saleReturn');
+    Route::get('/sales-return-invoice-print/{invoice_id}','InvoiceViewController@saleReturnPrint');
     Route::get('/sales-invoice-print/{invoice_id}','InvoiceViewController@print');
     Route::get('/sales-invoice-double-print/{invoice_id}','InvoiceViewController@doublePrint');
     Route::get('/sales-invoice-pos-print/{invoice_id}','InvoiceViewController@posPrint');

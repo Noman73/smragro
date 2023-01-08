@@ -1,7 +1,6 @@
  <!-- Content Wrapper. Contains page content -->
  @extends('layouts.master')
  @section('link')
- 
  @endsection
  @section('content')
     <!-- Content Header (Page header) -->
@@ -9,7 +8,8 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Manage Sales Return</h1>
+            {{-- {{trim(json_encode($invoice),'[]')}} --}}
+            <h1 class="m-0">Sales Return Invoice</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -38,12 +38,16 @@
             <div class="card-body">
                <div class="container">
                    <div class="row">
-                       <div class="col-12 col-md-2 mt-2">
-                           
-                           <input type="radio" onchange="customerVisibility()"  name="sale_type[]" id="cash" value="0" checked>
+                       <div class="col-12 col-md-2 ">
+                        <select name="" id="sale_type" class="form-control" onchange="customerVisibility()">
+                          <option value="0">Cash</option>
+                          <option selected value="1">Regular</option>
+                          <option value="2">Condition</option>
+                        </select>
+                           {{-- <input type="radio" onchange="customerVisibility()"  name="sale_type[]" id="cash" value="0" checked>
                            <label for="walking">Cash</label>
                            <input type="radio" onchange="customerVisibility()" name="sale_type[]" id="regular" value="1">
-                           <label for="regular">Regular</label>
+                           <label for="regular">Regular</label> --}}
                            {{-- <input type="radio" onchange="customerVisibility()" name="sale_type[]" id="condition" value="2">
                            <label for="condition">Condition</label>
                            <div class="invalid-feedback" id='purchase_type_msg'></div> --}}
@@ -60,22 +64,23 @@
                           <div class="total_balance d-none">Balance: <span id="customer-balance"></span></div>
                        </div>
                        <div class="col-12 col-md-2">
-                         <div class="form-group">
-                           <input type="text" class="form-control"  placeholder="Search Invoice" name="search_invoice" onfocusout="searchInvoice(this.value)">
-                         </div>
+                        <div class="form-group">
+                          <input type="text" class="form-control" id="hand_bill" placeholder="Hand Bill">
+                        </div>
                        </div>
-                       <div class="col-12 col-md-2 mt-2">
-                         <div class="float-right d-none">
-                            <input type="radio" name="action[]" value="0" >
+                       <div class="col-12 col-md-2 ">
+                        <input type="number" class='form-control' id='invoice-search' placeholder="Invoice Search" onkeyup='searchInvoice(this);'>
+                         <div class="float-right invisible">
+                            <input type="radio" name="action[]" value="0" checked>
                             <label for="">Sale</label>
-                            <input type="radio" name="action[]" value="1" checked>
+                            <input type="radio" name="action[]" value="1">
                             <label for="">Return</label>
                             <div class="invalid-feedback" id='action_msg'></div>
                          </div>
                        </div>
                        <div class="col-12 col-md-2">
                          <div class="form-group">
-                           <input type="text" class="form-control" id="date">
+                           <input type="text" class="form-control" id="date" placeholder="Date">
                          </div>
                        </div>
 
@@ -88,12 +93,14 @@
                         <div class="form-group">
                            <label for="">Mobile</label>
                            <input type="number" class="form-control" id="w_mobile" placeholder="Enter Mobile">
+                           <div class="invalid-feedback" id="mobile_msg"></div>
                         </div>
                       </div>
                       <div class="col-12 col-md-3 mt-2">
                         <div class="form-group">
                            <label for="">Name</label>
                            <input type="text" class="form-control" id="w_name" placeholder="Enter Name">
+                           <div class="invalid-feedback" id="name_msg"></div>
                         </div>
                       </div>
                       <div class="col-12 col-md-6 mt-2">
@@ -107,11 +114,11 @@
                        <table class="table table-sm text-center table-bordered" id="add_product">
                            <thead>
                                <tr>
-                                   <th width='20%'>Product</th>
+                                   <th width='40%'>Product</th>
                                    <th width='15%'>Stock</th>
-                                   <th width='15%'>Quantity</th>
-                                   <th width='20%'>Price</th>
-                                   <th width='20%'>Total</th>
+                                   <th width='10%'>Quantity</th>
+                                   <th width='10%'>Price</th>
+                                   <th width='15%'>Total</th>
                                    <th width='10%'>Action</th>
                                </tr>
                            </thead>
@@ -126,7 +133,7 @@
                     <div class="col-12 col-md-8">
                       <div class="form-group">
                         <label for="">Note :</label>
-                        <textarea class="form-control" name="" id="note" rows="2" placeholder="write something..."></textarea>
+                        <select class="form-control" name="" id="note"></select>
                       </div>
                       <div class="form-group">
                         <label for="">staff Note :</label>
@@ -137,10 +144,40 @@
                            <label for="cash">By Self</label>
                            <input type="radio" onchange="saleByCheck()" name="sale_by[]" id="sale_by_courier" value="1">
                            <label for="walking">By Courier</label>
+                           <input type="radio" onchange="saleByCheck()" name="sale_by[]" id="sale_by_shipping" value="2">
+                           <label for="walking">Shipping To</label>
                       </div>
                       <div class="d-none" id="courier-list">
                         <select class="form-control form-control-sm" name="" id="courier">
                         </select>
+                      </div>
+                      <div class="d-none shipping">
+                        <div class="row mt-2">
+                          <div class="col-3">
+                            <div class="form-group">
+                              <label for="">name:</label>
+                              <input type="text" class="form-control" id="shipping_name" placeholder="Enter Name">
+                            </div>
+                          </div>
+                          <div class="col-3">
+                            <div class="form-group">
+                              <label for="">mobile:</label>
+                              <input type="number" class="form-control" id="shipping_mobile" placeholder="Enter Mobile">
+                            </div>
+                          </div>
+                          <div class="col-3">
+                            <div class="form-group">
+                              <label for="">adress:</label>
+                              <input type="text" class="form-control" id="shipping_adress" placeholder="Enter Adress">
+                            </div>
+                          </div>
+                          <div class="col-3">
+                            <div class="form-group">
+                              <label for="">amount:</label>
+                              <input type="text" class="form-control" id="condition_amount" placeholder="Enter Amount">
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                     {{-- end note --}}
@@ -153,7 +190,7 @@
                                   <div class="invalid-feedback" id='total_msg'></div>
                                 </td>
                             </tr>
-                            <tr>
+                            <tr class=''>
                                 <th width="50%">Total Item: </th>
                                 <td>
                                   <input disabled type="number" class="form-control form-control-sm" id="total-item" placeholder="0.00">
@@ -193,7 +230,7 @@
                                 </td>
                             </tr>
                             {{-- payment  --}}
-                            <tr>
+                            <tr id="payment_method_row">
                                 <th width="50%">Payment Method: </th>
                                 <td>
                                   <input type="radio" onchange="paymentMethod()"  name="payment_method_type[]" id="cash" value="0" checked>
@@ -236,8 +273,7 @@
                 </div>
                 <div class="float-right mt-2">
                     <button class="btn btn-secondary" onclick="Clean()">Reset</button>
-                    <button class="btn btn-primary" onclick="formRequest()">Save</button>
-                    <button class="btn btn-warning">Print</button>
+                    <button class="btn btn-primary" onclick="formRequestTry()">Save</button>
                 </div>
                </div>
             </div>
@@ -340,4 +376,6 @@
   @section('script')
   
   @include('backend.sales_return.internal-assets.js.script')
+
+
   @endsection
